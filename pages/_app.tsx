@@ -30,6 +30,7 @@ const Wrap = styled.div`
 
 const ComponentWrap = styled.div`
   height: calc(100% - var(--height-header) - var(--height-footer));
+  padding: 20px;
   overflow-y: auto;
 `;
 

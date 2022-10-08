@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 
 interface InputRadioTypes {
-  id: string,
-  name: string,
+  id: string;
+  name: string;
 }
 
 const RadioStyled = styled.input<InputRadioTypes>`
@@ -13,14 +13,9 @@ const RadioStyled = styled.input<InputRadioTypes>`
 `;
 
 const InputRadioComponent: React.FC<InputRadioTypes> = ({ id, name }) => {
-
-  return (
-    <RadioStyled type="radio" id={id} name={name}></RadioStyled>
-  );
+  return <RadioStyled type="radio" id={id} name={name}></RadioStyled>;
 };
 
-InputRadioComponent.defaultProps = {
-
-}
+InputRadioComponent.defaultProps = {};
 
 export default InputRadioComponent;
