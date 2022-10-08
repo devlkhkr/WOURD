@@ -18,15 +18,16 @@ const FooterWrap = styled.footer`
     display: flex;
     align-items: center;
     border-top: 1px solid var(--color-grey);
+    height: var(--height-footer);
     li {
       border-right: 1px solid var(--color-grey);
       background-color: var(--color-white);
       width: 25%;
+      height: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 8px 0;
       &:first-child {
         border-left: 1px solid var(--color-grey);
       }

@@ -8,7 +8,7 @@ import styled from "styled-components";
 const HeaderWrap = styled.header`
   background-color: blue;
   width: 100%;
-  height: 50px;
+  height: var(--height-header);
   background-color: #ffffff;
   position: relative;
   display: flex;
