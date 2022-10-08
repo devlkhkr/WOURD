@@ -1,15 +1,14 @@
 import React from "react";
 
-type TextProps = {
-  placeHolder: string
+interface InputTextTypes {
+  id: string,
+  placeHolder: string,
 }
 
-const InputText: React.FC<TextProps> = ({ placeHolder }) => {
+const InputText: React.FC<InputTextTypes> = ({ id, placeHolder }) => {
 
   return (
-    <div>
-      <input type="text" placeholder={placeHolder}></input>
-    </div>
+    <input type="text" id={id} placeholder={placeHolder}></input>
   );
 };
 
