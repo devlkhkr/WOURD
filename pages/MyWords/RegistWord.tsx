@@ -7,6 +7,8 @@ import Fieldset from "../components/molecules/Fieldset";
 import InputWrap from "../components/molecules/InputWrap";
 import InputText from "../components/atoms/InputText";
 import InputRadio from "../components/atoms/InputRadio";
+import Select from "../components/atoms/Select";
+import MultiSelect from "../components/atoms/MultiSelect";
 import Label from "../components/atoms/Label";
 import Textarea from "../components/atoms/Textarea";
 import Button from "../components/atoms/Button";
@@ -60,6 +62,66 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
               id="wordDesc"
               height={300}
               placeholder="SSR이란 서버사이드 렌더링(Server Side Rendering)의 약자로 서버로부터 완전하게 만들어진 HTML 파일을 받아와 페이지 전체를 렌더링 하는 방식입니다."
+            />
+          </Fieldset>
+
+          <Fieldset>
+            <Label
+              htmlFor="wordsCtgrSlct"
+              desc="카테고리를 선택해주세요."
+              mandatory={true}
+            />
+            <Select
+              options={[
+                {
+                  name: "CS",
+                  value: 0,
+                },
+                {
+                  name: "FrontEnd",
+                  value: 1,
+                },
+                {
+                  name: "BackEnd",
+                  value: 2,
+                },
+                {
+                  name: "App",
+                  value: 3,
+                },
+              ]}
+              id="wordsCtgrSlct"
+              name="wordsCategorySlct"
+            />
+          </Fieldset>
+
+          <Fieldset>
+            <Label
+              htmlFor="wordsCtgrCbx"
+              desc="카테고리를 선택해주세요."
+              mandatory={true}
+            />
+            <MultiSelect
+              options={[
+                {
+                  name: "CS",
+                  value: 0,
+                },
+                {
+                  name: "FrontEnd",
+                  value: 1,
+                },
+                {
+                  name: "BackEnd",
+                  value: 2,
+                },
+                {
+                  name: "App",
+                  value: 3,
+                },
+              ]}
+              id="wordsCtgrCbx"
+              name="wordsCategoryCbx"
             />
           </Fieldset>
 
