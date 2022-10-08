@@ -6,7 +6,7 @@ import Form from "../../components/organisms/Form";
 import Fieldset from "../../components/molecules/Fieldset";
 import InputWrap from "../../components/molecules/InputWrap";
 import InputText from "../../components/atoms/InputText";
-import InputRadio from "../../components/atoms/InputRadio";
+import Radio from "../../components/atoms/Radio";
 import Select from "../../components/atoms/Select";
 import MultiSelect from "../../components/atoms/MultiSelect";
 import Label from "../../components/atoms/Label";
@@ -22,7 +22,6 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
   const intlYNOnclick = (event: React.MouseEvent<HTMLButtonElement>) => {
     const target = event.target as HTMLInputElement;
     target.id === "intlYN_Y" ? setIsIntl(true) : setIsIntl(false);
-    // setIsIntl(true);
   };
   return (
     <>
@@ -40,7 +39,7 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
           <Fieldset>
             <Label desc="약어 인가요?" mandatory={true}></Label>
             <InputWrap>
-              <InputRadio
+              <Radio
                 name="intlYN"
                 id="intlYN_Y"
                 onClick={intlYNOnclick}
@@ -49,7 +48,7 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
               <Label htmlFor="intlYN_Y" desc="예, 약어입니다." />
             </InputWrap>
             <InputWrap>
-              <InputRadio name="intlYN" id="intlYN_N" onClick={intlYNOnclick} />
+              <Radio name="intlYN" id="intlYN_N" onClick={intlYNOnclick} />
               <Label htmlFor="intlYN_N" desc="아니요, 낱말입니다." />
             </InputWrap>
           </Fieldset>
@@ -59,7 +58,7 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
             <Fieldset>
               <Label
                 htmlFor="wordsExpln"
-                desc="약어의 전체 문장을 적어주세요."
+                desc="약어를 각각의 낱말로 풀어서 적어주세요."
                 mandatory={true}
               />
               <InputText
