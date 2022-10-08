@@ -6,8 +6,9 @@ interface FieldsetTypes {
 }
 
 const FieldsetStyled = styled.fieldset<FieldsetTypes>`
+  padding: 16px 0;
   & + & {
-    margin-top: 20px;
+    border-top: 1px solid var(--color-grey);
   }
 `;
 
