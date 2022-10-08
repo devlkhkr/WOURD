@@ -18,12 +18,16 @@ const MSGridStyled = styled.div`
   min-width: 50%;
 `;
 
-const SelectComponent: React.FC<MultiSelectTypes> = ({ id, name, options }) => {
+const MultiSelectComponent: React.FC<MultiSelectTypes> = ({
+  id,
+  name,
+  options,
+}) => {
   return (
     <MultiSelectStyled id={id} name={name} options={options}>
       {options.map((o: any) => {
         return (
-          <MSGridStyled>
+          <MSGridStyled key={o.name}>
             <input
               type="checkbox"
               name={name}
@@ -38,6 +42,6 @@ const SelectComponent: React.FC<MultiSelectTypes> = ({ id, name, options }) => {
   );
 };
 
-SelectComponent.defaultProps = {};
+MultiSelectComponent.defaultProps = {};
 
-export default SelectComponent;
+export default MultiSelectComponent;

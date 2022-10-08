@@ -20,7 +20,11 @@ const SelectComponent: React.FC<SelectTypes> = ({ id, name, options }) => {
   return (
     <SelectStyled id={id} name={name} options={options}>
       {options.map((o: any) => {
-        return <option value={o.value}>{o.name}</option>;
+        return (
+          <option key={o.value} value={o.value}>
+            {o.name}
+          </option>
+        );
       })}
     </SelectStyled>
   );
