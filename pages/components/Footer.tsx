@@ -1,9 +1,10 @@
 import React from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 import styled from "styled-components";
 
-import Icon from "./atoms/icon";
+import Icon from "./atoms/Icon";
 import IconText from "./atoms/IconText";
 
 import {
@@ -22,14 +23,19 @@ const FooterWrap = styled.footer`
     li {
       border-right: 1px solid var(--color-grey);
       background-color: var(--color-white);
-      width: 25%;
       height: 100%;
       display: flex;
+      flex: auto;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       &:first-child {
         border-left: 1px solid var(--color-grey);
+      }
+      &.active {
+        a {
+          color: var(--color-point);
+        }
       }
       a {
         text-decoration: none;
@@ -42,10 +48,11 @@ const FooterWrap = styled.footer`
 `;
 
 const Footer: React.FC = () => {
+  const router = useRouter();
   return (
     <FooterWrap>
       <ul>
-        <li>
+        <li className={router.pathname == "/" ? "active" : ""}>
           <Link href="/">
             <a>
               <Icon
@@ -58,8 +65,8 @@ const Footer: React.FC = () => {
             </a>
           </Link>
         </li>
-        <li>
-          <Link href="/RegistWord">
+        <li className={router.pathname == "/MyWords" ? "active" : ""}>
+          <Link href="/MyWords">
             <a>
               <Icon
                 iconShape={faNoteSticky}
@@ -71,7 +78,7 @@ const Footer: React.FC = () => {
             </a>
           </Link>
         </li>
-        <li>
+        {/* <li>
           <Link href="/RegistWord">
             <a>
               <Icon
@@ -83,9 +90,9 @@ const Footer: React.FC = () => {
               <IconText text="단어관리" />
             </a>
           </Link>
-        </li>
-        <li>
-          <Link href="/RegistWord">
+        </li> */}
+        <li className={router.pathname == "/Setting" ? "active" : ""}>
+          <Link href="/Setting">
             <a>
               <Icon
                 iconShape={faInfoCircle}
