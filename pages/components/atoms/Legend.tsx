@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 interface LegendTypes {
-  desc: string
+  desc?: string
 }
 
 const LegendStyled = styled.fieldset<LegendTypes>`
@@ -12,7 +12,7 @@ const LegendStyled = styled.fieldset<LegendTypes>`
 const LegendComponent: React.FC<LegendTypes> = ({ desc }) => {
 
   return (
-    <legend>{desc}</legend >
+    <LegendStyled>{desc}</LegendStyled >
   );
 };
 

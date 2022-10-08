@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const Input = styled.input`
+const InputTextStyled = styled.input`
   width: 100%;
   height: 32px;
   border: 1px solid #999;
@@ -13,15 +13,15 @@ interface InputTextTypes {
   placeHolder: string,
 }
 
-const InputText: React.FC<InputTextTypes> = ({ id, placeHolder }) => {
+const InputTextComponent: React.FC<InputTextTypes> = ({ id, placeHolder }) => {
 
   return (
-    <Input type="text" id={id} placeholder={placeHolder}></Input>
+    <InputTextStyled type="text" id={id} placeholder={placeHolder}></InputTextStyled>
   );
 };
 
-InputText.defaultProps = {
+InputTextComponent.defaultProps = {
   placeHolder: '정보를 입력해주세요.'
 }
 
-export default InputText;
+export default InputTextComponent;

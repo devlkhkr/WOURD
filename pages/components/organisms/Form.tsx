@@ -1,17 +1,22 @@
 import React from "react";
+import styled from "styled-components";
 
 interface FormTypes {
   children: any,
 }
 
-const Form: React.FC<FormTypes> = ({ children }) => {
+const FormStyled = styled.fieldset<FormTypes>`
+  margin-top: 20px;
+`;
+
+const FormComponent: React.FC<FormTypes> = ({ children }) => {
   return (
-    <form>{children}</form>
+    <FormStyled>{children}</FormStyled>
   );
 };
 
-Form.defaultProps = {
+FormComponent.defaultProps = {
 
 }
 
-export default Form;
+export default FormComponent;

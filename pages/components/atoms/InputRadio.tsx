@@ -6,7 +6,7 @@ interface InputRadioTypes {
   name: string,
 }
 
-const RadioStyled = styled.input<InputRadioTypes>`
+const InputRadioStyled = styled.input<InputRadioTypes>`
   width: 24px;
   height: 24px;
   vertical-align: middle;
@@ -15,7 +15,7 @@ const RadioStyled = styled.input<InputRadioTypes>`
 const InputRadioComponent: React.FC<InputRadioTypes> = ({ id, name }) => {
 
   return (
-    <RadioStyled type="radio" id={id} name={name}></RadioStyled>
+    <InputRadioStyled type="radio" id={id} name={name}></InputRadioStyled>
   );
 };
 
