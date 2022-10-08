@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 
-interface ButtonWrapsetTypes {
+interface ButtonWrapTypes {
   children: any;
 }
 
-const ButtonWrapsetStyled = styled.div<ButtonWrapsetTypes>`
+const ButtonWrapsetStyled = styled.div<ButtonWrapTypes>`
   display: flex;
   button {
     flex: auto;
@@ -15,7 +15,7 @@ const ButtonWrapsetStyled = styled.div<ButtonWrapsetTypes>`
   }
 `;
 
-const ButtonWrapComponent: React.FC<ButtonWrapsetTypes> = ({ children }) => {
+const ButtonWrapComponent: React.FC<ButtonWrapTypes> = ({ children }) => {
   return <ButtonWrapsetStyled>{children}</ButtonWrapsetStyled>;
 };
 

@@ -7,6 +7,7 @@ interface ButtonTypes {
   color?: string;
   width?: string;
   height?: string;
+  onClick?: any;
 }
 
 const ButtonStyled = styled.button<ButtonTypes>`
@@ -25,6 +26,7 @@ const Button: React.FC<ButtonTypes> = ({
   color,
   width,
   height,
+  onClick,
 }) => {
   return (
     <ButtonStyled
@@ -34,6 +36,7 @@ const Button: React.FC<ButtonTypes> = ({
       color={color}
       width={width}
       height={height}
+      onClick={onClick}
     >
       {desc}
     </ButtonStyled>

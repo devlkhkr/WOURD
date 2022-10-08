@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import { useState } from "react";
+import { useRouter } from "next/router";
 import styled from "styled-components";
 
 import InputText from "../../components/atoms/InputText";
@@ -23,6 +24,10 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
   const intlYNOnclick = (event: React.MouseEvent<HTMLButtonElement>) => {
     const target = event.target as HTMLInputElement;
     target.id === "intlYN_Y" ? setIsIntl(true) : setIsIntl(false);
+  };
+  const router = useRouter();
+  const cancleRegWordClick = () => {
+    router.back();
   };
   return (
     <RegistWordWrap>
@@ -149,6 +154,7 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
               color="#fff"
               width="40%"
               height="40px"
+              onClick={cancleRegWordClick}
             ></Button>
             <Button
               desc="단어 등록하기"
