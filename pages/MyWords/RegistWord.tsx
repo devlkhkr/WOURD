@@ -1,6 +1,5 @@
 import type { NextPage } from "next";
 import { useState } from "react";
-import Head from "next/head";
 import styled from "styled-components";
 
 import Form from "../components/organisms/Form";
@@ -14,14 +13,12 @@ import Button from "../components/atoms/Button";
 
 interface RegistWordTypes {}
 
-const RegistWordWrap = styled.div`
-  padding: 6px 12px;
-`;
+const RegistWordWrap = styled.div``;
 
 const RegistWord: NextPage<RegistWordTypes> = ({}) => {
   const [isIntl, setIsIntl] = useState(true);
   return (
-    <div>
+    <>
       <RegistWordWrap>
         <Form>
           <Fieldset>
@@ -60,7 +57,7 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
           </Fieldset>
         </Form>
       </RegistWordWrap>
-    </div>
+    </>
   );
 };
 
