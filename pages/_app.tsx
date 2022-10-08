@@ -27,6 +27,10 @@ const Wrap = styled.div`
   justify-content: space-between;
 `;
 
+const ComponentWrap = styled.div`
+  height: calc(100% - var(--height-header) - var(--height-footer));
+`;
+
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Wrapper>
@@ -40,8 +44,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         <Header />
 
         {/* content */}
-
-        <Component {...pageProps} />
+        <ComponentWrap>
+          <Component {...pageProps} />
+        </ComponentWrap>
 
         <Footer />
       </Wrap>
