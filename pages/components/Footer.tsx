@@ -1,7 +1,11 @@
 import React from "react";
 import Link from "next/link";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import styled from "styled-components";
+
+import Icon from "./atoms/icon";
+import IconText from "./atoms/IconText";
+
 import {
   faHouse,
   faNoteSticky,
@@ -9,7 +13,6 @@ import {
   faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
 
-import styled from "styled-components";
 const FooterWrap = styled.footer`
   ul {
     display: flex;
@@ -27,26 +30,14 @@ const FooterWrap = styled.footer`
       &:first-child {
         border-left: 1px solid var(--color-grey);
       }
+      a {
+        text-decoration: none;
+        font-weight: var(--weight-medium);
+        color: var(--color-black);
+        font-size: 16px;
+      }
     }
   }
-`;
-
-const ButtonIcon = styled.i`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 30px;
-  height: 30px;
-  margin-bottom: 4px;
-  svg {
-    font-size: 20px;
-  }
-`;
-
-const ButtonText = styled.span`
-  font-weight: var(--weight-medium);
-  color: var(--color-black);
-  font-size: 16px;
 `;
 
 const Footer: React.FC = () => {
@@ -54,42 +45,57 @@ const Footer: React.FC = () => {
     <FooterWrap>
       <ul>
         <li>
-          <Link href="/RegistWord">
-            <a>Home</a>
-          </Link>
-        </li>
-        {/* <li>
           <Link href="/">
-            <ButtonIcon>
-              <FontAwesomeIcon icon={faHouse} />
-            </ButtonIcon>
-            <ButtonText>메인</ButtonText>
-          </Link>
-        </li> */}
-        {/* <li>
-          <Link href="/RegistWord">
-            <ButtonIcon>
-              <FontAwesomeIcon icon={faNoteSticky} />
-            </ButtonIcon>
-            <ButtonText>단어장</ButtonText>
+            <a>
+              <Icon
+                iconShape={faHouse}
+                iconWidth={30}
+                iconHeight={30}
+                bottom={4}
+              />
+              <IconText text="메인" />
+            </a>
           </Link>
         </li>
         <li>
-          <Link href="/">
-            <ButtonIcon>
-              <FontAwesomeIcon icon={faNotesMedical} />
-            </ButtonIcon>
-            <ButtonText>단어관리</ButtonText>
+          <Link href="/RegistWord">
+            <a>
+              <Icon
+                iconShape={faNoteSticky}
+                iconWidth={30}
+                iconHeight={30}
+                bottom={4}
+              />
+              <IconText text="단어장" />
+            </a>
           </Link>
         </li>
         <li>
-          <Link href="/">
-            <ButtonIcon>
-              <FontAwesomeIcon icon={faInfoCircle} />
-            </ButtonIcon>
-            <ButtonText>설정</ButtonText>
+          <Link href="/RegistWord">
+            <a>
+              <Icon
+                iconShape={faNotesMedical}
+                iconWidth={30}
+                iconHeight={30}
+                bottom={4}
+              />
+              <IconText text="단어관리" />
+            </a>
           </Link>
-        </li> */}
+        </li>
+        <li>
+          <Link href="/RegistWord">
+            <a>
+              <Icon
+                iconShape={faInfoCircle}
+                iconWidth={30}
+                iconHeight={30}
+                bottom={4}
+              />
+              <IconText text="설정" />
+            </a>
+          </Link>
+        </li>
       </ul>
     </FooterWrap>
   );
