@@ -3,14 +3,14 @@ import { useState } from 'react'
 import Head from 'next/head'
 import styled from "styled-components";
 
-import Form from "./components/organisms/Form";
-import Fieldset from "./components/molecules/Fieldset";
-import Legend from "./components/atoms/Legend";
-import InputText from "./components/atoms/InputText";
-import InputRadio from "./components/atoms/InputRadio";
-import Label from "./components/atoms/Label";
-import Textarea from "./components/atoms/Textarea"
-import Button from "./components/atoms/Button"
+import Form from "../components/organisms/Form";
+import Fieldset from "../components/molecules/Fieldset";
+import Legend from "../components/atoms/Legend";
+import InputText from "../components/atoms/InputText";
+import InputRadio from "../components/atoms/InputRadio";
+import Label from "../components/atoms/Label";
+import Textarea from "../components/atoms/Textarea"
+import Button from "../components/atoms/Button"
 
 interface RegistWordTypes {
 
