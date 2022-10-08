@@ -2,6 +2,10 @@
 @import "../abstracts/variables";
 @import "../abstracts/mixin";
 
+@import "../layout/grid";
+@import "../layout/header";
+@import "../layout/footer";
+
 @import "../atoms/input";
 @import "../atoms/button";
 @import "../atoms/logo";
