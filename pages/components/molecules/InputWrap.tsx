@@ -5,7 +5,7 @@ interface InputWrapTypes {
   children: any;
 }
 
-const InputWrapStyled = styled.fieldset<InputWrapTypes>`
+const InputWrapStyled = styled.div<InputWrapTypes>`
   & + & {
     margin-top: 8px;
   }

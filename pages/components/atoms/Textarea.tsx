@@ -10,6 +10,7 @@ interface TextAreaTypes {
 const TextAreaStyled = styled.textarea<TextAreaTypes>`
   width: 100%;
   height: ${(props) => props.height + `px`};
+  border: 1px solid var(--color-lightgrey);
   padding: 8px;
   resize: none;
 `;
