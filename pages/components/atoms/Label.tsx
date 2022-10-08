@@ -19,7 +19,8 @@ const LabelStyled = styled.label<LabelType>`
     color: ${(props) => (props.mandatory ? "var(--color-red)" : "inherit")};
     margin-right: 4px;
   }
-  input[type="radio"] + & {
+  input[type="radio"] + &,
+  input[type="checkbox"] + & {
     font-weight: var(--weight-regular);
     margin-left: 8px;
     margin-bottom: 0px;
