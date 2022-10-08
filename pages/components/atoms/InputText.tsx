@@ -4,7 +4,7 @@ import styled from "styled-components";
 const Input = styled.input`
   width: 100%;
   height: 32px;
-  border: 1px solid #999;
+  border: 1px solid var(--color-lightgrey);
   background-color: #fff;
   padding: 0 8px;
   &::placeholder {

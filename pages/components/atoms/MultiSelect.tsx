@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Label from "./Label";
+import Checkbox from "./Checkbox";
 
 interface MultiSelectTypes {
   id?: string;
@@ -16,6 +17,9 @@ const MultiSelectStyled = styled.div<MultiSelectTypes>`
 const MSGridStyled = styled.div`
   flex: auto;
   min-width: 50%;
+  &:nth-child(n + 3) {
+    margin-top: 8px;
+  }
 `;
 
 const MultiSelectComponent: React.FC<MultiSelectTypes> = ({
@@ -28,12 +32,7 @@ const MultiSelectComponent: React.FC<MultiSelectTypes> = ({
       {options.map((o: any) => {
         return (
           <MSGridStyled key={o.name}>
-            <input
-              type="checkbox"
-              name={name}
-              value={o.value}
-              id={name + o.value}
-            />
+            <Checkbox name={name} value={o.value} id={name + o.value} />
             <Label htmlFor={name + o.value} desc={o.name} />
           </MSGridStyled>
         );

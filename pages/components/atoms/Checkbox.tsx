@@ -1,21 +1,22 @@
 import React from "react";
 import styled from "styled-components";
 
-interface RadioTypes {
+interface CheckboxTypes {
   id: string;
   name: string;
   onClick?: any;
   defaultChecked?: boolean;
+  value?: number;
 }
 
-const RadioStyled = styled.input<RadioTypes>`
+const CheckboxStyled = styled.input<CheckboxTypes>`
   appearance: none;
   width: 24px;
   height: 24px;
   vertical-align: middle;
   background-color: #fff;
   border: 1px solid var(--color-lightgrey);
-  border-radius: 100%;
+  border-radius: 2px;
   position: relative;
   &:before {
     display: none;
@@ -35,23 +36,23 @@ const RadioStyled = styled.input<RadioTypes>`
   }
 `;
 
-const RadioComponent: React.FC<RadioTypes> = ({
+const InputRadioComponent: React.FC<CheckboxTypes> = ({
   id,
   name,
   onClick,
   defaultChecked,
 }) => {
   return (
-    <RadioStyled
-      type="radio"
+    <CheckboxStyled
+      type="checkbox"
       id={id}
       name={name}
       onClick={onClick}
       defaultChecked={defaultChecked}
-    ></RadioStyled>
+    ></CheckboxStyled>
   );
 };
 
-RadioComponent.defaultProps = {};
+InputRadioComponent.defaultProps = {};
 
-export default RadioComponent;
+export default InputRadioComponent;
