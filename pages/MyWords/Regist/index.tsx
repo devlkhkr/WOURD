@@ -2,16 +2,16 @@ import type { NextPage } from "next";
 import { useState } from "react";
 import styled from "styled-components";
 
-import Form from "../components/organisms/Form";
-import Fieldset from "../components/molecules/Fieldset";
-import InputWrap from "../components/molecules/InputWrap";
-import InputText from "../components/atoms/InputText";
-import InputRadio from "../components/atoms/InputRadio";
-import Select from "../components/atoms/Select";
-import MultiSelect from "../components/atoms/MultiSelect";
-import Label from "../components/atoms/Label";
-import Textarea from "../components/atoms/Textarea";
-import Button from "../components/atoms/Button";
+import Form from "../../components/organisms/Form";
+import Fieldset from "../../components/molecules/Fieldset";
+import InputWrap from "../../components/molecules/InputWrap";
+import InputText from "../../components/atoms/InputText";
+import InputRadio from "../../components/atoms/InputRadio";
+import Select from "../../components/atoms/Select";
+import MultiSelect from "../../components/atoms/MultiSelect";
+import Label from "../../components/atoms/Label";
+import Textarea from "../../components/atoms/Textarea";
+import Button from "../../components/atoms/Button";
 
 interface RegistWordTypes {}
 
@@ -19,6 +19,9 @@ const RegistWordWrap = styled.div``;
 
 const RegistWord: NextPage<RegistWordTypes> = ({}) => {
   const [isIntl, setIsIntl] = useState(true);
+  const intlYNOnclick = function () {
+    console.log(event?.target);
+  };
   return (
     <>
       <RegistWordWrap>
@@ -35,11 +38,11 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
           <Fieldset>
             <Label desc="약어 인가요?" mandatory={true}></Label>
             <InputWrap>
-              <InputRadio name="intlYN" id="intlYN_Y" />
+              <InputRadio name="intlYN" id="intlYN_Y" onClick={intlYNOnclick} />
               <Label htmlFor="intlYN_Y" desc="예, 약어입니다." />
             </InputWrap>
             <InputWrap>
-              <InputRadio name="intlYN" id="intlYN_N" />
+              <InputRadio name="intlYN" id="intlYN_N" onClick={intlYNOnclick} />
               <Label htmlFor="intlYN_N" desc="아니요, 악어가 아닙니다." />
             </InputWrap>
           </Fieldset>
