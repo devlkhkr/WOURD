@@ -1,22 +1,25 @@
 import React from "react";
+import styled from "styled-components";
 
-interface LabelTypes {
+interface LabelType {
   id?: string,
-  htmlFor: string,
-  desc: string
+  htmlFor?: string,
+  desc?: string
 }
 
-const Label: React.FC<LabelTypes> = ({ id, htmlFor, desc }) => {
+const LabelStyled = styled.label<LabelType>`
+  vertical-align: middle;
+`;
+
+const LabelComponent: React.FC<LabelType> = ({ id, htmlFor, desc }) => {
 
   return (
-    <label id={id} htmlFor={htmlFor}>{desc}</label >
+    <LabelStyled id={id} htmlFor={htmlFor}>{desc}</LabelStyled>
   );
 };
 
-Label.defaultProps = {
-  id: "",
-  htmlFor: "",
-  desc: ""
+LabelComponent.defaultProps = {
+
 }
 
-export default Label;
+export default LabelComponent;

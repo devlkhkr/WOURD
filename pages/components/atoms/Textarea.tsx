@@ -1,19 +1,27 @@
 import React from "react";
+import styled from "styled-components";
 
 interface TextAreaTypes {
   id: string,
   placeholder?: string,
+  height?: number,
 }
 
-const TextAreaTypes: React.FC<TextAreaTypes> = ({ id, placeholder }) => {
+const TextAreaStyled = styled.textarea<TextAreaTypes>`
+  width: 100%;
+  height: ${props => (props.height) + `px`};
+  resize: none;
+`;
 
+
+const TextAreaComponent: React.FC<TextAreaTypes> = ({ id, placeholder, height }) => {
   return (
-    <textarea id={id} placeholder={placeholder}></textarea>
+    <TextAreaStyled id={id} placeholder={placeholder} height={height}></TextAreaStyled>
   );
 };
 
-TextAreaTypes.defaultProps = {
+TextAreaComponent.defaultProps = {
 
 }
 
-export default TextAreaTypes;
+export default TextAreaComponent;

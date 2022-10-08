@@ -1,4 +1,12 @@
 import React from "react";
+import styled from "styled-components";
+
+const Input = styled.input`
+  width: 100%;
+  height: 32px;
+  border: 1px solid #999;
+  background-color: #fff;
+`;
 
 interface InputTextTypes {
   id: string,
@@ -8,7 +16,7 @@ interface InputTextTypes {
 const InputText: React.FC<InputTextTypes> = ({ id, placeHolder }) => {
 
   return (
-    <input type="text" id={id} placeholder={placeHolder}></input>
+    <Input type="text" id={id} placeholder={placeHolder}></Input>
   );
 };
 

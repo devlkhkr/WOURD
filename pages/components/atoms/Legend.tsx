@@ -1,18 +1,23 @@
 import React from "react";
-
+import styled from "styled-components";
 interface LegendTypes {
   desc: string
 }
 
-const Legend: React.FC<LegendTypes> = ({ desc }) => {
+const LegendStyled = styled.fieldset<LegendTypes>`
+  margin-top: 20px;
+`;
+
+
+const LegendComponent: React.FC<LegendTypes> = ({ desc }) => {
 
   return (
     <legend>{desc}</legend >
   );
 };
 
-Legend.defaultProps = {
+LegendComponent.defaultProps = {
 
 }
 
-export default Legend;
+export default LegendComponent;

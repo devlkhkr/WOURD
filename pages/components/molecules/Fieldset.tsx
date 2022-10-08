@@ -1,17 +1,22 @@
 import React from "react";
+import styled from "styled-components";
 
 interface FieldsetTypes {
   children: any,
 }
 
-const Fieldset: React.FC<FieldsetTypes> = ({ children }) => {
+const FieldsetStyled = styled.fieldset<FieldsetTypes>`
+  margin-top: 20px;
+`;
+
+const FieldsetComponent: React.FC<FieldsetTypes> = ({ children }) => {
   return (
-    <fieldset>{children}</fieldset>
+    <FieldsetStyled>{children}</FieldsetStyled>
   );
 };
 
-Fieldset.defaultProps = {
+FieldsetComponent.defaultProps = {
 
 }
 
-export default Fieldset;
+export default FieldsetComponent;

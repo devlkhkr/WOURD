@@ -54,7 +54,7 @@ const RegistWord: NextPage<RegistWordTypes> = ({ }) => {
 
           <Fieldset>
             <Label htmlFor="wordDesc" desc="단어에 대한 설명을 적어주세요." />
-            <Textarea id="wordDesc" placeholder="SSR이란 서버사이드 렌더링(Server Side Rendering)의 약자로 서버로부터 완전하게 만들어진 HTML 파일을 받아와 페이지 전체를 렌더링 하는 방식입니다." />
+            <Textarea id="wordDesc" height={300} placeholder="SSR이란 서버사이드 렌더링(Server Side Rendering)의 약자로 서버로부터 완전하게 만들어진 HTML 파일을 받아와 페이지 전체를 렌더링 하는 방식입니다." />
           </Fieldset>
 
           <Fieldset>
