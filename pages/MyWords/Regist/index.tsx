@@ -19,8 +19,10 @@ const RegistWordWrap = styled.div``;
 
 const RegistWord: NextPage<RegistWordTypes> = ({}) => {
   const [isIntl, setIsIntl] = useState(true);
-  const intlYNOnclick = function () {
-    console.log(event?.target);
+  const intlYNOnclick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const target = event.target as HTMLInputElement;
+    target.id === "intlYN_Y" ? setIsIntl(true) : setIsIntl(false);
+    // setIsIntl(true);
   };
   return (
     <>
@@ -38,26 +40,37 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
           <Fieldset>
             <Label desc="약어 인가요?" mandatory={true}></Label>
             <InputWrap>
-              <InputRadio name="intlYN" id="intlYN_Y" onClick={intlYNOnclick} />
+              <InputRadio
+                name="intlYN"
+                id="intlYN_Y"
+                onClick={intlYNOnclick}
+                defaultChecked={true}
+              />
               <Label htmlFor="intlYN_Y" desc="예, 약어입니다." />
             </InputWrap>
             <InputWrap>
               <InputRadio name="intlYN" id="intlYN_N" onClick={intlYNOnclick} />
-              <Label htmlFor="intlYN_N" desc="아니요, 악어가 아닙니다." />
+              <Label htmlFor="intlYN_N" desc="아니요, 낱말입니다." />
             </InputWrap>
           </Fieldset>
 
-          <Fieldset>
-            <Label
-              htmlFor="wordsExpln"
-              desc="약어의 전체 문장을 적어주세요."
-              mandatory={true}
-            />
-            <InputText
-              placeHolder="예) Server Side Rendering"
-              id="wordsExpln"
-            />
-          </Fieldset>
+          {/* S : 약어일때만 조건부 렌더링 */}
+          {isIntl ? (
+            <Fieldset>
+              <Label
+                htmlFor="wordsExpln"
+                desc="약어의 전체 문장을 적어주세요."
+                mandatory={true}
+              />
+              <InputText
+                placeHolder="예) Server Side Rendering"
+                id="wordsExpln"
+              />
+            </Fieldset>
+          ) : (
+            <></>
+          )}
+          {/* E : 약어일때만 조건부 렌더링 */}
 
           <Fieldset>
             <Label htmlFor="wordDesc" desc="단어에 대한 설명을 적어주세요." />
