@@ -16,8 +16,8 @@ const IconWrap = styled.i<IconTypes>`
 `;
 
 interface IconTypes {
-  iconShape?: any;
-  icon?: any;
+  iconShape?: object;
+  icon?: object;
   iconWidth?: number;
   iconHeight?: number;
   bottom?: number;
