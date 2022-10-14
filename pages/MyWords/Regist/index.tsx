@@ -15,15 +15,15 @@ import InputWrap from "../../components/molecules/InputWrap";
 import ButtonWrap from "../../components/molecules/ButtonWrap";
 import Form from "../../components/organisms/Form";
 
-interface RegistWordTypes {}
+interface RegistWordTypes { }
 
 const RegistWordWrap = styled.div``;
 
-const RegistWord: NextPage<RegistWordTypes> = ({}) => {
+const RegistWord: NextPage<RegistWordTypes> = ({ }) => {
   const [isIntl, setIsIntl] = useState(true);
   const intlYNOnclick = (event: React.MouseEvent<HTMLButtonElement>) => {
     const target = event.target as HTMLInputElement;
-    target.id === "intlYN_Y" ? setIsIntl(true) : setIsIntl(false);
+    target.id === "intlYN_0" ? setIsIntl(true) : setIsIntl(false);
   };
   const router = useRouter();
   const cancleRegWordClick = () => {
@@ -46,15 +46,19 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
           <InputWrap>
             <Radio
               name="intlYN"
-              id="intlYN_Y"
               onClick={intlYNOnclick}
-              defaultChecked={true}
+              options={[
+                {
+                  name: "예, 약어입니다.",
+                  value: 0,
+                  defaultChecked: true
+                },
+                {
+                  name: "아니요, 낱말입니다.",
+                  value: 1,
+                }
+              ]}
             />
-            <Label htmlFor="intlYN_Y" desc="예, 약어입니다." />
-          </InputWrap>
-          <InputWrap>
-            <Radio name="intlYN" id="intlYN_N" onClick={intlYNOnclick} />
-            <Label htmlFor="intlYN_N" desc="아니요, 낱말입니다." />
           </InputWrap>
         </Fieldset>
 

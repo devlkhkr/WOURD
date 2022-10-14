@@ -6,7 +6,12 @@ import Checkbox from "./Checkbox";
 interface MultiSelectTypes {
   id?: string;
   name: string;
-  options: any;
+  options: OptionTypes[];
+}
+
+interface OptionTypes {
+  name: string;
+  value: number;
 }
 
 const MultiSelectStyled = styled.div<MultiSelectTypes>`

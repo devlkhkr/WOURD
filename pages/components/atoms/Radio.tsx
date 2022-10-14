@@ -1,14 +1,21 @@
 import React from "react";
 import styled from "styled-components";
+import Label from "../../components/atoms/Label";
+import InputWrap from "../../components/molecules/InputWrap";
 
 interface RadioTypes {
-  id: string;
   name: string;
   onClick?: any;
+  options: OptionTypes[];
+}
+
+interface OptionTypes {
+  name: string;
+  value: number;
   defaultChecked?: boolean;
 }
 
-const RadioStyled = styled.input<RadioTypes>`
+const RadioStyled = styled.input<OptionTypes>`
   appearance: none;
   width: 24px;
   height: 24px;
@@ -36,19 +43,28 @@ const RadioStyled = styled.input<RadioTypes>`
 `;
 
 const RadioComponent: React.FC<RadioTypes> = ({
-  id,
   name,
   onClick,
-  defaultChecked,
+  options,
 }) => {
   return (
-    <RadioStyled
-      type="radio"
-      id={id}
-      name={name}
-      onClick={onClick}
-      defaultChecked={defaultChecked}
-    ></RadioStyled>
+    <>
+      {options.map((o: any) => {
+        return (
+          <InputWrap key={o.value}>
+            <RadioStyled
+              type="radio"
+              id={`${name}_${o.value}`}
+              name={name}
+              value={o.value}
+              onClick={onClick}
+              defaultChecked={o.defaultChecked}
+            ></RadioStyled>
+            <Label htmlFor={`${name}_${o.value}`} desc={o.name} />
+          </InputWrap>
+        )
+      })}
+    </>
   );
 };
 
