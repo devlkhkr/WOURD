@@ -159,7 +159,7 @@ const RegistWord: NextPage<RegistWordTypes> = ({ }) => {
               width="40%"
               height="40px"
               onClick={cancleRegWordClick}
-            ></Button>
+            />
             <Button
               desc="단어 등록하기"
               id="submitRegWord"
@@ -167,7 +167,7 @@ const RegistWord: NextPage<RegistWordTypes> = ({ }) => {
               color="#fff"
               width="60%"
               height="40px"
-            ></Button>
+            />
           </ButtonWrap>
         </Fieldset>
       </Form>
