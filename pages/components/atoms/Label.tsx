@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 
 interface LabelType {
-  id?: string;
   htmlFor?: string;
   desc?: string;
   mandatory?: boolean;
@@ -32,13 +31,12 @@ const LabelStyled = styled.label<LabelType>`
 `;
 
 const LabelComponent: React.FC<LabelType> = ({
-  id,
   htmlFor,
   desc,
   mandatory,
 }) => {
   return (
-    <LabelStyled id={id} htmlFor={htmlFor} mandatory={mandatory}>
+    <LabelStyled htmlFor={htmlFor} mandatory={mandatory}>
       {desc}
     </LabelStyled>
   );
