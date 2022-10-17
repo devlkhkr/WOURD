@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Button from "../../components/atoms/Button";
 import Typo from "../../components/atoms/Typo";
 // import { CardSwiper } from "react-card-rotate-swiper";
-import CardSwiper from "../../components/organisms/CardSwiper"
+import CardSwiper from "../../components/organisms/CardSwiper";
 
 interface CardMainTypes {
   exposeWord: ExposeWordTypes[];
@@ -32,21 +32,6 @@ const MainWrapStyled = styled.div<any>`
   width: 100%;
   height: 100%;
   position: relative;
-  .card {
-    width: 100%;
-    height: calc(100% - 80px);
-    &.fliped .cardMain {
-      transform: rotateY(180deg);
-      transition: transform 0.5s;
-    }
-    &.fliped ~ .btn_wrap_cardctrl {
-      opacity: 1;
-      pointer-event: all;
-    }
-    &.card_state_know{
-      
-    }
-  }
 `;
 
 const CardWrapStyled = styled.div`
@@ -62,7 +47,6 @@ const CardMainStyled = styled.div<CardMainTypes>`
   border-radius: 8px;
 
   position: absolute;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 
   transition: transform 0.5s;
   transform-style: preserve-3d;
@@ -101,24 +85,32 @@ const CardMainComponent: React.FC<CardMainTypes> = ({ exposeWord }) => {
   };
   const cardNextClick = function () {
     // if (wordIdx < exposeWord.length - 1) setWordIdx(wordIdx - 1);
-    cardList.current.children[wordIdx - 1].classList.add("card_state_know")
+    cardList.current.children[wordIdx - 1].classList.add("card_state_know");
   };
 
   const cardOnClick = function (_objWord: ExposeWordTypes, e: any) {
     // _objWord.fliped = !_objWord.fliped;
     _objWord.fliped = true;
     setWordList([...wordList]);
-  }
-
+  };
 
   const [wordList, setWordList] = useState([...exposeWord]);
   return (
     <MainWrapStyled ref={cardList}>
       {wordList.reverse().map((objWord, index) => (
-        <CardSwiper key={index} className={`card ${objWord.fliped ? "fliped" : ""}`}>
+        <CardSwiper
+          key={index}
+          className={`card ${objWord.fliped ? "fliped" : ""} ${
+            wordIdx - 1 == index ? "focus" : ""
+          }`}
+        >
           <CardWrapStyled
-            onMouseDown={(e) => { cardOnClick(objWord, e) }}
-            onTouchStart={(e) => { cardOnClick(objWord, e) }}
+            onMouseDown={(e) => {
+              cardOnClick(objWord, e);
+            }}
+            onTouchStart={(e) => {
+              cardOnClick(objWord, e);
+            }}
           >
             <CardMainStyled exposeWord={exposeWord} className="cardMain">
               <CardFrontStyled>
@@ -166,7 +158,6 @@ const CardMainComponent: React.FC<CardMainTypes> = ({ exposeWord }) => {
           height="40px"
           onClick={cardNextClick}
         />
-
       </BtnWrapCardCtrlStyled>
     </MainWrapStyled>
   );
