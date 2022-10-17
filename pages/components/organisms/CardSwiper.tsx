@@ -12,6 +12,7 @@ const CardSwiperSyled = styled.div<CardSwiperTypes>`
   position: absolute;
   left: 0px;
   user-select: none;
+  will-change: left, transform;
 `;
 
 const CardSwiperComponent: React.FC<CardSwiperTypes> = ({ children, className }) => {
@@ -45,6 +46,7 @@ const CardSwiperComponent: React.FC<CardSwiperTypes> = ({ children, className })
       prevPosY = event.touches[0].clientY;
       cardDOM.current.style.left = `${cardDOM.current.offsetLeft - posX}px`
       cardDOM.current.style.top = `${cardDOM.current.offsetTop - posY}px`
+      cardDOM.current.style.transform = `rotate(${(cardDOM.current.offsetLeft - posX) / 16}deg)`
     }
 
     if (event instanceof MouseEvent) {
@@ -54,10 +56,12 @@ const CardSwiperComponent: React.FC<CardSwiperTypes> = ({ children, className })
       prevPosY = event.clientY;
       cardDOM.current.style.left = `${cardDOM.current.offsetLeft - posX}px`
       cardDOM.current.style.top = `${cardDOM.current.offsetTop - posY}px`
+      cardDOM.current.style.transform = `rotate(${(cardDOM.current.offsetLeft - posX) / 16}deg)`
     }
   }
 
   const cardMouseUp: any = function (event: React.TouchEvent | React.MouseEvent) {
+    // cardStateDecided();
     if (event instanceof TouchEvent) {
       window.removeEventListener("touchend", cardMouseUp)
       window.removeEventListener("touchmove", cardMouseMove)
@@ -66,6 +70,10 @@ const CardSwiperComponent: React.FC<CardSwiperTypes> = ({ children, className })
       window.removeEventListener("mouseup", cardMouseUp)
       window.removeEventListener("mousemove", cardMouseMove)
     }
+  }
+
+  const cardStateDecided = function () {
+
   }
 
   const cardDOM: any = useRef();
