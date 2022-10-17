@@ -2,7 +2,6 @@ import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import Button from "../../components/atoms/Button";
 import Typo from "../../components/atoms/Typo";
-// import { CardSwiper } from "react-card-rotate-swiper";
 import CardSwiper from "../../components/organisms/CardSwiper";
 
 interface CardMainTypes {
