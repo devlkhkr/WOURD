@@ -112,7 +112,7 @@ const CardMainComponent: React.FC<CardMainTypes> = ({ exposeWord }) => {
           onSwipe={function (d: string) {
             switch (d) {
               case "none":
-                objWord.fliped = true;
+                objWord.fliped = !objWord.fliped;
                 setWordList([...wordList]);
                 break;
               case "left":
@@ -121,6 +121,7 @@ const CardMainComponent: React.FC<CardMainTypes> = ({ exposeWord }) => {
                   objWord.fliped = false;
                   setWordList([...wordList]);
                 }, 700);
+                break;
             }
           }}
           className={`card ${objWord.fliped ? "fliped" : ""}`}

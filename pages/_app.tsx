@@ -13,7 +13,7 @@ import styled from "styled-components";
 const Wrapper = styled.div`
   width: 100vw;
   height: 100vh;
-  background-color: #a29bfe;
+  background-color: #f3f3f3;
   overflow: hidden;
 `;
 
@@ -32,6 +32,7 @@ const ComponentWrap = styled.div`
   height: calc(100% - var(--height-header) - var(--height-footer));
   padding: 20px;
   overflow-y: auto;
+  overflow-x: hidden;
 `;
 
 function MyApp({ Component, pageProps }: AppProps) {
