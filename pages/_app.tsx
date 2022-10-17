@@ -9,6 +9,7 @@ import Head from "next/head";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import styled from "styled-components";
+import { useRouter } from "next/router";
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -28,7 +29,7 @@ const Wrap = styled.div`
   justify-content: space-between;
 `;
 
-const ComponentWrap = styled.div`
+const ComponentWrap = styled.div<any>`
   height: calc(100% - var(--height-header) - var(--height-footer));
   padding: 20px;
   overflow-y: auto;
@@ -36,6 +37,7 @@ const ComponentWrap = styled.div`
 `;
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const router = useRouter();
   return (
     <>
       <Head>
@@ -50,7 +52,9 @@ function MyApp({ Component, pageProps }: AppProps) {
           <Header />
 
           {/* content */}
-          <ComponentWrap>
+          <ComponentWrap
+            style={router.pathname == "/" ? { overflow: "hidden" } : {}}
+          >
             <Component {...pageProps} />
           </ComponentWrap>
 
