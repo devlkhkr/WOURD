@@ -4,33 +4,47 @@ import styled from "styled-components";
 interface CardSwiperTypes {
   children: any;
   className?: any;
+  state: string;
 }
 
 const CardSwiperSyled = styled.div<CardSwiperTypes>`
   width: 100%;
-  height: calc(100% - 80px);
+  height: 100%;
   position: absolute;
   left: 0px;
   user-select: none;
   will-change: left, transform;
-  &.focus {
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-  }
+  // box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+
   &.fliped .cardMain {
     transform: rotateY(180deg);
     transition: transform 0.5s;
   }
-  &.fliped ~ .btn_wrap_cardctrl {
+  &.fliped .btn_wrap_cardctrl {
     opacity: 1;
-    pointer-event: all;
+    pointer-events: all;
   }
-  &.card_state_know {
+  &[class*="state_"] {
+    transition-duration: 0.5s;
+  }
+  &.state_k {
+    left: 200% !important;
+  }
+  &.state_d {
+    left: -200% !important;
+  }
+  &.state_f {
+    top: -200% !important;
+  }
+  &.state_s {
+    top: 200% !important;
   }
 `;
 
 const CardSwiperComponent: React.FC<CardSwiperTypes> = ({
   children,
   className,
+  state,
 }) => {
   const throwLimit = 100;
   let startPointX = 0;
@@ -90,6 +104,16 @@ const CardSwiperComponent: React.FC<CardSwiperTypes> = ({
     cardDOM.current.style.transform = `rotate(${
       (cardDOM.current.offsetLeft - posX) / 16
     }deg)`;
+    if (Math.abs(_x - startPointX) > throwLimit) {
+      _x - startPointX > 0
+        ? console.log("showRightIcon")
+        : console.log("showLeftIcon");
+    }
+    if (Math.abs(_y - startPointY) > throwLimit) {
+      _y - startPointY > 0
+        ? console.log("showDownIcon")
+        : console.log("showUpIcon");
+    }
   };
 
   const cardMouseUp: any = function (
@@ -117,8 +141,29 @@ const CardSwiperComponent: React.FC<CardSwiperTypes> = ({
     cardStateDecided(movedDistanceX, movedDistanceY);
   };
 
-  const cardStateDecided = function (x: number, y: number) {
-    console.log(x, y);
+  const cardStateDecided = function (_x: number, _y: number) {
+    if (Math.abs(_x) < throwLimit && Math.abs(_y) < throwLimit) {
+      console.log("none");
+      cardDOM.current.style.left = 0;
+      cardDOM.current.style.top = 0;
+      cardDOM.current.style.transform = "unset";
+    }
+    if (Math.abs(_x) > throwLimit) {
+      _x > 0
+        ? cardDOM.current.classList.add("state_k")
+        : cardDOM.current.classList.add("state_d");
+      setTimeout(function () {
+        cardDOM.current.classList.remove("fliped");
+      }, 500);
+    }
+    if (Math.abs(_y) > throwLimit) {
+      _y > 0
+        ? cardDOM.current.classList.add("state_s")
+        : cardDOM.current.classList.add("state_f");
+      setTimeout(function () {
+        cardDOM.current.classList.remove("fliped");
+      }, 500);
+    }
   };
 
   const cardDOM: any = useRef();
@@ -128,6 +173,7 @@ const CardSwiperComponent: React.FC<CardSwiperTypes> = ({
       onMouseDown={cardMouseDown}
       onTouchStart={cardMouseDown}
       className={className}
+      state={state}
     >
       {children}
     </CardSwiperSyled>

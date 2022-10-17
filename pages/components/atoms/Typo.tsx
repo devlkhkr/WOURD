@@ -8,25 +8,19 @@ interface TypoType {
 
 const TypoStyled = styled.div<TypoType>`
     font-weight: var(--weight-regular);
-    ${props => props.type === "typo-lg" &&
-    `
+    ${(props) =>
+      props.type === "typo-lg" &&
+      `
       font-weight: var(--weight-bold);
       font-size: 24px;
     `} 
   }
 `;
 
-const TypoComponent: React.FC<TypoType> = ({
-  type,
-  children
-}) => {
-  return (
-    <TypoStyled type={type}>{children}</TypoStyled>
-  );
+const TypoComponent: React.FC<TypoType> = ({ type, children }) => {
+  return <TypoStyled type={type}>{children}</TypoStyled>;
 };
 
-TypoComponent.defaultProps = {
-
-};
+TypoComponent.defaultProps = {};
 
 export default TypoComponent;
