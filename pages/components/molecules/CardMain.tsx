@@ -2,8 +2,8 @@ import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import Button from "../../components/atoms/Button";
 import Typo from "../../components/atoms/Typo";
-import { CardSwiper } from "react-card-rotate-swiper";
-// import CardSwiper from "../../components/organisms/CardSwiper"
+// import { CardSwiper } from "react-card-rotate-swiper";
+import CardSwiper from "../../components/organisms/CardSwiper"
 
 interface CardMainTypes {
   exposeWord: ExposeWordTypes[];
@@ -35,7 +35,6 @@ const MainWrapStyled = styled.div<any>`
   .card {
     width: 100%;
     height: calc(100% - 80px);
-    position: absolute;
     &.fliped .cardMain {
       transform: rotateY(180deg);
       transition: transform 0.5s;
@@ -116,37 +115,23 @@ const CardMainComponent: React.FC<CardMainTypes> = ({ exposeWord }) => {
   return (
     <MainWrapStyled ref={cardList}>
       {wordList.reverse().map((objWord, index) => (
-        <CardSwiper
-          key={index}
-          onSwipe={function (d: string) {
-            switch (d) {
-              case "none":
-                break;
-              case "left":
-              case "right":
-                break;
-            }
-          }}
-          className={`card ${objWord.fliped ? "fliped" : ""}`}
-          throwLimit={360}
-          contents={
-            <CardWrapStyled
-              onMouseDown={(e) => { cardOnClick(objWord, e) }}
-              onTouchStart={(e) => { cardOnClick(objWord, e) }}
-            >
-              <CardMainStyled exposeWord={exposeWord} className="cardMain">
-                <CardFrontStyled>
-                  <Typo type="typo-lg">{objWord.word}</Typo>
-                </CardFrontStyled>
-                <CardBackStyled>
-                  <Typo type="typo-lg">{objWord.word}</Typo>
-                  <Typo>{objWord.unravel}</Typo>
-                  <Typo>{objWord.desc}</Typo>
-                </CardBackStyled>
-              </CardMainStyled>
-            </CardWrapStyled>
-          }
-        />
+        <CardSwiper key={index} className={`card ${objWord.fliped ? "fliped" : ""}`}>
+          <CardWrapStyled
+            onMouseDown={(e) => { cardOnClick(objWord, e) }}
+            onTouchStart={(e) => { cardOnClick(objWord, e) }}
+          >
+            <CardMainStyled exposeWord={exposeWord} className="cardMain">
+              <CardFrontStyled>
+                <Typo type="typo-lg">{objWord.word}</Typo>
+              </CardFrontStyled>
+              <CardBackStyled>
+                <Typo type="typo-lg">{objWord.word}</Typo>
+                <Typo>{objWord.unravel}</Typo>
+                <Typo>{objWord.desc}</Typo>
+              </CardBackStyled>
+            </CardMainStyled>
+          </CardWrapStyled>
+        </CardSwiper>
       ))}
       <BtnWrapCardCtrlStyled className="btn_wrap_cardctrl">
         <Button
