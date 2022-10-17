@@ -22,7 +22,10 @@ const CardSwiperComponent: React.FC<CardSwiperTypes> = ({ children, className })
     event.persist();
     if (event.nativeEvent instanceof TouchEvent) {
       if (event.nativeEvent.touches.length === 1) {
-        console.log(event.nativeEvent.touches[0].pageX)
+        prevPosX = event.nativeEvent.touches[0].clientX;
+        prevPosY = event.nativeEvent.touches[0].clientY;
+        window.addEventListener("touchend", cardMouseUp)
+        window.addEventListener("touchmove", cardMouseMove)
       };
     }
 
@@ -36,7 +39,12 @@ const CardSwiperComponent: React.FC<CardSwiperTypes> = ({ children, className })
 
   const cardMouseMove: any = function (event: React.TouchEvent | React.MouseEvent) {
     if (event instanceof TouchEvent) {
-
+      const posX = prevPosX - event.touches[0].clientX;
+      const posY = prevPosY - event.touches[0].clientY;
+      prevPosX = event.touches[0].clientX;
+      prevPosY = event.touches[0].clientY;
+      cardDOM.current.style.left = `${cardDOM.current.offsetLeft - posX}px`
+      cardDOM.current.style.top = `${cardDOM.current.offsetTop - posY}px`
     }
 
     if (event instanceof MouseEvent) {
@@ -46,23 +54,26 @@ const CardSwiperComponent: React.FC<CardSwiperTypes> = ({ children, className })
       prevPosY = event.clientY;
       cardDOM.current.style.left = `${cardDOM.current.offsetLeft - posX}px`
       cardDOM.current.style.top = `${cardDOM.current.offsetTop - posY}px`
-
     }
   }
 
   const cardMouseUp: any = function (event: React.TouchEvent | React.MouseEvent) {
-    window.removeEventListener("mouseup", cardMouseUp)
-    window.removeEventListener("mousemove", cardMouseMove)
+    if (event instanceof TouchEvent) {
+      window.removeEventListener("touchend", cardMouseUp)
+      window.removeEventListener("touchmove", cardMouseMove)
+    }
+    if (event instanceof MouseEvent) {
+      window.removeEventListener("mouseup", cardMouseUp)
+      window.removeEventListener("mousemove", cardMouseMove)
+    }
   }
 
   const cardDOM: any = useRef();
   return (
     <CardSwiperSyled
       ref={cardDOM}
-      // onTouchStart={cardMouseDown}
-      // onTouchMove={cardMouseMove}
       onMouseDown={cardMouseDown}
-      // onMouseUp={cardMouseUp}
+      onTouchStart={cardMouseDown}
       className={className}>
       {children}
     </CardSwiperSyled>
