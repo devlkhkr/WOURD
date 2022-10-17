@@ -10,10 +10,10 @@ const FormtSyled = styled.form<FormTypes>`
   border-radius: 8px;
 `;
 
-const Form: React.FC<FormTypes> = ({ children }) => {
+const FormComponent: React.FC<FormTypes> = ({ children }) => {
   return <FormtSyled>{children}</FormtSyled>;
 };
 
-Form.defaultProps = {};
+FormComponent.defaultProps = {};
 
-export default Form;
+export default FormComponent;

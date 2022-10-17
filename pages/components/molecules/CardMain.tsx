@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import Button from "../../components/atoms/Button";
 import Typo from "../../components/atoms/Typo";
 import { CardSwiper } from "react-card-rotate-swiper";
-import { dir } from "console";
+// import CardSwiper from "../../components/organisms/CardSwiper"
 
 interface CardMainTypes {
   exposeWord: ExposeWordTypes[];
@@ -12,7 +12,7 @@ interface ExposeWordTypes {
   word: string;
   unravel?: string;
   desc: string;
-  fliped?: boolean;
+  fliped: boolean;
 }
 
 const CardBaseStyle = `
@@ -28,7 +28,7 @@ const CardBaseStyle = `
   backface-visibility: hidden;
 `;
 
-const MainWrapStyled = styled.div`
+const MainWrapStyled = styled.div<any>`
   width: 100%;
   height: 100%;
   position: relative;
@@ -43,6 +43,9 @@ const MainWrapStyled = styled.div`
     &.fliped ~ .btn_wrap_cardctrl {
       opacity: 1;
       pointer-event: all;
+    }
+    &.card_state_know{
+      
     }
   }
 `;
@@ -92,45 +95,47 @@ const BtnWrapCardCtrlStyled = styled.div`
 `;
 
 const CardMainComponent: React.FC<CardMainTypes> = ({ exposeWord }) => {
-  const [wordIdx, setWordIdx] = useState(0);
+  const [wordIdx, setWordIdx] = useState(exposeWord.length);
+  const cardList: any = useRef();
   const cardPrevClick = function () {
-    setFlagFlip(false);
     if (wordIdx != 0) setWordIdx(wordIdx - 1);
   };
   const cardNextClick = function () {
-    setFlagFlip(false);
-    if (wordIdx < exposeWord.length - 1) setWordIdx(wordIdx + 1);
+    // if (wordIdx < exposeWord.length - 1) setWordIdx(wordIdx - 1);
+    cardList.current.children[wordIdx - 1].classList.add("card_state_know")
   };
 
-  const [flagFlip, setFlagFlip] = useState(false);
+  const cardOnClick = function (_objWord: ExposeWordTypes, e: any) {
+    // _objWord.fliped = !_objWord.fliped;
+    _objWord.fliped = true;
+    setWordList([...wordList]);
+  }
+
+
   const [wordList, setWordList] = useState([...exposeWord]);
   return (
-    <MainWrapStyled>
-      {wordList.map((objWord, index) => (
+    <MainWrapStyled ref={cardList}>
+      {wordList.reverse().map((objWord, index) => (
         <CardSwiper
           key={index}
           onSwipe={function (d: string) {
             switch (d) {
               case "none":
-                objWord.fliped = !objWord.fliped;
-                setWordList([...wordList]);
                 break;
               case "left":
               case "right":
-                setTimeout(function () {
-                  objWord.fliped = false;
-                  setWordList([...wordList]);
-                }, 700);
                 break;
             }
           }}
           className={`card ${objWord.fliped ? "fliped" : ""}`}
           throwLimit={360}
           contents={
-            <CardWrapStyled>
+            <CardWrapStyled
+              onMouseDown={(e) => { cardOnClick(objWord, e) }}
+              onTouchStart={(e) => { cardOnClick(objWord, e) }}
+            >
               <CardMainStyled exposeWord={exposeWord} className="cardMain">
                 <CardFrontStyled>
-                  <div>{objWord.fliped}</div>
                   <Typo type="typo-lg">{objWord.word}</Typo>
                 </CardFrontStyled>
                 <CardBackStyled>
@@ -145,7 +150,23 @@ const CardMainComponent: React.FC<CardMainTypes> = ({ exposeWord }) => {
       ))}
       <BtnWrapCardCtrlStyled className="btn_wrap_cardctrl">
         <Button
-          desc="이전카드"
+          desc="건너뛰기"
+          bgc="#666"
+          color="#fff"
+          width="40%"
+          height="40px"
+          onClick={cardNextClick}
+        />
+        <Button
+          desc="즐겨찾기"
+          bgc="#666"
+          color="#fff"
+          width="40%"
+          height="40px"
+          onClick={cardNextClick}
+        />
+        <Button
+          desc="모르는단어"
           bgc="#666"
           color="#fff"
           width="40%"
@@ -153,13 +174,14 @@ const CardMainComponent: React.FC<CardMainTypes> = ({ exposeWord }) => {
           onClick={cardPrevClick}
         />
         <Button
-          desc="다음카드"
+          desc="아는단어"
           bgc="#666"
           color="#fff"
           width="40%"
           height="40px"
           onClick={cardNextClick}
         />
+
       </BtnWrapCardCtrlStyled>
     </MainWrapStyled>
   );
