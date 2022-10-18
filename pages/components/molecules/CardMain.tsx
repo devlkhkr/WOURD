@@ -22,7 +22,7 @@ const CardBaseStyle = `
   flex-flow: column;
   width: 100%;
   height: 100%;
-  padding: 16px;
+  padding: 16px 16px 80px;
   position: absolute;
   text-align: center;
   backface-visibility: hidden;
@@ -93,7 +93,7 @@ const ConvertPointStyled = styled.div`
   opacity: 0;
   will-change: width height;
   &[class*="convert_"]{
-    opacity: .35;
+    opacity: .15;
   }
   &.convert_vert{
     width: 50%;
@@ -105,7 +105,7 @@ const ConvertPointStyled = styled.div`
     }
     &.convert_d{
       left: 0;
-      background: linear-gradient(90deg, #ffff00 0%, transparent 100%);
+      background: linear-gradient(90deg, #00ffff 0%, transparent 100%);
     }
   }
   &.convert_horz{
@@ -114,11 +114,11 @@ const ConvertPointStyled = styled.div`
     left: 0;
     &.convert_f{
       top: var(--height-header);
-      background: linear-gradient(0deg, transparent 0%, #009821 100%);
+      background: linear-gradient(0deg, transparent 0%, #00ffff 100%);
     }
     &.convert_s{
       bottom: var(--height-footer);
-      background: linear-gradient(0deg, #e51937 0%, transparent 100%);
+      background: linear-gradient(0deg, #00ffff 0%, transparent 100%);
     }
   }
 `
@@ -143,6 +143,7 @@ const CardMainComponent: React.FC<CardMainTypes> = ({ exposeWord }) => {
 
   const afterCardHandler = function (_objWord: ExposeWordTypes, state: string) {
     setCvrtPntState("")
+    _objWord.fliped = false;
     _objWord.state = `state_${state}`;
     setWordList([...wordList]);
   }

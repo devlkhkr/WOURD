@@ -21,15 +21,17 @@ const CardSwiperSyled = styled.div<CardSwiperTypes>`
   left: 0px;
   user-select: none;
   will-change: left, transform;
-  // box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-
-  &.fliped .cardMain {
-    transform: rotateY(180deg);
-    transition: transform 0.5s;
+  &.fliped, &[class*="state_"] {
+    .cardMain {
+      transform: rotateY(180deg);
+      transition: transform 0.5s;
+    }
   }
-  &.fliped ~ .btn_wrap_cardctrl {
-    opacity: 1;
-    pointer-events: all;
+  &.fliped{
+    & ~ .btn_wrap_cardctrl {
+      opacity: 1;
+      pointer-events: all;
+    }
   }
   &[class*="state_"] {
     transition-duration: 0.5s;
@@ -162,18 +164,12 @@ const CardSwiperComponent: React.FC<CardSwiperTypes> = ({
     if (Math.abs(_x) > throwLimit) {
       _x > 0
         ? cardHandler.know(wordInfo)
-        : cardHandler.dontKnow(wordInfo)
-      setTimeout(function () {
-        cardDOM.current.classList.remove("fliped");
-      }, 500);
+        : cardHandler.dontKnow(wordInfo);
     }
     if (Math.abs(_y) > throwLimit) {
       _y > 0
         ? cardHandler.skip(wordInfo)
-        : cardHandler.fav(wordInfo)
-      setTimeout(function () {
-        cardDOM.current.classList.remove("fliped");
-      }, 500);
+        : cardHandler.fav(wordInfo);
     }
   };
 
