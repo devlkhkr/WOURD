@@ -7,6 +7,7 @@ interface ButtonTypes {
   color?: string;
   width?: string;
   height?: string;
+  className?: string;
   onClick?: any;
 }
 
@@ -26,6 +27,7 @@ const Button: React.FC<ButtonTypes> = ({
   color,
   width,
   height,
+  className,
   onClick,
 }) => {
   return (
@@ -36,6 +38,7 @@ const Button: React.FC<ButtonTypes> = ({
       color={color}
       width={width}
       height={height}
+      className={className}
       onClick={onClick}
     >
       {desc}
