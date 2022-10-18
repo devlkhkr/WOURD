@@ -27,7 +27,7 @@ const CardSwiperSyled = styled.div<CardSwiperTypes>`
     transform: rotateY(180deg);
     transition: transform 0.5s;
   }
-  &.fliped .btn_wrap_cardctrl {
+  &.fliped ~ .btn_wrap_cardctrl {
     opacity: 1;
     pointer-events: all;
   }

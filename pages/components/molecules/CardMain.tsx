@@ -154,6 +154,7 @@ const CardMainComponent: React.FC<CardMainTypes> = ({ exposeWord }) => {
   };
 
   const [wordList, setWordList] = useState([...exposeWord]);
+  const [currentCardIdx, setCurrentCardIdx] = useState(0);
   const [cvrtPntState, setCvrtPntState] = useState("")
   return (
     <>
@@ -170,9 +171,11 @@ const CardMainComponent: React.FC<CardMainTypes> = ({ exposeWord }) => {
             <CardWrapStyled
               onMouseDown={(e) => {
                 setCardFlip(objWord, e);
+                setCurrentCardIdx(index)
               }}
               onTouchStart={(e) => {
                 setCardFlip(objWord, e);
+                setCurrentCardIdx(index)
               }}
             >
               <CardMainStyled exposeWord={exposeWord} className="cardMain">
@@ -183,53 +186,53 @@ const CardMainComponent: React.FC<CardMainTypes> = ({ exposeWord }) => {
                   <Typo type="typo-lg">{objWord.word}</Typo>
                   <Typo>{objWord.unravel}</Typo>
                   <Typo>{objWord.desc}</Typo>
-                  <BtnWrapCardCtrlStyled className="btn_wrap_cardctrl">
-                    <Button
-                      desc="건너뛰기"
-                      bgc="#92a4c9"
-                      color="#fff"
-                      width="40%"
-                      height="40px"
-                      onClick={(e: any) => {
-                        cardHandler.skip(objWord, e);
-                      }}
-                    />
-                    <Button
-                      desc="즐겨찾기"
-                      bgc="#92a4c9"
-                      color="#fff"
-                      width="40%"
-                      height="40px"
-                      onClick={(e: any) => {
-                        cardHandler.fav(objWord, e);
-                      }}
-                    />
-                    <Button
-                      desc="모르는단어"
-                      bgc="#92a4c9"
-                      color="#fff"
-                      width="40%"
-                      height="40px"
-                      onClick={(e: any) => {
-                        cardHandler.dontKnow(objWord, e);
-                      }}
-                    />
-                    <Button
-                      desc="아는단어"
-                      bgc="#92a4c9"
-                      color="#fff"
-                      width="40%"
-                      height="40px"
-                      onClick={(e: any) => {
-                        cardHandler.know(objWord, e);
-                      }}
-                    />
-                  </BtnWrapCardCtrlStyled>
                 </CardBackStyled>
               </CardMainStyled>
             </CardWrapStyled>
           </CardSwiper>
         ))}
+        <BtnWrapCardCtrlStyled className="btn_wrap_cardctrl">
+          <Button
+            desc="건너뛰기"
+            bgc="#92a4c9"
+            color="#fff"
+            width="40%"
+            height="40px"
+            onClick={(e: any) => {
+              cardHandler.skip(wordList[currentCardIdx], e);
+            }}
+          />
+          <Button
+            desc="즐겨찾기"
+            bgc="#92a4c9"
+            color="#fff"
+            width="40%"
+            height="40px"
+            onClick={(e: any) => {
+              cardHandler.fav(wordList[currentCardIdx], e);
+            }}
+          />
+          <Button
+            desc="모르는단어"
+            bgc="#92a4c9"
+            color="#fff"
+            width="40%"
+            height="40px"
+            onClick={(e: any) => {
+              cardHandler.dontKnow(wordList[currentCardIdx], e);
+            }}
+          />
+          <Button
+            desc="아는단어"
+            bgc="#92a4c9"
+            color="#fff"
+            width="40%"
+            height="40px"
+            onClick={(e: any) => {
+              cardHandler.know(wordList[currentCardIdx], e);
+            }}
+          />
+        </BtnWrapCardCtrlStyled>
       </MainWrapStyled>
     </>
   );
