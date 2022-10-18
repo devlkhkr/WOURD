@@ -88,24 +88,26 @@ const BtnWrapCardCtrlStyled = styled.div`
 const CardMainComponent: React.FC<CardMainTypes> = ({ exposeWord }) => {
   const cardList: any = useRef();
 
-  const handleClickDontKnow = function (_objWord: ExposeWordTypes, e: Event) {
-    _objWord.state = "state_d";
-    setWordList([...wordList]);
-  };
-  const handleClickKnow = function (_objWord: ExposeWordTypes, e: Event) {
-    _objWord.state = "state_k";
-    setWordList([...wordList]);
-  };
-  const handleClickFav = function (_objWord: ExposeWordTypes, e: Event) {
-    _objWord.state = "state_f";
-    setWordList([...wordList]);
-  };
-  const handleClickSkip = function (_objWord: ExposeWordTypes, e: Event) {
-    _objWord.state = "state_s";
-    setWordList([...wordList]);
-  };
+  const cardHandler = {
+    dontKnow: function (_objWord: ExposeWordTypes, e: Event) {
+      _objWord.state = "state_d";
+      setWordList([...wordList]);
+    },
+    know: function (_objWord: ExposeWordTypes, e: Event) {
+      _objWord.state = "state_k";
+      setWordList([...wordList]);
+    },
+    fav: function (_objWord: ExposeWordTypes, e: Event) {
+      _objWord.state = "state_f";
+      setWordList([...wordList]);
+    },
+    skip: function (_objWord: ExposeWordTypes, e: Event) {
+      _objWord.state = "state_s";
+      setWordList([...wordList]);
+    }
+  }
 
-  const cardOnClick = function (_objWord: ExposeWordTypes, e: any) {
+  const setCardFlip = function (_objWord: ExposeWordTypes, e: any) {
     // _objWord.fliped = !_objWord.fliped;
     _objWord.fliped = true;
     setWordList([...wordList]);
@@ -118,14 +120,15 @@ const CardMainComponent: React.FC<CardMainTypes> = ({ exposeWord }) => {
         <CardSwiper
           key={index}
           className={`card ${objWord.fliped ? "fliped" : ""} ${objWord.state}`}
-          state={objWord.state}
+          wordInfo={objWord}
+          cardHandler={cardHandler}
         >
           <CardWrapStyled
             onMouseDown={(e) => {
-              cardOnClick(objWord, e);
+              setCardFlip(objWord, e);
             }}
             onTouchStart={(e) => {
-              cardOnClick(objWord, e);
+              setCardFlip(objWord, e);
             }}
           >
             <CardMainStyled exposeWord={exposeWord} className="cardMain">
@@ -144,7 +147,7 @@ const CardMainComponent: React.FC<CardMainTypes> = ({ exposeWord }) => {
                     width="40%"
                     height="40px"
                     onClick={(e: any) => {
-                      handleClickSkip(objWord, e);
+                      cardHandler.skip(objWord, e);
                     }}
                   />
                   <Button
@@ -154,7 +157,7 @@ const CardMainComponent: React.FC<CardMainTypes> = ({ exposeWord }) => {
                     width="40%"
                     height="40px"
                     onClick={(e: any) => {
-                      handleClickFav(objWord, e);
+                      cardHandler.fav(objWord, e);
                     }}
                   />
                   <Button
@@ -164,7 +167,7 @@ const CardMainComponent: React.FC<CardMainTypes> = ({ exposeWord }) => {
                     width="40%"
                     height="40px"
                     onClick={(e: any) => {
-                      handleClickDontKnow(objWord, e);
+                      cardHandler.dontKnow(objWord, e);
                     }}
                   />
                   <Button
@@ -174,7 +177,7 @@ const CardMainComponent: React.FC<CardMainTypes> = ({ exposeWord }) => {
                     width="40%"
                     height="40px"
                     onClick={(e: any) => {
-                      handleClickKnow(objWord, e);
+                      cardHandler.know(objWord, e);
                     }}
                   />
                 </BtnWrapCardCtrlStyled>

@@ -4,7 +4,13 @@ import styled from "styled-components";
 interface CardSwiperTypes {
   children: any;
   className?: any;
-  state: string;
+  wordInfo: object;
+  cardHandler: {
+    know: Function;
+    dontKnow: Function;
+    fav: Function;
+    skip: Function;
+  };
 }
 
 const CardSwiperSyled = styled.div<CardSwiperTypes>`
@@ -44,7 +50,8 @@ const CardSwiperSyled = styled.div<CardSwiperTypes>`
 const CardSwiperComponent: React.FC<CardSwiperTypes> = ({
   children,
   className,
-  state,
+  wordInfo,
+  cardHandler
 }) => {
   const throwLimit = 100;
   let startPointX = 0;
@@ -101,9 +108,8 @@ const CardSwiperComponent: React.FC<CardSwiperTypes> = ({
     prevPosY = _y;
     cardDOM.current.style.left = `${cardDOM.current.offsetLeft - posX}px`;
     cardDOM.current.style.top = `${cardDOM.current.offsetTop - posY}px`;
-    cardDOM.current.style.transform = `rotate(${
-      (cardDOM.current.offsetLeft - posX) / 16
-    }deg)`;
+    cardDOM.current.style.transform = `rotate(${(cardDOM.current.offsetLeft - posX) / 16
+      }deg)`;
     if (Math.abs(_x - startPointX) > throwLimit) {
       _x - startPointX > 0
         ? console.log("showRightIcon")
@@ -150,16 +156,16 @@ const CardSwiperComponent: React.FC<CardSwiperTypes> = ({
     }
     if (Math.abs(_x) > throwLimit) {
       _x > 0
-        ? cardDOM.current.classList.add("state_k")
-        : cardDOM.current.classList.add("state_d");
+        ? cardHandler.know(wordInfo)
+        : cardHandler.dontKnow(wordInfo)
       setTimeout(function () {
         cardDOM.current.classList.remove("fliped");
       }, 500);
     }
     if (Math.abs(_y) > throwLimit) {
       _y > 0
-        ? cardDOM.current.classList.add("state_s")
-        : cardDOM.current.classList.add("state_f");
+        ? cardHandler.skip(wordInfo)
+        : cardHandler.fav(wordInfo)
       setTimeout(function () {
         cardDOM.current.classList.remove("fliped");
       }, 500);
@@ -173,7 +179,8 @@ const CardSwiperComponent: React.FC<CardSwiperTypes> = ({
       onMouseDown={cardMouseDown}
       onTouchStart={cardMouseDown}
       className={className}
-      state={state}
+      wordInfo={wordInfo}
+      cardHandler={cardHandler}
     >
       {children}
     </CardSwiperSyled>
