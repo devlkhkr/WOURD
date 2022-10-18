@@ -29,13 +29,24 @@ const HeaderLogo = styled.div`
   }
 `;
 
+const Logo = styled.div`
+  display: flex;
+  align-items: center;
+  img {
+    max-width: 80px;
+  }
+`;
+
 const Header: React.FC = () => {
   return (
     <HeaderWrap>
       {/* <FontAwesomeIcon icon="fa-brands fa-discord" /> */}
       <HeaderLogo>
-        <FontAwesomeIcon icon={faBolt} />
-        <h1>DINDER</h1>
+        {/* <FontAwesomeIcon icon={faBolt} />
+        <h1>DINDER</h1> */}
+        <Logo>
+          <img src="/images/logo_dinder.png" />
+        </Logo>
       </HeaderLogo>
     </HeaderWrap>
   );
