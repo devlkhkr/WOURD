@@ -11,7 +11,7 @@ interface CardSwiperTypes {
     fav: Function;
     skip: Function;
   };
-  setCvrtPntState: Function
+  setButtonState: Function;
 }
 
 const CardSwiperSyled = styled.div<CardSwiperTypes>`
@@ -21,30 +21,35 @@ const CardSwiperSyled = styled.div<CardSwiperTypes>`
   left: 0px;
   user-select: none;
   will-change: left, transform;
-  // box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-
-  &.fliped .cardMain {
-    transform: rotateY(180deg);
-    transition: transform 0.5s;
+  &.fliped,
+  &[class*="state_"] {
+    .cardMain {
+      transform: rotateY(180deg);
+      transition: transform 0.5s;
+    }
   }
-  &.fliped .btn_wrap_cardctrl {
-    opacity: 1;
-    pointer-events: all;
+  &.fliped {
+    & ~ .btn_wrap_cardctrl {
+      opacity: 1;
+      pointer-events: all;
+    }
   }
   &[class*="state_"] {
     transition-duration: 0.5s;
   }
-  &.state_k {
-    left: 200% !important;
-  }
-  &.state_d {
-    left: -200% !important;
-  }
-  &.state_f {
-    top: -200% !important;
-  }
-  &.state_s {
-    top: 200% !important;
+  &.state_ {
+    &k {
+      left: 200% !important;
+    }
+    &d {
+      left: -200% !important;
+    }
+    &f {
+      top: -200% !important;
+    }
+    &s {
+      top: 200% !important;
+    }
   }
 `;
 
@@ -53,7 +58,7 @@ const CardSwiperComponent: React.FC<CardSwiperTypes> = ({
   className,
   wordInfo,
   cardHandler,
-  setCvrtPntState
+  setButtonState,
 }) => {
   const throwLimit = 100;
   let startPointX = 0;
@@ -110,20 +115,19 @@ const CardSwiperComponent: React.FC<CardSwiperTypes> = ({
     prevPosY = _y;
     cardDOM.current.style.left = `${cardDOM.current.offsetLeft - posX}px`;
     cardDOM.current.style.top = `${cardDOM.current.offsetTop - posY}px`;
-    cardDOM.current.style.transform = `rotate(${(cardDOM.current.offsetLeft - posX) / 16
-      }deg)`;
+    cardDOM.current.style.transform = `rotate(${
+      (cardDOM.current.offsetLeft - posX) / 16
+    }deg)`;
     if (Math.abs(_x - startPointX) > throwLimit) {
       _x - startPointX > 0
-        ? setCvrtPntState("convert_vert convert_k")
-        : setCvrtPntState("convert_vert convert_d")
-    }
-    else if (Math.abs(_y - startPointY) > throwLimit) {
+        ? setButtonState("focused_k")
+        : setButtonState("focused_d");
+    } else if (Math.abs(_y - startPointY) > throwLimit) {
       _y - startPointY > 0
-        ? setCvrtPntState("convert_horz convert_s")
-        : setCvrtPntState("convert_horz convert_f")
-    }
-    else {
-      setCvrtPntState("")
+        ? setButtonState("focused_s")
+        : setButtonState("focused_f");
+    } else {
+      setButtonState("");
     }
   };
 
@@ -154,26 +158,15 @@ const CardSwiperComponent: React.FC<CardSwiperTypes> = ({
 
   const cardStateDecided = function (_x: number, _y: number) {
     if (Math.abs(_x) < throwLimit && Math.abs(_y) < throwLimit) {
-      console.log("none");
       cardDOM.current.style.left = 0;
       cardDOM.current.style.top = 0;
       cardDOM.current.style.transform = "unset";
     }
     if (Math.abs(_x) > throwLimit) {
-      _x > 0
-        ? cardHandler.know(wordInfo)
-        : cardHandler.dontKnow(wordInfo)
-      setTimeout(function () {
-        cardDOM.current.classList.remove("fliped");
-      }, 500);
+      _x > 0 ? cardHandler.know(wordInfo) : cardHandler.dontKnow(wordInfo);
     }
     if (Math.abs(_y) > throwLimit) {
-      _y > 0
-        ? cardHandler.skip(wordInfo)
-        : cardHandler.fav(wordInfo)
-      setTimeout(function () {
-        cardDOM.current.classList.remove("fliped");
-      }, 500);
+      _y > 0 ? cardHandler.skip(wordInfo) : cardHandler.fav(wordInfo);
     }
   };
 
@@ -186,7 +179,7 @@ const CardSwiperComponent: React.FC<CardSwiperTypes> = ({
       className={className}
       wordInfo={wordInfo}
       cardHandler={cardHandler}
-      setCvrtPntState={setCvrtPntState}
+      setButtonState={setButtonState}
     >
       {children}
     </CardSwiperSyled>
