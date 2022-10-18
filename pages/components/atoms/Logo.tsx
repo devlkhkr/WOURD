@@ -1,18 +1,30 @@
 import React from "react";
 import styled from "styled-components";
 interface LogoTypes {
+  width?: string;
+  height?: string;
   mainColor: string;
   subColor: string;
 }
 
-const LogoStyled = styled.svg<LogoTypes>`
+const LogoStyled = styled.div<LogoTypes>`
   width: ${(props) => props.width || "80px"};
   height: ${(props) => props.height || "unset"};
 `;
 
-const Button: React.FC<LogoTypes> = ({ mainColor, subColor }) => {
+const Button: React.FC<LogoTypes> = ({
+  width,
+  height,
+  mainColor,
+  subColor,
+}) => {
   return (
-    <LogoStyled mainColor={mainColor} subColor={subColor}>
+    <LogoStyled
+      width={width}
+      height={height}
+      mainColor={mainColor}
+      subColor={subColor}
+    >
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 164.21 50.96">
         <path
           d="M110.28,3.3V48.55c0,3.73,5.8,3.74,5.8,0V3.3c0-3.73-5.8-3.74-5.8,0Z"
