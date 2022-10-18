@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBolt } from "@fortawesome/free-solid-svg-icons";
 
 import styled from "styled-components";
+import Logo from "../components/atoms/Logo";
 
 const HeaderWrap = styled.header`
   background-color: blue;
@@ -29,14 +30,6 @@ const HeaderLogo = styled.div`
   }
 `;
 
-const Logo = styled.div`
-  display: flex;
-  align-items: center;
-  img {
-    max-width: 80px;
-  }
-`;
-
 const Header: React.FC = () => {
   return (
     <HeaderWrap>
@@ -44,9 +37,7 @@ const Header: React.FC = () => {
       <HeaderLogo>
         {/* <FontAwesomeIcon icon={faBolt} />
         <h1>DINDER</h1> */}
-        <Logo>
-          <img src="/images/logo_dinder.png" />
-        </Logo>
+        <Logo mainColor="#285eab" subColor="#231815"></Logo>
       </HeaderLogo>
     </HeaderWrap>
   );
