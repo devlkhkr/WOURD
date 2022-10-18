@@ -65,6 +65,11 @@ const CardBackStyled = styled.div`
   transform: rotateY(180deg);
   background: linear-gradient(#3f88ef, #0047ab);
   color: #fff;
+  > div {
+    & + div {
+      margin-top: 4px;
+    }
+  }
 `;
 
 const setButtonPosition: Function = function () {
@@ -200,12 +205,20 @@ const CardMainComponent: React.FC<CardMainTypes> = ({ exposeWord }) => {
             >
               <CardMainStyled exposeWord={exposeWord} className="cardMain">
                 <CardFrontStyled>
-                  <Typo type="typo-lg">{objWord.word}</Typo>
+                  <Typo size="24px" weight="bold">
+                    {objWord.word}
+                  </Typo>
                 </CardFrontStyled>
                 <CardBackStyled>
-                  <Typo type="typo-lg">{objWord.word}</Typo>
-                  <Typo>{objWord.unravel}</Typo>
-                  <Typo>{objWord.desc}</Typo>
+                  <Typo size="24px" weight="bold">
+                    {objWord.word}
+                  </Typo>
+                  <Typo size="16px" weight="semi-bold">
+                    {objWord.unravel}
+                  </Typo>
+                  <Typo size="14px" weight="regular" align="left">
+                    {objWord.desc}
+                  </Typo>
                 </CardBackStyled>
               </CardMainStyled>
             </CardWrapStyled>
