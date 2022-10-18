@@ -26,7 +26,7 @@ const CardBaseStyle = `
   position: absolute;
   text-align: center;
   backface-visibility: hidden;
-  border-radius: 8px;
+  border-radius: 16px;
 `;
 
 const MainWrapStyled = styled.div<any>`
@@ -49,7 +49,7 @@ const CardMainStyled = styled.div<CardMainTypes>`
   width: 100%;
   height: 100%;
   background-color: #fff;
-  border-radius: 8px;
+  border-radius: 16px;
   position: absolute;
   transition: transform 0.5s;
   transform-style: preserve-3d;
@@ -63,7 +63,7 @@ const CardFrontStyled = styled.div`
 const CardBackStyled = styled.div`
   ${CardBaseStyle}
   transform: rotateY(180deg);
-  background-color: #0047ab;
+  background: linear-gradient(#3f88ef, #0047ab);
   color: #fff;
 `;
 
@@ -96,12 +96,12 @@ const BtnWrapCardCtrlStyled = styled.div`
   justify-content: center;
   width: calc(100% - 32px);
   height: 80px;
-  transition-duration: 0.5s;
   button {
     position: absolute;
     max-width: calc(25% - 4px);
     font-size: 12px;
     transition-duration: 0.3s;
+    will-change: left;
     ${createCSS()};
   }
   &[class*="focused_"] {
