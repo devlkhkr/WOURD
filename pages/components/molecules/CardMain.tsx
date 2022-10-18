@@ -85,26 +85,66 @@ const BtnWrapCardCtrlStyled = styled.div`
   }
 `;
 
+const ConvertPointStyled = styled.div`
+  position: absolute;
+  display: inline-block;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  will-change: width height;
+  &[class*="convert_"]{
+    opacity: .35;
+  }
+  &.convert_vert{
+    width: 50%;
+    height: calc(100% - var(--height-header) - var(--height-footer));
+    top: var(--height-header);
+    &.convert_k{
+      right: 0;
+      background: linear-gradient(90deg, transparent 0%, #00ffff 100%);
+    }
+    &.convert_d{
+      left: 0;
+      background: linear-gradient(90deg, #ffff00 0%, transparent 100%);
+    }
+  }
+  &.convert_horz{
+    width: 100%;
+    height: 25%;
+    left: 0;
+    &.convert_f{
+      top: var(--height-header);
+      background: linear-gradient(0deg, transparent 0%, #009821 100%);
+    }
+    &.convert_s{
+      bottom: var(--height-footer);
+      background: linear-gradient(0deg, #e51937 0%, transparent 100%);
+    }
+  }
+`
+
 const CardMainComponent: React.FC<CardMainTypes> = ({ exposeWord }) => {
   const cardList: any = useRef();
 
   const cardHandler = {
     dontKnow: function (_objWord: ExposeWordTypes, e: Event) {
-      _objWord.state = "state_d";
-      setWordList([...wordList]);
+      afterCardHandler(_objWord, "d")
     },
     know: function (_objWord: ExposeWordTypes, e: Event) {
-      _objWord.state = "state_k";
-      setWordList([...wordList]);
+      afterCardHandler(_objWord, "k")
     },
     fav: function (_objWord: ExposeWordTypes, e: Event) {
-      _objWord.state = "state_f";
-      setWordList([...wordList]);
+      afterCardHandler(_objWord, "f")
     },
     skip: function (_objWord: ExposeWordTypes, e: Event) {
-      _objWord.state = "state_s";
-      setWordList([...wordList]);
+      afterCardHandler(_objWord, "s")
     }
+  }
+
+  const afterCardHandler = function (_objWord: ExposeWordTypes, state: string) {
+    setCvrtPntState("")
+    _objWord.state = `state_${state}`;
+    setWordList([...wordList]);
   }
 
   const setCardFlip = function (_objWord: ExposeWordTypes, e: any) {
@@ -114,79 +154,84 @@ const CardMainComponent: React.FC<CardMainTypes> = ({ exposeWord }) => {
   };
 
   const [wordList, setWordList] = useState([...exposeWord]);
+  const [cvrtPntState, setCvrtPntState] = useState("")
   return (
-    <MainWrapStyled ref={cardList}>
-      {wordList.reverse().map((objWord, index) => (
-        <CardSwiper
-          key={index}
-          className={`card ${objWord.fliped ? "fliped" : ""} ${objWord.state}`}
-          wordInfo={objWord}
-          cardHandler={cardHandler}
-        >
-          <CardWrapStyled
-            onMouseDown={(e) => {
-              setCardFlip(objWord, e);
-            }}
-            onTouchStart={(e) => {
-              setCardFlip(objWord, e);
-            }}
+    <>
+      <ConvertPointStyled className={cvrtPntState} />
+      <MainWrapStyled ref={cardList}>
+        {wordList.reverse().map((objWord, index) => (
+          <CardSwiper
+            key={index}
+            className={`card ${objWord.fliped ? "fliped" : ""} ${objWord.state}`}
+            wordInfo={objWord}
+            cardHandler={cardHandler}
+            setCvrtPntState={setCvrtPntState}
           >
-            <CardMainStyled exposeWord={exposeWord} className="cardMain">
-              <CardFrontStyled>
-                <Typo type="typo-lg">{objWord.word}</Typo>
-              </CardFrontStyled>
-              <CardBackStyled>
-                <Typo type="typo-lg">{objWord.word}</Typo>
-                <Typo>{objWord.unravel}</Typo>
-                <Typo>{objWord.desc}</Typo>
-                <BtnWrapCardCtrlStyled className="btn_wrap_cardctrl">
-                  <Button
-                    desc="건너뛰기"
-                    bgc="#92a4c9"
-                    color="#fff"
-                    width="40%"
-                    height="40px"
-                    onClick={(e: any) => {
-                      cardHandler.skip(objWord, e);
-                    }}
-                  />
-                  <Button
-                    desc="즐겨찾기"
-                    bgc="#92a4c9"
-                    color="#fff"
-                    width="40%"
-                    height="40px"
-                    onClick={(e: any) => {
-                      cardHandler.fav(objWord, e);
-                    }}
-                  />
-                  <Button
-                    desc="모르는단어"
-                    bgc="#92a4c9"
-                    color="#fff"
-                    width="40%"
-                    height="40px"
-                    onClick={(e: any) => {
-                      cardHandler.dontKnow(objWord, e);
-                    }}
-                  />
-                  <Button
-                    desc="아는단어"
-                    bgc="#92a4c9"
-                    color="#fff"
-                    width="40%"
-                    height="40px"
-                    onClick={(e: any) => {
-                      cardHandler.know(objWord, e);
-                    }}
-                  />
-                </BtnWrapCardCtrlStyled>
-              </CardBackStyled>
-            </CardMainStyled>
-          </CardWrapStyled>
-        </CardSwiper>
-      ))}
-    </MainWrapStyled>
+            <CardWrapStyled
+              onMouseDown={(e) => {
+                setCardFlip(objWord, e);
+              }}
+              onTouchStart={(e) => {
+                setCardFlip(objWord, e);
+              }}
+            >
+              <CardMainStyled exposeWord={exposeWord} className="cardMain">
+                <CardFrontStyled>
+                  <Typo type="typo-lg">{objWord.word}</Typo>
+                </CardFrontStyled>
+                <CardBackStyled>
+                  <Typo type="typo-lg">{objWord.word}</Typo>
+                  <Typo>{objWord.unravel}</Typo>
+                  <Typo>{objWord.desc}</Typo>
+                  <BtnWrapCardCtrlStyled className="btn_wrap_cardctrl">
+                    <Button
+                      desc="건너뛰기"
+                      bgc="#92a4c9"
+                      color="#fff"
+                      width="40%"
+                      height="40px"
+                      onClick={(e: any) => {
+                        cardHandler.skip(objWord, e);
+                      }}
+                    />
+                    <Button
+                      desc="즐겨찾기"
+                      bgc="#92a4c9"
+                      color="#fff"
+                      width="40%"
+                      height="40px"
+                      onClick={(e: any) => {
+                        cardHandler.fav(objWord, e);
+                      }}
+                    />
+                    <Button
+                      desc="모르는단어"
+                      bgc="#92a4c9"
+                      color="#fff"
+                      width="40%"
+                      height="40px"
+                      onClick={(e: any) => {
+                        cardHandler.dontKnow(objWord, e);
+                      }}
+                    />
+                    <Button
+                      desc="아는단어"
+                      bgc="#92a4c9"
+                      color="#fff"
+                      width="40%"
+                      height="40px"
+                      onClick={(e: any) => {
+                        cardHandler.know(objWord, e);
+                      }}
+                    />
+                  </BtnWrapCardCtrlStyled>
+                </CardBackStyled>
+              </CardMainStyled>
+            </CardWrapStyled>
+          </CardSwiper>
+        ))}
+      </MainWrapStyled>
+    </>
   );
 };
 

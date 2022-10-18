@@ -11,6 +11,7 @@ interface CardSwiperTypes {
     fav: Function;
     skip: Function;
   };
+  setCvrtPntState: Function
 }
 
 const CardSwiperSyled = styled.div<CardSwiperTypes>`
@@ -51,7 +52,8 @@ const CardSwiperComponent: React.FC<CardSwiperTypes> = ({
   children,
   className,
   wordInfo,
-  cardHandler
+  cardHandler,
+  setCvrtPntState
 }) => {
   const throwLimit = 100;
   let startPointX = 0;
@@ -112,13 +114,16 @@ const CardSwiperComponent: React.FC<CardSwiperTypes> = ({
       }deg)`;
     if (Math.abs(_x - startPointX) > throwLimit) {
       _x - startPointX > 0
-        ? console.log("showRightIcon")
-        : console.log("showLeftIcon");
+        ? setCvrtPntState("convert_vert convert_k")
+        : setCvrtPntState("convert_vert convert_d")
     }
-    if (Math.abs(_y - startPointY) > throwLimit) {
+    else if (Math.abs(_y - startPointY) > throwLimit) {
       _y - startPointY > 0
-        ? console.log("showDownIcon")
-        : console.log("showUpIcon");
+        ? setCvrtPntState("convert_horz convert_s")
+        : setCvrtPntState("convert_horz convert_f")
+    }
+    else {
+      setCvrtPntState("")
     }
   };
 
@@ -181,6 +186,7 @@ const CardSwiperComponent: React.FC<CardSwiperTypes> = ({
       className={className}
       wordInfo={wordInfo}
       cardHandler={cardHandler}
+      setCvrtPntState={setCvrtPntState}
     >
       {children}
     </CardSwiperSyled>
