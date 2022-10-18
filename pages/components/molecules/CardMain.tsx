@@ -136,51 +136,51 @@ const CardMainComponent: React.FC<CardMainTypes> = ({ exposeWord }) => {
                 <Typo type="typo-lg">{objWord.word}</Typo>
                 <Typo>{objWord.unravel}</Typo>
                 <Typo>{objWord.desc}</Typo>
+                <BtnWrapCardCtrlStyled className="btn_wrap_cardctrl">
+                  <Button
+                    desc="건너뛰기"
+                    bgc="#92a4c9"
+                    color="#fff"
+                    width="40%"
+                    height="40px"
+                    onClick={(e: any) => {
+                      handleClickSkip(objWord, e);
+                    }}
+                  />
+                  <Button
+                    desc="즐겨찾기"
+                    bgc="#92a4c9"
+                    color="#fff"
+                    width="40%"
+                    height="40px"
+                    onClick={(e: any) => {
+                      handleClickFav(objWord, e);
+                    }}
+                  />
+                  <Button
+                    desc="모르는단어"
+                    bgc="#92a4c9"
+                    color="#fff"
+                    width="40%"
+                    height="40px"
+                    onClick={(e: any) => {
+                      handleClickDontKnow(objWord, e);
+                    }}
+                  />
+                  <Button
+                    desc="아는단어"
+                    bgc="#92a4c9"
+                    color="#fff"
+                    width="40%"
+                    height="40px"
+                    onClick={(e: any) => {
+                      handleClickKnow(objWord, e);
+                    }}
+                  />
+                </BtnWrapCardCtrlStyled>
               </CardBackStyled>
             </CardMainStyled>
           </CardWrapStyled>
-          <BtnWrapCardCtrlStyled className="btn_wrap_cardctrl">
-            <Button
-              desc="건너뛰기"
-              bgc="#92a4c9"
-              color="#fff"
-              width="40%"
-              height="40px"
-              onClick={(e: any) => {
-                handleClickSkip(objWord, e);
-              }}
-            />
-            <Button
-              desc="즐겨찾기"
-              bgc="#92a4c9"
-              color="#fff"
-              width="40%"
-              height="40px"
-              onClick={(e: any) => {
-                handleClickFav(objWord, e);
-              }}
-            />
-            <Button
-              desc="모르는단어"
-              bgc="#92a4c9"
-              color="#fff"
-              width="40%"
-              height="40px"
-              onClick={(e: any) => {
-                handleClickDontKnow(objWord, e);
-              }}
-            />
-            <Button
-              desc="아는단어"
-              bgc="#92a4c9"
-              color="#fff"
-              width="40%"
-              height="40px"
-              onClick={(e: any) => {
-                handleClickKnow(objWord, e);
-              }}
-            />
-          </BtnWrapCardCtrlStyled>
         </CardSwiper>
       ))}
     </MainWrapStyled>
