@@ -67,7 +67,7 @@ const CardBackStyled = styled.div`
   color: #fff;
 `;
 
-const createCSS: Function = function () {
+const setButtonPosition: Function = function () {
   let styles = "";
 
   for (let i = 1; i < 5; i++) {
@@ -82,7 +82,13 @@ const createCSS: Function = function () {
   `;
 };
 
-console.log(typeof createCSS);
+const setButtonFocus: Function = function (color: string) {
+  return css`
+    z-index: 1;
+    opacity: 1;
+    background-color: ${color};
+  `;
+};
 
 const BtnWrapCardCtrlStyled = styled.div`
   position: absolute;
@@ -101,11 +107,12 @@ const BtnWrapCardCtrlStyled = styled.div`
     max-width: calc(25% - 4px);
     font-size: 12px;
     transition-duration: 0.3s;
-    will-change: left;
-    ${createCSS()};
+    will-change: left opacity;
+    ${setButtonPosition()};
   }
   &[class*="focused_"] {
     button {
+      opacity: 0;
       left: 50%;
       transform: translate(-50%, 0);
     }
@@ -113,22 +120,22 @@ const BtnWrapCardCtrlStyled = styled.div`
   &.focused_ {
     &k {
       .btn_word_k {
-        z-index: 1;
+        ${setButtonFocus("#94be88")}
       }
     }
     &d {
       .btn_word_d {
-        z-index: 1;
+        ${setButtonFocus("#da8484")}
       }
     }
     &f {
       .btn_word_f {
-        z-index: 1;
+        ${setButtonFocus("#c8be51")}
       }
     }
     &s {
       .btn_word_s {
-        z-index: 1;
+        ${setButtonFocus("#bb88be")}
       }
     }
   }
