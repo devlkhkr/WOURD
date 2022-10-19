@@ -9,7 +9,7 @@ const IconWrap = styled.i<IconTypes>`
   justify-content: center;
   width: ${props => props.iconWidth}px;
   height: ${props => props.iconHeight}px;
-  margin: 0 auto ${props => (props.bottom ? props.bottom : 4)}px;
+  margin: 0 ${props => props.align ? "auto" : ""} ${props => (props.bottom ? props.bottom : 4)}px;
   svg {
     font-size: 20px;
   }
@@ -21,6 +21,7 @@ interface IconTypes {
   iconWidth?: number;
   iconHeight?: number;
   bottom?: number;
+  align?: string;
 }
 
 const Icon: React.FC<IconTypes> = ({
@@ -29,6 +30,7 @@ const Icon: React.FC<IconTypes> = ({
   iconWidth,
   iconHeight,
   bottom,
+  align,
 }) => {
   return (
     <IconWrap

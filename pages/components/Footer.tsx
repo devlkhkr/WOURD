@@ -62,6 +62,7 @@ const Footer: React.FC = () => {
                 iconWidth={24}
                 iconHeight={24}
                 bottom={4}
+                align="center"
               />
               <IconText text="단어장" />
             </a>
@@ -75,6 +76,7 @@ const Footer: React.FC = () => {
                 iconWidth={24}
                 iconHeight={24}
                 bottom={4}
+                align="center"
               />
               <IconText text="메인" />
             </a>
@@ -101,6 +103,7 @@ const Footer: React.FC = () => {
                 iconWidth={24}
                 iconHeight={24}
                 bottom={4}
+                align="center"
               />
               <IconText text="설정" />
             </a>
