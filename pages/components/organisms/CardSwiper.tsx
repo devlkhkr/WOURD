@@ -37,6 +37,7 @@ const CardSwiperSyled = styled.div<CardSwiperTypes>`
   }
   &[class*="state_"] {
     transition-duration: 0.5s;
+    pointer-events: none;
   }
   &.state_ {
     &k {

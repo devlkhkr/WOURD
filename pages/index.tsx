@@ -42,7 +42,7 @@ const Home: NextPage = () => {
     },
     {
       word: "결측치",
-      desc: "결측치(Missing Value)는 직역하면 '값이 없는 것'을 의미합니다. 결측치는 사용하는 언어마다 여러가지로 표현됩니다. (NA, NaN, Null 등)",
+      desc: "결측치(Missing Value)는 직역하면 '값이 없는 것'을 의미한다. 결측치는 사용하는 언어마다 여러가지로 표현된다. (NA, NaN, Null 등)",
       fliped: false,
       state: "",
       focus: false,
