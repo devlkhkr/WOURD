@@ -38,7 +38,7 @@ const RegistWord: NextPage<RegistWordTypes> = ({ }) => {
             desc="단어를 입력해주세요."
             mandatory={true}
           />
-          <InputText placeHolder="예) SSR" id="wordName" />
+          <InputText type="text" placeHolder="예) SSR" id="wordName" />
         </Fieldset>
 
         <Fieldset>
@@ -71,8 +71,9 @@ const RegistWord: NextPage<RegistWordTypes> = ({ }) => {
               mandatory={true}
             />
             <InputText
-              placeHolder="예) Server Side Rendering"
               id="wordsExpln"
+              type="text"
+              placeHolder="예) Server Side Rendering"
             />
           </Fieldset>
         ) : (

@@ -13,12 +13,13 @@ const Input = styled.input`
 `;
 
 interface InputTextTypes {
-  id: string;
+  type: string;
   placeHolder: string;
+  id?: string;
 }
 
-const InputText: React.FC<InputTextTypes> = ({ id, placeHolder }) => {
-  return <Input type="text" id={id} placeholder={placeHolder}></Input>;
+const InputText: React.FC<InputTextTypes> = ({ type, id, placeHolder }) => {
+  return <Input type={type} placeholder={placeHolder} id={id}></Input>;
 };
 
 InputText.defaultProps = {
