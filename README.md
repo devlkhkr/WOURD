@@ -1,34 +1,44 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<h1 align="center" style="display: block; font-size: 2.5em; font-weight: bold; margin-block-start: 1em; margin-block-end: 1em;">
+  <br><br><strong>Copublish IT Dictionary</strong>
+</h1>
 
-## Getting Started
+## Front-End SKill Stack <br />
+<span><img src="https://img.shields.io/badge/-React-23F7DF1E?style=for-the-badge&logo=React&logoColor=white&color=61DAFB"></span>
+<span><img src="https://img.shields.io/badge/-ReactRouter-23F7DF1E?style=for-the-badge&logo=ReactRouter&logoColor=white&color=CA4245"></span>
+<span><img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white"></span>
+<span><img src="https://img.shields.io/badge/-Next.js-23F7DF1E?style=for-the-badge&logo=Next.js&logoColor=white&color=000000"></span>
+<span><img src="https://img.shields.io/badge/-styledComponents-23F7DF1E?style=for-the-badge&logo=styledComponents&logoColor=white&color=DB7093"></span>
 
-First, run the development server:
+## Back-End SKill Stack <br />
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+-------
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- TypeScript
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+**Framework**
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+- React (Functional Component)
+- React Hooks
+- Next.JS
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+**Routing**
 
-## Learn More
+- React-router-dom
 
-To learn more about Next.js, take a look at the following resources:
+**Styling**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Styled-Components
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+#### Commit Rules
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+| 타입     | 설명                                                           |
+| -------- | -------------------------------------------------------------- |
+| feat     | 새로운 기능 추가 (중요한 기능 개발 할 때 마다)                 |
+| fix      | 버그 수정                                                      |
+| refactor | 코드 리팩토링                                                  |
+| style    | 코드 포맷팅, 세미콜론 누락, 코드변경이 없는경우                        |
+| test     | 테스트 코드, 리팩토링 테스트 코드 추가                               |
+| docs     | 문서 수정 ex) README.md                                        |
+| chore    | 빌드 업무 수정, 패키지 매니저 수정                                   |
