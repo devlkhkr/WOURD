@@ -8,8 +8,11 @@ config.autoAddCss = false;
 import Head from "next/head";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import Loading from "./components/atoms/Loading"
 import styled from "styled-components";
 import { useRouter } from "next/router";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const Wrapper = styled.div`
   width: 100vw;
@@ -38,6 +41,28 @@ const ComponentWrap = styled.div<any>`
 
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
+  const [loadingStart, setLoadingStart] = useState(false);
+  useEffect(() => {
+    const start = () => {
+      setLoadingStart(true);
+    };
+    const end = () => {
+      setLoadingStart(false);
+    };
+
+    router.events.on("routeChangeStart", start);
+    router.events.on("routeChangeComplete", end);
+    router.events.on("routeChangeError", end);
+
+    return () => {
+      router.events.off("routeChangeStart", start);
+      router.events.off("routeChangeComplete", end);
+      router.events.off("routeChangeError", end);
+    };
+  }, []);
+
+
+
   return (
     <>
       <Head>
@@ -47,6 +72,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Head>
 
       {/* body */}
+      {
+        loadingStart ? <Loading></Loading> : <></>
+      }
       <Wrapper>
         <Wrap>
           <Header />
