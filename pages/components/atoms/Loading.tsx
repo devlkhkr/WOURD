@@ -60,7 +60,7 @@ const LoadingComponent: React.FC<LoadingTypes> = ({
   const createLoadingDomino = function () {
     return (
       <ul>
-        {new Array(countDominoSegs).fill(0).map(li => <li key={li}></li>)}
+        {new Array(countDominoSegs).fill(0).map((li, index) => <li key={index}></li>)}
       </ul>
     )
   }
