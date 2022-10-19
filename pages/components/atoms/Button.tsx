@@ -20,7 +20,7 @@ const ButtonStyled = styled.button<ButtonTypes>`
   border-radius: 4px;
 `;
 
-const Button: React.FC<ButtonTypes> = ({
+const ButtonCompontent: React.FC<ButtonTypes> = ({
   id,
   desc,
   bgc,
@@ -46,6 +46,6 @@ const Button: React.FC<ButtonTypes> = ({
   );
 };
 
-Button.defaultProps = {};
+ButtonCompontent.defaultProps = {};
 
-export default Button;
+export default ButtonCompontent;
