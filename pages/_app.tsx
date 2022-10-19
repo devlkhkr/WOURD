@@ -9,6 +9,7 @@ import Head from "next/head";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Loading from "./components/atoms/Loading"
+import Login from "./components/templates/Login"
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -42,22 +43,23 @@ const ComponentWrap = styled.div<any>`
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const [loadingStart, setLoadingStart] = useState(false);
+  const [isTokenLive, setIsTokenLive] = useState(false);
   useEffect(() => {
-    const start = () => {
+    const routesLoadStart = () => {
       setLoadingStart(true);
     };
-    const end = () => {
+    const routesLoadEnd = () => {
       setLoadingStart(false);
     };
 
-    router.events.on("routeChangeStart", start);
-    router.events.on("routeChangeComplete", end);
-    router.events.on("routeChangeError", end);
+    router.events.on("routeChangeStart", routesLoadStart);
+    router.events.on("routeChangeComplete", routesLoadEnd);
+    router.events.on("routeChangeError", routesLoadEnd);
 
     return () => {
-      router.events.off("routeChangeStart", start);
-      router.events.off("routeChangeComplete", end);
-      router.events.off("routeChangeError", end);
+      router.events.off("routeChangeStart", routesLoadStart);
+      router.events.off("routeChangeComplete", routesLoadEnd);
+      router.events.off("routeChangeError", routesLoadEnd);
     };
   }, []);
 
@@ -72,22 +74,24 @@ function MyApp({ Component, pageProps }: AppProps) {
 
       {/* body */}
       {
-        loadingStart ? <Loading></Loading> : <></>
+        loadingStart ? <Loading /> : <></>
       }
-      <Wrapper>
-        <Wrap>
-          <Header />
+      {
+        !isTokenLive ? <Login setIsTokenLive={setIsTokenLive} /> :
+          <Wrapper>
+            <Wrap>
+              <Header />
+              {/* content */}
+              <ComponentWrap
+                style={router.pathname == "/" ? { overflow: "hidden" } : {}}
+              >
+                <Component {...pageProps} />
+              </ComponentWrap>
 
-          {/* content */}
-          <ComponentWrap
-            style={router.pathname == "/" ? { overflow: "hidden" } : {}}
-          >
-            <Component {...pageProps} />
-          </ComponentWrap>
-
-          <Footer />
-        </Wrap>
-      </Wrapper>
+              <Footer />
+            </Wrap>
+          </Wrapper>
+      }
     </>
   );
 }

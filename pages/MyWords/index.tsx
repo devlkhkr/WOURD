@@ -2,9 +2,9 @@ import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import Button from "../components/atoms/Button";
 
-interface MyWordsTypes {}
+interface MyWordsTypes { }
 
-const MyWords: NextPage<MyWordsTypes> = () => {
+const MyWordsComponent: NextPage<MyWordsTypes> = () => {
   const router = useRouter();
   const addNewWordClick = () => {
     router.push("/MyWords/Regist");
@@ -24,4 +24,4 @@ const MyWords: NextPage<MyWordsTypes> = () => {
   );
 };
 
-export default MyWords;
+export default MyWordsComponent;

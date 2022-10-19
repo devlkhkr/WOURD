@@ -37,7 +37,7 @@ const Header: React.FC = () => {
       <HeaderLogo>
         {/* <FontAwesomeIcon icon={faBolt} />
         <h1>DINDER</h1> */}
-        <Logo mainColor="var(--color-point)" subColor="#231815"></Logo>
+        <Logo mainColor="var(--color-point)" subColor="#231815" />
       </HeaderLogo>
     </HeaderWrap>
   );
