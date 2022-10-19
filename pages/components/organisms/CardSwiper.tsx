@@ -61,7 +61,7 @@ const CardSwiperComponent: React.FC<CardSwiperTypes> = ({
   cardHandler,
   setButtonState,
 }) => {
-  const throwLimit = 100;
+  const throwLimit = 60;
   let startPointX = 0;
   let startPointY = 0;
   let prevPosX = 0;
@@ -116,9 +116,8 @@ const CardSwiperComponent: React.FC<CardSwiperTypes> = ({
     prevPosY = _y;
     cardDOM.current.style.left = `${cardDOM.current.offsetLeft - posX}px`;
     cardDOM.current.style.top = `${cardDOM.current.offsetTop - posY}px`;
-    cardDOM.current.style.transform = `rotate(${
-      (cardDOM.current.offsetLeft - posX) / 16
-    }deg)`;
+    cardDOM.current.style.transform = `rotate(${(cardDOM.current.offsetLeft - posX) / 16
+      }deg)`;
     if (Math.abs(_x - startPointX) > throwLimit) {
       _x - startPointX > 0
         ? setButtonState("focused_k")

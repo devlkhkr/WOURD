@@ -48,7 +48,6 @@ const CardWrapStyled = styled.div`
 const CardMainStyled = styled.div<CardMainTypes>`
   width: 100%;
   height: 100%;
-  background-color: #fff;
   border-radius: 16px;
   position: absolute;
   transition: transform 0.5s;
@@ -186,9 +185,8 @@ const CardMainComponent: React.FC<CardMainTypes> = ({ exposeWord }) => {
         {wordList.reverse().map((objWord, index) => (
           <CardSwiper
             key={index}
-            className={`card ${objWord.fliped ? "fliped" : ""} ${
-              objWord.state
-            }`}
+            className={`card ${objWord.fliped ? "fliped" : ""} ${objWord.state
+              }`}
             wordInfo={objWord}
             cardHandler={cardHandler}
             setButtonState={setButtonState}
