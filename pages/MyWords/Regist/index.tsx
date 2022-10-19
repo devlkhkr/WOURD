@@ -93,7 +93,7 @@ const RegistWord: NextPage<RegistWordTypes> = ({ }) => {
         <Fieldset>
           <Label
             htmlFor="wordsCtgrSlct"
-            desc="카테고리를 선택해주세요. (중복선택 가능)"
+            desc="카테고리를 선택해주세요."
             mandatory={true}
           />
           <Select
@@ -123,7 +123,7 @@ const RegistWord: NextPage<RegistWordTypes> = ({ }) => {
         <Fieldset>
           <Label
             htmlFor="wordsCtgrCbx"
-            desc="카테고리를 선택해주세요."
+            desc="카테고리를 선택해주세요. (중복선택 가능)"
             mandatory={true}
           />
           <MultiSelect

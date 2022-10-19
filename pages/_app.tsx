@@ -43,6 +43,7 @@ const ComponentWrap = styled.div<any>`
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const [loadingStart, setLoadingStart] = useState(false);
+  const [isTokenLive, setIsTokenLive] = useState(false);
   useEffect(() => {
     const routesLoadStart = () => {
       setLoadingStart(true);
@@ -73,22 +74,24 @@ function MyApp({ Component, pageProps }: AppProps) {
 
       {/* body */}
       {
-        loadingStart ? <Loading></Loading> : <></>
+        loadingStart ? <Loading /> : <></>
       }
-      <Wrapper>
-        <Wrap>
-          <Header />
+      {
+        !isTokenLive ? <Login setIsTokenLive={setIsTokenLive} /> :
+          <Wrapper>
+            <Wrap>
+              <Header />
+              {/* content */}
+              <ComponentWrap
+                style={router.pathname == "/" ? { overflow: "hidden" } : {}}
+              >
+                <Component {...pageProps} />
+              </ComponentWrap>
 
-          {/* content */}
-          <ComponentWrap
-            style={router.pathname == "/" ? { overflow: "hidden" } : {}}
-          >
-            <Component {...pageProps} />
-          </ComponentWrap>
-
-          <Footer />
-        </Wrap>
-      </Wrapper>
+              <Footer />
+            </Wrap>
+          </Wrapper>
+      }
     </>
   );
 }
