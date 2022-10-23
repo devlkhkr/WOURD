@@ -7,41 +7,44 @@ import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
 interface SettingListTypes {
   typo: string;
-  nextStep ?: boolean;
-  rightText ?: string;
+  nextStep?: boolean;
+  rightText?: string;
 }
 
 const SettingList = styled.div`
-  display : flex;
-  align-items : center;
-  justify-content : space-between;
-  color : var(--color-black);
-  padding : 8px 0;
-  border-bottom : 1px solid var(--color-deepgrey);
+  height : 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--color-black);
+  padding: 0 8px;
+  border-bottom: 1px solid var(--color-deepgrey);
   &:first-child {
-    border-top : 1px solid var(--color-deepgrey);
+    border-top: 1px solid var(--color-deepgrey);
   }
-`
+`;
 
 const SettingListComponent: React.FC<SettingListTypes> = props => {
-  const { typo, nextStep, rightText } = props;
+  const { typo, rightText, nextStep } = props;
   return (
     <SettingList>
       <TypoComponent size="14px" weight="regular" align="left">
         {typo}
       </TypoComponent>
-      {
-        nextStep ? (
-          // next step
-          <Icon iconShape={faChevronRight} iconWidth={16} iconHeight={16} bottom={4} />
-        ) : (
-          // version text
-          <TypoComponent size="14px" weight="semi-bold">
-            {rightText}
-          </TypoComponent>
-        )
-        
-      }
+      {nextStep ? (
+        // next step
+        <Icon
+          iconShape={faChevronRight}
+          iconWidth={16}
+          iconHeight={16}
+          bottom={4}
+        />
+      ) : (
+        // version text
+        <TypoComponent size="14px" weight="semi-bold">
+          {rightText}
+        </TypoComponent>
+      )}
     </SettingList>
   );
 };
