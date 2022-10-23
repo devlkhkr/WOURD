@@ -12,11 +12,12 @@ interface SettingListTypes {
 }
 
 const SettingList = styled.div`
+  height : 40px;
   display : flex;
   align-items : center;
   justify-content : space-between;
   color : var(--color-black);
-  padding : 8px 0;
+  padding : 0 8px;
   border-bottom : 1px solid var(--color-deepgrey);
   &:first-child {
     border-top : 1px solid var(--color-deepgrey);
@@ -33,7 +34,7 @@ const SettingListComponent: React.FC<SettingListTypes> = props => {
       {
         nextStep ? (
           // next step
-          <Icon iconShape={faChevronRight} iconWidth={16} iconHeight={16} bottom={4} />
+          <Icon iconShape={faChevronRight} iconWidth="16px" iconHeight="16px" />
         ) : (
           // version text
           <TypoComponent size="14px" weight="semi-bold">

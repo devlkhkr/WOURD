@@ -7,9 +7,9 @@ const IconWrap = styled.i<IconTypes>`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: ${props => props.iconWidth}px;
-  height: ${props => props.iconHeight}px;
-  margin : 0 ${props => props.align};
+  width: ${props => props.iconWidth};
+  height: ${props => props.iconHeight};
+  margin : 0 ${props => (props.align || "")} ${props => (props.bottom || "")};
   svg {
     font-size: 20px;
   }
@@ -20,15 +20,14 @@ const IconWrap = styled.i<IconTypes>`
 interface IconTypes {
   iconShape?: object;
   icon?: object;
-  iconWidth?: number;
-  iconHeight?: number;
-  bottom?: number;
+  iconWidth?: string;
+  iconHeight?: string;
+  bottom?: string;
   align?: string;
 }
 
 const Icon: React.FC<IconTypes> = ({
   iconShape,
-  icon,
   iconWidth,
   iconHeight,
   bottom,
@@ -40,6 +39,7 @@ const Icon: React.FC<IconTypes> = ({
       iconWidth={iconWidth}
       iconHeight={iconHeight}
       bottom={bottom}
+      align={align}
     >
       <FontAwesomeIcon icon={iconShape} />
     </IconWrap>
