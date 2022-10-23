@@ -1,11 +1,12 @@
 import React from "react";
 import styled from "styled-components";
+import styledInterface from "../Intefaces/styledComponent";
 import Icon from "../atoms/Icon";
 import TypoComponent from "../atoms/Typo";
 
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
-interface SettingListTypes {
+interface SettingListTypes extends styledInterface{
   typo: string;
   nextStep ?: boolean;
   rightText ?: string;
@@ -28,7 +29,7 @@ const SettingListComponent: React.FC<SettingListTypes> = props => {
   const { typo, nextStep, rightText } = props;
   return (
     <SettingList>
-      <TypoComponent size="14px" weight="regular" align="left">
+      <TypoComponent fontSize="14px" fontWeight="regular" textAlign="left">
         {typo}
       </TypoComponent>
       {
@@ -37,7 +38,7 @@ const SettingListComponent: React.FC<SettingListTypes> = props => {
           <Icon iconShape={faChevronRight} iconWidth="16px" iconHeight="16px" />
         ) : (
           // version text
-          <TypoComponent size="14px" weight="semi-bold">
+          <TypoComponent fontSize="14px" fontWeight="semi-bold">
             {rightText}
           </TypoComponent>
         )
