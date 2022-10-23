@@ -36,3 +36,4 @@ yarn-error.log*
 next-env.d.ts
 server/config/db.js
 server/config/db.js
+server/dist/config/db.js
