@@ -1,20 +1,14 @@
 import React from "react";
 import styled from "styled-components";
-interface ButtonTypes {
-  id?: string;
-  desc?: string;
-  bgc?: string;
-  color?: string;
-  width?: string;
-  height?: string;
-  className?: string;
-  onClick?: any;
+import styledInterface from "../Intefaces/styledComponent"
+interface ButtonTypes extends styledInterface {
+
 }
 
 const ButtonStyled = styled.button<ButtonTypes>`
   width: ${(props) => props.width || "100%"};
   height: ${(props) => props.height};
-  background-color: ${(props) => props.bgc};
+  background-color: ${(props) => props.backgroundColor};
   color: ${(props) => props.color};
   border-color: transparent;
   border-radius: 4px;
@@ -23,7 +17,7 @@ const ButtonStyled = styled.button<ButtonTypes>`
 const ButtonCompontent: React.FC<ButtonTypes> = ({
   id,
   desc,
-  bgc,
+  backgroundColor,
   color,
   width,
   height,
@@ -34,7 +28,7 @@ const ButtonCompontent: React.FC<ButtonTypes> = ({
     <ButtonStyled
       id={id}
       type="button"
-      bgc={bgc}
+      backgroundColor={backgroundColor}
       color={color}
       width={width}
       height={height}
