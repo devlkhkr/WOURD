@@ -91,7 +91,7 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
               <Button
                 desc="취소"
                 id="cancleRegWord"
-                bgc="#666"
+                backgroundColor="#666"
                 color="#fff"
                 width="40%"
                 height="40px"
@@ -100,7 +100,7 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
               <Button
                 desc="가입"
                 id="submitRegWord"
-                bgc="var(--color-point)"
+                backgroundColor="var(--color-point)"
                 color="#fff"
                 width="60%"
                 height="40px"
