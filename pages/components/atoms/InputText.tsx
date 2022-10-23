@@ -16,14 +16,16 @@ const Input = styled.input`
 interface InputTextTypes extends styledInterface {
   type: string;
   placeHolder?: string;
+  readonly?: boolean;
 }
 
-const InputText: React.FC<InputTextTypes> = ({ type, id, placeHolder }) => {
-  return <Input type={type} placeholder={placeHolder} id={id}></Input>;
+const InputText: React.FC<InputTextTypes> = ({ type, id, placeHolder, readonly }) => {
+  return <Input type={type} placeholder={placeHolder} id={id} readOnly={readonly}></Input>;
 };
 
 InputText.defaultProps = {
   placeHolder: "정보를 입력해주세요.",
+  readonly: false,
 };
 
 export default InputText;
