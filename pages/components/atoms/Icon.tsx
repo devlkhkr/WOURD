@@ -9,11 +9,13 @@ const IconWrap = styled.i<IconTypes>`
   justify-content: center;
   width: ${props => props.iconWidth}px;
   height: ${props => props.iconHeight}px;
-  margin: 0 ${props => props.align ? "auto" : ""} ${props => (props.bottom ? props.bottom : 4)}px;
+  margin : 0 ${props => props.align};
   svg {
     font-size: 20px;
   }
 `;
+
+// margin: 0 ${props => props.align}px ${props => (props.bottom ? props.bottom : 4)}px;
 
 interface IconTypes {
   iconShape?: object;

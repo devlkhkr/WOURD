@@ -15,12 +15,12 @@ interface TypoType {
 
 const TypoStyled = styled.div<TypoType>`
     line-height: 1.2;
-    font-weight: ${(props) => `var(--weight-${props.weight})`};
-    font-size: ${(props) => props.size || "16px"};
-    color: ${(props) => props.color || "inherit"};
-    text-align: ${(props) => props.align || "center"};
+    font-weight: ${props => `var(--weight-${props.weight})`};
+    font-size: ${props => props.size || "16px"};
+    color: ${props => props.color || "inherit"};
+    text-align: ${props => props.align || "center"};
 
-    margin-top: ${(props) => props.mt || "unset"};
+    margin-top: ${props => props.mt || "unset"};
   }
 `;
 
@@ -32,10 +32,18 @@ const TypoComponent: React.FC<TypoType> = ({
   mt,
   children,
   className,
-  onClick
+  onClick,
 }) => {
   return (
-    <TypoStyled size={size} weight={weight} align={align} color={color} mt={mt} className={className} onClick={onClick}>
+    <TypoStyled
+      size={size}
+      weight={weight}
+      align={align}
+      color={color}
+      mt={mt}
+      className={className}
+      onClick={onClick}
+    >
       {children}
     </TypoStyled>
   );
