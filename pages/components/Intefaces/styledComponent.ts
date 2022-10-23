@@ -3,9 +3,6 @@ export default interface StyledComponentTypes {
   className?: string;
   desc?: string;
 
-  src?: string;
-  alt?: string;
-
   width?: string;
   height?: string;
 

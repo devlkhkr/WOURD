@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-
-interface ImgTypes {
-  width?: string;
+import styledInterface from "../Intefaces/styledComponent"
+interface ImgTypes extends styledInterface{
   src?: string;
+  alt?: string;
 }
 
 const ImgStyled = styled.img`
