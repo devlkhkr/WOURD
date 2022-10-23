@@ -1,8 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-interface LogoTypes {
-  width?: string;
-  height?: string;
+import styledInterface from "../Intefaces/styledComponent"
+interface LogoTypes extends styledInterface {
   mainColor: string;
   subColor: string;
 }

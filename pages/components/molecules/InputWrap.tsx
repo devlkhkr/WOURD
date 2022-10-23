@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import styledInterface from "../Intefaces/styledComponent"
+interface InputWrapTypes extends styledInterface {
 
-interface InputWrapTypes {
-  children: any;
 }
 
 const InputWrapStyled = styled.div<InputWrapTypes>`

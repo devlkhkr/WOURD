@@ -39,7 +39,7 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
     <>
       <JoinStyled setJoinPageOpened={setJoinPageOpened}>
         <Form>
-          <Typo size="16px" weight="semi-bold" mt="12px">회원가입</Typo>
+          <Typo fontSize="16px" fontWeight="semi-bold" marginTop="12px">회원가입</Typo>
           <Fieldset>
             <InputWrap>
               <Label

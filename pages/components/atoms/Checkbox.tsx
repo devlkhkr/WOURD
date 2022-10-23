@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-
-interface CheckboxTypes {
+import styledInterface from "../Intefaces/styledComponent"
+interface CheckboxTypes extends styledInterface {
   id: string;
   name: string;
   onClick?: any;

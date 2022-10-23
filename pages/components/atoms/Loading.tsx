@@ -1,7 +1,8 @@
 import React from "react";
 import styled, { css } from "styled-components";
-interface LoadingTypes {
-  color?: string;
+import styledInterface from "../Intefaces/styledComponent"
+interface LoadingTypes extends styledInterface{
+
 }
 
 const countDominoSegs = 7;

@@ -1,9 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-
-interface LabelType {
+import styledInterface from "../Intefaces/styledComponent"
+interface LabelType extends styledInterface {
   htmlFor?: string;
-  desc?: string;
   mandatory?: boolean;
 }
 

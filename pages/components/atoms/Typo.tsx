@@ -1,46 +1,39 @@
 import React from "react";
 import { MouseEventHandler } from "react";
 import styled from "styled-components";
-
-interface TypoType {
-  size?: string;
-  weight?: string;
-  align?: string;
-  className?: string;
-  color?: string;
-  mt?: string;
-  children?: any;
+import styledInterface from "../Intefaces/styledComponent"
+interface TypoType extends styledInterface {
   onClick?: MouseEventHandler;
 }
 
 const TypoStyled = styled.div<TypoType>`
     line-height: 1.2;
-    font-weight: ${props => `var(--weight-${props.weight})`};
-    font-size: ${props => props.size || "16px"};
+    font-weight: ${props => `var(--weight-${props.fontWeight})`};
+    font-size: ${props => props.fontSize || "16px"};
     color: ${props => props.color || "inherit"};
-    text-align: ${props => props.align || "center"};
+    text-align: ${props => props.textAlign || "center"};
 
-    margin-top: ${props => props.mt || "unset"};
+    margin-top: ${props => props.marginTop || "unset"};
   }
 `;
 
 const TypoComponent: React.FC<TypoType> = ({
-  size,
-  weight,
-  align,
+  fontSize,
+  fontWeight,
+  textAlign,
   color,
-  mt,
+  marginTop,
   children,
   className,
   onClick,
 }) => {
   return (
     <TypoStyled
-      size={size}
-      weight={weight}
-      align={align}
+      fontSize={fontSize}
+      fontWeight={fontWeight}
+      textAlign={textAlign}
       color={color}
-      mt={mt}
+      marginTop={marginTop}
       className={className}
       onClick={onClick}
     >

@@ -1,15 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-
-interface TextAreaTypes {
-  id: string;
+import styledInterface from "../Intefaces/styledComponent"
+interface TextAreaTypes extends styledInterface {
   placeholder?: string;
-  height?: number;
 }
 
 const TextAreaStyled = styled.textarea<TextAreaTypes>`
   width: 100%;
-  height: ${(props) => props.height + `px`};
+  height: ${(props) => props.height};
   border: 1px solid var(--color-lightgrey);
   padding: 8px;
   resize: none;

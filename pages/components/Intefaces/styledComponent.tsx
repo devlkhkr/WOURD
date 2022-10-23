@@ -1,4 +1,7 @@
+import { MouseEventHandler } from "react";
 export default interface StyledComponentTypes {
+  children?: any;
+
   id?: string;
   className?: string;
   desc?: string;
@@ -19,7 +22,7 @@ export default interface StyledComponentTypes {
   backgroundColor?: string;
   color?: string;
 
-  onClick?: any;
+  onClick?: MouseEventHandler;
   title?: string;
 
   opacity?: string;
@@ -28,4 +31,5 @@ export default interface StyledComponentTypes {
   fontSize?: string;
   fontWeight?: string;
   lineHeight?: string;
+  textAlign?: string;
 }

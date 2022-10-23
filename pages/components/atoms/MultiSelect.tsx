@@ -2,9 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import Label from "./Label";
 import Checkbox from "./Checkbox";
-
-interface MultiSelectTypes {
-  id?: string;
+import styledInterface from "../Intefaces/styledComponent";
+interface MultiSelectTypes extends styledInterface {
   name: string;
   options: OptionTypes[];
 }

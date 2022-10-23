@@ -56,7 +56,7 @@ const LoginComponent: React.FC<LoginTypes> = ({ setIsTokenLive }) => {
           />
           <Button onClick={loginButtonClick} desc="로그인" height="48px" color="#fff" backgroundColor="var(--color-point)" />
         </Fieldset>
-        <Typo size="14px" color="rgba(0,0,0,.5)" onClick={(e) => setJoinPageOpened(true)}>회원가입</Typo>
+        <Typo fontSize="14px" color="rgba(0,0,0,.5)" onClick={(e) => setJoinPageOpened(true)}>회원가입</Typo>
       </LoginStyled>
     </>
   )

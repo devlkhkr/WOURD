@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-interface LegendTypes {
+import styledInterface from "../Intefaces/styledComponent"
+interface LegendTypes extends styledInterface{
   desc: string
 }
 

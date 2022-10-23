@@ -2,10 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import Label from "../../components/atoms/Label";
 import InputWrap from "../../components/molecules/InputWrap";
-
-interface RadioTypes {
+import styledInterface from "../Intefaces/styledComponent"
+interface RadioTypes extends styledInterface {
   name: string;
-  onClick?: any;
   options: OptionTypes[];
 }
 

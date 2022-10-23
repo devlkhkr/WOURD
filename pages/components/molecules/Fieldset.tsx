@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-
-interface FieldsetTypes {
-  children: any;
+import styledInterface from "../Intefaces/styledComponent"
+interface FieldsetTypes extends styledInterface {
+  
 }
 
 const FieldsetStyled = styled.fieldset<FieldsetTypes>`

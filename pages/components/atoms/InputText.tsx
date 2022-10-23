@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import styledInterface from "../Intefaces/styledComponent"
 
 const Input = styled.input`
   width: 100%;
@@ -12,10 +13,9 @@ const Input = styled.input`
   }
 `;
 
-interface InputTextTypes {
+interface InputTextTypes extends styledInterface {
   type: string;
-  placeHolder: string;
-  id?: string;
+  placeHolder?: string;
 }
 
 const InputText: React.FC<InputTextTypes> = ({ type, id, placeHolder }) => {

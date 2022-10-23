@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import styledInterface from "../Intefaces/styledComponent"
+interface ButtonWrapTypes extends styledInterface {
 
-interface ButtonWrapTypes {
-  children: any;
 }
 
 const ButtonWrapsetStyled = styled.div<ButtonWrapTypes>`

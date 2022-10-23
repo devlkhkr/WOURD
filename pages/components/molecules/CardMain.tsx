@@ -3,7 +3,7 @@ import styled, { css } from "styled-components";
 import Button from "../../components/atoms/Button";
 import Typo from "../../components/atoms/Typo";
 import CardSwiper from "../../components/organisms/CardSwiper";
-
+import styledInterface from "../Intefaces/styledComponent"
 interface CardMainTypes {
   exposeWord: ExposeWordTypes[];
 }
@@ -203,18 +203,18 @@ const CardMainComponent: React.FC<CardMainTypes> = ({ exposeWord }) => {
             >
               <CardMainStyled exposeWord={exposeWord} className="cardMain">
                 <CardFrontStyled>
-                  <Typo size="24px" weight="bold">
+                  <Typo fontSize="24px" fontWeight="bold">
                     {objWord.word}
                   </Typo>
                 </CardFrontStyled>
                 <CardBackStyled>
-                  <Typo size="24px" weight="bold">
+                  <Typo fontSize="24px" fontWeight="bold">
                     {objWord.word}
                   </Typo>
-                  <Typo size="16px" weight="semi-bold">
+                  <Typo fontSize="16px" fontWeight="semi-bold">
                     {objWord.unravel}
                   </Typo>
-                  <Typo size="14px" weight="regular" align="left">
+                  <Typo fontSize="14px" fontWeight="regular" textAlign="left">
                     {objWord.desc}
                   </Typo>
                 </CardBackStyled>
