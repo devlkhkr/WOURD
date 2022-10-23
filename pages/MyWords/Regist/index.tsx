@@ -155,7 +155,7 @@ const RegistWord: NextPage<RegistWordTypes> = ({ }) => {
             <Button
               desc="취소"
               id="cancleRegWord"
-              backgroundColor="#666"
+              bgc="#666"
               color="#fff"
               width="40%"
               height="40px"
@@ -164,7 +164,7 @@ const RegistWord: NextPage<RegistWordTypes> = ({ }) => {
             <Button
               desc="단어 등록하기"
               id="submitRegWord"
-              backgroundColor="var(--color-point)"
+              bgc="var(--color-point)"
               color="#fff"
               width="60%"
               height="40px"

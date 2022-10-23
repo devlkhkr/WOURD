@@ -1,14 +1,20 @@
 import React from "react";
 import styled from "styled-components";
-import StyledComponentTypes from "../Intefaces"
-interface ButtonTypes extends StyledComponentTypes {
-  
+interface ButtonTypes {
+  id?: string;
+  desc?: string;
+  bgc?: string;
+  color?: string;
+  width?: string;
+  height?: string;
+  className?: string;
+  onClick?: any;
 }
 
 const ButtonStyled = styled.button<ButtonTypes>`
   width: ${(props) => props.width || "100%"};
   height: ${(props) => props.height};
-  background-color: ${(props) => props.backgroundColor};
+  background-color: ${(props) => props.bgc};
   color: ${(props) => props.color};
   border-color: transparent;
   border-radius: 4px;
@@ -17,25 +23,23 @@ const ButtonStyled = styled.button<ButtonTypes>`
 const ButtonCompontent: React.FC<ButtonTypes> = ({
   id,
   desc,
-  backgroundColor,
+  bgc,
   color,
   width,
   height,
   className,
   onClick,
-  title
 }) => {
   return (
     <ButtonStyled
       id={id}
       type="button"
-      backgroundColor={backgroundColor}
+      bgc={bgc}
       color={color}
       width={width}
       height={height}
       className={className}
       onClick={onClick}
-      title={title}
     >
       {desc}
     </ButtonStyled>
