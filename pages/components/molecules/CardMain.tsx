@@ -186,7 +186,6 @@ const CardMainComponent: React.FC<CardMainTypes> = ({ exposeWord }) => {
   }, [exposeWord])
 
   const [wordList, setWordList] = useState<ExposeWordTypes[]>([]);
-  console.log(wordList)
   const [currentCardIdx, setCurrentCardIdx] = useState(0);
   const [buttonState, setButtonState] = useState("");
   return (

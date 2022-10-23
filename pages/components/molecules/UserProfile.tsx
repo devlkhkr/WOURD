@@ -31,7 +31,7 @@ const UserProfileComponent: React.FC<UserProfileTypes> = ({
 }) => {
   return (
     <UserProfileStyled>
-      <ImgComponent src="https://w.namu.la/s/819be1bb98456607507be41201b6418c2a713302c52c359f4f4ae579af6fa78db7ad4a01cf994092f5442b785fc554fcc1a0d119fc41d8ff7ef2003c066b8a4c96cd745de2155092a4a23e7d05a31e3051bc8c88bc28ea8f10212e6fe18132e9" />
+      <ImgComponent src="https://w.namu.la/s/819be1bb98456607507be41201b6418c2a713302c52c359f4f4ae579af6fa78db7ad4a01cf994092f5442b785fc554fcc1a0d119fc41d8ff7ef2003c066b8a4c96cd745de2155092a4a23e7d05a31e3051bc8c88bc28ea8f10212e6fe18132e9" objectFit="cover"/>
       <UserInfoStyled>
         <TypoComponent fontSize="16px" fontWeight="semi-bold" textAlign="left">
           {username}
