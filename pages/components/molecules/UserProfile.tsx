@@ -15,6 +15,7 @@ interface UserProfileTypes extends styledInterface {
 const UserProfileStyled = styled.div<UserProfileTypes>`
   display: flex;
   width: 100%;
+  align-items: center;
 `;
 
 const UserInfoStyled = styled.div<UserProfileTypes>`
