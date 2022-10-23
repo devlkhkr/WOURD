@@ -1,8 +1,8 @@
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import styled from "styled-components";
-import ImgComponent from "../components/atoms/Img";
 import SettingListComponent from "../components/molecules/SettingList";
+import UserProfileComponent from "../components/molecules/UserProfile";
 
 interface SettingTypes {
   typo: string;
@@ -39,7 +39,10 @@ const Setting: NextPage<SettingTypes> = () => {
   return (
     <SettingWrap>
       <SettingProfileStyled>
-        <ImgComponent src="https://w.namu.la/s/819be1bb98456607507be41201b6418c2a713302c52c359f4f4ae579af6fa78db7ad4a01cf994092f5442b785fc554fcc1a0d119fc41d8ff7ef2003c066b8a4c96cd745de2155092a4a23e7d05a31e3051bc8c88bc28ea8f10212e6fe18132e9" />
+        <UserProfileComponent 
+          username="비비맨"
+          usermail="barnesquiat@gmail.com"
+        />
       </SettingProfileStyled>
       <SettingTopStyled>
         <SettingListComponent typo="비밀번호 변경" nextStep={true} />
