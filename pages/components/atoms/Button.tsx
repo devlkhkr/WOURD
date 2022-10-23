@@ -34,6 +34,7 @@ const ButtonCompontent: React.FC<ButtonTypes> = ({
       height={height}
       className={className}
       onClick={onClick}
+      desc={desc}
     >
       {desc}
     </ButtonStyled>

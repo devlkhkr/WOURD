@@ -5,16 +5,16 @@ const PORT = process.env.PORT || 9090;
 const db = require('./config/db');
 const bodyParser = require('body-parser');
 // const path = require("path");
-// const cors = require('cors');
+const cors = require('cors');
 
 app.use(express.urlencoded({
     extended: true
 }))
 app.use(bodyParser.json());
-// app.use(cors({
-//     origin: 'http://saulter.co.kr',
-//     credentials: true,
-// }));
+app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true,
+}));
 
 // app.use(express.static(path.join(__dirname, "build")));
 

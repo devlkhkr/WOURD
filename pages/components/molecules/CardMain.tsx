@@ -1,18 +1,24 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styled, { css } from "styled-components";
 import Button from "../../components/atoms/Button";
 import Typo from "../../components/atoms/Typo";
 import CardSwiper from "../../components/organisms/CardSwiper";
-import styledInterface from "../Intefaces/styledComponent"
+import styledInterface from "../Intefaces/styledComponent";
 interface CardMainTypes {
   exposeWord: ExposeWordTypes[];
 }
 interface ExposeWordTypes {
-  word: string;
-  unravel?: string;
-  desc: string;
-  fliped: boolean;
-  state: string;
+
+  word_desc?: string;
+  word_id?: string;
+  word_name?: string;
+  word_reg_date?: Date;
+  word_reg_userid?: string;
+  word_seq?: number;
+  word_unravel?: string;
+
+  fliped?: boolean;
+  state?: string;
 }
 
 const CardBaseStyle = `
@@ -147,7 +153,6 @@ const BtnWrapCardCtrlStyled = styled.div`
 
 const CardMainComponent: React.FC<CardMainTypes> = ({ exposeWord }) => {
   const cardList: any = useRef();
-
   const cardHandler = {
     dontKnow: function (_objWord: ExposeWordTypes, e: Event) {
       afterCardHandler(_objWord, "d");
@@ -176,27 +181,33 @@ const CardMainComponent: React.FC<CardMainTypes> = ({ exposeWord }) => {
     setWordList([...wordList]);
   };
 
-  const [wordList, setWordList] = useState([...exposeWord]);
+  useEffect(() => {
+    setWordList([...exposeWord].reverse())
+  }, [exposeWord])
+
+  const [wordList, setWordList] = useState<ExposeWordTypes[]>([]);
+  console.log(wordList)
   const [currentCardIdx, setCurrentCardIdx] = useState(0);
   const [buttonState, setButtonState] = useState("");
   return (
     <>
       <MainWrapStyled ref={cardList}>
-        {wordList.reverse().map((objWord, index) => (
+        {wordList.map((objWord:any, index:any) => (
           <CardSwiper
-            key={index}
-            className={`card ${objWord.fliped ? "fliped" : ""} ${objWord.state
-              }`}
+            key={objWord.word_seq}
+            className={`card ${objWord.fliped ? "fliped" : ""} ${
+              objWord.state || ""
+            }`}
             wordInfo={objWord}
             cardHandler={cardHandler}
             setButtonState={setButtonState}
           >
             <CardWrapStyled
-              onMouseDown={(e) => {
+              onMouseDown={e => {
                 setCardFlip(objWord, e);
                 setCurrentCardIdx(index);
               }}
-              onTouchStart={(e) => {
+              onTouchStart={e => {
                 setCardFlip(objWord, e);
                 setCurrentCardIdx(index);
               }}
@@ -204,18 +215,18 @@ const CardMainComponent: React.FC<CardMainTypes> = ({ exposeWord }) => {
               <CardMainStyled exposeWord={exposeWord} className="cardMain">
                 <CardFrontStyled>
                   <Typo fontSize="24px" fontWeight="bold">
-                    {objWord.word}
+                    {objWord.word_name}
                   </Typo>
                 </CardFrontStyled>
                 <CardBackStyled>
                   <Typo fontSize="24px" fontWeight="bold">
-                    {objWord.word}
+                    {objWord.word_name}
                   </Typo>
                   <Typo fontSize="16px" fontWeight="semi-bold">
-                    {objWord.unravel}
+                    {objWord.word_unravel}
                   </Typo>
                   <Typo fontSize="14px" fontWeight="regular" textAlign="left">
-                    {objWord.desc}
+                    {objWord.word_desc}
                   </Typo>
                 </CardBackStyled>
               </CardMainStyled>
