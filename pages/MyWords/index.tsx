@@ -15,7 +15,7 @@ const MyWordsComponent: NextPage<MyWordsTypes> = () => {
       <Button
         desc="새로운 단어 등록하기"
         id="cancleRegWord"
-        bgc="#666"
+        backgroundColor="#666"
         color="#fff"
         height="40px"
         onClick={addNewWordClick}

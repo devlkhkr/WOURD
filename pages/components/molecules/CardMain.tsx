@@ -225,7 +225,7 @@ const CardMainComponent: React.FC<CardMainTypes> = ({ exposeWord }) => {
         <BtnWrapCardCtrlStyled className={`btn_wrap_cardctrl ${buttonState}`}>
           <Button
             desc="건너뛰기"
-            bgc="#92a4c9"
+            backgroundColor="#92a4c9"
             color="#fff"
             height="40px"
             className="btn_word_s"
@@ -235,7 +235,7 @@ const CardMainComponent: React.FC<CardMainTypes> = ({ exposeWord }) => {
           />
           <Button
             desc="즐겨찾기"
-            bgc="#92a4c9"
+            backgroundColor="#92a4c9"
             color="#fff"
             height="40px"
             className="btn_word_f"
@@ -245,7 +245,7 @@ const CardMainComponent: React.FC<CardMainTypes> = ({ exposeWord }) => {
           />
           <Button
             desc="모르는단어"
-            bgc="#92a4c9"
+            backgroundColor="#92a4c9"
             color="#fff"
             height="40px"
             className="btn_word_d"
@@ -255,7 +255,7 @@ const CardMainComponent: React.FC<CardMainTypes> = ({ exposeWord }) => {
           />
           <Button
             desc="아는단어"
-            bgc="#92a4c9"
+            backgroundColor="#92a4c9"
             color="#fff"
             height="40px"
             className="btn_word_k"
