@@ -59,10 +59,10 @@ const Footer: React.FC = () => {
             <a>
               <Icon
                 iconShape={faNoteSticky}
-                iconWidth={24}
-                iconHeight={24}
-                bottom={4}
-                align="center"
+                iconWidth="24px"
+                iconHeight="24px"
+                bottom="4px"
+                align="auto"
               />
               <IconText text="단어장" />
             </a>
@@ -73,37 +73,24 @@ const Footer: React.FC = () => {
             <a>
               <Icon
                 iconShape={faHouse}
-                iconWidth={24}
-                iconHeight={24}
-                bottom={4}
-                align="center"
+                iconWidth="24px"
+                iconHeight="24px"
+                bottom="4px"
+                align="auto"
               />
               <IconText text="메인" />
             </a>
           </Link>
         </li>
-        {/* <li>
-          <Link href="/RegistWord">
-            <a>
-              <Icon
-                iconShape={faNotesMedical}
-                iconWidth={30}
-                iconHeight={30}
-                bottom={4}
-              />
-              <IconText text="단어관리" />
-            </a>
-          </Link>
-        </li> */}
         <li className={router.pathname == "/Setting" ? "active" : ""}>
           <Link href="/Setting">
             <a>
               <Icon
                 iconShape={faInfoCircle}
-                iconWidth={24}
-                iconHeight={24}
-                bottom={4}
-                align="center"
+                iconWidth="24px"
+                iconHeight="24px"
+                bottom="4px"
+                align="auto"
               />
               <IconText text="설정" />
             </a>
