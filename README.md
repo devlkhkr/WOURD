@@ -2,16 +2,19 @@
   <br><br><strong>Copublish IT Dictionary</strong>
 </h1>
 
-## Front-End SKill Stack <br />
+# 📌 Front-End SKill Stack <br />
 <span><img src="https://img.shields.io/badge/-React-23F7DF1E?style=for-the-badge&logo=React&logoColor=white&color=61DAFB"></span>
 <span><img src="https://img.shields.io/badge/-ReactRouter-23F7DF1E?style=for-the-badge&logo=ReactRouter&logoColor=white&color=CA4245"></span>
 <span><img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white"></span>
 <span><img src="https://img.shields.io/badge/-Next.js-23F7DF1E?style=for-the-badge&logo=Next.js&logoColor=white&color=000000"></span>
 <span><img src="https://img.shields.io/badge/-styledComponents-23F7DF1E?style=for-the-badge&logo=styledComponents&logoColor=white&color=DB7093"></span>
 
-## Back-End SKill Stack <br />
+# 📌 Back-End SKill Stack <br />
 
--------
+<span><img src="https://img.shields.io/badge/-Node.js-23F7DF1E?style=for-the-badge&logo=Node.js&logoColor=white&color=339933"></span>
+<span><img src="https://img.shields.io/badge/-MySQL-23F7DF1E?style=for-the-badge&logo=MySQL&logoColor=white&color=4479A1"></span>
+<span><img src="https://img.shields.io/badge/-GraphQL-23F7DF1E?style=for-the-badge&logo=GraphQL&logoColor=white&color=E10098"></span>
+
 
 **Framework**
 
