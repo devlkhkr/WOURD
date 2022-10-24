@@ -1,16 +1,17 @@
 import React from "react";
 import styled from "styled-components";
-import Typo from "../../components/atoms/Typo";
-import InputText from "../../components/atoms/InputText";
-import Radio from "../../components/atoms/Radio";
-import Select from "../../components/atoms/Select";
-import MultiSelect from "../../components/atoms/MultiSelect";
-import Label from "../../components/atoms/Label";
-import Button from "../../components/atoms/Button";
-import Fieldset from "../../components/molecules/Fieldset";
-import InputWrap from "../../components/molecules/InputWrap";
-import ButtonWrap from "../../components/molecules/ButtonWrap";
-import Form from "../../components/organisms/Form";
+import Typo from "../atoms/Typo";
+import InputText from "../atoms/InputText";
+import Radio from "../atoms/Radio";
+import Select from "../atoms/Select";
+import MultiSelect from "../atoms/MultiSelect";
+import Label from "../atoms/Label";
+import Button from "../atoms/Button";
+import Fieldset from "../molecules/Fieldset";
+import InputWrap from "../molecules/InputWrap";
+import ButtonWrap from "../molecules/ButtonWrap";
+import Timer from "../molecules/Timer";
+import Form from "../organisms/Form";
 
 import { useState } from "react";
 import { useRef } from "react";
@@ -21,6 +22,9 @@ interface LoginTypes {
 
 const FlexWrap = styled.div`
   display: flex;
+  button.disabled{
+    background-color: var(--color-grey);
+  }
   > * + * {
     margin-left: 8px;
   }
@@ -53,12 +57,18 @@ const JoinStyled = styled.form<LoginTypes>`
 const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
   
   const [authCheckFlag, setAuthCheckFlag] = useState(false);
-  const [authTimer, setAuthTimer] = useState("5:00")
-  const authButtonClick = () => {
-    setAuthCheckFlag(true)
-    setTimeout(function(){
+  const authInput:any = useRef()
+  const authTimeEnd = function () {
+    setAuthCheckFlag(false);
+  }
 
-    }, 1000)
+  const authButtonClick = () => {
+    if(authCheckFlag){
+      alert("이미 전송되었습니다.")
+    }
+    else{
+      setAuthCheckFlag(true)
+    }
   }
 
   return (
@@ -74,14 +84,14 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
               />
               <FlexWrap>
                 <InputText type="text" placeHolder="아이디로 사용할 이메일을 입력하세요." id="joinId" />
-                <Button desc="인증하기" width="160px" backgroundColor="var(--color-grey)" color="#fff" onClick={authButtonClick}/>
+                <Button desc="인증하기" width="160px" backgroundColor="var(--color-point)" className={`${authCheckFlag ? "disabled" : ""}`} color="#fff" onClick={authButtonClick}/>
               </FlexWrap>
             </InputWrap>
             {authCheckFlag ? (
               <InputWrap>
                 <AuthCheckWrap>
-                  <InputText type="password" placeHolder="이메일로 전송된 인증코드를 입력하세요." id="joinAuth" />
-                  <Typo lineHeight="40px" color="#e51937" className="auth_time_limit">{authTimer}</Typo>
+                  <InputText type="password" placeHolder="이메일로 전송된 인증코드를 입력하세요." id="joinAuth" reference={authInput}/>
+                  <Typo lineHeight="40px" color="#e51937" className="auth_time_limit"><Timer mm="00" ss="10" onExpire={authTimeEnd}/></Typo>
                 </AuthCheckWrap>
               </InputWrap>
             ) : <></>}
