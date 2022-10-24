@@ -7,7 +7,7 @@ import Button from "../../components/atoms/Button";
 import Fieldset from "../../components/molecules/Fieldset";
 import Form from "../../components/organisms/Form";
 import Join from "../../components/templates/Join"
-import { useState } from "react";
+import { useState, useRef } from "react";
 import axios from "axios";
 interface LoginTypes {
   setIsTokenLive: Function
@@ -36,12 +36,16 @@ const LoginStyled = styled.form<LoginTypes>`
 `;
 
 const LoginComponent: React.FC<LoginTypes> = ({ setIsTokenLive }) => {
+  const idInput:any = useRef();
+  const pwInput:any = useRef();
   const loginButtonClick = async() => {
     if(loginUserId.length <= 0) {
       alert("아이디를 입력하세요");
+      idInput.current.focus();
     }
     else if(loginUserPw.length <= 0){
       alert("비밀번호를 입력하세요");
+      pwInput.current.focus();
     }
     else {
       const res = await axios.post('http://localhost:9090' + '/api/user/login', {
@@ -73,11 +77,13 @@ const LoginComponent: React.FC<LoginTypes> = ({ setIsTokenLive }) => {
             type="text"
             placeHolder="아이디를 입력하세요."
             onChange={(e:React.ChangeEvent<HTMLInputElement>) => {setLoginUserId(e.currentTarget.value)}}
+            reference={idInput}
           />
           <InputText
             type="password"
             placeHolder="패스워드를 입력하세요."
             onChange={(e:React.ChangeEvent<HTMLInputElement>) => {setLoginUserPw(e.currentTarget.value)}}
+            reference={pwInput}
           />
           <Button onClick={loginButtonClick} desc="로그인" height="48px" color="#fff" backgroundColor="var(--color-point)" />
         </Fieldset>
