@@ -90,7 +90,7 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
             {authCheckFlag ? (
               <InputWrap>
                 <AuthCheckWrap>
-                  <InputText type="password" placeHolder="이메일로 전송된 인증코드를 입력하세요." id="joinAuth" reference={authInput}/>
+                  <InputText type="text" placeHolder="이메일로 전송된 인증코드를 입력하세요." id="joinAuth" reference={authInput}/>
                   <Typo lineHeight="40px" color="#e51937" className="auth_time_limit"><Timer mm="00" ss="10" onExpire={authTimeEnd}/></Typo>
                 </AuthCheckWrap>
               </InputWrap>
