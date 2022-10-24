@@ -6,7 +6,7 @@
 .pnp.js
 package.json
 .eslintrc.json
-.babelrc
+# .babelrc
 yarn.lock
 tsconfig.json
 
