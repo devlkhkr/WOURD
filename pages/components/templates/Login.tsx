@@ -1,14 +1,18 @@
 import React from "react";
 import styled from "styled-components";
-import Logo from "../../components/atoms/Logo";
-import InputText from "../../components/atoms/InputText";
-import Typo from "../../components/atoms/Typo";
-import Button from "../../components/atoms/Button";
-import Fieldset from "../../components/molecules/Fieldset";
-import Form from "../../components/organisms/Form";
-import Join from "../../components/templates/Join"
+import Logo from "pages/components/atoms/Logo";
+import InputText from "pages/components/atoms/InputText";
+import Typo from "pages/components/atoms/Typo";
+import Button from "pages/components/atoms/Button";
+import Fieldset from "pages/components/molecules/Fieldset";
+import Form from "pages/components/organisms/Form";
+import Join from "pages/components/templates/Join"
 import { useState, useRef } from "react";
 import axios from "axios";
+
+import { useDispatch, useSelector } from 'react-redux';
+import { ReducerType } from 'redux/rootReducer';
+import { UserData, setUserData } from 'redux/slices/user';
 interface LoginTypes {
   setIsTokenLive: Function
 }
@@ -36,6 +40,7 @@ const LoginStyled = styled.form<LoginTypes>`
 `;
 
 const LoginComponent: React.FC<LoginTypes> = ({ setIsTokenLive }) => {
+  const dispatch = useDispatch();
   const idInput:any = useRef();
   const pwInput:any = useRef();
   const loginButtonClick = async() => {
@@ -54,8 +59,14 @@ const LoginComponent: React.FC<LoginTypes> = ({ setIsTokenLive }) => {
           pw: loginUserPw
         }
       })
-      if(res.data === true){
-        setIsTokenLive(res.data)
+      if(res.data.loginFlag === true){
+        dispatch(setUserData({ 
+          seq: res.data.userInfo.seq,
+          id: res.data.userInfo.id,
+          nickname: res.data.userInfo.nickname,
+          prfimg: res.data.userInfo.prfimg
+        } as UserData));
+        setIsTokenLive(res.data.loginFlag)
       }
       else{
         alert(res.data)
@@ -64,8 +75,8 @@ const LoginComponent: React.FC<LoginTypes> = ({ setIsTokenLive }) => {
   };
 
   const [joinPageOpened, setJoinPageOpened] = useState(false);
-  const [loginUserId, setLoginUserId] = useState("");
-  const [loginUserPw, setLoginUserPw] = useState("");
+  const [loginUserId, setUserDataId] = useState("");
+  const [loginUserPw, setUserDataPw] = useState("");
   
   return (
     <>
@@ -76,13 +87,13 @@ const LoginComponent: React.FC<LoginTypes> = ({ setIsTokenLive }) => {
           <InputText
             type="text"
             placeHolder="아이디를 입력하세요."
-            onChange={(e:React.ChangeEvent<HTMLInputElement>) => {setLoginUserId(e.currentTarget.value)}}
+            onChange={(e:React.ChangeEvent<HTMLInputElement>) => {setUserDataId(e.currentTarget.value)}}
             reference={idInput}
           />
           <InputText
             type="password"
             placeHolder="패스워드를 입력하세요."
-            onChange={(e:React.ChangeEvent<HTMLInputElement>) => {setLoginUserPw(e.currentTarget.value)}}
+            onChange={(e:React.ChangeEvent<HTMLInputElement>) => {setUserDataPw(e.currentTarget.value)}}
             reference={pwInput}
           />
           <Button onClick={loginButtonClick} desc="로그인" height="48px" color="#fff" backgroundColor="var(--color-point)" />

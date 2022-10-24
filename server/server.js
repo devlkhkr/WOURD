@@ -57,7 +57,15 @@ app.post('/api/user/login', (req, res) => {
             }
             else if(data.length === 1) {
                 if(req.body.loginUserData.pw === data[0].user_password) {
-                    res.send(true);
+                    res.send({
+                        loginFlag: true,
+                        userInfo: {
+                            seq: data[0].user_seq,
+                            id: data[0].user_id,
+                            nickname: data[0].user_nickname,
+                            prfimg: data[0].user_prf_img
+                        }
+                    });
                 }
                 else{
                     res.send("비밀번호가 일치하지 않습니다.")
