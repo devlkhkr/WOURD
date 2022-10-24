@@ -38,7 +38,7 @@ const SettingListComponent: React.FC<SettingListTypes> = props => {
           <Icon iconShape={faChevronRight} iconWidth="16px" iconHeight="16px" svgSize="12px" />
         ) : (
           // version text
-          <TypoComponent fontSize="14px" fontWeight="semi-bold">
+          <TypoComponent fontSize="14px" fontWeight="semi-bold" color="rgba(0,0,0,.5)">
             {rightText}
           </TypoComponent>
         )

@@ -34,7 +34,7 @@ const UserProfileComponent: React.FC<UserProfileTypes> = ({
   username,
   usermail,
 }) => {
-  const userData = useSelector<ReducerType, UserData[]>(state=> state.user);
+  const userData = useSelector<ReducerType, UserData[]>(state => state.user);
 
   return (
     <UserProfileStyled>

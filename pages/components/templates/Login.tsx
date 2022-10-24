@@ -13,6 +13,9 @@ import axios from "axios";
 import { useDispatch, useSelector } from 'react-redux';
 import { ReducerType } from 'redux/rootReducer';
 import { UserData, setUserData } from 'redux/slices/user';
+
+import crypto from 'crypto';
+
 interface LoginTypes {
   setIsTokenLive: Function
 }
@@ -53,10 +56,11 @@ const LoginComponent: React.FC<LoginTypes> = ({ setIsTokenLive }) => {
       pwInput.current.focus();
     }
     else {
+      console.log(crypto.createHash('sha512').update(loginUserPw).digest('base64'))
       const res = await axios.post('http://localhost:9090' + '/api/user/login', {
         loginUserData: {
           id: loginUserId,
-          pw: loginUserPw
+          pw: crypto.createHash('sha512').update(loginUserPw).digest('base64')
         }
       })
       if(res.data.loginFlag === true){
