@@ -47,7 +47,7 @@ const UserProfileComponent: React.FC<UserProfileTypes> = ({
           {usermail}
         </TypoComponent>
       </UserInfoStyled>
-      <Icon iconShape={faChevronRight} iconWidth="16px" iconHeight="16px" />
+      <Icon iconShape={faChevronRight} iconWidth="16px" iconHeight="16px" svgSize="12px" />
     </UserProfileStyled>
   );
 };

@@ -12,7 +12,7 @@ const IconWrap = styled.i<IconTypes>`
   height: ${props => props.iconHeight};
   margin : 0 ${props => (props.align || "")} ${props => (props.bottom || "")};
   svg {
-    font-size: 16px;
+    font-size: ${props => props.svgSize || "16px"};
   }
 `;
 
@@ -25,6 +25,7 @@ interface IconTypes extends styledInterface{
   iconHeight?: string;
   bottom?: string;
   align?: string;
+  svgSize?: string;
 }
 
 const Icon: React.FC<IconTypes> = ({
@@ -33,6 +34,7 @@ const Icon: React.FC<IconTypes> = ({
   iconHeight,
   bottom,
   align,
+  svgSize
 }) => {
   return (
     <IconWrap
@@ -41,6 +43,7 @@ const Icon: React.FC<IconTypes> = ({
       iconHeight={iconHeight}
       bottom={bottom}
       align={align}
+      svgSize={svgSize}
     >
       <FontAwesomeIcon icon={iconShape} />
     </IconWrap>

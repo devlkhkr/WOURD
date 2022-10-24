@@ -35,7 +35,7 @@ const SettingListComponent: React.FC<SettingListTypes> = props => {
       {
         nextStep ? (
           // next step
-          <Icon iconShape={faChevronRight} iconWidth="16px" iconHeight="16px" />
+          <Icon iconShape={faChevronRight} iconWidth="16px" iconHeight="16px" svgSize="12px" />
         ) : (
           // version text
           <TypoComponent fontSize="14px" fontWeight="semi-bold">
