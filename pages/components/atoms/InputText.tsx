@@ -17,10 +17,11 @@ interface InputTextTypes extends styledInterface {
   type: string;
   placeHolder?: string;
   readonly?: boolean;
+  onChange?: any;
 }
 
-const InputText: React.FC<InputTextTypes> = ({ type, id, placeHolder, readonly }) => {
-  return <Input type={type} placeholder={placeHolder} id={id} readOnly={readonly}></Input>;
+const InputText: React.FC<InputTextTypes> = ({ type, id, placeHolder, readonly, onChange }) => {
+  return <Input type={type} placeholder={placeHolder} id={id} readOnly={readonly} onChange={onChange}></Input>;
 };
 
 InputText.defaultProps = {
