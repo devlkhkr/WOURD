@@ -112,7 +112,7 @@ const LoginComponent: React.FC<LoginTypes> = ({ setIsTokenLive }) => {
         <Fieldset>
           <InputText
             type="text"
-            placeHolder="아이디를 입력하세요."
+            placeHolder="이메일을 입력하세요."
             onChange={(e:React.ChangeEvent<HTMLInputElement>) => {setLoginUserId(e.currentTarget.value)}}
             reference={idInput}
           />

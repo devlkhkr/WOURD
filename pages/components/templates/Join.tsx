@@ -42,15 +42,15 @@ const AuthCheckWrap = styled.div`
   }
 `
 
-const JoinStyled = styled.form<LoginTypes>`
+const JoinStyled = styled.div<LoginTypes>`
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   z-index: 19999;
-  padding: 32px 16px;
-  background-color: #fff;
+  padding: 16px;
+  background-color: #f3f3f3;
   overflow-y: auto;
 `;
 
@@ -74,16 +74,17 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
   return (
     <>
       <JoinStyled setJoinPageOpened={setJoinPageOpened}>
+        <Form>
           <Typo fontSize="18px" fontWeight="semi-bold" marginTop="12px">회원가입</Typo>
           <Fieldset>
             <InputWrap>
               <Label
                 htmlFor="joinId"
-                desc="아이디"
+                desc="이메일"
                 mandatory={true}
               />
               <FlexWrap>
-                <InputText type="text" placeHolder="아이디로 사용할 이메일을 입력하세요." id="joinId" />
+                <InputText type="text" placeHolder="예) user@copub.com" id="joinId" />
                 <Button desc="인증하기" width="160px" backgroundColor="var(--color-point)" className={`${authCheckFlag ? "disabled" : ""}`} color="#fff" onClick={authButtonClick} disabled={authCheckFlag}/>
               </FlexWrap>
             </InputWrap>
@@ -153,6 +154,7 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
               />
             </ButtonWrap>
           </Fieldset>
+        </Form>
       </JoinStyled>
     </>
   )
