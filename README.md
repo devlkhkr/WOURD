@@ -13,8 +13,6 @@
 
 -------
 
-- TypeScript
-
 **Framework**
 
 - React (Functional Component)
@@ -28,6 +26,32 @@
 **Styling**
 
 - Styled-Components
+
+**Script Spec**
+
+- ES6
+- TypeScript
+
+**API**
+
+- REST API
+- GraphQL
+
+**OPEN SOURCE LICENSE**
+
+- AXIOS
+  copyright
+  version
+
+- crypto
+  copyright
+  version
+  
+- uuid
+  copyright
+  version
+
+
 
 #### Commit Rules
 
