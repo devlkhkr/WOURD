@@ -32,7 +32,7 @@ const LoginStyled = styled.form<LoginTypes>`
   align-items: center;
   justify-content: center;
   padding: 16px;
-  background-color: #f3f3f3;
+  background-color: #fff;
   overflow: hidden;
   input{
     margin-top: 8px;

@@ -8,10 +8,11 @@ interface LabelType extends styledInterface {
 
 const LabelStyled = styled.label<LabelType>`
   display: inline-block;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
   line-height: 24px;
   vertical-align: middle;
   font-weight: var(--weight-medium);
+  font-size: ${(props) => (props.fontSize || "14px")};
   &:before {
     content: "\\2022";
     color: ${(props) => (props.mandatory ? "var(--color-red)" : "inherit")};

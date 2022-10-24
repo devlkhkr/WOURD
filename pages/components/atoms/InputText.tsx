@@ -4,10 +4,11 @@ import styledInterface from "../Intefaces/styledComponent"
 
 const Input = styled.input`
   width: 100%;
-  height: 32px;
+  height: 40px;
   border: 1px solid var(--color-lightgrey);
   background-color: #fff;
   padding: 0 8px;
+  border-radius: 0;
   &::placeholder {
     color: var(--color-grey);
   }

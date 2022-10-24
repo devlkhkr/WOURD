@@ -9,7 +9,7 @@ interface SelectTypes extends styledInterface {
 const SelectStyled = styled.select<SelectTypes>`
   appearance: none;
   width: 100%;
-  height: 32px;
+  height: 40px;
   border: 1px solid var(--color-lightgrey);
   background-color: #fff;
   padding: 0 8px;

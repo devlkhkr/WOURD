@@ -12,6 +12,7 @@ const ButtonStyled = styled.button<ButtonTypes>`
   color: ${(props) => props.color};
   border-color: transparent;
   border-radius: 4px;
+  font-size: ${(props) => props.fontSize || "14px"};
 `;
 
 const ButtonCompontent: React.FC<ButtonTypes> = ({
@@ -23,6 +24,8 @@ const ButtonCompontent: React.FC<ButtonTypes> = ({
   height,
   className,
   onClick,
+  fontSize,
+  reference
 }) => {
   return (
     <ButtonStyled
@@ -35,6 +38,8 @@ const ButtonCompontent: React.FC<ButtonTypes> = ({
       className={className}
       onClick={onClick}
       desc={desc}
+      fontSize={fontSize}
+      ref={reference}
     >
       {desc}
     </ButtonStyled>

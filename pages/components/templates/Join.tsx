@@ -13,10 +13,30 @@ import ButtonWrap from "../../components/molecules/ButtonWrap";
 import Form from "../../components/organisms/Form";
 
 import { useState } from "react";
+import { useRef } from "react";
 
 interface LoginTypes {
   setJoinPageOpened: Function
 }
+
+const FlexWrap = styled.div`
+  display: flex;
+  > * + * {
+    margin-left: 8px;
+  }
+`
+
+const AuthCheckWrap = styled.div`
+  position: relative;
+  input{
+    padding-right: 64px;
+  }
+  .auth_time_limit{
+    position: absolute;
+    right: 16px;
+    top: 0;
+  }
+`
 
 const JoinStyled = styled.form<LoginTypes>`
   position: fixed;
@@ -26,19 +46,25 @@ const JoinStyled = styled.form<LoginTypes>`
   height: 100%;
   z-index: 19999;
   padding: 32px 16px;
-  background-color: #f3f3f3;
+  background-color: #fff;
   overflow-y: auto;
 `;
 
 const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
-  const loginButtonClick = () => {
-    setJoinPageOpened(false)
-  };
+  
+  const [authCheckFlag, setAuthCheckFlag] = useState(false);
+  const [authTimer, setAuthTimer] = useState("5:00")
+  const authButtonClick = () => {
+    setAuthCheckFlag(true)
+    setTimeout(function(){
+
+    }, 1000)
+  }
 
   return (
     <>
       <JoinStyled setJoinPageOpened={setJoinPageOpened}>
-          <Typo fontSize="16px" fontWeight="semi-bold" marginTop="12px">회원가입</Typo>
+          <Typo fontSize="18px" fontWeight="semi-bold" marginTop="12px">회원가입</Typo>
           <Fieldset>
             <InputWrap>
               <Label
@@ -46,8 +72,19 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
                 desc="아이디"
                 mandatory={true}
               />
-              <InputText type="text" placeHolder="사용하실 아이디를 입력해주세요." id="joinId" />
+              <FlexWrap>
+                <InputText type="text" placeHolder="아이디로 사용할 이메일을 입력하세요." id="joinId" />
+                <Button desc="인증하기" width="160px" backgroundColor="var(--color-grey)" color="#fff" onClick={authButtonClick}/>
+              </FlexWrap>
             </InputWrap>
+            {authCheckFlag ? (
+              <InputWrap>
+                <AuthCheckWrap>
+                  <InputText type="password" placeHolder="이메일로 전송된 인증코드를 입력하세요." id="joinAuth" />
+                  <Typo lineHeight="40px" color="#e51937" className="auth_time_limit">{authTimer}</Typo>
+                </AuthCheckWrap>
+              </InputWrap>
+            ) : <></>}
             <InputWrap>
               <Label
                 htmlFor="joinPw"
@@ -62,7 +99,7 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
                 desc="비밀번호 확인"
                 mandatory={true}
               />
-              <InputText type="password" placeHolder="비밀번호를 한번 더 입력해주세요." id="joinPwConfirm" />
+              <InputText type="password" placeHolder="비밀번호를 한번 더 입력하세요." id="joinPwConfirm" />
             </InputWrap>
           </Fieldset>
 
@@ -73,7 +110,7 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
                 desc="성함"
                 mandatory={true}
               />
-              <InputText type="text" placeHolder="실명을 입력해주세요." id="joinName" />
+              <InputText type="text" placeHolder="실명을 입력하세요." id="joinName" />
             </InputWrap>
             <InputWrap>
               <Label
@@ -81,7 +118,7 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
                 desc="초대코드"
                 mandatory={true}
               />
-              <InputText type="text" placeHolder="초대코드를 입력해주세요." id="joinKey" />
+              <InputText type="text" placeHolder="초대코드를 입력하세요." id="joinKey" />
             </InputWrap>
           </Fieldset>
 
@@ -90,7 +127,7 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
               <Button
                 desc="취소"
                 id="cancleRegWord"
-                backgroundColor="#666"
+                backgroundColor="var(--color-grey)"
                 color="#fff"
                 width="40%"
                 height="40px"

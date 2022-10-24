@@ -7,9 +7,9 @@ interface TypoType extends styledInterface {
 }
 
 const TypoStyled = styled.div<TypoType>`
-    line-height: 1.2;
+    font-size: ${props => props.fontSize || "14px"};
     font-weight: ${props => `var(--weight-${props.fontWeight})`};
-    font-size: ${props => props.fontSize || "16px"};
+    line-height: ${props => props.lineHeight || "1.2"};
     color: ${props => props.color || "inherit"};
     text-align: ${props => props.textAlign || "center"};
 
@@ -21,6 +21,7 @@ const TypoComponent: React.FC<TypoType> = ({
   fontSize,
   fontWeight,
   textAlign,
+  lineHeight,
   color,
   marginTop,
   children,
@@ -32,6 +33,7 @@ const TypoComponent: React.FC<TypoType> = ({
       fontSize={fontSize}
       fontWeight={fontWeight}
       textAlign={textAlign}
+      lineHeight={lineHeight}
       color={color}
       marginTop={marginTop}
       className={className}
