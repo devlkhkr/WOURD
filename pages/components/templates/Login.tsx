@@ -8,6 +8,7 @@ import Fieldset from "../../components/molecules/Fieldset";
 import Form from "../../components/organisms/Form";
 import Join from "../../components/templates/Join"
 import { useState } from "react";
+import axios from "axios";
 
 interface LoginTypes {
   setIsTokenLive: Function
@@ -36,10 +37,26 @@ const LoginStyled = styled.form<LoginTypes>`
 `;
 
 const LoginComponent: React.FC<LoginTypes> = ({ setIsTokenLive }) => {
-  const loginButtonClick = () => {
-    setIsTokenLive(true)
+  const loginButtonClick = async() => {
+    const res = await axios.post('http://localhost:9090' + '/api/user/login', {
+      loginUserData: {
+        id: loginUserId,
+        pw: loginUserPw
+      }
+    })
+    console.log(res.data)
+    if(res.data === true){
+      setIsTokenLive(res.data)
+    }
+    else{
+      alert(res.data)
+    }
   };
+  
   const [joinPageOpened, setJoinPageOpened] = useState(false);
+  const [loginUserId, setLoginUserId] = useState("");
+  const [loginUserPw, setLoginUserPw] = useState("");
+  
   return (
     <>
       {joinPageOpened ? <Join setJoinPageOpened={setJoinPageOpened} /> : <></>}
@@ -49,10 +66,12 @@ const LoginComponent: React.FC<LoginTypes> = ({ setIsTokenLive }) => {
           <InputText
             type="text"
             placeHolder="아이디를 입력하세요."
+            onChange={(e:React.ChangeEvent<HTMLInputElement>) => {setLoginUserId(e.currentTarget.value)}}
           />
           <InputText
             type="password"
             placeHolder="패스워드를 입력하세요."
+            onChange={(e:React.ChangeEvent<HTMLInputElement>) => {setLoginUserPw(e.currentTarget.value)}}
           />
           <Button onClick={loginButtonClick} desc="로그인" height="48px" color="#fff" backgroundColor="var(--color-point)" />
         </Fieldset>

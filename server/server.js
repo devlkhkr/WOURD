@@ -49,6 +49,30 @@ app.get('/api/words/list', (req, res) => {
     })
 });
 
+app.post('/api/user/login', (req, res) => {
+    db.query(`SELECT * FROM USER_TB WHERE user_id='${req.body.loginUserData.id}'`, (err, data) => {
+        if (!err) {
+            if(data.length === 0){
+                res.send("존재하지 않는 아이디 입니다.")
+            }
+            else if(data.length === 1) {
+                if(req.body.loginUserData.pw === data[0].user_password) {
+                    res.send(true);
+                }
+                else{
+                    res.send("비밀번호가 일치하지 않습니다.")
+                }
+            }
+            else{
+                res.send(false)
+            }
+        } else {
+            console.log(err);
+            res.send(err);
+        }
+    })
+});
+
 
 // app.post('/api/board/del', (req, res) => {
 //     db.query("DELETE FROM BOARD_TB WHERE BOARD_SEQ=" + +req.body.seq, (err, data) => {
