@@ -9,7 +9,6 @@ import Form from "../../components/organisms/Form";
 import Join from "../../components/templates/Join"
 import { useState } from "react";
 import axios from "axios";
-
 interface LoginTypes {
   setIsTokenLive: Function
 }
@@ -38,21 +37,28 @@ const LoginStyled = styled.form<LoginTypes>`
 
 const LoginComponent: React.FC<LoginTypes> = ({ setIsTokenLive }) => {
   const loginButtonClick = async() => {
-    const res = await axios.post('http://localhost:9090' + '/api/user/login', {
-      loginUserData: {
-        id: loginUserId,
-        pw: loginUserPw
-      }
-    })
-    console.log(res.data)
-    if(res.data === true){
-      setIsTokenLive(res.data)
+    if(loginUserId.length <= 0) {
+      alert("아이디를 입력하세요");
     }
-    else{
-      alert(res.data)
+    else if(loginUserPw.length <= 0){
+      alert("비밀번호를 입력하세요");
+    }
+    else {
+      const res = await axios.post('http://localhost:9090' + '/api/user/login', {
+        loginUserData: {
+          id: loginUserId,
+          pw: loginUserPw
+        }
+      })
+      if(res.data === true){
+        setIsTokenLive(res.data)
+      }
+      else{
+        alert(res.data)
+      }
     }
   };
-  
+
   const [joinPageOpened, setJoinPageOpened] = useState(false);
   const [loginUserId, setLoginUserId] = useState("");
   const [loginUserPw, setLoginUserPw] = useState("");
