@@ -39,7 +39,7 @@ app.listen(PORT, () => {
 // E : sql setting
 
 app.get('/api/words/list', (req, res) => {
-    db.query("SELECT * FROM WORDS_TB", (err, data) => {
+    db.query("SELECT * FROM WORD_TB", (err, data) => {
         if (!err) {
             res.send(data);
         } else {
