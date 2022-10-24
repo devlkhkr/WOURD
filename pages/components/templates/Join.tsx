@@ -64,7 +64,7 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
 
   const authButtonClick = () => {
     if(authCheckFlag){
-      alert("이미 전송되었습니다.")
+      
     }
     else{
       setAuthCheckFlag(true)
@@ -84,7 +84,7 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
               />
               <FlexWrap>
                 <InputText type="text" placeHolder="아이디로 사용할 이메일을 입력하세요." id="joinId" />
-                <Button desc="인증하기" width="160px" backgroundColor="var(--color-point)" className={`${authCheckFlag ? "disabled" : ""}`} color="#fff" onClick={authButtonClick}/>
+                <Button desc="인증하기" width="160px" backgroundColor="var(--color-point)" className={`${authCheckFlag ? "disabled" : ""}`} color="#fff" onClick={authButtonClick} disabled={authCheckFlag}/>
               </FlexWrap>
             </InputWrap>
             {authCheckFlag ? (
