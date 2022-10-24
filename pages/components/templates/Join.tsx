@@ -10,7 +10,7 @@ import Button from "../atoms/Button";
 import Fieldset from "../molecules/Fieldset";
 import InputWrap from "../molecules/InputWrap";
 import ButtonWrap from "../molecules/ButtonWrap";
-import Timer from "../molecules/Timer";
+import Timer from "../atoms/Timer";
 import Form from "../organisms/Form";
 
 import { useState } from "react";
