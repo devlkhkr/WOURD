@@ -56,7 +56,9 @@ app.post('/api/user/login', (req, res) => {
                 res.send("존재하지 않는 아이디 입니다.")
             }
             else if(data.length === 1) {
-                if(req.body.loginUserData.pw === data[0].user_password) {
+                // console.log("input",req.body.loginUserData.pw)
+                // console.log("db", data[0].user_password)
+                if(req.body.loginUserData.pw == data[0].user_password) {
                     res.send({
                         loginFlag: true,
                         userInfo: {

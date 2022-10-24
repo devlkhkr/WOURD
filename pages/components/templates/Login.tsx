@@ -42,6 +42,25 @@ const LoginStyled = styled.form<LoginTypes>`
   }
 `;
 
+const createSalt = () => {
+  return new Promise((resolve, reject) => {
+      crypto.randomBytes(64, (err, buf) => {
+          if (err) reject(err);
+          resolve(buf.toString('base64'));
+      });
+  });
+}
+
+const createHashedPassword = ( plainPassword:string ) => {
+  return new Promise(async (resolve, reject) => {
+      const salt:any = await createSalt();
+      crypto.pbkdf2(plainPassword, salt, 1000, 64, 'sha512', (err, key) => {
+          if (err) reject(err);
+          resolve({ password: key.toString('base64'), salt });
+      });
+  });
+}
+
 const LoginComponent: React.FC<LoginTypes> = ({ setIsTokenLive }) => {
   const dispatch = useDispatch();
   const idInput:any = useRef();
@@ -56,11 +75,14 @@ const LoginComponent: React.FC<LoginTypes> = ({ setIsTokenLive }) => {
       pwInput.current.focus();
     }
     else {
-      console.log(crypto.createHash('sha512').update(loginUserPw).digest('base64'))
+      // createHashedPassword(loginUserPw).then(function(hasedObject) {
+      //   console.log(hasedObject)
+      //   // setLoginUserPw()
+      // })
       const res = await axios.post('http://localhost:9090' + '/api/user/login', {
         loginUserData: {
           id: loginUserId,
-          pw: crypto.createHash('sha512').update(loginUserPw).digest('base64')
+          pw: loginUserPw
         }
       })
       if(res.data.loginFlag === true){
@@ -79,8 +101,8 @@ const LoginComponent: React.FC<LoginTypes> = ({ setIsTokenLive }) => {
   };
 
   const [joinPageOpened, setJoinPageOpened] = useState(false);
-  const [loginUserId, setUserDataId] = useState("");
-  const [loginUserPw, setUserDataPw] = useState("");
+  const [loginUserId, setLoginUserId] = useState("");
+  const [loginUserPw, setLoginUserPw] = useState("");
   
   return (
     <>
@@ -91,13 +113,13 @@ const LoginComponent: React.FC<LoginTypes> = ({ setIsTokenLive }) => {
           <InputText
             type="text"
             placeHolder="아이디를 입력하세요."
-            onChange={(e:React.ChangeEvent<HTMLInputElement>) => {setUserDataId(e.currentTarget.value)}}
+            onChange={(e:React.ChangeEvent<HTMLInputElement>) => {setLoginUserId(e.currentTarget.value)}}
             reference={idInput}
           />
           <InputText
             type="password"
             placeHolder="패스워드를 입력하세요."
-            onChange={(e:React.ChangeEvent<HTMLInputElement>) => {setUserDataPw(e.currentTarget.value)}}
+            onChange={(e:React.ChangeEvent<HTMLInputElement>) => {setLoginUserPw(e.currentTarget.value)}}
             reference={pwInput}
           />
           <Button onClick={loginButtonClick} desc="로그인" height="48px" color="#fff" backgroundColor="var(--color-point)" />
