@@ -19,9 +19,9 @@ const SettingList = styled.div`
   justify-content : space-between;
   color : var(--color-black);
   padding : 0 8px;
-  border-bottom : 1px solid rgba(120,120,120, 0.2);
+  border-bottom : 1px dashed rgba(120,120,120, 0.2);
   &:first-child {
-    border-top : 1px solid rgba(120,120,120, 0.2);
+    border-top : 1px solid rgba(120,120,120, 0.45);
   }
 `
 

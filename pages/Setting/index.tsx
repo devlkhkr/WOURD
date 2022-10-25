@@ -29,7 +29,7 @@ const SettingProfileStyled = styled.div`
 
 // user interface
 const SettingTopStyled = styled.div`
-  margin-bottom: 2rem;
+  margin-bottom: 32px;
 `;
 
 // app interface
