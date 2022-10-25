@@ -70,10 +70,9 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
   
   const [stopTimer, setStopTimer] = useState(false); //인증성공시 타이머 종료 플래그
   
+  const [isEmailValid, setIsEmailValid] = useState(false);
   const [isPwValid, setIsPwValid] = useState(false);
 
-  const authInput:any = useRef();
-  const emailInput:any = useRef();
   const pwInput:any = useRef();
   const pwCfInput:any = useRef();
 
@@ -98,7 +97,6 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
       alert("유효한 이메일 형식이 아닙니다.")
     }
     else{
-      emailInput.current.readOnly = true;
       sendAuthCheckMail();
       setAuthCheckFlag(true)
     }
@@ -117,8 +115,8 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
 
   const successAuthCheck = () => {
     setStopTimer(true)
-    authInput.current.readOnly = true;
     alert("인증에 성공했습니다.")
+    setIsEmailValid(true);
   }
 
   const authCodeCheck = () => {
@@ -174,10 +172,10 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
                   width="auto"
                   placeHolder="예) user@cidict.com"
                   id="joinId"
+                  readonly={authCheckFlag}
                   onChange={
                     (e:React.ChangeEvent<HTMLInputElement>) => {setJoinUserId(e.currentTarget.value)}
                   }
-                  reference={emailInput}
                 />
                 <Button
                   desc="코드전송"
@@ -198,9 +196,9 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
                     type="text"
                     placeHolder="인증코드를 입력하세요."
                     id="joinAuth"
-                    reference={authInput}
+                    readonly={isEmailValid}
                     onChange={
-                      (e:React.ChangeEvent<HTMLInputElement>) => {validatePw(e.currentTarget.value)}
+                      (e:React.ChangeEvent<HTMLInputElement>) => {setJoinUserAuthCode(e.currentTarget.value)}
                     }
                   />
                   <Typo lineHeight="40px" color="#e51937" className="auth_time_limit">
