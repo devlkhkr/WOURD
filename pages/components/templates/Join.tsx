@@ -106,17 +106,36 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
     setAuthCheckFlag(false);
   }
 
+  const emailDupCheck = async() => {
+    const res = await axios.post('http://localhost:9090' + '/api/join/dup', {
+      joinUserData: {
+        email: joinUserId,
+      }
+    })
+    return res.data.length;
+  }
+
   const authButtonClick = () => {
-    if(authCheckFlag){
+    emailDupCheck().then((dupCheckLeng:number) => {
+      if(dupCheckLeng === 0){
+        if(authCheckFlag){
       
-    }
-    else if(!validator.isEmail(joinUserId)){
-      alert("유효한 이메일 형식이 아닙니다.")
-    }
-    else{
-      sendAuthCheckMail();
-      setAuthCheckFlag(true)
-    }
+        }
+        else if(!validator.isEmail(joinUserId)){
+          alert("유효한 이메일 형식이 아닙니다.")
+        }
+        else{
+          sendAuthCheckMail();
+          setAuthCheckFlag(true)
+        }
+      }
+      else if(dupCheckLeng > 0){
+        alert("이미 등록된 이메일 입니다.")
+      }
+      else {
+        console.log("예외오류:::::", dupCheckLeng);
+      }
+    })
   }
 
   const sendAuthCheckMail = async() => {

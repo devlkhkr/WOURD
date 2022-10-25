@@ -107,6 +107,17 @@ function getRandomString () {
     return randomstring;
 }
 
+app.post('/api/join/dup', (req, res) => {
+    db.query(`SELECT * FROM USER_TB WHERE user_id='${req.body.joinUserData.email}'`, (err, data) => {
+        if (!err) {
+            res.send(data)
+        } else {
+            console.log(err);
+            res.send(err);
+        }
+    })
+})
+
 app.post('/api/join/sendmail', (req, res) => {
     let user_email = req.body.joinUserData.email;
     let randomAuthCode = getRandomString()
@@ -127,7 +138,7 @@ app.post('/api/join/sendmail', (req, res) => {
         from: 'devlkhkr@gmail.com',
         to: user_email,
         subject: '[CIDict] 인증코드 입니다',
-        text: `인증번호 : ${randomAuthCode} \n 회원가입 인증코드 입력란에 위의 코드를 올바르게 입력해주세요. 대소문자를 구분합니다. (타인 유출 금지)`,
+        text: `인증번호 : ${randomAuthCode}\n\n회원가입 인증코드 입력란에 위의 코드를 올바르게 입력해주세요. 대소문자를 구분합니다.\n\n유효시간 10분, 타인 유출 금지.`,
     });
 
     info.then(function(data) {
