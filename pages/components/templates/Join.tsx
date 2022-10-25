@@ -59,6 +59,7 @@ const JoinStyled = styled.div<LoginTypes>`
   padding: 16px;
   background-color: #f3f3f3;
   overflow-y: auto;
+  animation: popup .3s linear;
 `;
 
 const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
