@@ -28,19 +28,28 @@ app.use(cors({
 //     res.sendFile(path.join(__dirname, "build", "index.html"));
 // });
 
-app.get('/api/host', (req, res) => {
-    res.send({
-        host: 'kany'
-    });
-})
-
 app.listen(PORT, () => {
     console.log(`Server On : http://localhost:${PORT}/`);
 })
 // E : sql setting
 
-app.get('/api/words/list', (req, res) => {
-    db.query("SELECT * FROM WORD_TB", (err, data) => {
+app.post('/api/join/reg', (req, res) => {
+    db.query("INSERT INTO USER_TB ("
+            + "user_seq,"
+            + "user_id,"
+            + "user_password,"
+            + "user_salt,"
+            + "user_nickname,"
+            + "user_prf_img,"
+            + "user_join_date"
+        + ") VALUES ("
+            + "null, '"
+            + req.body.joinUserData.email + "','"
+            + req.body.joinUserData.pw + "','"
+            + req.body.joinUserData.salt + "','"
+            + req.body.joinUserData.name + "',"
+            + "null, NOW()" + ")"
+        , (err, data) => {
         if (!err) {
             res.send(data);
         } else {
@@ -183,18 +192,6 @@ app.post('/api/join/sendmail', (req, res) => {
 //         if (!err) {
 //             res.send(data);
 
-//         } else {
-//             console.log(err);
-//             res.send(err);
-//         }
-//     })
-// });
-
-// app.post('/api/devlog/write', (req, res) => {
-//     db.query(`INSERT INTO DEVLOG_TB (DEVLOG_SEQ, DEVLOG_TITLE, DEVLOG_DETAIL, DEVLOG_IMG_URL, DEVLOG_WRITED_TIME, DEVLOG_CATEGORY, DEVLOG_WRITER) VALUES (null, "${req.body.postTitle}", '${req.body.postDetail}', "${req.body.postImgUrl}", NOW(), "REACT", "Lee Kanghyoung" )`
-//         , (err, data) => {
-//         if (!err) {
-//             res.send(data);
 //         } else {
 //             console.log(err);
 //             res.send(err);

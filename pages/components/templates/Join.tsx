@@ -63,20 +63,33 @@ const JoinStyled = styled.div<LoginTypes>`
 `;
 
 const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
+
+  /* S : DOM Element 동작 State Flag */
   const [authCheckFlag, setAuthCheckFlag] = useState(false); //인증 시작 플래그
-  
-  const [joinUserId, setJoinUserId] = useState(""); //사용자가 입력한 id 이메일
-  const [joinUserAuthCode, setJoinUserAuthCode] = useState(""); //사용자가 입력한 authCode
-  const [resAuthCode, setResAuthCode] = useState(""); //서버에서 전달받은 인증코드
-  
   const [stopTimer, setStopTimer] = useState(false); //인증성공시 타이머 종료 플래그
-  
+  /* E : DOM Element 동작 State Flag */
+
+  /* S : 인증코드 State */
+  const [resAuthCode, setResAuthCode] = useState(""); //서버에서 전달받은 인증코드
+  const [joinUserAuthCode, setJoinUserAuthCode] = useState(""); //사용자가 입력한 authCode
+  /* E : 인증코드 State */
+
+  /* S : 유효성 체크 State Flags */
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [isPwValid, setIsPwValid] = useState(false);
   const [isInvtValid, setIsInvtValid] = useState(false);
+  /* E : 유효성 체크 State Flags */
+
+  /* S : 서버로 보낼 데이터 State */
+  const [joinUserId, setJoinUserId] = useState(""); //사용자가 입력한 id 이메일
+  const [joinUserPw, setJoinUserPw] = useState(""); //사용자가 입력한 pw
+  const [joinUserName, setJoinUserName] = useState(""); //사용자가 입력한 이름
+
+  /* E : 서버로 보낼 데이터 State */
 
   const pwInput:any = useRef();
   const pwCfInput:any = useRef();
+
   const invtCode:string = "test"
 
   const schema = new passwordValidator();
@@ -127,6 +140,7 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
   }
 
   const validatePw = (pw:string) => {
+    setJoinUserPw(pw);
     if(pwCfInput.current.value.length > 0){
       validatePwConfirm();
     }
@@ -170,6 +184,46 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
         setIsInvtValid(false);
       })();
     }
+  }
+
+  const joinButtonClick = () => {
+    console.log("작성된 이메일: ", joinUserId)
+    console.log("작성된 암호: ", joinUserPw)
+    console.log("작성된 이름: ", joinUserName)
+
+    console.log("mail 유효성: ", isEmailValid)
+    console.log("pw 유효성: ", isPwValid)
+    console.log("invt 유효성: ", isInvtValid)
+
+    console.log("-----------------------------")
+    if(!isEmailValid){
+      alert("이메일 인증을 완료해주세요.")
+    }
+    else if(!isPwValid){
+      alert("암호를 확인해주세요.")
+    }
+    else if(joinUserName.length <= 0) {
+      alert("성함을 입력해주세요.")
+    }
+    else if(!isInvtValid){
+      alert("초대코드가 유효하지 않습니다.")
+    }
+    else{
+      sendJoinForm();
+    }
+  }
+
+  const sendJoinForm = async() => {
+    const res = await axios.post('http://localhost:9090' + '/api/join/reg', {
+      joinUserData: {
+        email: joinUserId,
+        pw: joinUserPw,
+        name: joinUserName,
+        salt: 123,
+      }
+    })
+    
+    console.log(res.data)
   }
 
   return (
@@ -270,7 +324,14 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
                 desc="성함"
                 mandatory={true}
               />
-              <InputText type="text" placeHolder="실명을 입력하세요." id="joinName" />
+              <InputText
+                type="text"
+                placeHolder="실명을 입력하세요."
+                id="joinName"
+                onChange={
+                  (e:React.ChangeEvent<HTMLInputElement>) => {setJoinUserName(e.currentTarget.value)}
+                }
+              />
             </InputWrap>
             <InputWrap>
               <Label
@@ -307,6 +368,7 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
                 color="#fff"
                 width="60%"
                 height="40px"
+                onClick={() => {joinButtonClick()}}
               />
             </ButtonWrap>
           </Fieldset>

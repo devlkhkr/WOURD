@@ -1,7 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-interface FormTypes {
+import styledInterface from "../Intefaces/styledComponent"
+interface FormTypes extends styledInterface{
   children: any;
+  onSubmit?: React.FormEventHandler<HTMLFormElement>;
 }
 
 const FormtStyled = styled.form<FormTypes>`
@@ -10,8 +12,8 @@ const FormtStyled = styled.form<FormTypes>`
   border-radius: 8px;
 `;
 
-const FormComponent: React.FC<FormTypes> = ({ children }) => {
-  return <FormtStyled>{children}</FormtStyled>;
+const FormComponent: React.FC<FormTypes> = ({ children, onSubmit, reference }) => {
+  return <FormtStyled onSubmit={onSubmit} ref={reference}>{children}</FormtStyled>;
 };
 
 FormComponent.defaultProps = {};

@@ -21,7 +21,7 @@ const Input = styled.input`
     background-color: #f3f3f3;
   }
   &[data-valid-state=valid]{
-    border-color: green;
+    border-color: #3bc831;
   }
   &[data-valid-state=err]{
     border-color: #e51937;
