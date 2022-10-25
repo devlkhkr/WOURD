@@ -50,7 +50,7 @@ app.post('/api/join/reg', (req, res) => {
             + req.body.joinUserData.pw + "','"
             + req.body.joinUserData.salt + "','"
             + req.body.joinUserData.name + "',"
-            + "null, NOW()" + ")"
+            + "null, NOW())"
         , (err, data) => {
         if (!err) {
             res.send(data);

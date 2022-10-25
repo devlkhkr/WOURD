@@ -77,6 +77,7 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
   /* S : 유효성 체크 State Flags */
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [isPwValid, setIsPwValid] = useState(false);
+  const [isPwCfValid, setIsPwCfValid] = useState(false);
   const [isInvtValid, setIsInvtValid] = useState(false);
   /* E : 유효성 체크 State Flags */
 
@@ -140,21 +141,22 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
   }
 
   const validatePw = (pw:string) => {
+    setIsPwValid(false); // 입력시 암호가 변경되었으므로 state false
     setJoinUserPw(pw);
+    
+    if(pw.length === 0){
+      pwInput.current.removeAttribute("data-valid-state");
+    }
     if(pwCfInput.current.value.length > 0){
       validatePwConfirm();
     }
-    if(pw.length === 0){
-      pwInput.current.removeAttribute("data-valid-state");
-    }else{
-      schema.validate(pw) ? (() => {
-        pwInput.current.setAttribute("data-valid-state", "valid");
-        setIsPwValid(true);
-      })() : (() => {
-        pwInput.current.setAttribute("data-valid-state", "err");
-        setIsPwValid(false);
-      })();
-    }
+    
+    schema.validate(pw) ? (() => {
+      pwInput.current.setAttribute("data-valid-state", "valid");
+      setIsPwValid(true);
+    })() : (() => {
+      pwInput.current.setAttribute("data-valid-state", "err");
+    })();
   }
 
   const validatePwConfirm = () => {
@@ -163,11 +165,11 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
     }
     else if(pwCfInput.current.value === pwInput.current.value){
       pwCfInput.current.setAttribute("data-valid-state", "valid")
-      setIsPwValid(true);
+      setIsPwCfValid(true);
     }
     else{
       pwCfInput.current.setAttribute("data-valid-state", "err")
-      setIsPwValid(false);
+      setIsPwCfValid(false);
     }
   }
 
@@ -200,7 +202,10 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
       alert("이메일 인증을 완료해주세요.")
     }
     else if(!isPwValid){
-      alert("암호를 확인해주세요.")
+      alert("비밀번호 양식을 확인해주세요.")
+    }
+    else if(!isPwCfValid){
+      alert("비밀번호가 일치하지 않습니다.")
     }
     else if(joinUserName.length <= 0) {
       alert("성함을 입력해주세요.")
@@ -223,7 +228,12 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
       }
     })
     
-    console.log(res.data)
+    res.data.affectedRows === 1 ? (() => {
+      alert("회원가입 완료");
+      setJoinPageOpened(false)
+    })() : (() => {
+      console.log("에러 발생:::::", res.data)
+    })();
   }
 
   return (
