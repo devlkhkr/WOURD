@@ -8,7 +8,7 @@
 .eslintrc.json
 # .babelrc
 yarn.lock
-tsconfig.json
+# tsconfig.json
 
 #next
 next.config.js
