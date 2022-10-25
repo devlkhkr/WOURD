@@ -135,7 +135,7 @@ app.post('/api/join/sendmail', (req, res) => {
     });
 
     let info = transporter.sendMail({   
-        from: 'Team CIDict <admin@cidict.com>',
+        from: 'Team CIDict <admin@cidict.co.kr>',
         to: user_email,
         subject: '[CIDict] 인증코드 입니다',
         text: `인증번호 : ${randomAuthCode}\n\n회원가입 인증코드 입력란에 위의 코드를 올바르게 입력해주세요. 대소문자를 구분합니다.\n\n유효시간 10분, 타인 유출 금지.`,
