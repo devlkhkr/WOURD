@@ -172,7 +172,7 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
                 <InputText
                   type="text"
                   width="auto"
-                  placeHolder="예) user@copub.com"
+                  placeHolder="예) user@cidict.com"
                   id="joinId"
                   onChange={
                     (e:React.ChangeEvent<HTMLInputElement>) => {setJoinUserId(e.currentTarget.value)}
