@@ -48,5 +48,5 @@ next-env.d.ts
 
 #env
 .env
-server/config/db.js
+server/config/config.js
 server/dist/config/db.js

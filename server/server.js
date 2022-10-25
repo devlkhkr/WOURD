@@ -2,9 +2,11 @@
 const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 9090;
-const db = require('./config/db');
+const config = require('./config/config');
+const db = config.db;
 const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
+const nodemailerConfig = config.nodemailer;
 // const path = require("path");
 const cors = require('cors');
 
@@ -116,7 +118,7 @@ app.post('/api/join/sendmail', (req, res) => {
         , requireTLS: true
         , auth: {
             user: 'devlkhkr@gmail.com',
-            pass: ''
+            pass: nodemailerConfig.pass
         }
     });
 
@@ -135,9 +137,19 @@ app.post('/api/join/sendmail', (req, res) => {
         console.log(connectObject)
         res.send(connectObject)
     })
-
-
 })
+
+app.get('/api/words/list', (req, res) => {
+    db.query("SELECT * FROM WORD_TB", (err, data) => {
+        if (!err) {
+            res.send(data);
+        } else {
+            console.log(err);
+            res.send(err);
+        }
+    })
+});
+
 
 // app.post('/api/board/del', (req, res) => {
 //     db.query("DELETE FROM BOARD_TB WHERE BOARD_SEQ=" + +req.body.seq, (err, data) => {
