@@ -25,6 +25,9 @@ const FlexWrap = styled.div`
   button.disabled{
     background-color: var(--color-grey);
   }
+  input{
+    flex: 1;
+  }
   > * + * {
     margin-left: 8px;
   }
@@ -32,6 +35,7 @@ const FlexWrap = styled.div`
 
 const AuthCheckWrap = styled.div`
   position: relative;
+  flex: 1;
   input{
     padding-right: 64px;
   }
@@ -71,6 +75,10 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
     }
   }
 
+  const authCodeCheck = () => {
+    
+  }
+
   return (
     <>
       <JoinStyled setJoinPageOpened={setJoinPageOpened}>
@@ -84,17 +92,20 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
                 mandatory={true}
               />
               <FlexWrap>
-                <InputText type="text" placeHolder="예) user@copub.com" id="joinId" />
-                <Button desc="인증하기" width="160px" backgroundColor="var(--color-point)" className={`${authCheckFlag ? "disabled" : ""}`} color="#fff" onClick={authButtonClick} disabled={authCheckFlag}/>
+                <InputText type="text" width="auto" placeHolder="예) user@copub.com" id="joinId" />
+                <Button desc="코드전송" width="80px" backgroundColor="var(--color-point)" className={`${authCheckFlag ? "disabled" : ""}`} color="#fff" onClick={authButtonClick} disabled={authCheckFlag}/>
               </FlexWrap>
             </InputWrap>
             {authCheckFlag ? (
-              <InputWrap>
+            <InputWrap>
+              <FlexWrap>
                 <AuthCheckWrap>
-                  <InputText type="text" placeHolder="이메일로 전송된 인증코드를 입력하세요." id="joinAuth" reference={authInput}/>
-                  <Typo lineHeight="40px" color="#e51937" className="auth_time_limit"><Timer mm="00" ss="10" onExpire={authTimeEnd}/></Typo>
+                  <InputText type="text" placeHolder="인증코드를 입력하세요." id="joinAuth" reference={authInput}/>
+                  <Typo lineHeight="40px" color="#e51937" className="auth_time_limit"><Timer mm="10" ss="10" onExpire={authTimeEnd}/></Typo>
                 </AuthCheckWrap>
-              </InputWrap>
+                <Button desc="인증하기" width="80px" backgroundColor="var(--color-point)" color="#fff" onClick={authCodeCheck} />
+              </FlexWrap>
+            </InputWrap>
             ) : <></>}
             <InputWrap>
               <Label

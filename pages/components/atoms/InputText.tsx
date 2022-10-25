@@ -3,7 +3,7 @@ import styled from "styled-components";
 import styledInterface from "../Intefaces/styledComponent"
 
 const Input = styled.input`
-  width: 100%;
+  width: ${(props) => props.width || "100%"};
   height: 40px;
   border: 1px solid var(--color-lightgrey);
   background-color: #fff;
@@ -22,8 +22,8 @@ interface InputTextTypes extends styledInterface {
   reference?: any;
 }
 
-const InputText: React.FC<InputTextTypes> = ({ type, id, placeHolder, readonly, onChange, reference }) => {
-  return <Input type={type} placeholder={placeHolder} id={id} readOnly={readonly} onChange={onChange} ref={reference}></Input>;
+const InputText: React.FC<InputTextTypes> = ({ type, width, id, placeHolder, readonly, onChange, reference }) => {
+  return <Input type={type} width={width} placeholder={placeHolder} id={id} readOnly={readonly} onChange={onChange} ref={reference}></Input>;
 };
 
 InputText.defaultProps = {
