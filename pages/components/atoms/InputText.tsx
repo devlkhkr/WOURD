@@ -9,8 +9,22 @@ const Input = styled.input`
   background-color: #fff;
   padding: 0 8px;
   border-radius: 0;
+  position: relative;
+  outline: none;
   &::placeholder {
     color: var(--color-grey);
+  }
+  &:focus{
+    border-color: #222;
+  }
+  &:read-only{
+    background-color: #f3f3f3;
+  }
+  &[data-valid-state=valid]{
+    border-color: green;
+  }
+  &[data-valid-state=err]{
+    border-color: #e51937;
   }
 `;
 
@@ -19,11 +33,23 @@ interface InputTextTypes extends styledInterface {
   placeHolder?: string;
   readonly?: boolean;
   onChange?: any;
+  onBlur?: any;
+  onKeyUp?: any;
   reference?: any;
 }
 
-const InputText: React.FC<InputTextTypes> = ({ type, width, id, placeHolder, readonly, onChange, reference }) => {
-  return <Input type={type} width={width} placeholder={placeHolder} id={id} readOnly={readonly} onChange={onChange} ref={reference}></Input>;
+const InputText: React.FC<InputTextTypes> = ({ type, width, id, placeHolder, readonly, onChange, onBlur, onKeyUp, reference }) => {
+  return <Input 
+    type={type}
+    width={width}
+    placeholder={placeHolder}
+    id={id}
+    readOnly={readonly}
+    onChange={onChange}
+    onBlur={onBlur}
+    onKeyUp={onKeyUp}
+    ref={reference}
+  />
 };
 
 InputText.defaultProps = {

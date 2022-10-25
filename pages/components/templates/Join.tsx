@@ -16,6 +16,9 @@ import Form from "../organisms/Form";
 import { useState } from "react";
 import { useRef } from "react";
 
+import axios from "axios";
+import validator from "validator"
+import passwordValidator from "password-validator";
 interface LoginTypes {
   setJoinPageOpened: Function
 }
@@ -59,9 +62,30 @@ const JoinStyled = styled.div<LoginTypes>`
 `;
 
 const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
+  const [authCheckFlag, setAuthCheckFlag] = useState(false); //인증 시작 플래그
   
-  const [authCheckFlag, setAuthCheckFlag] = useState(false);
-  const authInput:any = useRef()
+  const [joinUserId, setJoinUserId] = useState(""); //사용자가 입력한 id 이메일
+  const [joinUserAuthCode, setJoinUserAuthCode] = useState(""); //사용자가 입력한 authCode
+  const [resAuthCode, setResAuthCode] = useState(""); //서버에서 전달받은 인증코드
+  
+  const [stopTimer, setStopTimer] = useState(false); //인증성공시 타이머 종료 플래그
+  
+  const [isPwValid, setIsPwValid] = useState(false);
+
+  const authInput:any = useRef();
+  const emailInput:any = useRef();
+  const pwInput:any = useRef();
+  const pwCfInput:any = useRef();
+
+  const schema = new passwordValidator();
+  schema
+  .is().min(8)
+  .is().max(100)
+  .has().uppercase()
+  .has().lowercase()
+  .has().digits(1)
+  .has().not().spaces()
+
   const authTimeEnd = function () {
     setAuthCheckFlag(false);
   }
@@ -70,13 +94,66 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
     if(authCheckFlag){
       
     }
+    else if(!validator.isEmail(joinUserId)){
+      alert("유효한 이메일 형식이 아닙니다.")
+    }
     else{
+      emailInput.current.readOnly = true;
+      sendAuthCheckMail();
       setAuthCheckFlag(true)
     }
   }
 
-  const authCodeCheck = () => {
+  const sendAuthCheckMail = async() => {
+    const res = await axios.post('http://localhost:9090' + '/api/join/sendmail', {
+      joinUserData: {
+        email: joinUserId,
+      }
+    })
     
+    setResAuthCode(res.data.authCode)
+
+  }
+
+  const successAuthCheck = () => {
+    setStopTimer(true)
+    authInput.current.readOnly = true;
+    alert("인증에 성공했습니다.")
+  }
+
+  const authCodeCheck = () => {
+    joinUserAuthCode === resAuthCode ? successAuthCheck() : alert("인증코드가 일치하지 않습니다.");
+  }
+
+  const validatePw = (pw:string) => {
+    if(pwCfInput.current.value.length > 0){
+      validatePwConfirm();
+    }
+    if(pw.length === 0){
+      pwInput.current.removeAttribute("data-valid-state");
+    }else{
+      schema.validate(pw) ? (() => {
+        pwInput.current.setAttribute("data-valid-state", "valid");
+        setIsPwValid(true);
+      })() : (() => {
+        pwInput.current.setAttribute("data-valid-state", "err");
+        setIsPwValid(false);
+      })();
+    }
+  }
+
+  const validatePwConfirm = () => {
+    if(pwCfInput.current.value.length === 0){
+      pwCfInput.current.removeAttribute("data-valid-state");
+    }
+    else if(pwCfInput.current.value === pwInput.current.value){
+      pwCfInput.current.setAttribute("data-valid-state", "valid")
+      setIsPwValid(true);
+    }
+    else{
+      pwCfInput.current.setAttribute("data-valid-state", "err")
+      setIsPwValid(false);
+    }
   }
 
   return (
@@ -92,28 +169,65 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
                 mandatory={true}
               />
               <FlexWrap>
-                <InputText type="text" width="auto" placeHolder="예) user@copub.com" id="joinId" />
-                <Button desc="코드전송" width="80px" backgroundColor="var(--color-point)" className={`${authCheckFlag ? "disabled" : ""}`} color="#fff" onClick={authButtonClick} disabled={authCheckFlag}/>
+                <InputText
+                  type="text"
+                  width="auto"
+                  placeHolder="예) user@copub.com"
+                  id="joinId"
+                  onChange={
+                    (e:React.ChangeEvent<HTMLInputElement>) => {setJoinUserId(e.currentTarget.value)}
+                  }
+                  reference={emailInput}
+                />
+                <Button
+                  desc="코드전송"
+                  width="80px"
+                  backgroundColor="var(--color-point)"
+                  className={`${authCheckFlag ? "disabled" : ""}`}
+                  color="#fff"
+                  onClick={authButtonClick}
+                  disabled={authCheckFlag}
+                />
               </FlexWrap>
             </InputWrap>
             {authCheckFlag ? (
             <InputWrap>
               <FlexWrap>
                 <AuthCheckWrap>
-                  <InputText type="text" placeHolder="인증코드를 입력하세요." id="joinAuth" reference={authInput}/>
-                  <Typo lineHeight="40px" color="#e51937" className="auth_time_limit"><Timer mm="10" ss="10" onExpire={authTimeEnd}/></Typo>
+                  <InputText
+                    type="text"
+                    placeHolder="인증코드를 입력하세요."
+                    id="joinAuth"
+                    reference={authInput}
+                    onChange={
+                      (e:React.ChangeEvent<HTMLInputElement>) => {validatePw(e.currentTarget.value)}
+                    }
+                  />
+                  <Typo lineHeight="40px" color="#e51937" className="auth_time_limit">
+                    <Timer mm="10" ss="00" onExpire={authTimeEnd} stopTimer={stopTimer}/>
+                  </Typo>
                 </AuthCheckWrap>
                 <Button desc="인증하기" width="80px" backgroundColor="var(--color-point)" color="#fff" onClick={authCodeCheck} />
               </FlexWrap>
             </InputWrap>
             ) : <></>}
+          </Fieldset>
+          <Fieldset>
             <InputWrap>
               <Label
                 htmlFor="joinPw"
                 desc="비밀번호"
                 mandatory={true}
               />
-              <InputText type="password" placeHolder="최소 8자리 이상, 영문자 + 숫자 조합" id="joinPw" />
+              <InputText
+                type="password"
+                placeHolder="8자리 이상, 영어대문자 + 소문자 + 숫자 조합"
+                id="joinPw"
+                reference={pwInput}
+                onKeyUp={
+                  (e:React.ChangeEvent<HTMLInputElement>) => {validatePw(e.currentTarget.value)}
+                }
+              />
             </InputWrap>
             <InputWrap>
               <Label
@@ -121,7 +235,15 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
                 desc="비밀번호 확인"
                 mandatory={true}
               />
-              <InputText type="password" placeHolder="비밀번호를 한번 더 입력하세요." id="joinPwConfirm" />
+              <InputText
+                type="password"
+                placeHolder="비밀번호를 한번 더 입력하세요."
+                id="joinPwConfirm"
+                reference={pwCfInput}
+                onKeyUp={
+                  (e:React.ChangeEvent<HTMLInputElement>) => {validatePwConfirm()}
+                }
+              />
             </InputWrap>
           </Fieldset>
 
