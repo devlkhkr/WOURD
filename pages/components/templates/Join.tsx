@@ -250,7 +250,7 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
     })
     
     res.data.affectedRows === 1 ? (() => {
-      alert("회원가입 완료");
+      alert("회원가입이 완료되었습니다.");
       setJoinPageOpened(false)
     })() : (() => {
       console.log("에러 발생:::::", res.data)
@@ -273,7 +273,7 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
                 <InputText
                   type="text"
                   width="auto"
-                  placeHolder="예) user@cidict.com"
+                  placeHolder="예) user@cidict.co.kr"
                   id="joinId"
                   readonly={authCheckFlag}
                   onChange={
