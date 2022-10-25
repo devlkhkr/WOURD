@@ -5,7 +5,9 @@ import styledInterface from "../Intefaces/styledComponent"
 const Input = styled.input`
   width: ${(props) => props.width || "100%"};
   height: 40px;
-  border: 1px solid var(--color-lightgrey);
+  border-style: solid;
+  border-width: 0 0 1px;
+  border-color: var(--color-lightgrey);
   background-color: #fff;
   padding: 0 8px;
   border-radius: 0;
