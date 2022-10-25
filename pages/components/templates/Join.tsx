@@ -162,13 +162,13 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
       invt.removeAttribute("data-valid-state");
     }
     else{
-      invt.value === invtCode ? (() => {
+      (invt.value === invtCode) ? (() => {
         invt.setAttribute("data-valid-state", "valid");
         setIsInvtValid(true);
-      }) : (() => {
+      })() : (() => {
         invt.setAttribute("data-valid-state", "err");
         setIsInvtValid(false);
-      })
+      })();
     }
   }
 
