@@ -85,7 +85,7 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
   const [joinUserId, setJoinUserId] = useState(""); //사용자가 입력한 id 이메일
   const [joinUserPw, setJoinUserPw] = useState(""); //사용자가 입력한 pw
   const [joinUserName, setJoinUserName] = useState(""); //사용자가 입력한 이름
-
+  const [joinUserImg, setJoinUserImg] = useState("/images/img_user_default.jpg"); //사용자가 입력한 이름
   /* E : 서버로 보낼 데이터 State */
 
   const pwInput:any = useRef();
@@ -143,20 +143,21 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
   const validatePw = (pw:string) => {
     setIsPwValid(false); // 입력시 암호가 변경되었으므로 state false
     setJoinUserPw(pw);
-    
-    if(pw.length === 0){
-      pwInput.current.removeAttribute("data-valid-state");
-    }
+
     if(pwCfInput.current.value.length > 0){
       validatePwConfirm();
     }
-    
-    schema.validate(pw) ? (() => {
-      pwInput.current.setAttribute("data-valid-state", "valid");
-      setIsPwValid(true);
-    })() : (() => {
-      pwInput.current.setAttribute("data-valid-state", "err");
-    })();
+    if(pw.length === 0){
+      pwInput.current.removeAttribute("data-valid-state");
+    }
+    else{
+      schema.validate(pw) ? (() => {
+        pwInput.current.setAttribute("data-valid-state", "valid");
+        setIsPwValid(true);
+      })() : (() => {
+        pwInput.current.setAttribute("data-valid-state", "err");
+      })();
+    }
   }
 
   const validatePwConfirm = () => {
@@ -225,6 +226,7 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
         pw: joinUserPw,
         name: joinUserName,
         salt: 123,
+        prfImg: joinUserImg
       }
     })
     

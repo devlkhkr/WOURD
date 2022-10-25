@@ -49,8 +49,9 @@ app.post('/api/join/reg', (req, res) => {
             + req.body.joinUserData.email + "','"
             + req.body.joinUserData.pw + "','"
             + req.body.joinUserData.salt + "','"
-            + req.body.joinUserData.name + "',"
-            + "null, NOW())"
+            + req.body.joinUserData.name + "','"
+            + req.body.joinUserData.prfImg + "',"
+            + "NOW())"
         , (err, data) => {
         if (!err) {
             res.send(data);
