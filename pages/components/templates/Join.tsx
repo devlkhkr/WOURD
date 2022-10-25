@@ -91,7 +91,7 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
   const pwInput:any = useRef();
   const pwCfInput:any = useRef();
 
-  const invtCode:string = "test"
+  const invtCode:any = process.env.NEXT_PUBLIC_INVITE_CODE;
 
   const schema = new passwordValidator();
   schema
