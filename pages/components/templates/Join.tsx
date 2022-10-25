@@ -72,9 +72,11 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
   
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [isPwValid, setIsPwValid] = useState(false);
+  const [isInvtValid, setIsInvtValid] = useState(false);
 
   const pwInput:any = useRef();
   const pwCfInput:any = useRef();
+  const invtCode:string = "test"
 
   const schema = new passwordValidator();
   schema
@@ -152,6 +154,14 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
       pwCfInput.current.setAttribute("data-valid-state", "err")
       setIsPwValid(false);
     }
+  }
+
+  const validInvtCode = (invt:string) => {
+    invt === invtCode ? (() => {
+      setIsInvtValid(true);
+    }) : (() => {
+      setIsInvtValid(false);
+    })
   }
 
   return (
@@ -260,7 +270,14 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
                 desc="초대코드"
                 mandatory={true}
               />
-              <InputText type="text" placeHolder="초대코드를 입력하세요." id="joinKey" />
+              <InputText
+                type="text"
+                placeHolder="초대코드를 입력하세요."
+                id="joinKey"
+                onChange={
+                  (e:React.ChangeEvent<HTMLInputElement>) => {validInvtCode(e.currentTarget.value)}
+                }
+              />
             </InputWrap>
           </Fieldset>
 
