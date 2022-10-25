@@ -157,12 +157,19 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
     }
   }
 
-  const validInvtCode = (invt:string) => {
-    invt === invtCode ? (() => {
-      setIsInvtValid(true);
-    }) : (() => {
-      setIsInvtValid(false);
-    })
+  const validInvtCode = (invt:HTMLInputElement) => {
+    if(invt.value.length === 0){
+      invt.removeAttribute("data-valid-state");
+    }
+    else{
+      invt.value === invtCode ? (() => {
+        invt.setAttribute("data-valid-state", "valid");
+        setIsInvtValid(true);
+      }) : (() => {
+        invt.setAttribute("data-valid-state", "err");
+        setIsInvtValid(false);
+      })
+    }
   }
 
   return (
@@ -276,7 +283,7 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
                 placeHolder="초대코드를 입력하세요."
                 id="joinKey"
                 onChange={
-                  (e:React.ChangeEvent<HTMLInputElement>) => {validInvtCode(e.currentTarget.value)}
+                  (e:React.ChangeEvent<HTMLInputElement>) => {validInvtCode(e.currentTarget)}
                 }
               />
             </InputWrap>
