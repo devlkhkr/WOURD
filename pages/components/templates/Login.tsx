@@ -54,29 +54,31 @@ const LoginComponent: React.FC<LoginTypes> = ({ setIsTokenLive }) => {
       pwInput.current.focus();
     }
     else {
-      Hash.makePasswordHashed(loginUserId, loginUserPw).then((hashedPw:string) => {
+      Hash.makePasswordHashed(loginUserId, loginUserPw).then((hashedPw:string | boolean) => {
         startLogin(hashedPw);
       })
     }
   };
-  const startLogin = async(hashedPw:string) => {
-    const res = await axios.post('http://localhost:9090' + '/api/user/login', {
-      loginUserData: {
-        id: loginUserId,
-        pw: hashedPw
+  const startLogin = async(hashedPw:string | boolean) => {
+    if(hashedPw){
+      const res = await axios.post('http://localhost:9090' + '/api/user/login', {
+        loginUserData: {
+          id: loginUserId,
+          pw: hashedPw
+        }
+      })
+      if(res.data.loginFlag === true){
+        dispatch(setUserData({ 
+          seq: res.data.userInfo.seq,
+          id: res.data.userInfo.id,
+          nickname: res.data.userInfo.nickname,
+          prfimg: res.data.userInfo.prfimg
+        } as UserData));
+        setIsTokenLive(res.data.loginFlag)
       }
-    })
-    if(res.data.loginFlag === true){
-      dispatch(setUserData({ 
-        seq: res.data.userInfo.seq,
-        id: res.data.userInfo.id,
-        nickname: res.data.userInfo.nickname,
-        prfimg: res.data.userInfo.prfimg
-      } as UserData));
-      setIsTokenLive(res.data.loginFlag)
-    }
-    else{
-      alert(res.data)
+      else{
+        alert(res.data)
+      }
     }
   }
 

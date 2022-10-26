@@ -63,9 +63,17 @@ app.post('/api/join/reg', (req, res) => {
 });
 
 app.post('/api/user/salt', (req, res) => {
+    const objSaltInfo = {
+        dupLeng: 0,
+        salt: ""
+    }
     db.query(`SELECT * FROM USER_TB WHERE user_id='${req.body.loginUserId}'`, (err, data) => {
         if (!err) {
-            res.send(data[0].user_salt);
+            objSaltInfo.dupLeng = data.length;
+            if(data.length === 1){
+                objSaltInfo.salt = data[0].user_salt;
+            }
+            res.send(objSaltInfo);
         } else {
             console.log(err);
             res.send(err);
@@ -75,30 +83,20 @@ app.post('/api/user/salt', (req, res) => {
 
 app.post('/api/user/login', (req, res) => {
     db.query(`SELECT * FROM USER_TB WHERE user_id='${req.body.loginUserData.id}'`, (err, data) => {
-        if (!err) {
-            if(data.length === 0){
-                res.send("존재하지 않는 아이디 입니다.")
-            }
-            else if(data.length === 1) {
-                // console.log("input",req.body.loginUserData.pw)
-                // console.log("db", data[0].user_password)
-                if(req.body.loginUserData.pw == data[0].user_password) {
-                    res.send({
-                        loginFlag: true,
-                        userInfo: {
-                            seq: data[0].user_seq,
-                            id: data[0].user_id,
-                            nickname: data[0].user_nickname,
-                            prfimg: data[0].user_prf_img
-                        }
-                    });
-                }
-                else{
-                    res.send("비밀번호가 일치하지 않습니다.")
-                }
+        if (!err && data.length === 1) {
+            if(req.body.loginUserData.pw == data[0].user_password) {
+                res.send({
+                    loginFlag: true,
+                    userInfo: {
+                        seq: data[0].user_seq,
+                        id: data[0].user_id,
+                        nickname: data[0].user_nickname,
+                        prfimg: data[0].user_prf_img
+                    }
+                });
             }
             else{
-                res.send(false)
+                res.send("비밀번호가 일치하지 않습니다.")
             }
         } else {
             console.log(err);

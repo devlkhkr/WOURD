@@ -31,13 +31,23 @@ const Hash:HashTypes = {
     const res = await axios.post('http://localhost:9090' + '/api/user/salt', {
       loginUserId: loginUserId,
     })
-    const salt = res.data;
-    return new Promise(async (resolve, reject) => {
-      crypto.pbkdf2(plainPassword, salt, Hash.stretching, 64, 'sha512', (err, key) => {
-          if (err) reject(err);
-          resolve(key.toString('base64'));
-      });
-    })
+    if(res.data.dupLeng <= 0){
+      alert("존재하지 않는 아이디 입니다.")
+      return false;
+    }
+    else if(res.data.dupLeng === 1){
+      const salt = res.data.salt;
+      return new Promise(async (resolve, reject) => {
+        crypto.pbkdf2(plainPassword, salt, Hash.stretching, 64, 'sha512', (err, key) => {
+            if (err) reject(err);
+            resolve(key.toString('base64'));
+        });
+      })
+    }
+    else{
+      console.log("아이디 중복 체크 오류, Length:::::", res.data.dupLeng)
+      return;
+    }
   }
 }
 
