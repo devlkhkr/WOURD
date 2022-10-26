@@ -331,7 +331,7 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
               />
               <InputText
                 type="password"
-                placeHolder="8자리 이상, 영어대문자 + 소문자 + 숫자 조합"
+                placeHolder="8자리 이상, 영어대문자 + 소문자 포함"
                 id="joinPw"
                 reference={pwInput}
                 onKeyUp={
