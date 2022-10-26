@@ -78,7 +78,7 @@ const LoginComponent: React.FC<LoginTypes> = ({ setIsTokenLive }) => {
         setIsTokenLive(res.data.loginFlag)
       }
       else{
-        alert(res.data)
+        console.log("로그인 실패:::::", res.data)
       }
     }
   }
@@ -90,7 +90,8 @@ const LoginComponent: React.FC<LoginTypes> = ({ setIsTokenLive }) => {
         logAction: 1,
       }
     })
-    console.log(res.data)
+    let logInsertResult = res.data.affectedRows === 1 ? "true" : "false";
+    console.log(`로그인 기록 Insert : ${logInsertResult}`);
   }
 
   const [joinPageOpened, setJoinPageOpened] = useState(false);
