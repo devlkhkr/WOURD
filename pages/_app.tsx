@@ -71,7 +71,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, []);
 
   // modal
-  const modalData = useSelector<ReducerType, ModalData[]>(state => state.modal);
+  // const modalData = useSelector<ReducerType, ModalData[]>(state => state.modal);
 
   return (
     <>
