@@ -73,6 +73,12 @@ const Setting: NextPage<SettingTypes> = () => {
             <ToggleCheckComponent 
               typo="모르는단어"
             />
+            <ToggleCheckComponent 
+              typo="즐겨찾은단어"
+            />
+            <ToggleCheckComponent 
+              typo="건너뛴단어"
+            />
           </Accordion>
           // )
         }

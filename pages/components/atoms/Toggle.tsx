@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import styledInterface from "../Intefaces/styledComponent"
-import InputRadioComponent from "./Checkbox";
+import CheckboxComponent from "./Checkbox";
 import TypoComponent from "./Typo";
 interface ToggleCheckTypes extends styledInterface {
   typo?: string;
@@ -23,8 +23,9 @@ const ToggleCheckComponent: React.FC<ToggleCheckTypes> = ({
       <TypoComponent fontSize="14px" fontWeight="regular" textAlign="left">
         {typo}
       </TypoComponent>
-      <InputRadioComponent 
+      <CheckboxComponent 
         isToggle={true}
+        defaultChecked={true}
       />
     </ToggleCheckStyled>
   );
