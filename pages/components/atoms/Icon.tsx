@@ -34,7 +34,7 @@ const Icon: React.FC<IconTypes> = ({
   iconHeight,
   bottom,
   align,
-  svgSize
+  svgSize,
 }) => {
   return (
     <IconWrap

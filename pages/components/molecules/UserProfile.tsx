@@ -4,15 +4,16 @@ import styledInterface from "../Intefaces/styledComponent";
 import ImgComponent from "../atoms/Img";
 import TypoComponent from "../atoms/Typo";
 
-import { useSelector } from 'react-redux'
-import { ReducerType } from 'redux/rootReducer';
-import { UserData, setUserData } from 'redux/slices/user';
+import { useSelector } from "react-redux";
+import { ReducerType } from "redux/rootReducer";
+import { UserData, setUserData } from "redux/slices/user";
 
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import Icon from "../atoms/Icon";
 
 interface UserProfileTypes extends styledInterface {
-  
+  username?: string;
+  usermail?: string;
 }
 
 const UserProfileStyled = styled.div<UserProfileTypes>`
@@ -30,14 +31,12 @@ const UserInfoStyled = styled.div<UserProfileTypes>`
   flex: 1 1;
 `;
 
-const UserProfileComponent: React.FC<UserProfileTypes> = ({
-
-}) => {
+const UserProfileComponent: React.FC<UserProfileTypes> = ({}) => {
   const userData = useSelector<ReducerType, UserData[]>(state => state.user);
 
   return (
     <UserProfileStyled>
-      <ImgComponent src={userData[0].prfimg} objectFit="cover"/>
+      <ImgComponent src={userData[0].prfimg} objectFit="cover" />
       <UserInfoStyled>
         <TypoComponent fontSize="16px" fontWeight="semi-bold" textAlign="left">
           {userData[0].nickname}
@@ -52,7 +51,12 @@ const UserProfileComponent: React.FC<UserProfileTypes> = ({
           {userData[0].id}
         </TypoComponent>
       </UserInfoStyled>
-      <Icon iconShape={faChevronRight} iconWidth="16px" iconHeight="16px" svgSize="12px" />
+      <Icon
+        iconShape={faChevronRight}
+        iconWidth="16px"
+        iconHeight="16px"
+        svgSize="12px"
+      />
     </UserProfileStyled>
   );
 };
