@@ -7,7 +7,7 @@ import UserProfileComponent from "../components/molecules/UserProfile";
 
 interface SettingTypes extends styledInterface {
   typo: string;
-  nextStep?: boolean;
+  afterIcon?: string;
   rightText?: string;
 }
 
@@ -42,22 +42,25 @@ const Setting: NextPage<SettingTypes> = () => {
       <SettingProfileStyled>
         <UserProfileComponent />
       </SettingProfileStyled>
+
       <SettingTopStyled>
-      <SettingListComponent typo="닉네임 변경" nextStep={true} />
-        <SettingListComponent typo="비밀번호 변경" nextStep={true} />
-        <SettingListComponent typo="공지사항" nextStep={true} />
-        <SettingListComponent typo="탈퇴요청" nextStep={true} />
+        <SettingListComponent typo="단어노출제어" afterIcon='arr-down' />
+        {/* 
+          아는단어
+          모르는단어
+          즐겨찾는단어
+          건너뛴단어
+         */}
       </SettingTopStyled>
 
+      
       <SettingBottomStyled>
-        <SettingListComponent typo="도움말(FAQ)" nextStep={true} />
-        <SettingListComponent typo="로그아웃" nextStep={true} />
-        <SettingListComponent 
-          typo="개발히스토리"
-          nextStep={true}
-
-        />
+        <SettingListComponent typo="공지사항" />
+        <SettingListComponent typo="도움말(FAQ)" />
+        <SettingListComponent typo="개발히스토리" />
         <SettingListComponent typo="버전정보" rightText="1.0.0" />
+        <SettingListComponent typo="시스템스펙" />
+        <SettingListComponent typo="로그아웃" />
       </SettingBottomStyled>
     </SettingWrap>
   );

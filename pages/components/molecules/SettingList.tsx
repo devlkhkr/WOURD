@@ -4,11 +4,11 @@ import styledInterface from "../Intefaces/styledComponent";
 import Icon from "../atoms/Icon";
 import TypoComponent from "../atoms/Typo";
 
-import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { faChevronRight, faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 
 interface SettingListTypes extends styledInterface{
   typo: string;
-  nextStep ?: boolean;
+  afterIcon ?: string;
   rightText ?: string;
 }
 
@@ -26,23 +26,27 @@ const SettingList = styled.div`
 `
 
 const SettingListComponent: React.FC<SettingListTypes> = props => {
-  const { typo, nextStep, rightText } = props;
+  const { typo, afterIcon, rightText } = props;
+  const setAfterIcon = () => {
+    switch(afterIcon){
+      case 'arr-right':
+        return <Icon iconShape={faChevronRight} iconWidth="16px" iconHeight="16px" svgSize="12px"/>
+      case 'arr-down':
+        return <Icon iconShape={faChevronDown} iconWidth="16px" iconHeight="16px" svgSize="12px" />
+      case 'arr-up':
+        return <Icon iconShape={faChevronUp} iconWidth="16px" iconHeight="16px" svgSize="12px" />
+      default:
+        return 
+    }
+  }
+  
   return (
     <SettingList>
       <TypoComponent fontSize="14px" fontWeight="regular" textAlign="left">
         {typo}
       </TypoComponent>
       {
-        nextStep ? (
-          // next step
-          <Icon iconShape={faChevronRight} iconWidth="16px" iconHeight="16px" svgSize="12px" />
-        ) : (
-          // version text
-          <TypoComponent fontSize="14px" fontWeight="semi-bold" color="rgba(0,0,0,.5)">
-            {rightText}
-          </TypoComponent>
-        )
-        
+        setAfterIcon()
       }
     </SettingList>
   );
