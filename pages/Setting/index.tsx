@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import ToggleCheckComponent from "pages/components/atoms/Toggle";
 import { useState } from "react";
 import styled from "styled-components";
 import styledInterface from "../components/Intefaces/styledComponent";
@@ -64,7 +65,16 @@ const Setting: NextPage<SettingTypes> = () => {
          */}
         {
           // 아코디언
-          wordControl && <div>hello</div>
+          wordControl && (
+            <>
+              <ToggleCheckComponent 
+                typo="아는단어만보기"
+              />
+              <ToggleCheckComponent 
+                typo="모르는단어보기"
+              />
+            </>
+          )
         }
       </SettingTopStyled>
 
