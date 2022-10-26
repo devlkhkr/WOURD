@@ -8,8 +8,9 @@ interface ToggleCheckTypes extends styledInterface {
 }
 
 const ToggleCheckStyled = styled.div`
-  padding : 8px;
   display : flex;
+  height: 40px;
+  padding: 0 8px;
   align-items : center;
   justify-content: space-between;
 `

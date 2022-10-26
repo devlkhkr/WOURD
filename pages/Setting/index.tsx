@@ -5,6 +5,7 @@ import styled from "styled-components";
 import styledInterface from "../components/Intefaces/styledComponent";
 import SettingListComponent from "../components/molecules/SettingList";
 import UserProfileComponent from "../components/molecules/UserProfile";
+import Accordion from "../components/molecules/Accordion";
 
 interface SettingTypes extends styledInterface {
   typo: string;
@@ -25,7 +26,7 @@ const SettingWrap = styled.div`
 const SettingProfileStyled = styled.div`
   display: flex;
   align-items: center;
-  height: 88px;
+  /* height: 88px; */
   padding: 0 8px;
 `;
 
@@ -51,7 +52,7 @@ const Setting: NextPage<SettingTypes> = () => {
 
       <SettingTopStyled>
         <SettingListComponent 
-          typo="단어노출제어" 
+          typo="단어카드 노출 제어" 
           afterIcon="arr-down"
           onClick={() => {
             setwordControl(prev => !prev);
@@ -65,16 +66,16 @@ const Setting: NextPage<SettingTypes> = () => {
          */}
         {
           // 아코디언
-          wordControl && (
-            <>
-              <ToggleCheckComponent 
-                typo="아는단어만보기"
-              />
-              <ToggleCheckComponent 
-                typo="모르는단어보기"
-              />
-            </>
-          )
+          // wordControl && (
+          <Accordion isOpened={wordControl}>
+            <ToggleCheckComponent 
+              typo="아는단어"
+            />
+            <ToggleCheckComponent 
+              typo="모르는단어"
+            />
+          </Accordion>
+          // )
         }
       </SettingTopStyled>
 

@@ -20,7 +20,7 @@ const CheckboxStyled = styled.input<CheckboxTypes>`
           position: relative;
           border-radius: 16px;
           background-color: var(--color-white);
-          box-shadow: 0 0 4px 1px rgba(0 0 0 / 15%);
+          border: 1px solid var(--color-lightgrey);
           cursor: pointer;
           transition : background-color 0.2s ease-in;
             &::after{
@@ -37,6 +37,7 @@ const CheckboxStyled = styled.input<CheckboxTypes>`
               transition : left 0.2s ease-in;
             }
             &:checked {
+              border-color : var(--color-point);
               background-color : var(--color-point);
               &::after{
                 background-color : var(--color-white);
