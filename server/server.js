@@ -160,6 +160,28 @@ app.post('/api/join/sendmail', (req, res) => {
     })
 })
 
+app.post('/api/log/history', (req, res) => {
+    db.query("INSERT INTO LOG_HISTORY_TB ("
+            + "log_seq,"
+            + "log_user_id,"
+            + "log_action,"
+            + "log_date"
+        + ") VALUES ("
+            + "null, '"
+            + req.body.loginUserData.logUserId + "',"
+            + req.body.loginUserData.logAction + ","
+            + "NOW())"
+        , (err, data) => {
+        if (!err) {
+            res.send(data);
+        } else {
+            console.log(err);
+            res.send(err);
+        }
+    })
+});
+
+
 app.get('/api/words/list', (req, res) => {
     db.query("SELECT * FROM WORD_TB", (err, data) => {
         if (!err) {

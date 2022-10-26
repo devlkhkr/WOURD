@@ -74,12 +74,23 @@ const LoginComponent: React.FC<LoginTypes> = ({ setIsTokenLive }) => {
           nickname: res.data.userInfo.nickname,
           prfimg: res.data.userInfo.prfimg
         } as UserData));
+        insertLoginData();
         setIsTokenLive(res.data.loginFlag)
       }
       else{
         alert(res.data)
       }
     }
+  }
+
+  const insertLoginData = async() => {
+    const res = await axios.post('http://localhost:9090' + '/api/log/history', {
+      loginUserData: {
+        logUserId: loginUserId,
+        logAction: 1,
+      }
+    })
+    console.log(res.data)
   }
 
   const [joinPageOpened, setJoinPageOpened] = useState(false);
