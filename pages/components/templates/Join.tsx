@@ -58,7 +58,10 @@ const AuthCheckWrap = styled.div`
 const JoinStyled = styled.div<LoginTypes>`
   position: fixed;
   top: 0;
-  left: 0;
+  left: 50%;
+  transform: translate(-50%, 0);
+  max-width: 720px;
+  min-width: 360px;
   width: 100%;
   height: 100%;
   z-index: 19999;
@@ -371,6 +374,7 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
                 type="text"
                 placeHolder="실명을 입력하세요."
                 id="joinName"
+                maxLength={5}
                 onChange={
                   (e:React.ChangeEvent<HTMLInputElement>) => {setJoinUserName(e.currentTarget.value)}
                 }
