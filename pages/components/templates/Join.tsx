@@ -19,8 +19,14 @@ import { useRef } from "react";
 import axios from "axios";
 import validator from "validator"
 import passwordValidator from "password-validator";
+import Hash from "../atoms/Hash";
 interface LoginTypes {
   setJoinPageOpened: Function
+}
+
+interface HashedDataTypes{
+  password: string;
+  salt: string;
 }
 
 const FlexWrap = styled.div`
@@ -234,17 +240,20 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
       alert("초대코드가 유효하지 않습니다.")
     }
     else{
-      sendJoinForm();
+      Hash.createHashedPassword(joinUserPw).then((hashedData:HashedDataTypes) => {
+        console.log(hashedData)
+        sendJoinForm(hashedData.password, hashedData.salt);
+      });
     }
   }
 
-  const sendJoinForm = async() => {
+  const sendJoinForm = async(hashedPw:string, salt:string) => {
     const res = await axios.post('http://localhost:9090' + '/api/join/reg', {
       joinUserData: {
         email: joinUserId,
-        pw: joinUserPw,
+        pw: hashedPw,
         name: joinUserName,
-        salt: 123,
+        salt: salt,
         prfImg: joinUserImg
       }
     })

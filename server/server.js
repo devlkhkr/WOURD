@@ -62,6 +62,17 @@ app.post('/api/join/reg', (req, res) => {
     })
 });
 
+app.post('/api/user/salt', (req, res) => {
+    db.query(`SELECT * FROM USER_TB WHERE user_id='${req.body.loginUserId}'`, (err, data) => {
+        if (!err) {
+            res.send(data[0].user_salt);
+        } else {
+            console.log(err);
+            res.send(err);
+        }
+    })
+})
+
 app.post('/api/user/login', (req, res) => {
     db.query(`SELECT * FROM USER_TB WHERE user_id='${req.body.loginUserData.id}'`, (err, data) => {
         if (!err) {

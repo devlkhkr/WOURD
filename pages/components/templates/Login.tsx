@@ -9,12 +9,10 @@ import Form from "pages/components/organisms/Form";
 import Join from "pages/components/templates/Join"
 import { useState, useRef } from "react";
 import axios from "axios";
+import Hash from "../atoms/Hash";
 
-import { useDispatch, useSelector } from 'react-redux';
-import { ReducerType } from 'redux/rootReducer';
+import { useDispatch } from 'react-redux';
 import { UserData, setUserData } from 'redux/slices/user';
-
-import crypto from 'crypto';
 
 interface LoginTypes {
   setIsTokenLive: Function
@@ -42,25 +40,6 @@ const LoginStyled = styled.form<LoginTypes>`
   }
 `;
 
-const createSalt = () => {
-  return new Promise((resolve, reject) => {
-      crypto.randomBytes(64, (err, buf) => {
-          if (err) reject(err);
-          resolve(buf.toString('base64'));
-      });
-  });
-}
-
-const createHashedPassword = ( plainPassword:string ) => {
-  return new Promise(async (resolve, reject) => {
-      const salt:any = await createSalt();
-      crypto.pbkdf2(plainPassword, salt, 1000, 64, 'sha512', (err, key) => {
-          if (err) reject(err);
-          resolve({ password: key.toString('base64'), salt });
-      });
-  });
-}
-
 const LoginComponent: React.FC<LoginTypes> = ({ setIsTokenLive }) => {
   const dispatch = useDispatch();
   const idInput:any = useRef();
@@ -75,30 +54,31 @@ const LoginComponent: React.FC<LoginTypes> = ({ setIsTokenLive }) => {
       pwInput.current.focus();
     }
     else {
-      // createHashedPassword(loginUserPw).then(function(hasedObject) {
-      //   console.log(hasedObject)
-      //   // setLoginUserPw()
-      // })
-      const res = await axios.post('http://localhost:9090' + '/api/user/login', {
-        loginUserData: {
-          id: loginUserId,
-          pw: loginUserPw
-        }
+      Hash.makePasswordHashed(loginUserId, loginUserPw).then((hashedPw:string) => {
+        startLogin(hashedPw);
       })
-      if(res.data.loginFlag === true){
-        dispatch(setUserData({ 
-          seq: res.data.userInfo.seq,
-          id: res.data.userInfo.id,
-          nickname: res.data.userInfo.nickname,
-          prfimg: res.data.userInfo.prfimg
-        } as UserData));
-        setIsTokenLive(res.data.loginFlag)
-      }
-      else{
-        alert(res.data)
-      }
     }
   };
+  const startLogin = async(hashedPw:string) => {
+    const res = await axios.post('http://localhost:9090' + '/api/user/login', {
+      loginUserData: {
+        id: loginUserId,
+        pw: hashedPw
+      }
+    })
+    if(res.data.loginFlag === true){
+      dispatch(setUserData({ 
+        seq: res.data.userInfo.seq,
+        id: res.data.userInfo.id,
+        nickname: res.data.userInfo.nickname,
+        prfimg: res.data.userInfo.prfimg
+      } as UserData));
+      setIsTokenLive(res.data.loginFlag)
+    }
+    else{
+      alert(res.data)
+    }
+  }
 
   const [joinPageOpened, setJoinPageOpened] = useState(false);
   const [loginUserId, setLoginUserId] = useState("");
