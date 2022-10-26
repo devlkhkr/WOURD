@@ -46,7 +46,7 @@ const Hash:HashTypes = {
     }
     else{
       console.log("아이디 중복 체크 오류, Length:::::", res.data.dupLeng)
-      return;
+      return false;
     }
   }
 }
