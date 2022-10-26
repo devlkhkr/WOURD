@@ -1,11 +1,11 @@
 import type { NextPage } from "next";
-import { useRouter } from "next/router";
+import Link from "next/link";
 import styled from "styled-components";
 import styledInterface from "../components/Intefaces/styledComponent";
 import SettingListComponent from "../components/molecules/SettingList";
 import UserProfileComponent from "../components/molecules/UserProfile";
 
-interface SettingTypes extends styledInterface{
+interface SettingTypes extends styledInterface {
   typo: string;
   nextStep?: boolean;
   rightText?: string;
@@ -51,6 +51,11 @@ const Setting: NextPage<SettingTypes> = () => {
       <SettingBottomStyled>
         <SettingListComponent typo="도움말(FAQ)" nextStep={true} />
         <SettingListComponent typo="로그아웃" nextStep={true} />
+        <Link href="/Setting/history">
+          <a>
+            <SettingListComponent typo="개발히스토리" nextStep={true} />
+          </a>
+        </Link>
         <SettingListComponent typo="버전정보" rightText="1.0.0" />
       </SettingBottomStyled>
     </SettingWrap>
