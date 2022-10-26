@@ -5,6 +5,7 @@ import CheckboxComponent from "./Checkbox";
 import TypoComponent from "./Typo";
 interface ToggleCheckTypes extends styledInterface {
   typo?: string;
+  defaultChecked?: boolean;
 }
 
 const ToggleCheckStyled = styled.div`
@@ -16,7 +17,7 @@ const ToggleCheckStyled = styled.div`
 `
 
 const ToggleCheckComponent: React.FC<ToggleCheckTypes> = ({
-  typo
+  typo, defaultChecked
 }) => {
   return (
     <ToggleCheckStyled>
@@ -25,7 +26,7 @@ const ToggleCheckComponent: React.FC<ToggleCheckTypes> = ({
       </TypoComponent>
       <CheckboxComponent 
         isToggle={true}
-        defaultChecked={true}
+        defaultChecked={defaultChecked}
       />
     </ToggleCheckStyled>
   );

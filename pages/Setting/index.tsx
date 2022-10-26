@@ -13,6 +13,14 @@ interface SettingTypes extends styledInterface {
   rightTypo?: string;
 }
 
+interface AcrdListTypes {
+  acrdTitle: string;
+  acrdList: {
+    label: string;
+    checked: boolean;
+  }[]
+}
+
 const SettingWrap = styled.div`
   background-color: var(--color-white);
   border-radius: 16px;
@@ -41,6 +49,52 @@ const SettingBottomStyled = styled.div``;
 const Setting: NextPage<SettingTypes> = () => {
   const [wordControl, setwordControl] = useState(false);
 
+  const objAcrdList:AcrdListTypes[] = [
+    {
+      acrdTitle: "상태별 노출 관리",
+      acrdList: [
+        {
+          label: "아는단어",
+          checked: false
+        },
+        {
+          label: "모르는단어",
+          checked: true
+        },
+        {
+          label: "즐겨찾은단어",
+          checked: true
+        },
+        {
+          label: "건너뛴단어",
+          checked: false
+        },
+      ]
+    },
+    {
+      acrdTitle: "카테고리별 노출 관리",
+      acrdList: [
+        {
+          label: "CS",
+          checked: false
+        },
+        {
+          label: "FrontEnd",
+          checked: true
+        },
+        {
+          label: "BackEnd",
+          checked: true
+        },
+        {
+          label: "App",
+          checked: false
+        },
+      ]
+    }    
+  ];
+  
+
   return (
     <SettingWrap>
       <SettingProfileStyled>
@@ -49,7 +103,7 @@ const Setting: NextPage<SettingTypes> = () => {
 
       <SettingTopStyled>
         <SettingListComponent 
-          typo="단어카드 노출 제어" 
+          typo="상태별 노출 관리"
           afterIcon={
             wordControl ? "arr-up" : "arr-down"
           }
@@ -57,31 +111,26 @@ const Setting: NextPage<SettingTypes> = () => {
             setwordControl(prev => !prev);
           }}
         />
-        {/* 
-          아는단어
-          모르는단어
-          즐겨찾는단어
-          건너뛴단어
-         */}
-        {
-          // 아코디언
-          // wordControl && (
-          <Accordion isOpened={wordControl}>
-            <ToggleCheckComponent 
-              typo="아는단어"
-            />
-            <ToggleCheckComponent 
-              typo="모르는단어"
-            />
-            <ToggleCheckComponent 
-              typo="즐겨찾은단어"
-            />
-            <ToggleCheckComponent 
-              typo="건너뛴단어"
-            />
-          </Accordion>
-          // )
-        }
+
+      <Accordion isOpened={wordControl}>
+        <ToggleCheckComponent 
+          typo="아는단어"
+          defaultChecked={false}
+        />
+        <ToggleCheckComponent 
+          typo="모르는단어"
+          defaultChecked={true}
+        />
+        <ToggleCheckComponent 
+          typo="즐겨찾은단어"
+          defaultChecked={true}
+        />
+        <ToggleCheckComponent 
+          typo="건너뛴단어"
+          defaultChecked={false}
+        />
+      </Accordion>
+        
       </SettingTopStyled>
 
       <SettingBottomStyled>
