@@ -4,6 +4,7 @@ export default interface StyledComponentTypes {
   reference?: any;
 
   id?: string;
+  name?: string;
   className?: string;
   desc?: string;
 
