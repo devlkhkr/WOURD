@@ -20,6 +20,7 @@ const UserProfileStyled = styled.div<UserProfileTypes>`
   display: flex;
   width: 100%;
   align-items: center;
+  padding-bottom: 16px;
 `;
 
 const UserInfoStyled = styled.div<UserProfileTypes>`
