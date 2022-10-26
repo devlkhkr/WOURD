@@ -4,9 +4,7 @@ import styled from "styled-components";
 import styledInterface from "../components/Intefaces/styledComponent";
 
 const owner = 'devlkhkr';
-const token = process.env.REACT_APP_GIT_TOKEN;
 const repo = 'DEV-WORDS'
-console.log(repo)
 
 const SettingHistory = () => {
   const [repos, setRepos] = useState();
@@ -14,7 +12,9 @@ const SettingHistory = () => {
     try {
       const response = await axios({
         method: 'get',
-        url: `https://api.github.com/repos/${owner}/${repo}/commits`,
+        // &page = 페이지네이션
+        // &per_page = 한번에 가져올 아이템의 개수
+        url : `https://api.github.com/repos/${owner}/${repo}/commits?&per_page=100`,
       })
       console.log(response)
       const data = response.data
@@ -31,11 +31,6 @@ const SettingHistory = () => {
   return (
     <>
       <div>깃헙타이틀</div>
-      <ul>
-        <li>
-
-        </li>
-      </ul>
     </>
   );
 };

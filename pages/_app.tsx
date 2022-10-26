@@ -16,6 +16,10 @@ import { useState, useEffect } from "react";
 
 import { Provider } from 'react-redux';
 import store from 'redux/store'
+import { useSelector } from "react-redux";
+
+import { ModalData, setModalData } from 'redux/slices/modal';
+import { ReducerType } from "redux/rootReducer";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -46,6 +50,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const [loadingStart, setLoadingStart] = useState(false);
   const [isTokenLive, setIsTokenLive] = useState(false);
+
   useEffect(() => {
     const routesLoadStart = () => {
       setLoadingStart(true);
@@ -65,6 +70,9 @@ function MyApp({ Component, pageProps }: AppProps) {
     };
   }, []);
 
+  // modal
+  const modalData = useSelector<ReducerType, ModalData[]>(state => state.modal);
+
   return (
     <>
       <Head>
@@ -82,6 +90,8 @@ function MyApp({ Component, pageProps }: AppProps) {
         !isTokenLive ? <Login setIsTokenLive={setIsTokenLive} /> :
         
           <Wrapper>
+            {/* modal */}
+
             <Wrap>
               <Header />
               {/* content */}

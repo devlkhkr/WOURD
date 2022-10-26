@@ -43,6 +43,7 @@ const Setting: NextPage<SettingTypes> = () => {
         <UserProfileComponent />
       </SettingProfileStyled>
       <SettingTopStyled>
+      <SettingListComponent typo="닉네임 변경" nextStep={true} />
         <SettingListComponent typo="비밀번호 변경" nextStep={true} />
         <SettingListComponent typo="공지사항" nextStep={true} />
         <SettingListComponent typo="탈퇴요청" nextStep={true} />
@@ -51,11 +52,11 @@ const Setting: NextPage<SettingTypes> = () => {
       <SettingBottomStyled>
         <SettingListComponent typo="도움말(FAQ)" nextStep={true} />
         <SettingListComponent typo="로그아웃" nextStep={true} />
-        <Link href="/Setting/history">
-          <a>
-            <SettingListComponent typo="개발히스토리" nextStep={true} />
-          </a>
-        </Link>
+        <SettingListComponent 
+          typo="개발히스토리"
+          nextStep={true}
+
+        />
         <SettingListComponent typo="버전정보" rightText="1.0.0" />
       </SettingBottomStyled>
     </SettingWrap>
