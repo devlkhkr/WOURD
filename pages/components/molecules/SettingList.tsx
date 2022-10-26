@@ -21,7 +21,7 @@ const SettingList = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: var(--color-black);
+  color: ${(props) => props.color || "var(--color-black)"};
   padding: 0 8px;
   border-bottom: 1px dashed rgba(120, 120, 120, 0.2);
   &:first-child {
@@ -30,7 +30,7 @@ const SettingList = styled.div`
 `;
 
 const SettingListComponent: React.FC<SettingListTypes> = props => {
-  const { typo, afterIcon, rightTypo, onClick } = props;
+  const { typo, afterIcon, rightTypo, onClick, color } = props;
   const setAfterIcon = () => {
     switch (afterIcon) {
       case "arr-right":
@@ -67,7 +67,7 @@ const SettingListComponent: React.FC<SettingListTypes> = props => {
 
   return (
     <SettingList onClick={onClick}>
-      <TypoComponent fontSize="14px" fontWeight="regular" textAlign="left">
+      <TypoComponent fontSize="14px" fontWeight="regular" textAlign="left" color={color}>
         {typo}
       </TypoComponent>
       {rightTypo && <span>{rightTypo}</span>}
