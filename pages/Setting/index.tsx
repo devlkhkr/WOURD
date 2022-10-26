@@ -88,8 +88,8 @@ const Setting: NextPage<SettingTypes> = () => {
         <SettingListComponent typo="공지사항" />
         <SettingListComponent typo="도움말(FAQ)" />
         <SettingListComponent typo="개발히스토리" />
-        <SettingListComponent typo="버전정보" rightTypo="1.0.0" />
         <SettingListComponent typo="시스템스펙" />
+        <SettingListComponent typo="버전정보" rightTypo="1.0.0" />
         <SettingListComponent typo="로그아웃" color="var(--color-red)" />
       </SettingBottomStyled>
     </SettingWrap>

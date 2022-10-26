@@ -70,7 +70,7 @@ const SettingListComponent: React.FC<SettingListTypes> = props => {
       <TypoComponent fontSize="14px" fontWeight="regular" textAlign="left" color={color}>
         {typo}
       </TypoComponent>
-      {rightTypo && <span>{rightTypo}</span>}
+      {rightTypo && <TypoComponent color="var(--color-grey)">{rightTypo}</TypoComponent>}
       {afterIcon && setAfterIcon()}
     </SettingList>
   );
