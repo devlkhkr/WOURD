@@ -40,10 +40,7 @@ const Setting: NextPage<SettingTypes> = () => {
   return (
     <SettingWrap>
       <SettingProfileStyled>
-        <UserProfileComponent
-          username="비비맨"
-          usermail="barnesquiat@gmail.com"
-        />
+        <UserProfileComponent />
       </SettingProfileStyled>
       <SettingTopStyled>
         <SettingListComponent typo="비밀번호 변경" nextStep={true} />
