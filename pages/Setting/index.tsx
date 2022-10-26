@@ -16,10 +16,10 @@ interface SettingTypes extends styledInterface {
 const SettingWrap = styled.div`
   background-color: var(--color-white);
   border-radius: 16px;
-  padding: 16px 16px 80px;
+  padding: 16px 16px 40px;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  min-height: 100%;
 `;
 
 // user profile
