@@ -12,8 +12,7 @@ import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import Icon from "../atoms/Icon";
 
 interface UserProfileTypes extends styledInterface {
-  username?: string;
-  usermail?: string;
+  
 }
 
 const UserProfileStyled = styled.div<UserProfileTypes>`
@@ -32,8 +31,7 @@ const UserInfoStyled = styled.div<UserProfileTypes>`
 `;
 
 const UserProfileComponent: React.FC<UserProfileTypes> = ({
-  username,
-  usermail,
+
 }) => {
   const userData = useSelector<ReducerType, UserData[]>(state => state.user);
 
