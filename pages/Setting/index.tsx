@@ -40,9 +40,6 @@ const SettingBottomStyled = styled.div``;
 
 const Setting: NextPage<SettingTypes> = () => {
   const [wordControl, setwordControl] = useState(false);
-  
-  console.log(wordControl)
-
 
   return (
     <SettingWrap>
@@ -53,7 +50,9 @@ const Setting: NextPage<SettingTypes> = () => {
       <SettingTopStyled>
         <SettingListComponent 
           typo="단어카드 노출 제어" 
-          afterIcon="arr-down"
+          afterIcon={
+            wordControl ? "arr-up" : "arr-down"
+          }
           onClick={() => {
             setwordControl(prev => !prev);
           }}
