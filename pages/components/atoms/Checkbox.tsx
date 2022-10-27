@@ -10,7 +10,7 @@ interface CheckboxTypes extends styledInterface {
 
 const CheckboxStyled = styled.input<CheckboxTypes>`
   appearance: none;
-  ${props =>
+  ${(props) =>
     props.isToggle
       ? // isToggle이 true일때 (Setting 단어노출제어)
         `

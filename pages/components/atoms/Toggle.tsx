@@ -11,9 +11,13 @@ interface ToggleCheckTypes extends styledInterface {
 const ToggleCheckStyled = styled.div`
   display : flex;
   height: 40px;
-  padding: 0 8px;
+  padding: 0 12px;
   align-items : center;
   justify-content: space-between;
+  border-bottom: 1px dashed rgba(120, 120, 120, 0.2);
+  &:last-of-type{
+    border-bottom: 0;
+  }
 `
 
 const ToggleCheckComponent: React.FC<ToggleCheckTypes> = ({
@@ -21,7 +25,7 @@ const ToggleCheckComponent: React.FC<ToggleCheckTypes> = ({
 }) => {
   return (
     <ToggleCheckStyled>
-      <TypoComponent fontSize="14px" fontWeight="regular" textAlign="left">
+      <TypoComponent fontSize="13px" fontWeight="regular" textAlign="left">
         {typo}
       </TypoComponent>
       <CheckboxComponent 
