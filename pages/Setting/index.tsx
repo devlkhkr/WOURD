@@ -15,10 +15,12 @@ interface SettingTypes extends styledInterface {
 
 interface AcrdListTypes {
   acrdTitle: string;
+  toggleFlag: boolean;
+  toggleFunc: Function;
   acrdList: {
     label: string;
     checked: boolean;
-  }[]
+  }[];
 }
 
 const SettingWrap = styled.div`
@@ -47,53 +49,57 @@ const SettingTopStyled = styled.div`
 const SettingBottomStyled = styled.div``;
 
 const Setting: NextPage<SettingTypes> = () => {
-  const [wordControl, setwordControl] = useState(false);
+  const [wordCtrlByState, setWordCtrlByState] = useState(false);
+  const [wordCtrlByCate, setWordCtrlByCate] = useState(false);
 
-  const objAcrdList:AcrdListTypes[] = [
+  const objAcrdList: AcrdListTypes[] = [
     {
       acrdTitle: "상태별 노출 관리",
+      toggleFlag: wordCtrlByState,
+      toggleFunc: setWordCtrlByState,
       acrdList: [
         {
           label: "아는단어",
-          checked: false
+          checked: false,
         },
         {
           label: "모르는단어",
-          checked: true
+          checked: true,
         },
         {
           label: "즐겨찾은단어",
-          checked: true
+          checked: true,
         },
         {
           label: "건너뛴단어",
-          checked: false
+          checked: false,
         },
-      ]
+      ],
     },
     {
       acrdTitle: "카테고리별 노출 관리",
+      toggleFlag: wordCtrlByCate,
+      toggleFunc: setWordCtrlByCate,
       acrdList: [
         {
           label: "CS",
-          checked: false
+          checked: false,
         },
         {
           label: "FrontEnd",
-          checked: true
+          checked: true,
         },
         {
           label: "BackEnd",
-          checked: true
+          checked: true,
         },
         {
           label: "App",
-          checked: false
+          checked: false,
         },
-      ]
-    }    
+      ],
+    },
   ];
-  
 
   return (
     <SettingWrap>
@@ -102,35 +108,24 @@ const Setting: NextPage<SettingTypes> = () => {
       </SettingProfileStyled>
 
       <SettingTopStyled>
-        <SettingListComponent 
-          typo="상태별 노출 관리"
-          afterIcon={
-            wordControl ? "arr-up" : "arr-down"
-          }
-          onClick={() => {
-            setwordControl(prev => !prev);
-          }}
-        />
+        {objAcrdList.map((item) => (
+          <>
+            <SettingListComponent
+              typo={item.acrdTitle}
+              afterIcon={item.toggleFlag ? "arr-up" : "arr-down"}
+              onClick={() => {
+                item.toggleFunc((prev: boolean) => !prev);
+              }}
+            />
 
-      <Accordion isOpened={wordControl}>
-        <ToggleCheckComponent 
-          typo="아는단어"
-          defaultChecked={false}
-        />
-        <ToggleCheckComponent 
-          typo="모르는단어"
-          defaultChecked={true}
-        />
-        <ToggleCheckComponent 
-          typo="즐겨찾은단어"
-          defaultChecked={true}
-        />
-        <ToggleCheckComponent 
-          typo="건너뛴단어"
-          defaultChecked={false}
-        />
-      </Accordion>
-        
+            <Accordion isOpened={item.toggleFlag}>
+              <ToggleCheckComponent typo="아는단어" defaultChecked={false} />
+              <ToggleCheckComponent typo="모르는단어" defaultChecked={true} />
+              <ToggleCheckComponent typo="즐겨찾은단어" defaultChecked={true} />
+              <ToggleCheckComponent typo="건너뛴단어" defaultChecked={false} />
+            </Accordion>
+          </>
+        ))}
       </SettingTopStyled>
 
       <SettingBottomStyled>

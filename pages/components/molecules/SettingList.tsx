@@ -29,7 +29,7 @@ const SettingList = styled.div`
   }
 `;
 
-const SettingListComponent: React.FC<SettingListTypes> = props => {
+const SettingListComponent: React.FC<SettingListTypes> = (props) => {
   const { typo, afterIcon, rightTypo, onClick, color } = props;
   const setAfterIcon = () => {
     switch (afterIcon) {
@@ -67,10 +67,17 @@ const SettingListComponent: React.FC<SettingListTypes> = props => {
 
   return (
     <SettingList onClick={onClick}>
-      <TypoComponent fontSize="14px" fontWeight="regular" textAlign="left" color={color}>
+      <TypoComponent
+        fontSize="14px"
+        fontWeight="regular"
+        textAlign="left"
+        color={color}
+      >
         {typo}
       </TypoComponent>
-      {rightTypo && <TypoComponent color="var(--color-grey)">{rightTypo}</TypoComponent>}
+      {rightTypo && (
+        <TypoComponent color="var(--color-grey)">{rightTypo}</TypoComponent>
+      )}
       {afterIcon && setAfterIcon()}
     </SettingList>
   );
