@@ -8,7 +8,6 @@ interface CardMainTypes {
   exposeWord: ExposeWordTypes[];
 }
 interface ExposeWordTypes {
-
   word_desc?: string;
   word_id?: string;
   word_name?: string;
@@ -182,8 +181,8 @@ const CardMainComponent: React.FC<CardMainTypes> = ({ exposeWord }) => {
   };
 
   useEffect(() => {
-    setWordList([...exposeWord].reverse())
-  }, [exposeWord])
+    setWordList([...exposeWord].reverse());
+  }, [exposeWord]);
 
   const [wordList, setWordList] = useState<ExposeWordTypes[]>([]);
   const [currentCardIdx, setCurrentCardIdx] = useState(0);
@@ -191,7 +190,7 @@ const CardMainComponent: React.FC<CardMainTypes> = ({ exposeWord }) => {
   return (
     <>
       <MainWrapStyled ref={cardList}>
-        {wordList.map((objWord:any, index:any) => (
+        {wordList.map((objWord: any, index: any) => (
           <CardSwiper
             key={objWord.word_seq}
             className={`card ${objWord.fliped ? "fliped" : ""} ${
@@ -202,11 +201,7 @@ const CardMainComponent: React.FC<CardMainTypes> = ({ exposeWord }) => {
             setButtonState={setButtonState}
           >
             <CardWrapStyled
-              // onMouseDown={e => {
-              //   setCardFlip(objWord, e);
-              //   setCurrentCardIdx(index);
-              // }}
-              onPointerDown={e => {
+              onPointerDown={(e) => {
                 setCardFlip(objWord, e);
                 setCurrentCardIdx(index);
               }}
