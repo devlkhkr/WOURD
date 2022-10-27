@@ -19,15 +19,6 @@ const HeaderWrap = styled.header`
 const HeaderLogo = styled.div`
   display: flex;
   align-items: center;
-  svg {
-    font-size: 26px;
-    color: #0047ab;
-  }
-  h1 {
-    font-size: 26px;
-    color: #0047ab;
-    font-weight: var(--weight-black);
-  }
 `;
 
 const Header: React.FC = () => {
