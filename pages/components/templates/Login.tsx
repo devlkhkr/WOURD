@@ -73,10 +73,10 @@ const LoginComponent: React.FC<LoginTypes> = ({ setIsTokenLive }) => {
       if (res.data.loginFlag === true) {
         dispatch(
           setUserData({
-            seq: res.data.userInfo.seq,
             id: res.data.userInfo.id,
             nickname: res.data.userInfo.nickname,
             prfimg: res.data.userInfo.prfimg,
+            lastLogin: res.data.userInfo.lastLogin,
           } as UserData)
         );
         insertLoginData();

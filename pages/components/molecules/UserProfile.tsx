@@ -33,7 +33,23 @@ const UserInfoStyled = styled.div<UserProfileTypes>`
 
 const UserProfileComponent: React.FC<UserProfileTypes> = ({}) => {
   const userData = useSelector<ReducerType, UserData[]>((state) => state.user);
+  const getLastLoginPeriod = () => {
+    let stDate = new Date(userData[0].lastLogin);
+    let endDate = new Date();
+    let btMs = endDate.getTime() - stDate.getTime();
+    let btDay = classifyTimestamp(btMs);
+    return btDay;
+  };
+  const classifyTimestamp = (ms: number) => {
+    let returnString: string = "";
+    const timeDiv: number[] = [1000, 60, 60, 24];
 
+    // for(let i=0; i<timeDiv.length; i++) {
+    //   if(ms / (1000 * 60 * 60 * 24)).toFixed();
+    // }
+
+    return returnString;
+  };
   return (
     <UserProfileStyled>
       <ImgComponent src={userData[0].prfimg} objectFit="cover" />
@@ -49,6 +65,15 @@ const UserProfileComponent: React.FC<UserProfileTypes> = ({}) => {
           marginTop="4px"
         >
           {userData[0].id}
+        </TypoComponent>
+        <TypoComponent
+          fontSize="12px"
+          fontWeight="light"
+          color="var(--color-lightgrey)"
+          textAlign="left"
+          marginTop="4px"
+        >
+          {`마지막 로그인: ${getLastLoginPeriod()}`}
         </TypoComponent>
       </UserInfoStyled>
       <Icon

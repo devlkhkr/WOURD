@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface UserData {
-  seq: number;
   id: string;
   nickname: string;
   prfimg: string;
+  lastLogin: Date;
 }
 
 export const user = createSlice({
