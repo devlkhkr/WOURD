@@ -83,7 +83,7 @@ const Setting: NextPage<SettingTypes> = () => {
       acrdList: [
         {
           label: "CS",
-          checked: false,
+          checked: true,
         },
         {
           label: "FrontEnd",
@@ -95,7 +95,7 @@ const Setting: NextPage<SettingTypes> = () => {
         },
         {
           label: "App",
-          checked: false,
+          checked: true,
         },
       ],
     },
@@ -108,21 +108,23 @@ const Setting: NextPage<SettingTypes> = () => {
       </SettingProfileStyled>
 
       <SettingTopStyled>
-        {objAcrdList.map((item) => (
+        {objAcrdList.map((objAcrd) => (
           <>
             <SettingListComponent
-              typo={item.acrdTitle}
-              afterIcon={item.toggleFlag ? "arr-up" : "arr-down"}
+              typo={objAcrd.acrdTitle}
+              afterIcon={objAcrd.toggleFlag ? "arr-up" : "arr-down"}
               onClick={() => {
-                item.toggleFunc((prev: boolean) => !prev);
+                objAcrd.toggleFunc((prev: boolean) => !prev);
               }}
             />
 
-            <Accordion isOpened={item.toggleFlag}>
-              <ToggleCheckComponent typo="아는단어" defaultChecked={false} />
-              <ToggleCheckComponent typo="모르는단어" defaultChecked={true} />
-              <ToggleCheckComponent typo="즐겨찾은단어" defaultChecked={true} />
-              <ToggleCheckComponent typo="건너뛴단어" defaultChecked={false} />
+            <Accordion isOpened={objAcrd.toggleFlag}>
+              {objAcrd.acrdList.map((list) => (
+                <ToggleCheckComponent
+                  typo={list.label}
+                  defaultChecked={list.checked}
+                />
+              ))}
             </Accordion>
           </>
         ))}
