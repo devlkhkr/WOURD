@@ -41,12 +41,19 @@ const SettingProfileStyled = styled.div`
 `;
 
 // user interface
+
 const SettingTopStyled = styled.div`
-  margin-bottom: 32px;
+  border-top: 1px solid rgba(120, 120, 120, 0.4);
+`;
+// app interface
+const SettingBottomStyled = styled.div`
+  border-top: 1px solid rgba(120, 120, 120, 0.4);
+  margin-top: 32px;
 `;
 
-// app interface
-const SettingBottomStyled = styled.div``;
+const AcrdWrapStyled = styled.div`
+  border-bottom: 1px dashed #ddd;
+`;
 
 const Setting: NextPage<SettingTypes> = () => {
   const [wordCtrlByState, setWordCtrlByState] = useState(false);
@@ -108,8 +115,8 @@ const Setting: NextPage<SettingTypes> = () => {
       </SettingProfileStyled>
 
       <SettingTopStyled>
-        {objAcrdList.map((objAcrd) => (
-          <>
+        {objAcrdList.map((objAcrd, index) => (
+          <AcrdWrapStyled key={index}>
             <SettingListComponent
               typo={objAcrd.acrdTitle}
               afterIcon={objAcrd.toggleFlag ? "arr-up" : "arr-down"}
@@ -119,14 +126,15 @@ const Setting: NextPage<SettingTypes> = () => {
             />
 
             <Accordion isOpened={objAcrd.toggleFlag}>
-              {objAcrd.acrdList.map((list) => (
+              {objAcrd.acrdList.map((list, index) => (
                 <ToggleCheckComponent
+                  key={index}
                   typo={list.label}
                   defaultChecked={list.checked}
                 />
               ))}
             </Accordion>
-          </>
+          </AcrdWrapStyled>
         ))}
       </SettingTopStyled>
 

@@ -32,7 +32,7 @@ const UserInfoStyled = styled.div<UserProfileTypes>`
 `;
 
 const UserProfileComponent: React.FC<UserProfileTypes> = ({}) => {
-  const userData = useSelector<ReducerType, UserData[]>(state => state.user);
+  const userData = useSelector<ReducerType, UserData[]>((state) => state.user);
 
   return (
     <UserProfileStyled>
