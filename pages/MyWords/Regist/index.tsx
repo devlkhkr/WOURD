@@ -15,11 +15,11 @@ import InputWrap from "../../components/molecules/InputWrap";
 import ButtonWrap from "../../components/molecules/ButtonWrap";
 import Form from "../../components/organisms/Form";
 
-interface RegistWordTypes { }
+interface RegistWordTypes {}
 
 const RegistWordWrap = styled.div``;
 
-const RegistWord: NextPage<RegistWordTypes> = ({ }) => {
+const RegistWord: NextPage<RegistWordTypes> = ({}) => {
   const [isIntl, setIsIntl] = useState(true);
   const intlYNOnclick = (event: React.MouseEvent<HTMLButtonElement>) => {
     const target = event.target as HTMLInputElement;
@@ -51,12 +51,12 @@ const RegistWord: NextPage<RegistWordTypes> = ({ }) => {
                 {
                   name: "예, 약어입니다.",
                   value: 0,
-                  defaultChecked: true
+                  defaultChecked: true,
                 },
                 {
                   name: "아니요, 낱말입니다.",
                   value: 1,
-                }
+                },
               ]}
             />
           </InputWrap>
@@ -92,36 +92,6 @@ const RegistWord: NextPage<RegistWordTypes> = ({ }) => {
 
         <Fieldset>
           <Label
-            htmlFor="wordsCtgrSlct"
-            desc="카테고리를 선택해주세요."
-            mandatory={true}
-          />
-          <Select
-            options={[
-              {
-                name: "CS",
-                value: 0,
-              },
-              {
-                name: "FrontEnd",
-                value: 1,
-              },
-              {
-                name: "BackEnd",
-                value: 2,
-              },
-              {
-                name: "App",
-                value: 3,
-              },
-            ]}
-            id="wordsCtgrSlct"
-            name="wordsCategorySlct"
-          />
-        </Fieldset>
-
-        <Fieldset>
-          <Label
             htmlFor="wordsCtgrCbx"
             desc="카테고리를 선택해주세요. (중복선택 가능)"
             mandatory={true}
@@ -147,6 +117,36 @@ const RegistWord: NextPage<RegistWordTypes> = ({ }) => {
             ]}
             id="wordsCtgrCbx"
             name="wordsCategoryCbx"
+          />
+        </Fieldset>
+
+        <Fieldset>
+          <Label
+            htmlFor="wordsCtgrSlct"
+            desc="등록 후 단어 관리"
+            mandatory={true}
+          />
+          <Select
+            options={[
+              {
+                name: "선택안함",
+                value: 0,
+              },
+              {
+                name: "아는 단어",
+                value: 1,
+              },
+              {
+                name: "모르는 단어",
+                value: 2,
+              },
+              {
+                name: "즐겨찾은 단어",
+                value: 3,
+              },
+            ]}
+            id="wordsCtgrSlct"
+            name="wordsCategorySlct"
           />
         </Fieldset>
 
