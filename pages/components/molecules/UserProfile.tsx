@@ -44,8 +44,9 @@ const UserProfileComponent: React.FC<UserProfileTypes> = ({}) => {
     let returnString: string = "";
     const timeDiv: number[] = [1000, 60, 60, 24];
 
-    // for(let i=0; i<timeDiv.length; i++) {
-    //   if(ms / (1000 * 60 * 60 * 24)).toFixed();
+    // for (let i = 0; i < timeDiv.length; i++) {
+    //   if ((ms / (1000 * 60 * 60 * 24)).toFixed() == "0") {
+    //   }
     // }
 
     return returnString;
@@ -71,9 +72,9 @@ const UserProfileComponent: React.FC<UserProfileTypes> = ({}) => {
           fontWeight="light"
           color="var(--color-lightgrey)"
           textAlign="left"
-          marginTop="4px"
+          marginTop="8px"
         >
-          {`마지막 로그인: ${getLastLoginPeriod()}`}
+          {`최근 접속: ${getLastLoginPeriod()}`}
         </TypoComponent>
       </UserInfoStyled>
       <Icon
