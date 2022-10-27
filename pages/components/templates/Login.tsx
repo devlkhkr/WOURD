@@ -78,7 +78,7 @@ const LoginComponent: React.FC<LoginTypes> = ({ setIsTokenLive }) => {
         setIsTokenLive(res.data.loginFlag)
       }
       else{
-        console.log("로그인 실패:::::", res.data)
+        alert(res.data)
       }
     }
   }

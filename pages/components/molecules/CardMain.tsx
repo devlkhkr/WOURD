@@ -106,7 +106,7 @@ const BtnWrapCardCtrlStyled = styled.div`
   bottom: 0;
   transform: translate(-50%, 0);
   opacity: 0;
-  pointer-events: none;
+  /* pointer-events: none; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -202,11 +202,11 @@ const CardMainComponent: React.FC<CardMainTypes> = ({ exposeWord }) => {
             setButtonState={setButtonState}
           >
             <CardWrapStyled
-              onMouseDown={e => {
-                setCardFlip(objWord, e);
-                setCurrentCardIdx(index);
-              }}
-              onTouchStart={e => {
+              // onMouseDown={e => {
+              //   setCardFlip(objWord, e);
+              //   setCurrentCardIdx(index);
+              // }}
+              onPointerDown={e => {
                 setCardFlip(objWord, e);
                 setCurrentCardIdx(index);
               }}

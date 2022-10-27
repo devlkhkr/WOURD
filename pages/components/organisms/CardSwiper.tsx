@@ -32,12 +32,12 @@ const CardSwiperSyled = styled.div<CardSwiperTypes>`
     & ~ .btn_wrap_cardctrl {
       transition-duration: 0.5s;
       opacity: 1;
-      pointer-events: all;
+      /* pointer-events: all; */
     }
   }
   &[class*="state_"] {
     transition-duration: 0.5s;
-    pointer-events: none;
+    /* pointer-events: none; */
   }
   &.state_ {
     &k {
@@ -70,24 +70,25 @@ const CardSwiperComponent: React.FC<CardSwiperTypes> = ({
   let movedDistanceX;
   let movedDistanceY;
 
-  const cardMouseDown = function (event: React.TouchEvent | React.MouseEvent) {
-    event.persist();
-    if (event.nativeEvent instanceof TouchEvent) {
-      if (event.nativeEvent.touches.length === 1) {
-        setStartPoint(
-          event.nativeEvent.touches[0].clientX,
-          event.nativeEvent.touches[0].clientY
-        );
-        window.addEventListener("touchend", cardMouseUp);
-        window.addEventListener("touchmove", cardMouseMove);
-      }
-    }
+  const [cardMoveable, setCardMoveable] = useState(false);
 
-    if (event.nativeEvent instanceof MouseEvent) {
-      setStartPoint(event.nativeEvent.clientX, event.nativeEvent.clientY);
-      window.addEventListener("mouseup", cardMouseUp);
-      window.addEventListener("mousemove", cardMouseMove);
-    }
+  const cardMouseDown = function (event: React.PointerEvent) {
+    setCardMoveable(true)
+    event.persist();
+    // if (event.nativeEvent instanceof TouchEvent) {
+    //   if (event.nativeEvent.touches.length === 1) {
+    //     setStartPoint(
+    //       event.nativeEvent.touches[0].clientX,
+    //       event.nativeEvent.touches[0].clientY
+    //     );
+    //     window.addEventListener("touchend", cardMouseUp);
+    //     window.addEventListener("touchmove", cardMouseMove);
+    //   }
+    // }
+
+    setStartPoint(event.nativeEvent.clientX, event.nativeEvent.clientY);
+    window.addEventListener("pointerup", cardMouseUp);
+    window.addEventListener("pointermove", cardMouseMove);
   };
 
   const setStartPoint = function (_x: number, _y: number) {
@@ -99,56 +100,55 @@ const CardSwiperComponent: React.FC<CardSwiperTypes> = ({
   };
 
   const cardMouseMove: any = function (
-    event: React.TouchEvent | React.MouseEvent
+    event: React.PointerEvent
   ) {
-    if (event instanceof TouchEvent) {
-      commonMoveEvent(event.touches[0].clientX, event.touches[0].clientY);
-    }
-
-    if (event instanceof MouseEvent) {
-      commonMoveEvent(event.clientX, event.clientY);
-    }
+    // if (event instanceof TouchEvent) {
+    //   commonMoveEvent(event.touches[0].clientX, event.touches[0].clientY);
+    // }
+    console.log(event)
+    commonMoveEvent(event.clientX, event.clientY);
   };
 
   const commonMoveEvent = function (_x: number, _y: number) {
-    const posX = prevPosX - _x;
-    const posY = prevPosY - _y;
-    prevPosX = _x;
-    prevPosY = _y;
-    cardDOM.current.style.left = `${cardDOM.current.offsetLeft - posX}px`;
-    cardDOM.current.style.top = `${cardDOM.current.offsetTop - posY}px`;
-    cardDOM.current.style.transform = `rotate(${(cardDOM.current.offsetLeft - posX) / 16
-      }deg)`;
-    if (Math.abs(_x - startPointX) > throwLimit) {
-      _x - startPointX > 0
-        ? setButtonState("focused_k")
-        : setButtonState("focused_d");
-    } else if (Math.abs(_y - startPointY) > throwLimit) {
-      _y - startPointY > 0
-        ? setButtonState("focused_s")
-        : setButtonState("focused_f");
-    } else {
-      setButtonState("");
+    if(cardMoveable) {
+      const posX = prevPosX - _x;
+      const posY = prevPosY - _y;
+      prevPosX = _x;
+      prevPosY = _y;
+      cardDOM.current.style.left = `${cardDOM.current.offsetLeft - posX}px`;
+      cardDOM.current.style.top = `${cardDOM.current.offsetTop - posY}px`;
+      cardDOM.current.style.transform = `rotate(${(cardDOM.current.offsetLeft - posX) / 16
+        }deg)`;
+      if (Math.abs(_x - startPointX) > throwLimit) {
+        _x - startPointX > 0
+          ? setButtonState("focused_k")
+          : setButtonState("focused_d");
+      } else if (Math.abs(_y - startPointY) > throwLimit) {
+        _y - startPointY > 0
+          ? setButtonState("focused_s")
+          : setButtonState("focused_f");
+      } else {
+        setButtonState("");
+      }
     }
   };
 
   const cardMouseUp: any = function (
-    event: React.TouchEvent | React.MouseEvent
+    event: React.PointerEvent
   ) {
     // cardStateDecided();
-    if (event instanceof TouchEvent) {
-      commonEndEvent(
-        event.changedTouches[0].clientX,
-        event.changedTouches[0].clientY
-      );
-      window.removeEventListener("touchend", cardMouseUp);
-      window.removeEventListener("touchmove", cardMouseMove);
-    }
-    if (event instanceof MouseEvent) {
+    // if (event instanceof TouchEvent) {
+    //   commonEndEvent(
+    //     event.changedTouches[0].clientX,
+    //     event.changedTouches[0].clientY
+    //   );
+    //   window.removeEventListener("touchend", cardMouseUp);
+    //   window.removeEventListener("touchmove", cardMouseMove);
+    // }
       commonEndEvent(event.clientX, event.clientY);
-      window.removeEventListener("mouseup", cardMouseUp);
-      window.removeEventListener("mousemove", cardMouseMove);
-    }
+      window.removeEventListener("pointerup", cardMouseUp);
+      setCardMoveable(false);
+      window.removeEventListener("pointermove", cardMouseMove);
   };
 
   const commonEndEvent = function (_x: number, _y: number) {
@@ -175,8 +175,9 @@ const CardSwiperComponent: React.FC<CardSwiperTypes> = ({
   return (
     <CardSwiperSyled
       ref={cardDOM}
-      onMouseDown={cardMouseDown}
-      onTouchStart={cardMouseDown}
+      // onMouseDown={cardMouseDown}
+      // onTouchStart={cardMouseDown}
+      onPointerDown={cardMouseDown}
       className={className}
       wordInfo={wordInfo}
       cardHandler={cardHandler}
