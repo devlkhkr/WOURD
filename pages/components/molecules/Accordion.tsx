@@ -10,6 +10,7 @@ const AccordionWrapsetStyled = styled.div<AccordionTypes>`
   transition-duration: 0.3s;
   overflow: hidden;
   max-height: 0;
+  border-bottom: ${props => (props.isOpened ? "1px solid rgba(120, 120, 120, 0.45);" : "0")}
   ${(props) =>
     props.isOpened
       ? `
