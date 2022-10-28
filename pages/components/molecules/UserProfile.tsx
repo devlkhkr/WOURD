@@ -16,6 +16,11 @@ interface UserProfileTypes extends styledInterface {
   usermail?: string;
 }
 
+interface PeriodTypes {
+  type: any;
+  result: any;
+}
+
 const UserProfileStyled = styled.div<UserProfileTypes>`
   display: flex;
   width: 100%;
@@ -40,16 +45,44 @@ const UserProfileComponent: React.FC<UserProfileTypes> = ({}) => {
     let btDay = classifyTimestamp(btMs);
     return btDay;
   };
-  const classifyTimestamp = (ms: number) => {
-    let returnString: string = "";
+
+  const getPeriodType = (microSec: number) => {
     const timeDiv: number[] = [1000, 60, 60, 24];
+    let result: string = "";
+    for (let type: number = timeDiv.length - 1; type > -1; type--) {
+      let divValue: number = 1;
+      for (let v = type; v > -1; v--) {
+        divValue *= timeDiv[v];
+      }
+      result = (microSec / divValue).toFixed();
+      // console.log(result);
+      if (result != "0") {
+        return { type, result };
+      }
+    }
+  };
 
-    // for (let i = 0; i < timeDiv.length; i++) {
-    //   if ((ms / (1000 * 60 * 60 * 24)).toFixed() == "0") {
-    //   }
-    // }
+  const classifyTimestamp = (ms: number) => {
+    let periodSuffix: string = "";
 
-    return returnString;
+    let lastLoginPeriod: PeriodTypes = getPeriodType(ms)!;
+
+    switch (lastLoginPeriod.type) {
+      case 0:
+        periodSuffix = "초";
+        break;
+      case 1:
+        periodSuffix = "분";
+        break;
+      case 2:
+        periodSuffix = "시간";
+        break;
+      case 3:
+        periodSuffix = "일";
+        break;
+    }
+
+    return `${lastLoginPeriod.result + periodSuffix} 전`;
   };
   return (
     <UserProfileStyled>
@@ -74,7 +107,7 @@ const UserProfileComponent: React.FC<UserProfileTypes> = ({}) => {
           textAlign="left"
           marginTop="8px"
         >
-          {`최근 접속: ${getLastLoginPeriod()}`}
+          {`마지막 접속: ${getLastLoginPeriod()}`}
         </TypoComponent>
       </UserInfoStyled>
       <Icon
