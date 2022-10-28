@@ -113,8 +113,8 @@ app.post("/api/user/login", (req, res) => {
             loginFlag: true,
             userInfo: {
               id: data[0].user_id,
-              nickname: data[0].user_nickname,
-              prfimg: data[0].user_prf_img,
+              nickName: data[0].user_nickname,
+              prfImg: data[0].user_prf_img,
               lastLogin: data[0].log_date,
             },
           });

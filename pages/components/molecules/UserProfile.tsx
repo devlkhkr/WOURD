@@ -86,10 +86,10 @@ const UserProfileComponent: React.FC<UserProfileTypes> = ({}) => {
   };
   return (
     <UserProfileStyled>
-      <ImgComponent src={userData[0].prfimg} objectFit="cover" />
+      <ImgComponent src={userData[0].prfImg} objectFit="cover" />
       <UserInfoStyled>
         <TypoComponent fontSize="16px" fontWeight="semi-bold" textAlign="left">
-          {userData[0].nickname}
+          {userData[0].nickName}
         </TypoComponent>
         <TypoComponent
           fontSize="14px"
