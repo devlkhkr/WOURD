@@ -177,13 +177,13 @@ const CardMainComponent: React.FC<CardMainTypes> = ({ exposeWord }) => {
   };
 
   const setCardData = async (_objWord: ExposeWordTypes, _state: string) => {
-    const res = await axios.post(
-      "http://localhost:9090" + "/api/user/word/reg",
-      {
-        cardInfo: {},
-      }
-    );
-    console.log(res.data);
+    // const res = await axios.post(
+    //   "http://localhost:9090" + "/api/user/word/reg",
+    //   {
+    //     cardInfo: {},
+    //   }
+    // );
+    // console.log(res.data);
   };
 
   const setCardFlip = function (_objWord: ExposeWordTypes, e: any) {
