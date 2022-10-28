@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState, useRef, useEffect } from "react";
 import styled, { css } from "styled-components";
 import Button from "../../components/atoms/Button";
@@ -171,7 +172,18 @@ const CardMainComponent: React.FC<CardMainTypes> = ({ exposeWord }) => {
     setButtonState("");
     _objWord.fliped = false;
     _objWord.state = `state_${state}`;
+    setCardData(_objWord, state);
     setWordList([...wordList]);
+  };
+
+  const setCardData = async (_objWord: ExposeWordTypes, _state: string) => {
+    const res = await axios.post(
+      "http://localhost:9090" + "/api/user/word/reg",
+      {
+        cardInfo: {},
+      }
+    );
+    console.log(res.data);
   };
 
   const setCardFlip = function (_objWord: ExposeWordTypes, e: any) {

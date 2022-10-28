@@ -95,7 +95,7 @@ app.post("/api/user/salt", (req, res) => {
   );
 });
 
-app.post("/api/user/login", (req, res) => {
+app.post("/api/user/log/in", (req, res) => {
   db.query(
     "SELECT " +
       "user_id," +
@@ -187,7 +187,7 @@ app.post("/api/join/sendmail", (req, res) => {
   });
 });
 
-app.post("/api/log/history", (req, res) => {
+app.post("/api/user/log/history", (req, res) => {
   db.query(
     "INSERT INTO LOG_HISTORY_TB (" +
       "log_seq," +

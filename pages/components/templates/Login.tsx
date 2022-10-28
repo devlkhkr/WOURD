@@ -62,7 +62,7 @@ const LoginComponent: React.FC<LoginTypes> = ({ setIsTokenLive }) => {
   const startLogin = async (hashedPw: string | boolean) => {
     if (hashedPw) {
       const res = await axios.post(
-        "http://localhost:9090" + "/api/user/login",
+        "http://localhost:9090" + "/api/user/log/in",
         {
           loginUserData: {
             id: loginUserId,
@@ -88,12 +88,15 @@ const LoginComponent: React.FC<LoginTypes> = ({ setIsTokenLive }) => {
   };
 
   const insertLoginData = async () => {
-    const res = await axios.post("http://localhost:9090" + "/api/log/history", {
-      loginUserData: {
-        logUserId: loginUserId,
-        logAction: 1,
-      },
-    });
+    const res = await axios.post(
+      "http://localhost:9090" + "/api/user/log/history",
+      {
+        loginUserData: {
+          logUserId: loginUserId,
+          logAction: 1,
+        },
+      }
+    );
     let logInsertResult = res.data.affectedRows === 1 ? "true" : "false";
     console.log(`로그인 기록 Insert : ${logInsertResult}`);
   };
