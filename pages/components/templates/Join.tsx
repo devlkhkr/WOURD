@@ -276,7 +276,7 @@ const JoinComponent: React.FC<JoinTypes> = ({
     res.data.affectedRows === 1
       ? (() => {
           insertLoginData(joinUserId);
-          confirm("회원가입이 완료되었습니다. 즉시 로그인하시겠습니까?")
+          confirm("회원가입이 완료되었습니다.\n즉시 로그인하시겠습니까?")
             ? startLogin(joinUserId, hashedPw)
             : void 0;
           setJoinPageOpened(false);
