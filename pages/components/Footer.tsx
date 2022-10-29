@@ -54,7 +54,7 @@ const Footer: React.FC = () => {
   return (
     <FooterWrap>
       <ul>
-        <li className={router.pathname == "/MyWords" ? "active" : ""}>
+        <li className={router.pathname.includes('/MyWords') ? "active" : ""}>
           <Link href="/MyWords">
             <a>
               <Icon
@@ -82,7 +82,7 @@ const Footer: React.FC = () => {
             </a>
           </Link>
         </li>
-        <li className={router.pathname == "/Setting" ? "active" : ""}>
+        <li className={router.pathname.includes('/Setting') ? "active" : ""}>
           <Link href="/Setting">
             <a>
               <Icon
