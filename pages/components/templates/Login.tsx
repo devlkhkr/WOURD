@@ -79,7 +79,7 @@ const LoginComponent: React.FC<LoginTypes> = ({ setIsTokenLive }) => {
             lastLogin: res.data.userInfo.lastLogin,
           } as UserData)
         );
-        insertLoginData(loginUserId, 1);
+        insertLoginData(loginUserId);
         setIsTokenLive(res.data.loginFlag);
       } else {
         alert(res.data);
