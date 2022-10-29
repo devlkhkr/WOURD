@@ -257,6 +257,17 @@ app.post("/api/user/word/state", (req, res) => {
   );
 });
 
+app.post("/api/myword/list", (req, res) => {
+  db.query(`SELECT * FROM USER_WORD_TB WHERE user_id='${req.body.params.userId}'`, (err, data) => {
+    if (!err) {
+      res.send(data);
+    } else {
+      console.log(err);
+      res.send(err);
+    }
+  });
+});
+
 // app.post('/api/board/del', (req, res) => {
 //     db.query("DELETE FROM BOARD_TB WHERE BOARD_SEQ=" + +req.body.seq, (err, data) => {
 //         if (!err) {
