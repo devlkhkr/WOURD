@@ -6,6 +6,7 @@ import styledInterface from "../components/Intefaces/styledComponent";
 import SettingListComponent from "../components/molecules/SettingList";
 import UserProfileComponent from "../components/molecules/UserProfile";
 import Accordion from "../components/molecules/Accordion";
+import Link from "next/link";
 
 interface SettingTypes extends styledInterface {
   typo: string;
@@ -111,7 +112,11 @@ const Setting: NextPage<SettingTypes> = () => {
   return (
     <SettingWrap>
       <SettingProfileStyled>
-        <UserProfileComponent />
+        <Link href="/Setting/UserProfile">
+          <a>
+            <UserProfileComponent />
+          </a>
+        </Link>
       </SettingProfileStyled>
 
       <SettingTopStyled>
