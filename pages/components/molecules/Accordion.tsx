@@ -3,7 +3,7 @@ import styled from "styled-components";
 import styledInterface from "../Intefaces/styledComponent";
 interface AccordionTypes extends styledInterface {
   isOpened: boolean;
-  childrenLength?: any;
+  childrenLength?: number;
 }
 
 const AccordionWrapsetStyled = styled.div<AccordionTypes>`
@@ -16,7 +16,7 @@ const AccordionWrapsetStyled = styled.div<AccordionTypes>`
   ${(props) =>
     props.isOpened
       ? `
-      max-height: ${props.childrenLength * 40 + "px" || "0"};
+      max-height: ${props.childrenLength! * 40 + "px" || "0"};
     `
       : ``}
 `;

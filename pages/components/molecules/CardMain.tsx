@@ -5,6 +5,11 @@ import Button from "../../components/atoms/Button";
 import Typo from "../../components/atoms/Typo";
 import CardSwiper from "../../components/organisms/CardSwiper";
 import styledInterface from "../Intefaces/styledComponent";
+
+import { useSelector } from "react-redux";
+import { ReducerType } from "redux/rootReducer";
+import { UserData } from "redux/slices/user";
+
 interface CardMainTypes {
   exposeWord: ExposeWordTypes[];
 }
@@ -152,6 +157,8 @@ const BtnWrapCardCtrlStyled = styled.div`
 `;
 
 const CardMainComponent: React.FC<CardMainTypes> = ({ exposeWord }) => {
+  const userData = useSelector<ReducerType, UserData[]>((state) => state.user);
+
   const cardList: any = useRef();
   const cardHandler = {
     dontKnow: function (_objWord: ExposeWordTypes, e: Event) {
@@ -177,13 +184,17 @@ const CardMainComponent: React.FC<CardMainTypes> = ({ exposeWord }) => {
   };
 
   const setCardData = async (_objWord: ExposeWordTypes, _state: string) => {
-    // const res = await axios.post(
-    //   "http://localhost:9090" + "/api/user/word/reg",
-    //   {
-    //     cardInfo: {},
-    //   }
-    // );
-    // console.log(res.data);
+    const res = await axios.post(
+      "http://localhost:9090" + "/api/user/word/state",
+      {
+        wordInfo: {
+          userId: userData[0].id,
+          wordId: _objWord.word_id,
+          wordState: _state,
+        },
+      }
+    );
+    console.log(res.data);
   };
 
   const setCardFlip = function (_objWord: ExposeWordTypes, e: any) {

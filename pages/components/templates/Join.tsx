@@ -17,43 +17,43 @@ import { useState } from "react";
 import { useRef } from "react";
 
 import axios from "axios";
-import validator from "validator"
+import validator from "validator";
 import passwordValidator from "password-validator";
 import Hash from "../atoms/Hash";
 interface LoginTypes {
-  setJoinPageOpened: Function
+  setJoinPageOpened: Function;
 }
 
-interface HashedDataTypes{
+interface HashedDataTypes {
   password: string;
   salt: string;
 }
 
 const FlexWrap = styled.div`
   display: flex;
-  button.disabled{
+  button.disabled {
     background-color: var(--color-grey);
   }
-  input{
+  input {
     flex: 1;
   }
   > * + * {
     margin-left: 8px;
   }
-`
+`;
 
 const AuthCheckWrap = styled.div`
   position: relative;
   flex: 1;
-  input{
+  input {
     padding-right: 64px;
   }
-  .auth_time_limit{
+  .auth_time_limit {
     position: absolute;
     right: 16px;
     top: 0;
   }
-`
+`;
 
 const JoinStyled = styled.div<LoginTypes>`
   position: fixed;
@@ -68,11 +68,10 @@ const JoinStyled = styled.div<LoginTypes>`
   padding: 16px;
   background-color: #f3f3f3;
   overflow-y: auto;
-  animation: popup .3s linear;
+  animation: popup 0.3s linear;
 `;
 
 const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
-
   /* S : DOM Element 동작 State Flag */
   const [authCheckFlag, setAuthCheckFlag] = useState(false); //인증 시작 플래그
   const [stopTimer, setStopTimer] = useState(false); //인증성공시 타이머 종료 플래그
@@ -94,196 +93,200 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
   const [joinUserId, setJoinUserId] = useState(""); //사용자가 입력한 id 이메일
   const [joinUserPw, setJoinUserPw] = useState(""); //사용자가 입력한 pw
   const [joinUserName, setJoinUserName] = useState(""); //사용자가 입력한 이름
-  const [joinUserImg, setJoinUserImg] = useState("/images/img_user_default.jpg"); //사용자가 입력한 이름
+  const [joinUserImg, setJoinUserImg] = useState(
+    "/images/img_user_default.jpg"
+  ); //사용자가 입력한 이름
   /* E : 서버로 보낼 데이터 State */
 
-  const pwInput:any = useRef();
-  const pwCfInput:any = useRef();
+  const pwInput: any = useRef();
+  const pwCfInput: any = useRef();
 
-  const invtCode:any = process.env.NEXT_PUBLIC_INVITE_CODE;
+  const invtCode: any = process.env.NEXT_PUBLIC_INVITE_CODE;
 
   const schema = new passwordValidator();
   schema
-  .is().min(8)
-  .is().max(100)
-  .has().uppercase()
-  .has().lowercase()
-  .has().digits(1)
-  .has().not().spaces()
+    .is()
+    .min(8)
+    .is()
+    .max(100)
+    .has()
+    .uppercase()
+    .has()
+    .lowercase()
+    .has()
+    .digits(1)
+    .has()
+    .not()
+    .spaces();
 
   const authTimeEnd = function () {
     setAuthCheckFlag(false);
-  }
+  };
 
-  const emailDupCheck = async() => {
-    const res = await axios.post('http://localhost:9090' + '/api/join/dup', {
+  const emailDupCheck = async () => {
+    const res = await axios.post("http://localhost:9090" + "/api/join/dup", {
       joinUserData: {
         email: joinUserId,
-      }
-    })
+      },
+    });
     return res.data.length;
-  }
+  };
 
   const authButtonClick = () => {
-    emailDupCheck().then((dupCheckLeng:number) => {
-      if(dupCheckLeng === 0){
-        if(authCheckFlag){
-      
-        }
-        else if(joinUserId.length === 0) {
-          alert("이메일을 입력해주세요.")
-        }
-        else if(!validator.isEmail(joinUserId)){
-          alert("유효한 이메일 형식이 아닙니다.")
-        }
-        else{
+    emailDupCheck().then((dupCheckLeng: number) => {
+      if (dupCheckLeng === 0) {
+        if (authCheckFlag) {
+        } else if (joinUserId.length === 0) {
+          alert("이메일을 입력해주세요.");
+        } else if (!validator.isEmail(joinUserId)) {
+          alert("유효한 이메일 형식이 아닙니다.");
+        } else {
           sendAuthCheckMail();
-          setAuthCheckFlag(true)
+          setAuthCheckFlag(true);
         }
-      }
-      else if(dupCheckLeng > 0){
-        alert("이미 등록된 이메일 입니다.")
-      }
-      else {
+      } else if (dupCheckLeng > 0) {
+        alert("이미 등록된 이메일 입니다.");
+      } else {
         console.log("예외오류:::::", dupCheckLeng);
       }
-    })
-  }
+    });
+  };
 
-  const sendAuthCheckMail = async() => {
-    const res = await axios.post('http://localhost:9090' + '/api/join/sendmail', {
-      joinUserData: {
-        email: joinUserId,
+  const sendAuthCheckMail = async () => {
+    const res = await axios.post(
+      "http://localhost:9090" + "/api/join/sendmail",
+      {
+        joinUserData: {
+          email: joinUserId,
+        },
       }
-    })
-    
-    setResAuthCode(res.data.authCode)
+    );
 
-  }
+    setResAuthCode(res.data.authCode);
+  };
 
   const successAuthCheck = () => {
-    setStopTimer(true)
-    alert("인증에 성공했습니다.")
+    setStopTimer(true);
+    alert("인증에 성공했습니다.");
     setIsEmailValid(true);
-  }
+  };
 
   const authCodeCheck = () => {
-    joinUserAuthCode === resAuthCode ? successAuthCheck() : alert("인증코드가 일치하지 않습니다.");
-  }
+    joinUserAuthCode === resAuthCode
+      ? successAuthCheck()
+      : alert("인증코드가 일치하지 않습니다.");
+  };
 
-  const validatePw = (pw:string) => {
+  const validatePw = (pw: string) => {
     setIsPwValid(false); // 입력시 암호가 변경되었으므로 state false
     setJoinUserPw(pw);
 
-    if(pwCfInput.current.value.length > 0){
+    if (pwCfInput.current.value.length > 0) {
       validatePwConfirm();
     }
-    if(pw.length === 0){
+    if (pw.length === 0) {
       pwInput.current.removeAttribute("data-valid-state");
+    } else {
+      schema.validate(pw)
+        ? (() => {
+            pwInput.current.setAttribute("data-valid-state", "valid");
+            setIsPwValid(true);
+          })()
+        : (() => {
+            pwInput.current.setAttribute("data-valid-state", "err");
+          })();
     }
-    else{
-      schema.validate(pw) ? (() => {
-        pwInput.current.setAttribute("data-valid-state", "valid");
-        setIsPwValid(true);
-      })() : (() => {
-        pwInput.current.setAttribute("data-valid-state", "err");
-      })();
-    }
-  }
+  };
 
   const validatePwConfirm = () => {
-    if(pwCfInput.current.value.length === 0){
+    if (pwCfInput.current.value.length === 0) {
       pwCfInput.current.removeAttribute("data-valid-state");
-    }
-    else if(pwCfInput.current.value === pwInput.current.value){
-      pwCfInput.current.setAttribute("data-valid-state", "valid")
+    } else if (pwCfInput.current.value === pwInput.current.value) {
+      pwCfInput.current.setAttribute("data-valid-state", "valid");
       setIsPwCfValid(true);
-    }
-    else{
-      pwCfInput.current.setAttribute("data-valid-state", "err")
+    } else {
+      pwCfInput.current.setAttribute("data-valid-state", "err");
       setIsPwCfValid(false);
     }
-  }
+  };
 
-  const validInvtCode = (invt:HTMLInputElement) => {
-    if(invt.value.length === 0){
+  const validInvtCode = (invt: HTMLInputElement) => {
+    if (invt.value.length === 0) {
       invt.removeAttribute("data-valid-state");
+    } else {
+      invt.value === invtCode
+        ? (() => {
+            invt.setAttribute("data-valid-state", "valid");
+            setIsInvtValid(true);
+          })()
+        : (() => {
+            invt.setAttribute("data-valid-state", "err");
+            setIsInvtValid(false);
+          })();
     }
-    else{
-      (invt.value === invtCode) ? (() => {
-        invt.setAttribute("data-valid-state", "valid");
-        setIsInvtValid(true);
-      })() : (() => {
-        invt.setAttribute("data-valid-state", "err");
-        setIsInvtValid(false);
-      })();
-    }
-  }
+  };
 
   const joinButtonClick = () => {
-    console.log("작성된 이메일: ", joinUserId)
-    console.log("작성된 암호: ", joinUserPw)
-    console.log("작성된 이름: ", joinUserName)
+    console.log("작성된 이메일: ", joinUserId);
+    console.log("작성된 암호: ", joinUserPw);
+    console.log("작성된 이름: ", joinUserName);
 
-    console.log("mail 유효성: ", isEmailValid)
-    console.log("pw 유효성: ", isPwValid)
-    console.log("invt 유효성: ", isInvtValid)
+    console.log("mail 유효성: ", isEmailValid);
+    console.log("pw 유효성: ", isPwValid);
+    console.log("invt 유효성: ", isInvtValid);
 
-    console.log("-----------------------------")
-    if(!isEmailValid){
-      alert("이메일 인증을 완료해주세요.")
+    console.log("-----------------------------");
+    if (!isEmailValid) {
+      alert("이메일 인증을 완료해주세요.");
+    } else if (!isPwValid) {
+      alert("비밀번호 양식을 확인해주세요.");
+    } else if (!isPwCfValid) {
+      alert("비밀번호가 일치하지 않습니다.");
+    } else if (joinUserName.length <= 0) {
+      alert("성함을 입력해주세요.");
+    } else if (!isInvtValid) {
+      alert("초대코드가 유효하지 않습니다.");
+    } else {
+      Hash.createHashedPassword(joinUserPw).then(
+        (hashedData: HashedDataTypes) => {
+          console.log(hashedData);
+          sendJoinForm(hashedData.password, hashedData.salt);
+        }
+      );
     }
-    else if(!isPwValid){
-      alert("비밀번호 양식을 확인해주세요.")
-    }
-    else if(!isPwCfValid){
-      alert("비밀번호가 일치하지 않습니다.")
-    }
-    else if(joinUserName.length <= 0) {
-      alert("성함을 입력해주세요.")
-    }
-    else if(!isInvtValid){
-      alert("초대코드가 유효하지 않습니다.")
-    }
-    else{
-      Hash.createHashedPassword(joinUserPw).then((hashedData:HashedDataTypes) => {
-        console.log(hashedData)
-        sendJoinForm(hashedData.password, hashedData.salt);
-      });
-    }
-  }
+  };
 
-  const sendJoinForm = async(hashedPw:string, salt:string) => {
-    const res = await axios.post('http://localhost:9090' + '/api/join/reg', {
+  const sendJoinForm = async (hashedPw: string, salt: string) => {
+    const res = await axios.post("http://localhost:9090" + "/api/join/reg", {
       joinUserData: {
         email: joinUserId,
         pw: hashedPw,
         name: joinUserName,
         salt: salt,
-        prfImg: joinUserImg
-      }
-    })
-    
-    res.data.affectedRows === 1 ? (() => {
-      alert("회원가입이 완료되었습니다.");
-      setJoinPageOpened(false)
-    })() : (() => {
-      console.log("에러 발생:::::", res.data)
-    })();
-  }
+        prfImg: joinUserImg,
+      },
+    });
+
+    res.data.affectedRows === 1
+      ? (() => {
+          alert("회원가입이 완료되었습니다.");
+          setJoinPageOpened(false);
+        })()
+      : (() => {
+          console.log("에러 발생:::::", res.data);
+        })();
+  };
 
   return (
     <>
       <JoinStyled setJoinPageOpened={setJoinPageOpened}>
         <Form>
-          <Typo fontSize="18px" fontWeight="semi-bold" marginTop="12px">회원가입</Typo>
+          <Typo fontSize="18px" fontWeight="semi-bold" marginTop="12px">
+            회원가입
+          </Typo>
           <Fieldset>
             <InputWrap>
-              <Label
-                htmlFor="joinId"
-                desc="이메일"
-                mandatory={true}
-              />
+              <Label htmlFor="joinId" desc="이메일" mandatory={true} />
               <FlexWrap>
                 <InputText
                   type="text"
@@ -291,9 +294,9 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
                   placeHolder="예) user@cidict.co.kr"
                   id="joinId"
                   readonly={authCheckFlag}
-                  onChange={
-                    (e:React.ChangeEvent<HTMLInputElement>) => {setJoinUserId(e.currentTarget.value)}
-                  }
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    setJoinUserId(e.currentTarget.value);
+                  }}
                 />
                 <Button
                   desc="코드전송"
@@ -307,42 +310,55 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
               </FlexWrap>
             </InputWrap>
             {authCheckFlag ? (
-            <InputWrap>
-              <FlexWrap>
-                <AuthCheckWrap>
-                  <InputText
-                    type="text"
-                    placeHolder="인증코드를 입력하세요."
-                    id="joinAuth"
-                    readonly={isEmailValid}
-                    onChange={
-                      (e:React.ChangeEvent<HTMLInputElement>) => {setJoinUserAuthCode(e.currentTarget.value)}
-                    }
+              <InputWrap>
+                <FlexWrap>
+                  <AuthCheckWrap>
+                    <InputText
+                      type="text"
+                      placeHolder="인증코드를 입력하세요."
+                      id="joinAuth"
+                      readonly={isEmailValid}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        setJoinUserAuthCode(e.currentTarget.value);
+                      }}
+                    />
+                    <Typo
+                      lineHeight="40px"
+                      color="#e51937"
+                      className="auth_time_limit"
+                    >
+                      <Timer
+                        mm="10"
+                        ss="00"
+                        onExpire={authTimeEnd}
+                        stopTimer={stopTimer}
+                      />
+                    </Typo>
+                  </AuthCheckWrap>
+                  <Button
+                    desc="인증하기"
+                    width="80px"
+                    backgroundColor="var(--color-point)"
+                    color="#fff"
+                    onClick={authCodeCheck}
                   />
-                  <Typo lineHeight="40px" color="#e51937" className="auth_time_limit">
-                    <Timer mm="10" ss="00" onExpire={authTimeEnd} stopTimer={stopTimer}/>
-                  </Typo>
-                </AuthCheckWrap>
-                <Button desc="인증하기" width="80px" backgroundColor="var(--color-point)" color="#fff" onClick={authCodeCheck} />
-              </FlexWrap>
-            </InputWrap>
-            ) : <></>}
+                </FlexWrap>
+              </InputWrap>
+            ) : (
+              <></>
+            )}
           </Fieldset>
           <Fieldset>
             <InputWrap>
-              <Label
-                htmlFor="joinPw"
-                desc="비밀번호"
-                mandatory={true}
-              />
+              <Label htmlFor="joinPw" desc="비밀번호" mandatory={true} />
               <InputText
                 type="password"
                 placeHolder="8자리 이상, 영어대문자 + 소문자 포함"
                 id="joinPw"
                 reference={pwInput}
-                onKeyUp={
-                  (e:React.ChangeEvent<HTMLInputElement>) => {validatePw(e.currentTarget.value)}
-                }
+                onKeyUp={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  validatePw(e.currentTarget.value);
+                }}
               />
             </InputWrap>
             <InputWrap>
@@ -356,43 +372,35 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
                 placeHolder="비밀번호를 한번 더 입력하세요."
                 id="joinPwConfirm"
                 reference={pwCfInput}
-                onKeyUp={
-                  (e:React.ChangeEvent<HTMLInputElement>) => {validatePwConfirm()}
-                }
+                onKeyUp={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  validatePwConfirm();
+                }}
               />
             </InputWrap>
           </Fieldset>
 
           <Fieldset>
             <InputWrap>
-              <Label
-                htmlFor="joinName"
-                desc="성함"
-                mandatory={true}
-              />
+              <Label htmlFor="joinName" desc="성함" mandatory={true} />
               <InputText
                 type="text"
                 placeHolder="실명을 입력하세요."
                 id="joinName"
                 maxLength={5}
-                onChange={
-                  (e:React.ChangeEvent<HTMLInputElement>) => {setJoinUserName(e.currentTarget.value)}
-                }
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setJoinUserName(e.currentTarget.value);
+                }}
               />
             </InputWrap>
             <InputWrap>
-              <Label
-                htmlFor="joinKey"
-                desc="초대코드"
-                mandatory={true}
-              />
+              <Label htmlFor="joinKey" desc="초대코드" mandatory={true} />
               <InputText
                 type="text"
                 placeHolder="초대코드를 입력하세요."
                 id="joinKey"
-                onChange={
-                  (e:React.ChangeEvent<HTMLInputElement>) => {validInvtCode(e.currentTarget)}
-                }
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  validInvtCode(e.currentTarget);
+                }}
               />
             </InputWrap>
           </Fieldset>
@@ -415,14 +423,16 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
                 color="#fff"
                 width="60%"
                 height="40px"
-                onClick={() => {joinButtonClick()}}
+                onClick={() => {
+                  joinButtonClick();
+                }}
               />
             </ButtonWrap>
           </Fieldset>
         </Form>
       </JoinStyled>
     </>
-  )
+  );
 };
 
 JoinComponent.defaultProps = {};

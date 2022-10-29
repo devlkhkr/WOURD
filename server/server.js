@@ -223,6 +223,39 @@ app.get("/api/words/list", (req, res) => {
   });
 });
 
+app.post("/api/user/word/state", (req, res) => {
+  console.log(req.body)
+  db.query(
+    "INSERT INTO USER_WORD_TB (" +
+      "user_word_key," +
+      "user_id," +
+      "word_id," +
+      "word_state," +
+      "state_modified_date" +
+      ") VALUES ('" +
+      (req.body.wordInfo.userId + req.body.wordInfo.wordId) +
+      "','" +
+      req.body.wordInfo.userId + //user_id
+      "','" +
+      req.body.wordInfo.wordId + //word_id
+      "','" +
+      req.body.wordInfo.wordState + //word_state
+      "'," +
+      "NOW()) ON DUPLICATE KEY UPDATE word_state='" +
+      req.body.wordInfo.wordState +
+      "', state_modified_date=NOW()"
+      , //modified_date
+    (err, data) => {
+      if (!err) {
+        res.send(data);
+      } else {
+        console.log(err);
+        res.send(err);
+      }
+    }
+  );
+});
+
 // app.post('/api/board/del', (req, res) => {
 //     db.query("DELETE FROM BOARD_TB WHERE BOARD_SEQ=" + +req.body.seq, (err, data) => {
 //         if (!err) {
