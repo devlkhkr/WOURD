@@ -20,8 +20,10 @@ import axios from "axios";
 import validator from "validator";
 import passwordValidator from "password-validator";
 import Hash from "../atoms/Hash";
-interface LoginTypes {
+interface JoinTypes {
   setJoinPageOpened: Function;
+  startLogin: Function;
+  insertLoginData: Function;
 }
 
 interface HashedDataTypes {
@@ -55,7 +57,7 @@ const AuthCheckWrap = styled.div`
   }
 `;
 
-const JoinStyled = styled.div<LoginTypes>`
+const JoinStyled = styled.div<JoinTypes>`
   position: fixed;
   top: 0;
   left: 50%;
@@ -71,7 +73,11 @@ const JoinStyled = styled.div<LoginTypes>`
   animation: popup 0.3s linear;
 `;
 
-const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
+const JoinComponent: React.FC<JoinTypes> = ({
+  setJoinPageOpened,
+  startLogin,
+  insertLoginData,
+}) => {
   /* S : DOM Element 동작 State Flag */
   const [authCheckFlag, setAuthCheckFlag] = useState(false); //인증 시작 플래그
   const [stopTimer, setStopTimer] = useState(false); //인증성공시 타이머 종료 플래그
@@ -270,6 +276,8 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
     res.data.affectedRows === 1
       ? (() => {
           alert("회원가입이 완료되었습니다.");
+          insertLoginData(joinUserId);
+          // startLogin(joinUserId, hashedPw);
           setJoinPageOpened(false);
         })()
       : (() => {
@@ -279,7 +287,11 @@ const JoinComponent: React.FC<LoginTypes> = ({ setJoinPageOpened }) => {
 
   return (
     <>
-      <JoinStyled setJoinPageOpened={setJoinPageOpened}>
+      <JoinStyled
+        setJoinPageOpened={setJoinPageOpened}
+        startLogin={startLogin}
+        insertLoginData={insertLoginData}
+      >
         <Form>
           <Typo fontSize="18px" fontWeight="semi-bold" marginTop="12px">
             회원가입

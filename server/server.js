@@ -121,7 +121,8 @@ app.post("/api/user/log/in", (req, res) => {
         } else {
           res.send("비밀번호가 일치하지 않습니다.");
         }
-      } else {
+      }
+      else {
         console.log(err);
         res.send(err);
       }

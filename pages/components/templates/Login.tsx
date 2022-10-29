@@ -54,18 +54,18 @@ const LoginComponent: React.FC<LoginTypes> = ({ setIsTokenLive }) => {
     } else {
       Hash.makePasswordHashed(loginUserId, loginUserPw).then(
         (hashedPw: string | boolean) => {
-          startLogin(hashedPw);
+          startLogin(loginUserId, hashedPw);
         }
       );
     }
   };
-  const startLogin = async (hashedPw: string | boolean) => {
+  const startLogin = async (userId: string, hashedPw: string | boolean) => {
     if (hashedPw) {
       const res = await axios.post(
         "http://localhost:9090" + "/api/user/log/in",
         {
           loginUserData: {
-            id: loginUserId,
+            id: userId,
             pw: hashedPw,
           },
         }
@@ -79,7 +79,7 @@ const LoginComponent: React.FC<LoginTypes> = ({ setIsTokenLive }) => {
             lastLogin: res.data.userInfo.lastLogin,
           } as UserData)
         );
-        insertLoginData();
+        insertLoginData(loginUserId, 1);
         setIsTokenLive(res.data.loginFlag);
       } else {
         alert(res.data);
@@ -87,12 +87,12 @@ const LoginComponent: React.FC<LoginTypes> = ({ setIsTokenLive }) => {
     }
   };
 
-  const insertLoginData = async () => {
+  const insertLoginData = async (userId: string) => {
     const res = await axios.post(
       "http://localhost:9090" + "/api/user/log/history",
       {
         loginUserData: {
-          logUserId: loginUserId,
+          logUserId: userId,
           logAction: 1,
         },
       }
@@ -107,7 +107,15 @@ const LoginComponent: React.FC<LoginTypes> = ({ setIsTokenLive }) => {
 
   return (
     <>
-      {joinPageOpened ? <Join setJoinPageOpened={setJoinPageOpened} /> : <></>}
+      {joinPageOpened ? (
+        <Join
+          setJoinPageOpened={setJoinPageOpened}
+          startLogin={startLogin}
+          insertLoginData={insertLoginData}
+        />
+      ) : (
+        <></>
+      )}
       <LoginStyled setIsTokenLive={setIsTokenLive}>
         <Logo mainColor="var(--color-point)" subColor="#231815" />
         <Fieldset>
