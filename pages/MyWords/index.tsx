@@ -71,7 +71,7 @@ const MyWordsComponent: NextPage<MyWordsListTypes> = () => {
         width: 0;
         height: 0;
         border-style: solid;
-        border-width: 0 24px 24px 0;
+        border-width: 0 20px 20px 0;
         border-color: transparent;
       }
     }
@@ -116,10 +116,23 @@ const MyWordsComponent: NextPage<MyWordsListTypes> = () => {
             >
               {objMyWord.word_name}
             </Typo>
-            <Typo lineClamp="1" textAlign="left" marginTop="8px">
-              {objMyWord.word_unravel}
-            </Typo>
-            <Typo lineClamp="2" textAlign="left" marginTop="8px">
+            {objMyWord.word_unravel != null ? (
+              <Typo
+                lineClamp="1"
+                textAlign="left"
+                marginTop="8px"
+                color="var(--color-grey)"
+              >
+                {objMyWord.word_unravel}
+              </Typo>
+            ) : (
+              <></>
+            )}
+            <Typo
+              lineClamp={objMyWord.word_unravel == null ? "3" : "2"}
+              textAlign="left"
+              marginTop="8px"
+            >
               {objMyWord.word_desc}
             </Typo>
           </MyWordListWrapStyled>

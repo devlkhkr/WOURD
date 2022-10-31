@@ -133,15 +133,15 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
                 value: 0,
               },
               {
-                name: "아는 단어",
+                name: "아는 단어에 추가",
                 value: 1,
               },
               {
-                name: "모르는 단어",
+                name: "모르는 단어에 추가",
                 value: 2,
               },
               {
-                name: "즐겨찾은 단어",
+                name: "즐겨찾은 단어에 추가",
                 value: 3,
               },
             ]}
