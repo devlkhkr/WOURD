@@ -213,16 +213,16 @@ app.post("/api/user/log/history", (req, res) => {
   );
 });
 
-app.get("/api/words/list", (req, res) => {
-  db.query("SELECT * FROM WORD_TB", (err, data) => {
-    if (!err) {
-      res.send(data);
-    } else {
-      console.log(err);
-      res.send(err);
-    }
-  });
-});
+// app.get("/api/words/list", (req, res) => {
+//   db.query("SELECT * FROM WORD_TB", (err, data) => {
+//     if (!err) {
+//       res.send(data);
+//     } else {
+//       console.log(err);
+//       res.send(err);
+//     }
+//   });
+// });
 
 app.post("/api/user/word/state", (req, res) => {
   console.log(req.body)
@@ -258,7 +258,17 @@ app.post("/api/user/word/state", (req, res) => {
 });
 
 app.post("/api/myword/list", (req, res) => {
-  db.query(`SELECT * FROM USER_WORD_TB WHERE user_id='${req.body.params.userId}'`, (err, data) => {
+  
+  db.query(
+    "SELECT " +
+    "user_word_key," +
+    "user_id," +
+    "word_name," +
+    "word_unravel," +
+    "word_desc," +
+    "word_reg_userid" +
+    " FROM USER_WORD_TB, WORD_TB WHERE user_id='" +
+    req.body.params.userId + "' AND word_use_flag=1", (err, data) => {
     if (!err) {
       res.send(data);
     } else {

@@ -5,14 +5,16 @@ import CardMain from "./components/molecules/CardMain";
 
 const Home: NextPage = () => {
   const [exposeWord, setExposeWord] = useState([]);
-  const getCardList:Function = async() => {
-    const res = await axios.get('http://localhost:9090' + '/api/words/list');
-    return res
-  }
+
+  const getCardList: Function = async () => {
+    await axios
+      .get("http://localhost:3000" + "/api/words/list")
+      .then((res: any) => {
+        setExposeWord(res.data);
+      });
+  };
   useEffect(() => {
-    getCardList().then((res:any) => {
-      setExposeWord(res.data);
-    });
+    getCardList();
   }, []);
 
   return (

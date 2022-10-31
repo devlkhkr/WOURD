@@ -10,9 +10,15 @@ import { useSelector } from "react-redux";
 import { ReducerType } from "redux/rootReducer";
 import { UserData } from "redux/slices/user";
 
-interface MyWordsTypes {}
+interface MyWordsListTypes {
+  user_word_key: string;
+  user_id: string;
+  word_id: string;
+  word_state: string;
+  state_modified_date: Date;
+}
 
-const MyWordsComponent: NextPage<MyWordsTypes> = () => {
+const MyWordsComponent: NextPage<MyWordsListTypes> = () => {
   const userData = useSelector<ReducerType, UserData[]>((state) => state.user);
 
   const router = useRouter();
@@ -20,7 +26,7 @@ const MyWordsComponent: NextPage<MyWordsTypes> = () => {
     router.push("/MyWords/Regist");
   };
 
-  const [myWordList, setMyWordList] = useState([]);
+  const [myWordList, setMyWordList] = useState<MyWordsListTypes[]>([]);
   const getMyWordList: Function = async () => {
     const res = await axios
       .post("http://localhost:9090" + "/api/myword/list", {
@@ -44,7 +50,6 @@ const MyWordsComponent: NextPage<MyWordsTypes> = () => {
   }, []);
 
   const MyWordListStyled = styled.div``;
-
   return (
     <div>
       <Button
@@ -56,8 +61,10 @@ const MyWordsComponent: NextPage<MyWordsTypes> = () => {
         onClick={addNewWordClick}
       ></Button>
       <MyWordListStyled>
-        {myWordList.map((objMyWord: any, index: any) => (
-          <div></div>
+        {myWordList.map((objMyWord: MyWordsListTypes, index: number) => (
+          <div key={index}>
+            <div>{objMyWord.word_id}</div>
+          </div>
         ))}
       </MyWordListStyled>
     </div>
