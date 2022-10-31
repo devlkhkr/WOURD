@@ -18,7 +18,7 @@ export default function setUserHistory(
       "word_reg_userid" +
       " FROM USER_WORD_TB LEFT OUTER JOIN WORD_TB ON USER_WORD_TB.word_id = WORD_TB.word_id WHERE user_id='" +
       req.body.params.userId +
-      "' AND NOT word_state='s' AND word_use_flag=1",
+      "' AND NOT word_state='s' AND word_use_flag=1 ORDER BY state_modified_date desc",
     function (err: any, data: any) {
       if (!err) {
         res.send(data);
