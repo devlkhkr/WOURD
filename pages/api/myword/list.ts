@@ -13,8 +13,10 @@ export default function setUserHistory(
       "word_name," +
       "word_unravel," +
       "word_desc," +
+      "word_state," +
+      "state_modified_date," +
       "word_reg_userid" +
-      " FROM USER_WORD_TB, WORD_TB WHERE user_id='" +
+      " FROM USER_WORD_TB LEFT OUTER JOIN WORD_TB ON USER_WORD_TB.word_id = WORD_TB.word_id WHERE user_id='" +
       req.body.params.userId +
       "' AND word_use_flag=1",
     function (err: any, data: any) {
