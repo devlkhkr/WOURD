@@ -62,7 +62,7 @@ const LoginComponent: React.FC<LoginTypes> = ({ setIsTokenLive }) => {
   const startLogin = async (userId: string, hashedPw: string | boolean) => {
     if (hashedPw) {
       const res = await axios.post(
-        "http://localhost:9090" + "/api/user/log/in",
+        "http://localhost:3000" + "/api/user/log/in",
         {
           loginUserData: {
             id: userId,
@@ -89,7 +89,7 @@ const LoginComponent: React.FC<LoginTypes> = ({ setIsTokenLive }) => {
 
   const insertLoginData = async (userId: string) => {
     const res = await axios.post(
-      "http://localhost:9090" + "/api/user/log/history",
+      "http://localhost:3000" + "/api/user/log/history",
       {
         loginUserData: {
           logUserId: userId,

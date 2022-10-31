@@ -29,7 +29,7 @@ const MyWordsComponent: NextPage<MyWordsListTypes> = () => {
   const [myWordList, setMyWordList] = useState<MyWordsListTypes[]>([]);
   const getMyWordList: Function = async () => {
     const res = await axios
-      .post("http://localhost:9090" + "/api/myword/list", {
+      .post("http://localhost:3000" + "/api/myword/list", {
         params: {
           userId: userData[0].id,
         },

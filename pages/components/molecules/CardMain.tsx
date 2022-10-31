@@ -185,7 +185,7 @@ const CardMainComponent: React.FC<CardMainTypes> = ({ exposeWord }) => {
 
   const setCardData = async (_objWord: ExposeWordTypes, _state: string) => {
     const res = await axios.post(
-      "http://localhost:9090" + "/api/user/word/state",
+      "http://localhost:3000" + "/api/user/word/state",
       {
         wordInfo: {
           userId: userData[0].id,

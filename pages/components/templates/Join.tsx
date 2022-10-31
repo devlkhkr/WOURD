@@ -130,7 +130,7 @@ const JoinComponent: React.FC<JoinTypes> = ({
   };
 
   const emailDupCheck = async () => {
-    const res = await axios.post("http://localhost:9090" + "/api/join/dup", {
+    const res = await axios.post("http://localhost:3000" + "/api/join/dup", {
       joinUserData: {
         email: joinUserId,
       },
@@ -160,7 +160,7 @@ const JoinComponent: React.FC<JoinTypes> = ({
 
   const sendAuthCheckMail = async () => {
     const res = await axios.post(
-      "http://localhost:9090" + "/api/join/sendmail",
+      "http://localhost:3000" + "/api/join/sendmail",
       {
         joinUserData: {
           email: joinUserId,
@@ -263,7 +263,7 @@ const JoinComponent: React.FC<JoinTypes> = ({
   };
 
   const sendJoinForm = async (hashedPw: string, salt: string) => {
-    const res = await axios.post("http://localhost:9090" + "/api/join/reg", {
+    const res = await axios.post("http://localhost:3000" + "/api/join/reg", {
       joinUserData: {
         email: joinUserId,
         pw: hashedPw,

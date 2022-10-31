@@ -8,7 +8,7 @@ const Home: NextPage = () => {
 
   const getCardList: Function = async () => {
     await axios
-      .get("http://localhost:3000" + "/api/words/list")
+      .get("http://localhost:3000" + "/api/word/list")
       .then((res: any) => {
         setExposeWord(res.data);
       });
