@@ -5,15 +5,19 @@ import styled from "styled-components";
 import styledInterface from "../components/Intefaces/styledComponent";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Typo from "pages/components/atoms/Typo";
 
 import { useSelector } from "react-redux";
 import { ReducerType } from "redux/rootReducer";
 import { UserData } from "redux/slices/user";
 
 interface MyWordsListTypes {
-  user_word_key: string;
   user_id: string;
-  word_id: string;
+  user_word_key: string;
+  word_desc: string;
+  word_name: string;
+  word_reg_userid: string;
+  word_unravel: string;
   word_state: string;
   state_modified_date: Date;
 }
@@ -49,6 +53,44 @@ const MyWordsComponent: NextPage<MyWordsListTypes> = () => {
     getMyWordList();
   }, []);
 
+  const MyWordListWrapStyled = styled.div`
+    width: 100%;
+    height: 120px;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 16px;
+    margin-top: 16px;
+    position: relative;
+    overflow: hidden;
+    &[class*="state"] {
+      &::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 0 24px 24px 0;
+        border-color: transparent;
+      }
+    }
+    &.state {
+      &_k::after {
+        border-color: transparent var(--color-point) transparent transparent;
+      }
+      &_d::after {
+        border-color: transparent #ea8c47 transparent transparent;
+      }
+      &_f::after {
+        border-color: transparent #dddf56 transparent transparent;
+      }
+      &_s::after {
+        border-color: transparent #b977bf transparent transparent;
+      }
+    }
+  `;
+
   const MyWordListStyled = styled.div``;
   return (
     <div>
@@ -62,9 +104,20 @@ const MyWordsComponent: NextPage<MyWordsListTypes> = () => {
       ></Button>
       <MyWordListStyled>
         {myWordList.map((objMyWord: MyWordsListTypes, index: number) => (
-          <div key={index}>
-            <div>{objMyWord.word_id}</div>
-          </div>
+          <MyWordListWrapStyled
+            key={index}
+            className={`state_${objMyWord.word_state}`}
+          >
+            <Typo fontSize="18px" fontWeight="bold" textAlign="left">
+              {objMyWord.word_name}
+            </Typo>
+            <Typo textAlign="left" marginTop="8px">
+              {objMyWord.word_unravel}
+            </Typo>
+            <Typo lineClamp="2" textAlign="left" marginTop="8px">
+              {objMyWord.word_desc}
+            </Typo>
+          </MyWordListWrapStyled>
         ))}
       </MyWordListStyled>
     </div>

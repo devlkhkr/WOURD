@@ -4,6 +4,7 @@ import styled from "styled-components";
 import styledInterface from "../Intefaces/styledComponent";
 interface TypoType extends styledInterface {
   onClick?: MouseEventHandler;
+  lineClamp?: string;
 }
 
 const TypoStyled = styled.div<TypoType>`
@@ -13,6 +14,12 @@ const TypoStyled = styled.div<TypoType>`
   color: ${(props) => props.color || "inherit"};
   text-align: ${(props) => props.textAlign || "center"};
   margin-top: ${(props) => props.marginTop || "unset"};
+  text-overflow: ellipsis;
+  overflow: hidden;
+  word-break: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: ${(props) => props.lineClamp || "unset"};
+  -webkit-box-orient: vertical;
 `;
 
 const TypoComponent: React.FC<TypoType> = ({
@@ -22,6 +29,7 @@ const TypoComponent: React.FC<TypoType> = ({
   lineHeight,
   color,
   marginTop,
+  lineClamp,
   children,
   className,
   onClick,
@@ -34,6 +42,7 @@ const TypoComponent: React.FC<TypoType> = ({
       lineHeight={lineHeight}
       color={color}
       marginTop={marginTop}
+      lineClamp={lineClamp}
       className={className}
       onClick={onClick}
     >
