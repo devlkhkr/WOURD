@@ -108,10 +108,15 @@ const MyWordsComponent: NextPage<MyWordsListTypes> = () => {
             key={index}
             className={`state_${objMyWord.word_state}`}
           >
-            <Typo fontSize="18px" fontWeight="bold" textAlign="left">
+            <Typo
+              lineClamp="1"
+              fontSize="18px"
+              fontWeight="bold"
+              textAlign="left"
+            >
               {objMyWord.word_name}
             </Typo>
-            <Typo textAlign="left" marginTop="8px">
+            <Typo lineClamp="1" textAlign="left" marginTop="8px">
               {objMyWord.word_unravel}
             </Typo>
             <Typo lineClamp="2" textAlign="left" marginTop="8px">
