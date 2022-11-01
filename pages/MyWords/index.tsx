@@ -32,30 +32,37 @@ const MyWordListWrapStyled = styled.div`
   position: relative;
   overflow: hidden;
   &[class*="state"] {
+    &::before,
     &::after {
       content: "";
       position: absolute;
-      right: 0;
-      top: 0;
       width: 0;
       height: 0;
       border-style: solid;
+      right: 0;
+      top: 0;
+    }
+    &::after {
       border-width: 0 20px 20px 0;
-      border-color: transparent;
+      border-color: transparent #f3f3f3 transparent transparent;
+    }
+    &::before {
+      border-width: 20px 0 0 20px;
+      border-color: transparent transparent transparent red;
     }
   }
   &.state {
-    &_k::after {
-      border-color: transparent var(--color-point) transparent transparent;
+    &_k::before {
+      border-color: transparent transparent transparent #94be88;
     }
-    &_d::after {
-      border-color: transparent #ea8c47 transparent transparent;
+    &_d::before {
+      border-color: transparent transparent transparent #da8484;
     }
-    &_f::after {
-      border-color: transparent #dddf56 transparent transparent;
+    &_f::before {
+      border-color: transparent transparent transparent #c8be51;
     }
-    &_s::after {
-      border-color: transparent #b977bf transparent transparent;
+    &_s::before {
+      border-color: transparent transparent transparent #bb88be;
     }
   }
 `;
@@ -120,7 +127,7 @@ const MyWordsComponent: NextPage<MyWordsListTypes> = () => {
               <Typo
                 lineClamp="1"
                 textAlign="left"
-                marginTop="8px"
+                marginTop="4px"
                 color="var(--color-grey)"
               >
                 {objMyWord.word_unravel}
@@ -131,7 +138,7 @@ const MyWordsComponent: NextPage<MyWordsListTypes> = () => {
             <Typo
               lineClamp={objMyWord.word_unravel == null ? "3" : "2"}
               textAlign="left"
-              marginTop="8px"
+              marginTop="10px"
             >
               {objMyWord.word_desc}
             </Typo>
