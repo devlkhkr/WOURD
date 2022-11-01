@@ -30,7 +30,7 @@ const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
     align-items: center;
   `;
 
-  // 이미 수정할수있는 함수
+  // FIXME: 이미지 수정할수있는 함수
   const modifyImg = () => {
     console.log("이미지 수정 함수");
   };
@@ -39,7 +39,7 @@ const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
     <SettingProfileWrap>
       <SettingProfileUser>
         <ImgComponent src={userData[0].prfImg} objectFit="cover" marginBottom="16px" width="80px" height="80px"/>
-        {/* 추후 버튼으로 바꾸어야할까요? */}
+        {/* FIXME: 추후 버튼으로 바꾸어야할까요? */}
         <TypoComponent
           fontSize="16px"
           fontWeight="semi-bold"

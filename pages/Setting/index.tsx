@@ -143,6 +143,7 @@ const Setting: NextPage<SettingTypes> = () => {
       </SettingTopStyled>
 
       <SettingBottomStyled>
+        {/* FIXME: 추후에 list형식으로 바꾸어서 map ?_? */}
         <SettingListComponent typo="공지사항" />
         <SettingListComponent typo="도움말(FAQ)" />
         <SettingListComponent typo="개발히스토리" />
