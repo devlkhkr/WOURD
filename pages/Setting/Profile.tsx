@@ -29,6 +29,11 @@ const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom : 16px;
+  `;
+
+  const ProfileListWrap = styled.div`
+    
   `;
 
   // FIXME: 이미지 수정할수있는 함수
@@ -58,7 +63,14 @@ const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
         </TypoComponent>
       </SettingProfileUser>
 
-      <ProfileListComponent typo="이름" />
+      <ProfileListWrap>
+        <ProfileListComponent typo="이름" userInfo={`${userData[0].id}`} />
+        <ProfileListComponent
+          typo="닉네임"
+          userInfo={`${userData[0].nickName}`}
+        />
+        {/* <ProfileListComponent typo="소개글" /> */}
+      </ProfileListWrap>
     </SettingProfileWrap>
   );
 };

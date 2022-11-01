@@ -1,16 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 
-import { useSelector } from "react-redux";
-import { ReducerType } from "redux/rootReducer";
-import { UserData } from "redux/slices/user";
-
 import InputText from "../atoms/InputText";
 import TypoComponent from "../atoms/Typo";
 import styledInterface from "../Intefaces/styledComponent";
 
 interface ProfileListTypes extends styledInterface {
   typo : string;
+  userInfo?: string;
 }
 
 const ProfileListWrap = styled.dl`
@@ -25,11 +22,8 @@ const ProfileListWrap = styled.dl`
 `
 
 const ProfileListComponent: React.FC<ProfileListTypes> = (props) => {
-  const { typo, color } = props;
-
-  const userData = useSelector<ReducerType, UserData[]>(state => state.user);
-
-  console.log(userData[0].id)
+  const { typo, color, userInfo } = props;
+  console.log(userInfo)
   return (
     <ProfileListWrap>
       <dt>
@@ -43,7 +37,8 @@ const ProfileListComponent: React.FC<ProfileListTypes> = (props) => {
         </TypoComponent>
       </dt>
       <dd>
-        <InputText type="text" placeHolder="이름을 입력해주세요" value={`${userData[0].id}`} />
+        {/* FIXME : input value ? */}
+        <InputText type="text" placeHolder={userInfo} />
       </dd>
     </ProfileListWrap>
   );
