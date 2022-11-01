@@ -25,10 +25,12 @@ interface MyWordsListTypes {
 
 const MyClickedCardStyled = styled.div`
   position: absolute;
-  left: 0;
+  left: 50%;
+  transform: translate(-50%, 0);
   top: var(--height-header);
   z-index: 9999;
   width: 100%;
+  max-width: 720px;
   height: calc(100% - var(--height-header) - var(--height-footer));
   padding: 20px;
   background-color: rgba(255, 255, 255, 0.5);

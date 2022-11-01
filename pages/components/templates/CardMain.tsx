@@ -78,6 +78,19 @@ const CardBackStyled = styled.div`
   ${CardBaseStyle}
   transform: rotateY(180deg);
   background: linear-gradient(#3f88ef, #0047ab);
+  &.state {
+    &_k {
+      background: linear-gradient(#91d54d, #56a823);
+    }
+    &_d {
+      background: linear-gradient(#d5784d, #a84023);
+    }
+    &_f {
+      background: linear-gradient(#d5cd4d, #a8a023);
+    }
+    &_s {
+    }
+  }
   color: #fff;
   > div {
     & + div {
@@ -139,7 +152,7 @@ const BtnWrapCardCtrlStyled = styled.div`
   &.focused_ {
     &k {
       .btn_word_k {
-        ${setButtonFocus("#94be88")}
+        ${setButtonFocus("#98c97b")}
       }
     }
     &d {
@@ -249,7 +262,11 @@ const CardMainComponent: React.FC<CardMainTypes> = ({
                     {objWord.word_name}
                   </Typo>
                 </CardFrontStyled>
-                <CardBackStyled>
+                <CardBackStyled
+                  className={
+                    objWord.state != undefined ? `state_${objWord.state}` : ""
+                  }
+                >
                   <Typo fontSize="24px" fontWeight="bold">
                     {objWord.word_name}
                   </Typo>
@@ -267,7 +284,7 @@ const CardMainComponent: React.FC<CardMainTypes> = ({
         <BtnWrapCardCtrlStyled className={`btn_wrap_cardctrl ${buttonState}`}>
           <Button
             desc="건너뛰기"
-            backgroundColor="#92a4c9"
+            backgroundColor="rgba(255,255,255,.35)"
             color="#fff"
             height="40px"
             className="btn_word_s"
@@ -277,7 +294,7 @@ const CardMainComponent: React.FC<CardMainTypes> = ({
           />
           <Button
             desc="즐겨찾기"
-            backgroundColor="#92a4c9"
+            backgroundColor="rgba(255,255,255,.35)"
             color="#fff"
             height="40px"
             className="btn_word_f"
@@ -287,7 +304,7 @@ const CardMainComponent: React.FC<CardMainTypes> = ({
           />
           <Button
             desc="모르는단어"
-            backgroundColor="#92a4c9"
+            backgroundColor="rgba(255,255,255,.35)"
             color="#fff"
             height="40px"
             className="btn_word_d"
@@ -297,7 +314,7 @@ const CardMainComponent: React.FC<CardMainTypes> = ({
           />
           <Button
             desc="아는단어"
-            backgroundColor="#92a4c9"
+            backgroundColor="rgba(255,255,255,.35)"
             color="#fff"
             height="40px"
             className="btn_word_k"
