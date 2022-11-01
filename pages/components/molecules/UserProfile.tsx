@@ -86,7 +86,7 @@ const UserProfileComponent: React.FC<UserProfileTypes> = ({}) => {
   };
   return (
     <UserProfileStyled>
-      <ImgComponent src={userData[0].prfImg} objectFit="cover" />
+      <ImgComponent src={userData[0].prfImg} objectFit="cover" width="64" height="64"/>
       <UserInfoStyled>
         <TypoComponent fontSize="16px" fontWeight="semi-bold" textAlign="left">
           {userData[0].nickName}

@@ -4,6 +4,7 @@ import Anchor from "pages/components/atoms/Anchor";
 import { useState } from "react";
 import styled from "styled-components";
 import styledInterface from "../components/Intefaces/styledComponent";
+
 import SettingListComponent from "../components/molecules/SettingList";
 import UserProfileComponent from "../components/molecules/UserProfile";
 import Accordion from "../components/molecules/Accordion";
@@ -112,7 +113,7 @@ const Setting: NextPage<SettingTypes> = () => {
   return (
     <SettingWrap>
       <SettingProfileStyled>
-        <Anchor width="100%" href="/Setting/UserProfile">
+        <Anchor width="100%" href="/Setting/Profile">
           <UserProfileComponent />
         </Anchor>
       </SettingProfileStyled>
