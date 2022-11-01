@@ -12,6 +12,8 @@ import {
   faNoteSticky,
   faNotesMedical,
   faInfoCircle,
+  faGear,
+  faFolder,
 } from "@fortawesome/free-solid-svg-icons";
 
 const FooterWrap = styled.footer`
@@ -54,11 +56,11 @@ const Footer: React.FC = () => {
   return (
     <FooterWrap>
       <ul>
-        <li className={router.pathname.includes('/MyWords') ? "active" : ""}>
+        <li className={router.pathname.includes("/MyWords") ? "active" : ""}>
           <Link href="/MyWords">
             <a>
               <Icon
-                iconShape={faNoteSticky}
+                iconShape={faFolder}
                 iconWidth="24px"
                 iconHeight="24px"
                 bottom="4px"
@@ -82,11 +84,11 @@ const Footer: React.FC = () => {
             </a>
           </Link>
         </li>
-        <li className={router.pathname.includes('/Setting') ? "active" : ""}>
+        <li className={router.pathname.includes("/Setting") ? "active" : ""}>
           <Link href="/Setting">
             <a>
               <Icon
-                iconShape={faInfoCircle}
+                iconShape={faGear}
                 iconWidth="24px"
                 iconHeight="24px"
                 bottom="4px"
