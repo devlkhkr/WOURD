@@ -39,9 +39,10 @@ interface InputTextTypes extends styledInterface {
   onKeyUp?: any;
   reference?: any;
   maxLength?: number;
+  value?: string;
 }
 
-const InputText: React.FC<InputTextTypes> = ({ type, width, id, placeHolder, maxLength, readonly, onChange, onBlur, onKeyUp, reference }) => {
+const InputText: React.FC<InputTextTypes> = ({ type, width, id, placeHolder, maxLength, readonly, onChange, onBlur, onKeyUp, reference, value }) => {
   return <Input 
     type={type}
     width={width}
@@ -53,6 +54,7 @@ const InputText: React.FC<InputTextTypes> = ({ type, width, id, placeHolder, max
     onBlur={onBlur}
     onKeyUp={onKeyUp}
     ref={reference}
+    value={value}
   />
 };
 

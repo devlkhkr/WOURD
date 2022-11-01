@@ -1,12 +1,13 @@
+import styled from "styled-components";
+import styledInterface from "../components/Intefaces/styledComponent";
+
 import ImgComponent from "pages/components/atoms/Img";
 import TypoComponent from "pages/components/atoms/Typo";
+import ProfileListComponent from "pages/components/molecules/SettingProfileList";
 
 import { useSelector } from "react-redux";
 import { ReducerType } from "redux/rootReducer";
 import { UserData } from "redux/slices/user";
-
-import styled from "styled-components";
-import styledInterface from "../components/Intefaces/styledComponent";
 
 interface SettingProfileTypes extends styledInterface {}
 
@@ -38,7 +39,13 @@ const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
   return (
     <SettingProfileWrap>
       <SettingProfileUser>
-        <ImgComponent src={userData[0].prfImg} objectFit="cover" marginBottom="16px" width="80px" height="80px"/>
+        <ImgComponent
+          src={userData[0].prfImg}
+          objectFit="cover"
+          marginBottom="16px"
+          width="80px"
+          height="80px"
+        />
         {/* FIXME: 추후 버튼으로 바꾸어야할까요? */}
         <TypoComponent
           fontSize="16px"
@@ -50,6 +57,8 @@ const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
           프로필 사진 바꾸기
         </TypoComponent>
       </SettingProfileUser>
+
+      <ProfileListComponent typo="이름" />
     </SettingProfileWrap>
   );
 };
