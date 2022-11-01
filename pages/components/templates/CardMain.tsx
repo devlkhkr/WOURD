@@ -12,8 +12,10 @@ import { UserData } from "redux/slices/user";
 
 interface CardMainTypes {
   exposeWord: ExposeWordTypes[];
+  isMyWord?: boolean;
+  closeCardModal?: Function;
 }
-interface ExposeWordTypes {
+export interface ExposeWordTypes {
   word_desc?: string;
   word_id?: string;
   word_name?: string;
@@ -157,7 +159,11 @@ const BtnWrapCardCtrlStyled = styled.div`
   }
 `;
 
-const CardMainComponent: React.FC<CardMainTypes> = ({ exposeWord }) => {
+const CardMainComponent: React.FC<CardMainTypes> = ({
+  exposeWord,
+  isMyWord,
+  closeCardModal,
+}) => {
   const userData = useSelector<ReducerType, UserData[]>((state) => state.user);
 
   const cardList: any = useRef();
@@ -182,6 +188,7 @@ const CardMainComponent: React.FC<CardMainTypes> = ({ exposeWord }) => {
     _objWord.state = `state_${state}`;
     setCardData(_objWord, state);
     setWordList([...wordList]);
+    closeCardModal ? closeCardModal([]) : void 0;
   };
 
   const setCardData = async (_objWord: ExposeWordTypes, _state: string) => {
@@ -216,7 +223,8 @@ const CardMainComponent: React.FC<CardMainTypes> = ({ exposeWord }) => {
       <MainWrapStyled ref={cardList}>
         {wordList.map((objWord: any, index: any) => (
           <CardSwiper
-            key={objWord.word_seq}
+            // key={objWord.word_seq}
+            key={index}
             className={`card ${objWord.fliped ? "fliped" : ""} ${
               objWord.state || ""
             }`}
@@ -230,7 +238,11 @@ const CardMainComponent: React.FC<CardMainTypes> = ({ exposeWord }) => {
                 setCurrentCardIdx(index);
               }}
             >
-              <CardMainStyled exposeWord={exposeWord} className="cardMain">
+              <CardMainStyled
+                exposeWord={exposeWord}
+                className="cardMain"
+                isMyWord={isMyWord}
+              >
                 <CardFrontStyled>
                   <Typo fontSize="24px" fontWeight="bold">
                     {objWord.word_name}

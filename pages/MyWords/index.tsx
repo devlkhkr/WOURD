@@ -6,7 +6,7 @@ import styledInterface from "../components/Intefaces/styledComponent";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Typo from "pages/components/atoms/Typo";
-
+import CardMain, { ExposeWordTypes } from "pages/components/templates/CardMain";
 import { useSelector } from "react-redux";
 import { ReducerType } from "redux/rootReducer";
 import { UserData } from "redux/slices/user";
@@ -14,6 +14,7 @@ import { UserData } from "redux/slices/user";
 interface MyWordsListTypes {
   user_id: string;
   user_word_key: string;
+  word_id: string;
   word_desc: string;
   word_name: string;
   word_reg_userid: string;
@@ -21,6 +22,17 @@ interface MyWordsListTypes {
   word_state: string;
   state_modified_date: Date;
 }
+
+const MyClickedCardStyled = styled.div`
+  position: absolute;
+  left: 0;
+  top: var(--height-header);
+  z-index: 9999;
+  width: 100%;
+  height: calc(100% - var(--height-header) - var(--height-footer));
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.5);
+`;
 
 const MyWordListWrapStyled = styled.div`
   width: 100%;
@@ -77,6 +89,8 @@ const MyWordsComponent: NextPage<MyWordsListTypes> = () => {
     router.push("/MyWords/Regist");
   };
 
+  const [clickedWord, setClickedWord] = useState<ExposeWordTypes[]>([]);
+
   const [myWordList, setMyWordList] = useState<MyWordsListTypes[]>([]);
   const getMyWordList: Function = async () => {
     const res = await axios
@@ -95,25 +109,56 @@ const MyWordsComponent: NextPage<MyWordsListTypes> = () => {
         // finally
       });
   };
+
+  const myCardClick = (_objMyWord: MyWordsListTypes) => {
+    console.log(_objMyWord);
+    let obj = [
+      {
+        word_desc: _objMyWord.word_desc,
+        word_id: _objMyWord.word_id,
+        word_name: _objMyWord.word_name,
+        word_reg_date: new Date(),
+        word_reg_userid: _objMyWord.word_reg_userid,
+        word_seq: 0,
+        word_unravel: _objMyWord.word_unravel,
+        fliped: true,
+        state: _objMyWord.word_state,
+      },
+    ];
+    setClickedWord(obj);
+  };
+
   useEffect(() => {
     getMyWordList();
   }, []);
 
   return (
-    <div>
-      <Button
-        desc="새로운 단어 등록하기"
-        id="cancleRegWord"
-        backgroundColor="#666"
-        color="#fff"
-        height="40px"
-        onClick={addNewWordClick}
-      ></Button>
+    <>
+      {clickedWord.length === 1 ? (
+        <MyClickedCardStyled onClick={() => setClickedWord([])}>
+          <CardMain
+            exposeWord={clickedWord}
+            isMyWord={true}
+            closeCardModal={setClickedWord}
+          />
+        </MyClickedCardStyled>
+      ) : (
+        <></>
+      )}
       <MyWordListStyled>
+        <Button
+          desc="+ 새로운 단어 등록하기"
+          id="cancleRegWord"
+          backgroundColor="transparent"
+          color="var(--color-grey)"
+          height="40px"
+          onClick={addNewWordClick}
+        ></Button>
         {myWordList.map((objMyWord: MyWordsListTypes, index: number) => (
           <MyWordListWrapStyled
             key={index}
             className={`state_${objMyWord.word_state}`}
+            onClick={() => myCardClick(objMyWord)}
           >
             <Typo
               lineClamp="1"
@@ -145,7 +190,7 @@ const MyWordsComponent: NextPage<MyWordsListTypes> = () => {
           </MyWordListWrapStyled>
         ))}
       </MyWordListStyled>
-    </div>
+    </>
   );
 };
 

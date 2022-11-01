@@ -10,6 +10,7 @@ export default function setUserHistory(
     "SELECT " +
       "user_word_key," +
       "user_id," +
+      "USER_WORD_TB.word_id," +
       "word_name," +
       "word_unravel," +
       "word_desc," +
