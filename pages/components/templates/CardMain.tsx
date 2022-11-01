@@ -47,6 +47,7 @@ const MainWrapStyled = styled.div<any>`
   height: 100%;
   position: relative;
   touch-action: none;
+  animation: popup 0.3s linear;
 `;
 
 const CardWrapStyled = styled.div`
