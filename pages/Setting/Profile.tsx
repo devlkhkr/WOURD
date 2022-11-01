@@ -8,33 +8,40 @@ import ProfileListComponent from "pages/components/molecules/SettingProfileList"
 import { useSelector } from "react-redux";
 import { ReducerType } from "redux/rootReducer";
 import { UserData } from "redux/slices/user";
+import ButtonCompontent from "pages/components/atoms/Button";
+import ButtonWrapComponent from "pages/components/molecules/ButtonWrap";
+import { useRouter } from "next/router";
 
 interface SettingProfileTypes extends styledInterface {}
 
-interface AcrdListTypes {}
+const SettingProfileWrap = styled.div`
+background-color: var(--color-white);
+border-radius: 16px;
+padding: 16px 16px 40px;
+display: flex;
+flex-direction: column;
+min-height: 100%;
+`;
+
+const SettingProfileUser = styled.div`
+display: flex;
+flex-direction: column;
+align-items: center;
+margin-bottom : 16px;
+`;
+
+const ProfileListWrap = styled.div`
+margin-bottom : 24px;
+`;
+
 
 const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
   const userData = useSelector<ReducerType, UserData[]>(state => state.user);
 
-  const SettingProfileWrap = styled.div`
-    background-color: var(--color-white);
-    border-radius: 16px;
-    padding: 16px 16px 40px;
-    display: flex;
-    flex-direction: column;
-    min-height: 100%;
-  `;
-
-  const SettingProfileUser = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom : 16px;
-  `;
-
-  const ProfileListWrap = styled.div`
-    
-  `;
+  const router = useRouter();
+  const cancelBtnClick = () => {
+    router.push("/Setting")
+  }
 
   // FIXME: 이미지 수정할수있는 함수
   const modifyImg = () => {
@@ -69,8 +76,14 @@ const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
           typo="닉네임"
           userInfo={`${userData[0].nickName}`}
         />
-        {/* <ProfileListComponent typo="소개글" /> */}
+        <ProfileListComponent typo="소개글" />
       </ProfileListWrap>
+
+      <ButtonWrapComponent>
+        <ButtonCompontent desc="취소" height="32px" onClick={cancelBtnClick} />
+        <ButtonCompontent desc="수정" backgroundColor="var(--color-point)" color="var(--color-white)" height="32px" />
+      </ButtonWrapComponent>
+
     </SettingProfileWrap>
   );
 };

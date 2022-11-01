@@ -38,7 +38,7 @@ const ProfileListComponent: React.FC<ProfileListTypes> = (props) => {
       </dt>
       <dd>
         {/* FIXME : input value ? */}
-        <InputText type="text" placeHolder={userInfo} />
+        <InputText type="text" placeHolder={userInfo || `${typo}을 입력해주세요`} />
       </dd>
     </ProfileListWrap>
   );
