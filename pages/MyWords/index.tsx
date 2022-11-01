@@ -22,6 +22,46 @@ interface MyWordsListTypes {
   state_modified_date: Date;
 }
 
+const MyWordListWrapStyled = styled.div`
+  width: 100%;
+  height: 120px;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 16px;
+  position: relative;
+  overflow: hidden;
+  &[class*="state"] {
+    &::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 0 20px 20px 0;
+      border-color: transparent;
+    }
+  }
+  &.state {
+    &_k::after {
+      border-color: transparent var(--color-point) transparent transparent;
+    }
+    &_d::after {
+      border-color: transparent #ea8c47 transparent transparent;
+    }
+    &_f::after {
+      border-color: transparent #dddf56 transparent transparent;
+    }
+    &_s::after {
+      border-color: transparent #b977bf transparent transparent;
+    }
+  }
+`;
+
+const MyWordListStyled = styled.div``;
+
 const MyWordsComponent: NextPage<MyWordsListTypes> = () => {
   const userData = useSelector<ReducerType, UserData[]>((state) => state.user);
 
@@ -40,7 +80,6 @@ const MyWordsComponent: NextPage<MyWordsListTypes> = () => {
       })
       .then(function (res) {
         setMyWordList(res.data);
-        console.log(res.data);
       })
       .catch(function (err) {
         console.log(err);
@@ -53,45 +92,6 @@ const MyWordsComponent: NextPage<MyWordsListTypes> = () => {
     getMyWordList();
   }, []);
 
-  const MyWordListWrapStyled = styled.div`
-    width: 100%;
-    height: 120px;
-    background-color: #fff;
-    border-radius: 8px;
-    padding: 16px;
-    margin-top: 16px;
-    position: relative;
-    overflow: hidden;
-    &[class*="state"] {
-      &::after {
-        content: "";
-        position: absolute;
-        right: 0;
-        top: 0;
-        width: 0;
-        height: 0;
-        border-style: solid;
-        border-width: 0 20px 20px 0;
-        border-color: transparent;
-      }
-    }
-    &.state {
-      &_k::after {
-        border-color: transparent var(--color-point) transparent transparent;
-      }
-      &_d::after {
-        border-color: transparent #ea8c47 transparent transparent;
-      }
-      &_f::after {
-        border-color: transparent #dddf56 transparent transparent;
-      }
-      &_s::after {
-        border-color: transparent #b977bf transparent transparent;
-      }
-    }
-  `;
-
-  const MyWordListStyled = styled.div``;
   return (
     <div>
       <Button
