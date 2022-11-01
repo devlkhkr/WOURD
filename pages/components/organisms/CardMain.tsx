@@ -1,9 +1,9 @@
 import axios from "axios";
 import React, { useState, useRef, useEffect } from "react";
 import styled, { css } from "styled-components";
-import Button from "../../components/atoms/Button";
-import Typo from "../../components/atoms/Typo";
-import CardSwiper from "../../components/organisms/CardSwiper";
+import Button from "../atoms/Button";
+import Typo from "../atoms/Typo";
+import CardSwiper from "../molecules/CardSwiper";
 import styledInterface from "../Intefaces/styledComponent";
 
 import { useSelector } from "react-redux";

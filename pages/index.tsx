@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import CardMain from "./components/molecules/CardMain";
+import CardMain from "./components/organisms/CardMain";
 
 const Home: NextPage = () => {
   const [exposeWord, setExposeWord] = useState([]);
