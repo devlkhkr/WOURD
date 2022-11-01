@@ -3,7 +3,7 @@ import React, { useState, useRef, useEffect } from "react";
 import styled, { css } from "styled-components";
 import Button from "../atoms/Button";
 import Typo from "../atoms/Typo";
-import CardSwiper from "../molecules/CardSwiper";
+import CardSwiper from "../organisms/CardSwiper";
 import styledInterface from "../Intefaces/styledComponent";
 
 import { useSelector } from "react-redux";
@@ -44,6 +44,7 @@ const MainWrapStyled = styled.div<any>`
   width: 100%;
   height: 100%;
   position: relative;
+  touch-action: none;
 `;
 
 const CardWrapStyled = styled.div`

@@ -46,7 +46,6 @@ const ComponentWrap = styled.div<any>`
   overflow-x: hidden;
   &.isMain {
     overflow: hidden;
-    touch-action: none;
   }
 `;
 
