@@ -80,7 +80,7 @@ const CardBackStyled = styled.div`
   background: linear-gradient(#3f88ef, #0047ab);
   &.state {
     &_k {
-      background: linear-gradient(#91d54d, #56a823);
+      background: linear-gradient(#80d069, #38991c);
     }
     &_d {
       background: linear-gradient(#dc6b6b, #c72f2f);
