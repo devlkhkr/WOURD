@@ -99,7 +99,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             <Wrap>
               <Header />
               {/* content */}
-              <ComponentWrap className={router.pathname == "/" ? "isMain" : {}}>
+              <ComponentWrap className={router.pathname == "/" ? "isMain" : ""}>
                 <Component {...pageProps} />
               </ComponentWrap>
 
