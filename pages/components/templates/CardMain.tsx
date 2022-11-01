@@ -3,7 +3,8 @@ import React, { useState, useRef, useEffect } from "react";
 import styled, { css } from "styled-components";
 import Button from "../atoms/Button";
 import Typo from "../atoms/Typo";
-import CardSwiper from "../molecules/CardSwiper";
+import CardSwiper from "../organisms/CardSwiper";
+import CardBackStyled from "../molecules/CardBackside";
 import styledInterface from "../Intefaces/styledComponent";
 
 import { useSelector } from "react-redux";
@@ -25,20 +26,6 @@ interface ExposeWordTypes {
   fliped?: boolean;
   state?: string;
 }
-
-const CardBaseStyle = `
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-flow: column;
-  width: 100%;
-  height: 100%;
-  padding: 16px 16px 80px;
-  position: absolute;
-  text-align: center;
-  backface-visibility: hidden;
-  border-radius: 16px;
-`;
 
 const MainWrapStyled = styled.div<any>`
   width: 100%;
@@ -66,21 +53,31 @@ const CardMainStyled = styled.div<CardMainTypes>`
 `;
 
 const CardFrontStyled = styled.div`
-  ${CardBaseStyle}
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-flow: column;
+  width: 100%;
+  height: 100%;
+  padding: 16px 16px 80px;
+  position: absolute;
+  text-align: center;
+  backface-visibility: hidden;
+  border-radius: 16px;
   background-color: #fff;
 `;
 
-const CardBackStyled = styled.div`
-  ${CardBaseStyle}
-  transform: rotateY(180deg);
-  background: linear-gradient(#3f88ef, #0047ab);
-  color: #fff;
-  > div {
-    & + div {
-      margin-top: 4px;
-    }
-  }
-`;
+// const CardBackStyled = styled.div`
+//   ${CardBaseStyle}
+//   transform: rotateY(180deg);
+//   background: linear-gradient(#3f88ef, #0047ab);
+//   color: #fff;
+//   > div {
+//     & + div {
+//       margin-top: 4px;
+//     }
+//   }
+// `;
 
 const setButtonPosition: Function = function () {
   let styles = "";
@@ -235,17 +232,11 @@ const CardMainComponent: React.FC<CardMainTypes> = ({ exposeWord }) => {
                     {objWord.word_name}
                   </Typo>
                 </CardFrontStyled>
-                <CardBackStyled>
-                  <Typo fontSize="24px" fontWeight="bold">
-                    {objWord.word_name}
-                  </Typo>
-                  <Typo fontSize="16px" fontWeight="semi-bold">
-                    {objWord.word_unravel}
-                  </Typo>
-                  <Typo fontSize="14px" fontWeight="regular" textAlign="left">
-                    {objWord.word_desc}
-                  </Typo>
-                </CardBackStyled>
+                <CardBackStyled
+                  word_name={objWord.word_name}
+                  word_unravel={objWord.word_unravel}
+                  word_desc={objWord.word_desc}
+                ></CardBackStyled>
               </CardMainStyled>
             </CardWrapStyled>
           </CardSwiper>
