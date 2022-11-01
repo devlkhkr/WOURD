@@ -83,7 +83,7 @@ const CardBackStyled = styled.div`
       background: linear-gradient(#91d54d, #56a823);
     }
     &_d {
-      background: linear-gradient(#d5784d, #a84023);
+      background: linear-gradient(#dc6b6b, #c72f2f);
     }
     &_f {
       background: linear-gradient(#d5cd4d, #a8a023);
