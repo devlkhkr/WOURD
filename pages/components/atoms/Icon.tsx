@@ -1,7 +1,7 @@
 import React from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core'
+import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import styled from "styled-components";
 import styledInterface from "../Intefaces/styledComponent";
 
@@ -9,11 +9,12 @@ const IconWrap = styled.i<IconWrapTypes>`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: ${props => props.iconWidth};
-  height: ${props => props.iconHeight};
-  margin : 0 ${props => (props.align || "")} ${props => (props.bottom || "")};
+  width: ${(props) => props.iconWidth};
+  height: ${(props) => props.iconHeight};
+  margin: 0 ${(props) => props.align || ""} ${(props) => props.bottom || ""};
+  color: ${(props) => props.color || "inherit"};
   svg {
-    font-size: ${props => props.svgSize || "16px"};
+    font-size: ${(props) => props.svgSize || "16px"};
   }
 `;
 
@@ -22,7 +23,7 @@ const IconWrap = styled.i<IconWrapTypes>`
 interface IconTypes {
   iconShape: IconDefinition;
 }
-interface IconWrapTypes extends styledInterface{
+interface IconWrapTypes extends styledInterface {
   iconWidth?: string;
   iconHeight?: string;
   bottom?: string;
@@ -37,6 +38,7 @@ const Icon: React.FC<IconWrapTypes & IconTypes> = ({
   bottom,
   align,
   svgSize,
+  color,
 }) => {
   return (
     <IconWrap
@@ -45,6 +47,7 @@ const Icon: React.FC<IconWrapTypes & IconTypes> = ({
       bottom={bottom}
       align={align}
       svgSize={svgSize}
+      color={color}
     >
       <FontAwesomeIcon icon={iconShape} />
     </IconWrap>

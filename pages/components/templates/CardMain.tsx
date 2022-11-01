@@ -3,6 +3,10 @@ import React, { useState, useRef, useEffect } from "react";
 import styled, { css } from "styled-components";
 import Button from "../atoms/Button";
 import Typo from "../atoms/Typo";
+
+import Icon from "pages/components/atoms/Icon";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
+
 import CardSwiper from "../organisms/CardSwiper";
 import styledInterface from "../Intefaces/styledComponent";
 
@@ -14,6 +18,7 @@ interface CardMainTypes {
   exposeWord: ExposeWordTypes[];
   isMyWord?: boolean;
   closeCardModal?: Function;
+  afterMyWordState?: Function;
 }
 export interface ExposeWordTypes {
   word_desc?: string;
@@ -173,10 +178,21 @@ const BtnWrapCardCtrlStyled = styled.div`
   }
 `;
 
+const ButtonCardClose = styled.i`
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  z-index: 1;
+`;
+
 const CardMainComponent: React.FC<CardMainTypes> = ({
   exposeWord,
   isMyWord,
   closeCardModal,
+  afterMyWordState,
 }) => {
   const userData = useSelector<ReducerType, UserData[]>((state) => state.user);
 
@@ -202,7 +218,6 @@ const CardMainComponent: React.FC<CardMainTypes> = ({
     _objWord.state = `state_${state}`;
     setCardData(_objWord, state);
     setWordList([...wordList]);
-    closeCardModal ? closeCardModal([]) : void 0;
   };
 
   const setCardData = async (_objWord: ExposeWordTypes, _state: string) => {
@@ -216,7 +231,13 @@ const CardMainComponent: React.FC<CardMainTypes> = ({
         },
       }
     );
-    console.log(res.data);
+    afterMyWordState
+      ? (() => {
+          setTimeout(() => {
+            afterMyWordState(res.data.state);
+          }, 100);
+        })()
+      : void 0;
   };
 
   const setCardFlip = function (_objWord: ExposeWordTypes, e: any) {
@@ -257,16 +278,34 @@ const CardMainComponent: React.FC<CardMainTypes> = ({
                 className="cardMain"
                 isMyWord={isMyWord}
               >
-                <CardFrontStyled>
-                  <Typo fontSize="24px" fontWeight="bold">
-                    {objWord.word_name}
-                  </Typo>
-                </CardFrontStyled>
+                {isMyWord ? (
+                  <></>
+                ) : (
+                  <CardFrontStyled>
+                    <Typo fontSize="24px" fontWeight="bold">
+                      {objWord.word_name}
+                    </Typo>
+                  </CardFrontStyled>
+                )}
                 <CardBackStyled
                   className={
                     objWord.state != undefined ? `state_${objWord.state}` : ""
                   }
                 >
+                  {closeCardModal ? (
+                    <ButtonCardClose onClick={() => closeCardModal([])}>
+                      <Icon
+                        iconShape={faXmark}
+                        iconWidth="24px"
+                        iconHeight="24px"
+                        svgSize="24px"
+                        align="auto"
+                        color="#fff"
+                      />
+                    </ButtonCardClose>
+                  ) : (
+                    <></>
+                  )}
                   <Typo fontSize="24px" fontWeight="bold">
                     {objWord.word_name}
                   </Typo>

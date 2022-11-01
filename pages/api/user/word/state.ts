@@ -27,7 +27,10 @@ export default function setCardState(
       "', state_modified_date=NOW()",
     function (err: any, data: any) {
       if (!err) {
-        res.send(data);
+        res.send({
+          state: req.body.wordInfo.wordState,
+          queryResult: data,
+        });
       } else {
         console.log(err);
         res.send(err);

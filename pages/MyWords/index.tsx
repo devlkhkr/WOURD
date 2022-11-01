@@ -34,6 +34,7 @@ const MyClickedCardStyled = styled.div`
   height: calc(100% - var(--height-header) - var(--height-footer));
   padding: 20px;
   background-color: rgba(255, 255, 255, 0.5);
+  overflow: hidden;
 `;
 
 const MyWordListWrapStyled = styled.div`
@@ -92,8 +93,8 @@ const MyWordsComponent: NextPage<MyWordsListTypes> = () => {
   };
 
   const [clickedWord, setClickedWord] = useState<ExposeWordTypes[]>([]);
-
   const [myWordList, setMyWordList] = useState<MyWordsListTypes[]>([]);
+  const [currentCardIdx, setCurrentCardIdx] = useState(0);
   const getMyWordList: Function = async () => {
     const res = await axios
       .post("http://localhost:3000" + "/api/myword/list", {
@@ -112,8 +113,9 @@ const MyWordsComponent: NextPage<MyWordsListTypes> = () => {
       });
   };
 
-  const myCardClick = (_objMyWord: MyWordsListTypes) => {
-    console.log(_objMyWord);
+  const myCardClick = (_objMyWord: MyWordsListTypes, _index: number) => {
+    console.log(_objMyWord, _index);
+    setCurrentCardIdx(_index);
     let obj = [
       {
         word_desc: _objMyWord.word_desc,
@@ -130,6 +132,17 @@ const MyWordsComponent: NextPage<MyWordsListTypes> = () => {
     setClickedWord(obj);
   };
 
+  const afterMyWordState = (userSelectState: string) => {
+    let sprdMyWordList = [...myWordList];
+    let tempWord = sprdMyWordList[currentCardIdx];
+    tempWord.word_state = userSelectState;
+    sprdMyWordList.splice(currentCardIdx, 1);
+    sprdMyWordList.unshift(tempWord);
+
+    setMyWordList(sprdMyWordList);
+    setClickedWord([]);
+  };
+
   useEffect(() => {
     getMyWordList();
   }, []);
@@ -137,11 +150,12 @@ const MyWordsComponent: NextPage<MyWordsListTypes> = () => {
   return (
     <>
       {clickedWord.length === 1 ? (
-        <MyClickedCardStyled onClick={() => setClickedWord([])}>
+        <MyClickedCardStyled>
           <CardMain
             exposeWord={clickedWord}
             isMyWord={true}
             closeCardModal={setClickedWord}
+            afterMyWordState={afterMyWordState}
           />
         </MyClickedCardStyled>
       ) : (
@@ -160,7 +174,7 @@ const MyWordsComponent: NextPage<MyWordsListTypes> = () => {
           <MyWordListWrapStyled
             key={index}
             className={`state_${objMyWord.word_state}`}
-            onClick={() => myCardClick(objMyWord)}
+            onClick={() => myCardClick(objMyWord, index)}
           >
             <Typo
               lineClamp="1"
