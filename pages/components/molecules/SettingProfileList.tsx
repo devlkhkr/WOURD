@@ -40,7 +40,7 @@ const ProfileListComponent: React.FC<ProfileListTypes> = (props) => {
         {/* FIXME : input value ? */}
         <InputText
           type="text"
-          placeHolder={userInfo || `${typo}을 입력해주세요`}
+          placeHolder={`${typo}을 입력해주세요`}
           defaultValue={userInfo}
         />
       </dd>
