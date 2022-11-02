@@ -1,20 +1,16 @@
 import type { NextPage } from "next";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import CardMain from "./components/templates/CardMain";
+import CardMain, { ExposeWordTypes } from "./components/templates/CardMain";
 
-const Home: NextPage = () => {
+interface dataWordListTypes {
+  dataWordList: ExposeWordTypes;
+}
+
+const Home: NextPage = ({ dataWordList }: any) => {
   const [exposeWord, setExposeWord] = useState([]);
-
-  const getCardList: Function = async () => {
-    await axios
-      .get("http://localhost:3000" + "/api/word/list")
-      .then((res: any) => {
-        setExposeWord(res.data);
-      });
-  };
   useEffect(() => {
-    getCardList();
+    setExposeWord(dataWordList);
   }, []);
 
   return (
@@ -22,6 +18,12 @@ const Home: NextPage = () => {
       <CardMain exposeWord={exposeWord} />
     </>
   );
+};
+Home.getInitialProps = async () => {
+  const res = await axios.get("http://localhost:3000" + "/api/word/list");
+  return {
+    dataWordList: res.data,
+  };
 };
 
 export default Home;

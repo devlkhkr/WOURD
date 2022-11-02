@@ -9,7 +9,7 @@ import Head from "next/head";
 import Header from "pages/components/Header";
 import Footer from "pages/components/Footer";
 import Loading from "pages/components/atoms/Loading";
-import Login from "pages/components/templates/Login";
+import Login from "pages/Login";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";

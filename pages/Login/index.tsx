@@ -9,7 +9,7 @@ import Form from "pages/components/organisms/Form";
 import Join from "pages/components/templates/Join";
 import { useState, useRef } from "react";
 import axios from "axios";
-import Hash from "../atoms/Hash";
+import Hash from "../components/atoms/Hash";
 
 import { useDispatch } from "react-redux";
 import { UserData, setUserData } from "redux/slices/user";

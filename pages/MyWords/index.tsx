@@ -10,6 +10,7 @@ import CardMain, { ExposeWordTypes } from "pages/components/templates/CardMain";
 import { useSelector } from "react-redux";
 import { ReducerType } from "redux/rootReducer";
 import { UserData } from "redux/slices/user";
+import store from "redux/store";
 
 interface MyWordsListTypes {
   user_id: string;
@@ -84,9 +85,8 @@ const MyWordListWrapStyled = styled.div`
 
 const MyWordListStyled = styled.div``;
 
-const MyWordsComponent: NextPage<MyWordsListTypes> = () => {
-  const userData = useSelector<ReducerType, UserData[]>((state) => state.user);
-
+const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
+  // const userData = useSelector<ReducerType, UserData[]>((state) => state.user);
   const router = useRouter();
   const addNewWordClick = () => {
     router.push("/MyWords/Regist");
@@ -95,23 +95,6 @@ const MyWordsComponent: NextPage<MyWordsListTypes> = () => {
   const [clickedWord, setClickedWord] = useState<ExposeWordTypes[]>([]);
   const [myWordList, setMyWordList] = useState<MyWordsListTypes[]>([]);
   const [currentCardIdx, setCurrentCardIdx] = useState(0);
-  const getMyWordList: Function = async () => {
-    const res = await axios
-      .post("http://localhost:3000" + "/api/myword/list", {
-        params: {
-          userId: userData[0].id,
-        },
-      })
-      .then(function (res) {
-        setMyWordList(res.data);
-      })
-      .catch(function (err) {
-        console.log(err);
-      })
-      .then(function () {
-        // finally
-      });
-  };
 
   const myCardClick = (_objMyWord: MyWordsListTypes, _index: number) => {
     console.log(_objMyWord, _index);
@@ -144,7 +127,7 @@ const MyWordsComponent: NextPage<MyWordsListTypes> = () => {
   };
 
   useEffect(() => {
-    getMyWordList();
+    setMyWordList(dataMyWordList);
   }, []);
 
   return (
@@ -209,5 +192,23 @@ const MyWordsComponent: NextPage<MyWordsListTypes> = () => {
     </>
   );
 };
+
+store.getState().user.length === 1
+  ? (() => {
+      MyWordsComponent.getInitialProps = async () => {
+        const res = await axios.post(
+          "http://localhost:3000" + "/api/myword/list",
+          {
+            params: {
+              userId: store.getState().user[0].id,
+            },
+          }
+        );
+        return {
+          dataMyWordList: res.data,
+        };
+      };
+    })()
+  : void 0;
 
 export default MyWordsComponent;

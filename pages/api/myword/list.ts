@@ -2,7 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 const db = require("../../../common/config/db");
 
-export default function getServerSideProps(
+export default function getMyWordlist(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
