@@ -2,7 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 const db = require("../../../common/config/db");
 
-export default function setUserHistory(
+export default function getServerSideProps(
   req: NextApiRequest,
   res: NextApiResponse
 ) {

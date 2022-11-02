@@ -2,7 +2,10 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 const db = require("../../../common/config/db");
 
-export default function getWordlist(req: NextApiRequest, res: NextApiResponse) {
+export default function getServerSideProps(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   db.query("SELECT * FROM WORD_TB", function (err: any, result: any) {
     if (err) {
       console.log(err);
