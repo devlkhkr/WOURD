@@ -6,24 +6,24 @@ import TypoComponent from "../atoms/Typo";
 import styledInterface from "../Intefaces/styledComponent";
 
 interface ProfileListTypes extends styledInterface {
-  typo : string;
+  typo: string;
   userInfo?: string;
 }
 
 const ProfileListWrap = styled.dl`
-  display : flex;
-  align-items : center;
+  display: flex;
+  align-items: center;
   dt {
-    min-width : 80px;
+    min-width: 80px;
   }
   dd {
-    width : calc(100% - 80px);
+    width: calc(100% - 80px);
   }
-`
+`;
 
 const ProfileListComponent: React.FC<ProfileListTypes> = (props) => {
   const { typo, color, userInfo } = props;
-  console.log(userInfo)
+  console.log(userInfo);
   return (
     <ProfileListWrap>
       <dt>
@@ -38,7 +38,11 @@ const ProfileListComponent: React.FC<ProfileListTypes> = (props) => {
       </dt>
       <dd>
         {/* FIXME : input value ? */}
-        <InputText type="text" placeHolder={userInfo || `${typo}을 입력해주세요`} />
+        <InputText
+          type="text"
+          placeHolder={userInfo || `${typo}을 입력해주세요`}
+          defaultValue={userInfo}
+        />
       </dd>
     </ProfileListWrap>
   );

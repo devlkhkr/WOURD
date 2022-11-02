@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import styledInterface from "../Intefaces/styledComponent"
+import styledInterface from "../Intefaces/styledComponent";
 
 const Input = styled.input`
   width: ${(props) => props.width || "100%"};
@@ -16,16 +16,16 @@ const Input = styled.input`
   &::placeholder {
     color: var(--color-grey);
   }
-  &:focus{
+  &:focus {
     border-color: #222;
   }
-  &:read-only{
+  &:read-only {
     background-color: #f3f3f3;
   }
-  &[data-valid-state=valid]{
+  &[data-valid-state="valid"] {
     border-color: #3bc831;
   }
-  &[data-valid-state=err]{
+  &[data-valid-state="err"] {
     border-color: #e51937;
   }
 `;
@@ -42,20 +42,34 @@ interface InputTextTypes extends styledInterface {
   defaultValue?: string;
 }
 
-const InputText: React.FC<InputTextTypes> = ({ type, width, id, placeHolder, maxLength, readonly, onChange, onBlur, onKeyUp, reference, value }) => {
-  return <Input 
-    type={type}
-    width={width}
-    placeholder={placeHolder}
-    maxLength={maxLength}
-    id={id}
-    readOnly={readonly}
-    onChange={onChange}
-    onBlur={onBlur}
-    onKeyUp={onKeyUp}
-    ref={reference}
-    defaultValue={value}
-  />
+const InputText: React.FC<InputTextTypes> = ({
+  type,
+  width,
+  id,
+  placeHolder,
+  maxLength,
+  readonly,
+  onChange,
+  onBlur,
+  onKeyUp,
+  reference,
+  defaultValue,
+}) => {
+  return (
+    <Input
+      type={type}
+      width={width}
+      placeholder={placeHolder}
+      maxLength={maxLength}
+      id={id}
+      readOnly={readonly}
+      onChange={onChange}
+      onBlur={onBlur}
+      onKeyUp={onKeyUp}
+      ref={reference}
+      defaultValue={defaultValue}
+    />
+  );
 };
 
 InputText.defaultProps = {
