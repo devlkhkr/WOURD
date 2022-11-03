@@ -18,7 +18,8 @@ import { Provider } from "react-redux";
 import store from "redux/store";
 import { useSelector } from "react-redux";
 
-import { ModalData, setModalData } from "redux/slices/modal";
+import GlobalModal from "pages/components/templates/GlobalModal";
+// import { ModalData, setModalData } from "redux/slices/modal";
 import { ReducerType } from "redux/rootReducer";
 
 const Wrapper = styled.div`
@@ -95,7 +96,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         ) : (
           <Wrapper>
             {/* modal */}
-
+            <GlobalModal />
             <Wrap>
               <Header />
               {/* content */}

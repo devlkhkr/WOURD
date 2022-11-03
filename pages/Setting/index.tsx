@@ -4,10 +4,12 @@ import Anchor from "pages/components/atoms/Anchor";
 import { useState } from "react";
 import styled from "styled-components";
 import styledInterface from "../components/Intefaces/styledComponent";
+import { openModal, closeModal } from "redux/slices/modal";
 
 import SettingListComponent from "../components/molecules/SettingList";
 import UserProfileComponent from "../components/molecules/UserProfile";
 import Accordion from "../components/molecules/Accordion";
+import { useDispatch } from "react-redux";
 
 interface SettingTypes extends styledInterface {
   typo: string;
@@ -60,7 +62,15 @@ const AcrdWrapStyled = styled.div`
 const Setting: NextPage<SettingTypes> = () => {
   const [wordCtrlByState, setWordCtrlByState] = useState(false);
   const [wordCtrlByCate, setWordCtrlByCate] = useState(false);
-
+  const dispatch = useDispatch();
+  const modalOpenClick = () => {
+    dispatch(
+      openModal({
+        modalType: "DevLogModal",
+        isOpen: true,
+      })
+    );
+  };
   const objAcrdList: AcrdListTypes[] = [
     {
       acrdTitle: "상태별 노출 관리",
@@ -146,7 +156,7 @@ const Setting: NextPage<SettingTypes> = () => {
         {/* FIXME: 추후에 list형식으로 바꾸어서 map ?_? */}
         <SettingListComponent typo="공지사항" />
         <SettingListComponent typo="도움말(FAQ)" />
-        <SettingListComponent typo="개발히스토리" />
+        <SettingListComponent typo="개발히스토리" onClick={modalOpenClick} />
         <SettingListComponent typo="시스템스펙" />
         <SettingListComponent typo="버전정보" rightTypo="1.0.0" />
         <SettingListComponent typo="로그아웃" color="var(--color-red)" />
