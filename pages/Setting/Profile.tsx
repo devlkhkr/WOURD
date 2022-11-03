@@ -20,16 +20,6 @@ import ProfileWordComponent from "pages/components/molecules/ProfileWord";
 
 interface SettingProfileTypes extends styledInterface {}
 
-interface WordactivityTypes {
-  acrdTitle: string;
-  toggleFlag: boolean;
-  toggleFunc: Function;
-  acrdList: {
-    label: string;
-    checked: boolean;
-  }[];
-}
-
 const SettingProfileWrap = styled.div`
   background-color: var(--color-white);
   border-radius: 16px;
@@ -50,7 +40,11 @@ const ProfileListWrap = styled.div``;
 
 const ProfileWordsWrap = styled.div`
   margin: 20px 0;
-  background-color: #cccccc;
+  > div {
+    &:first-child {
+      padding : 0;
+    }
+  }
 `;
 
 const AcrdWrapStyled = styled.div`
@@ -104,18 +98,14 @@ const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
       </ProfileListWrap>
 
       <ProfileWordsWrap>
-        <TypoComponent
-          fontSize="16px"
-          fontWeight="semi-bold"
-          textAlign="left"
-          color="var(--color-point)"
+        <SettingListComponent
+          typo="나의 단어 내역"
+          afterIcon={wordActivity ? "arr-up" : "arr-down"}
+          pdNone="0"
           onClick={() => {
             setWordActivity((prev: boolean) => !prev);
           }}
-        >
-          {/*  */}
-          나의 단어 활동내역
-        </TypoComponent>
+        />
         <ProfileWordComponent isOpened={wordActivity}>
           <TypoComponent
             fontSize="16px"
