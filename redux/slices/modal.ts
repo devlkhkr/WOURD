@@ -1,21 +1,34 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export interface ModalData {
-  isOpened?: boolean;
+interface ModalData {
+  modalType: string;
+  modalTitle: string;
+  isOpen: boolean;
 }
 
-export const modal = createSlice({
-  name: 'modal',
-  initialState: [
+const initialState: ModalData = {
+  modalType: "",
+  modalTitle: "",
+  isOpen: false,
+};
 
-  ] as ModalData[],
+export const modalSlice = createSlice({
+  name: "modal",
+  initialState,
   reducers: {
-    setModalData(state, action: PayloadAction<ModalData>) {
-      return [...state, action.payload];
-    }
-  }
+    openModal: (state, actions) => {
+      const { modalType } = actions.payload;
+      state.modalType = modalType;
+      state.modalTitle = modalType;
+      state.isOpen = true;
+    },
+    closeModal: (state) => {
+      state.isOpen = false;
+    },
+  },
 });
 
-// 액션과 리듀서를 export 해준다. 이건 그냥 따라하면 된다.
-export const { setModalData } = modal.actions;
-export default modal.reducer;
+export const { openModal, closeModal } = modalSlice.actions;
+export const selectModal = (state: any) => state.modal;
+
+export default modalSlice.reducer;

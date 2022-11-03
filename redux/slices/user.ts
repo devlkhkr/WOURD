@@ -7,7 +7,7 @@ export interface UserData {
   lastLogin: Date;
 }
 
-export const user = createSlice({
+export const userSlice = createSlice({
   name: "user",
   initialState: [] as UserData[],
   reducers: {
@@ -17,5 +17,5 @@ export const user = createSlice({
   },
 });
 
-export const { setUserData } = user.actions;
-export default user.reducer;
+export const { setUserData } = userSlice.actions;
+export default userSlice.reducer;
