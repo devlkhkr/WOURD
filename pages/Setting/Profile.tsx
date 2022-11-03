@@ -15,6 +15,7 @@ import { useState } from "react";
 
 import ProfileWordComponent from "pages/components/molecules/ProfileWord";
 import ProfileWordTitleComponent from "pages/components/molecules/ProfileWordTitle";
+import ProfileWordItemComponent from "pages/components/molecules/ProfileWordItem";
 
 interface SettingProfileTypes extends styledInterface {}
 
@@ -38,15 +39,7 @@ const ProfileListWrap = styled.div``;
 
 const ProfileWordsWrap = styled.div`
   margin: 20px 0;
-  > div {
-    &:first-child {
-      padding : 0;
-    }
-  }
-`;
-
-const AcrdWrapStyled = styled.div`
-  border-bottom: 1px dashed #ddd;
+  border-bottom: 1px solid var(--color-lightgrey);
 `;
 
 const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
@@ -97,7 +90,6 @@ const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
 
       <ProfileWordsWrap>
         <ProfileWordTitleComponent
-          pdNone="0"
           typo="나의 활동 내역"
           color="var(--color-point)"
           afterIcon={wordActivity ? "arr-up" : "arr-down"}
@@ -106,14 +98,26 @@ const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
           }}
         />
         <ProfileWordComponent isOpened={wordActivity}>
-          <TypoComponent
-            fontSize="16px"
-            fontWeight="semi-bold"
-            textAlign="left"
-            color="var(--color-point)"
-          >
-            안녕F
-          </TypoComponent>
+          <ProfileWordItemComponent
+            typo="아는단어"
+            color="red"
+            wordIcon="know"
+          />
+          <ProfileWordItemComponent
+            typo="모르는단어"
+            color="red"
+            wordIcon="dontknow"
+          />
+          <ProfileWordItemComponent
+            typo="즐겨찾는단어"
+            color="red"
+            wordIcon="favorite"
+          />
+          <ProfileWordItemComponent
+            typo="건너뛴단어"
+            color="red"
+            wordIcon="skip"
+          />
         </ProfileWordComponent>
       </ProfileWordsWrap>
 

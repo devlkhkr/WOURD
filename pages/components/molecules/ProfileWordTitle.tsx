@@ -5,7 +5,6 @@ import Icon from "../atoms/Icon";
 import TypoComponent from "../atoms/Typo";
 
 import {
-  faChevronRight,
   faChevronDown,
   faChevronUp,
 } from "@fortawesome/free-solid-svg-icons";
@@ -13,7 +12,6 @@ import {
 interface ProfileWordTitleTypes extends styledInterface {
   typo: string;
   afterIcon?: string;
-  pdNone?: string;
 }
 
 const ProfileWordTitleList = styled.div`
@@ -22,12 +20,11 @@ const ProfileWordTitleList = styled.div`
   align-items: center;
   justify-content: space-between;
   color: ${(props) => props.color || "var(--color-black)"};
-  padding : ${(props) => props.pdNone || "0 8px"};
-  border-top: 1px dashed rgba(120, 120, 120, 0.2);
+  border-top: 1px solid rgba(120, 120, 120, 0.2);
 `;
 
 const ProfileWordTitleComponent: React.FC<ProfileWordTitleTypes> = (props) => {
-  const { typo, afterIcon, onClick, color, pdNone } = props;
+  const { typo, afterIcon, onClick, color } = props;
   const setAfterIcon = () => {
     switch (afterIcon) {
       case "arr-down":

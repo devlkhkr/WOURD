@@ -5,14 +5,15 @@ interface ProfileWordTypes extends styledInterface {
   isOpened: boolean;
 }
 
-const ProfileWordWrapStyled = styled.div<ProfileWordTypes>`
+const ProfileWordWrapStyled = styled.ul<ProfileWordTypes>`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   transition-duration: 0.3s;
   overflow: hidden;
   max-height: 0;
-  border-top: ${props =>
-    props.isOpened ? "1px dashed rgba(120, 120, 120, 0.2);" : "0"};
-  /* background-color: #f9f9f9; */
-  ${props => (props.isOpened ? 'max-height: 150px' : ``)}
+  ${props => (props.isOpened ? "padding: 16px 0" : ``)};
+  ${props => (props.isOpened ? "max-height: 200px" : ``)};
 `;
 
 const ProfileWordComponent: React.FC<ProfileWordTypes> = ({
