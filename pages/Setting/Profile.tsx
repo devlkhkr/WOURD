@@ -60,9 +60,8 @@ const AcrdWrapStyled = styled.div`
 const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
   const userData = useSelector<ReducerType, UserData[]>(state => state.user);
 
-  const [ wordActivity, setWordActivity ] = useState(false);
-  console.log(wordActivity)
-  
+  const [wordActivity, setWordActivity] = useState(false);
+
   const router = useRouter();
   const cancelBtnClick = () => {
     router.push("/Setting");
@@ -111,13 +110,22 @@ const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
           textAlign="left"
           color="var(--color-point)"
           onClick={() => {
-            setWordActivity((prev:boolean) => prev);
+            setWordActivity((prev: boolean) => !prev);
           }}
         >
           {/*  */}
           나의 단어 활동내역
         </TypoComponent>
-        <ProfileWordComponent />
+        <ProfileWordComponent isOpened={wordActivity}>
+          <TypoComponent
+            fontSize="16px"
+            fontWeight="semi-bold"
+            textAlign="left"
+            color="var(--color-point)"
+          >
+            안녕F
+          </TypoComponent>
+        </ProfileWordComponent>
       </ProfileWordsWrap>
 
       <ButtonWrapComponent>
