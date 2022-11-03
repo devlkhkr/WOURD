@@ -19,20 +19,25 @@ interface ProfileWordTitleTypes extends styledInterface {
 
 const ProfileWordItem = styled.li`
   width: calc(25% - 24px / 4);
-  padding : 16px 0;
+  padding : 8px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 1px solid red;
   justify-content: space-between;
   color: ${props => props.color || "var(--color-black)"};
+  > div {
+    &:nth-child(2) {
+      /* FIXME: 4px 도 앵춘일까 */
+      margin-bottom : 4px;
+    }
+  }
 `;
 
 const ProfileWordIconWrap = styled.div`
   padding: 8px;
-  margin-bottom : 8px;
+  margin-bottom : 16px;
   border-radius : 50%;
-  background-color : #cccccc;
+  background-color : #eaeaea;
 `;
 
 const ProfileWordItemComponent: React.FC<ProfileWordTitleTypes> = props => {
@@ -89,12 +94,18 @@ const ProfileWordItemComponent: React.FC<ProfileWordTitleTypes> = props => {
     <ProfileWordItem>
       {wordIcon && <ProfileWordIconWrap>{setWordIcon()}</ProfileWordIconWrap>}
       <TypoComponent
-        fontSize="16px"
-        fontWeight="semi-bold"
-        textAlign="left"
+        fontSize="14px"
+        fontWeight="medium"
         color={color}
       >
         {typo}
+      </TypoComponent>
+      <TypoComponent
+        fontSize="16px"
+        fontWeight="semi-bold"
+        color="var(--color-point)"
+      >
+        0개
       </TypoComponent>
     </ProfileWordItem>
   );

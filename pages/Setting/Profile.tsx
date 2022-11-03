@@ -100,22 +100,22 @@ const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
         <ProfileWordComponent isOpened={wordActivity}>
           <ProfileWordItemComponent
             typo="아는단어"
-            color="red"
+            color="#aaaaaa"
             wordIcon="know"
           />
           <ProfileWordItemComponent
             typo="모르는단어"
-            color="red"
+            color="#aaaaaa"
             wordIcon="dontknow"
           />
           <ProfileWordItemComponent
             typo="즐겨찾는단어"
-            color="red"
+            color="#aaaaaa"
             wordIcon="favorite"
           />
           <ProfileWordItemComponent
             typo="건너뛴단어"
-            color="red"
+            color="#aaaaaa"
             wordIcon="skip"
           />
         </ProfileWordComponent>

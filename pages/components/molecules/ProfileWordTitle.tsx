@@ -20,7 +20,7 @@ const ProfileWordTitleList = styled.div`
   align-items: center;
   justify-content: space-between;
   color: ${(props) => props.color || "var(--color-black)"};
-  border-top: 1px solid rgba(120, 120, 120, 0.2);
+  border-top: 1px solid var(--color-lightgrey);
 `;
 
 const ProfileWordTitleComponent: React.FC<ProfileWordTitleTypes> = (props) => {
@@ -55,7 +55,7 @@ const ProfileWordTitleComponent: React.FC<ProfileWordTitleTypes> = (props) => {
   return (
     <ProfileWordTitleList onClick={onClick}>
       <TypoComponent
-        fontSize="16px"
+        fontSize="14px"
         fontWeight="semi-bold"
         textAlign="left"
         color={color}
