@@ -11,42 +11,62 @@ import { UserData } from "redux/slices/user";
 import ButtonCompontent from "pages/components/atoms/Button";
 import ButtonWrapComponent from "pages/components/molecules/ButtonWrap";
 import { useRouter } from "next/router";
+import { useState } from "react";
+
+import SettingListComponent from "../components/molecules/SettingList";
+import UserProfileComponent from "../components/molecules/UserProfile";
+import Accordion from "../components/molecules/Accordion";
+import ProfileWordComponent from "pages/components/molecules/ProfileWord";
 
 interface SettingProfileTypes extends styledInterface {}
 
+interface WordactivityTypes {
+  acrdTitle: string;
+  toggleFlag: boolean;
+  toggleFunc: Function;
+  acrdList: {
+    label: string;
+    checked: boolean;
+  }[];
+}
+
 const SettingProfileWrap = styled.div`
-background-color: var(--color-white);
-border-radius: 16px;
-padding: 16px 16px 40px;
-display: flex;
-flex-direction: column;
-min-height: 100%;
+  background-color: var(--color-white);
+  border-radius: 16px;
+  padding: 16px 16px 40px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
 `;
 
 const SettingProfileUser = styled.div`
-display: flex;
-flex-direction: column;
-align-items: center;
-margin-bottom : 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 16px;
 `;
 
-const ProfileListWrap = styled.div`
-
-`;
+const ProfileListWrap = styled.div``;
 
 const ProfileWordsWrap = styled.div`
-  margin : 20px 0;
-  background-color : #cccccc;
-`
+  margin: 20px 0;
+  background-color: #cccccc;
+`;
 
+const AcrdWrapStyled = styled.div`
+  border-bottom: 1px dashed #ddd;
+`;
 
 const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
   const userData = useSelector<ReducerType, UserData[]>(state => state.user);
 
+  const [ wordActivity, setWordActivity ] = useState(false);
+  console.log(wordActivity)
+  
   const router = useRouter();
   const cancelBtnClick = () => {
-    router.push("/Setting")
-  }
+    router.push("/Setting");
+  };
 
   // FIXME: 이미지 수정할수있는 함수
   const modifyImg = () => {
@@ -85,14 +105,30 @@ const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
       </ProfileListWrap>
 
       <ProfileWordsWrap>
-        <div>hello</div>
+        <TypoComponent
+          fontSize="16px"
+          fontWeight="semi-bold"
+          textAlign="left"
+          color="var(--color-point)"
+          onClick={() => {
+            setWordActivity((prev:boolean) => prev);
+          }}
+        >
+          {/*  */}
+          나의 단어 활동내역
+        </TypoComponent>
+        <ProfileWordComponent />
       </ProfileWordsWrap>
 
       <ButtonWrapComponent>
         <ButtonCompontent desc="취소" height="32px" onClick={cancelBtnClick} />
-        <ButtonCompontent desc="수정" backgroundColor="var(--color-point)" color="var(--color-white)" height="32px" />
+        <ButtonCompontent
+          desc="수정"
+          backgroundColor="var(--color-point)"
+          color="var(--color-white)"
+          height="32px"
+        />
       </ButtonWrapComponent>
-
     </SettingProfileWrap>
   );
 };
