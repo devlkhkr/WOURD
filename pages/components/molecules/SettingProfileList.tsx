@@ -14,10 +14,10 @@ const ProfileListWrap = styled.dl`
   display: flex;
   align-items: center;
   dt {
-    min-width: 80px;
+    min-width: 100px;
   }
   dd {
-    width: calc(100% - 80px);
+    width: calc(100% - 100px);
   }
 `;
 

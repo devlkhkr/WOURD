@@ -31,8 +31,13 @@ margin-bottom : 16px;
 `;
 
 const ProfileListWrap = styled.div`
-margin-bottom : 24px;
+
 `;
+
+const ProfileWordsWrap = styled.div`
+  margin : 20px 0;
+  background-color : #cccccc;
+`
 
 
 const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
@@ -78,6 +83,10 @@ const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
         />
         <ProfileListComponent typo="소개글" />
       </ProfileListWrap>
+
+      <ProfileWordsWrap>
+        <div>hello</div>
+      </ProfileWordsWrap>
 
       <ButtonWrapComponent>
         <ButtonCompontent desc="취소" height="32px" onClick={cancelBtnClick} />
