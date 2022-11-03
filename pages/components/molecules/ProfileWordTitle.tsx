@@ -10,39 +10,26 @@ import {
   faChevronUp,
 } from "@fortawesome/free-solid-svg-icons";
 
-interface SettingListTypes extends styledInterface {
+interface ProfileWordTitleTypes extends styledInterface {
   typo: string;
   afterIcon?: string;
-  rightTypo?: string;
   pdNone?: string;
 }
 
-const SettingList = styled.div`
+const ProfileWordTitleList = styled.div`
   height: 40px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   color: ${(props) => props.color || "var(--color-black)"};
-  padding: ${(props) => props.pdNone || "0 8px"};
+  padding : ${(props) => props.pdNone || "0 8px"};
   border-top: 1px dashed rgba(120, 120, 120, 0.2);
-  &:first-child {
-    border-top: 0;
-  }
 `;
 
-const SettingListComponent: React.FC<SettingListTypes> = (props) => {
-  const { typo, afterIcon, rightTypo, onClick, color, pdNone } = props;
+const ProfileWordTitleComponent: React.FC<ProfileWordTitleTypes> = (props) => {
+  const { typo, afterIcon, onClick, color, pdNone } = props;
   const setAfterIcon = () => {
     switch (afterIcon) {
-      case "arr-right":
-        return (
-          <Icon
-            iconShape={faChevronRight}
-            iconWidth="16px"
-            iconHeight="16px"
-            svgSize="12px"
-          />
-        );
       case "arr-down":
         return (
           <Icon
@@ -50,6 +37,7 @@ const SettingListComponent: React.FC<SettingListTypes> = (props) => {
             iconWidth="16px"
             iconHeight="16px"
             svgSize="12px"
+            color="var(--color-point)"
           />
         );
       case "arr-up":
@@ -59,6 +47,7 @@ const SettingListComponent: React.FC<SettingListTypes> = (props) => {
             iconWidth="16px"
             iconHeight="16px"
             svgSize="12px"
+            color="var(--color-point)"
           />
         );
       default:
@@ -67,23 +56,20 @@ const SettingListComponent: React.FC<SettingListTypes> = (props) => {
   };
 
   return (
-    <SettingList onClick={onClick}>
+    <ProfileWordTitleList onClick={onClick}>
       <TypoComponent
-        fontSize="14px"
-        fontWeight="regular"
+        fontSize="16px"
+        fontWeight="semi-bold"
         textAlign="left"
         color={color}
       >
         {typo}
       </TypoComponent>
-      {rightTypo && (
-        <TypoComponent color="var(--color-grey)">{rightTypo}</TypoComponent>
-      )}
       {afterIcon && setAfterIcon()}
-    </SettingList>
+    </ProfileWordTitleList>
   );
 };
 
-SettingListComponent.defaultProps = {};
+ProfileWordTitleComponent.defaultProps = {};
 
-export default SettingListComponent;
+export default ProfileWordTitleComponent;

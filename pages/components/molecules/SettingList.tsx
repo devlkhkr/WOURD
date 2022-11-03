@@ -14,7 +14,6 @@ interface SettingListTypes extends styledInterface {
   typo: string;
   afterIcon?: string;
   rightTypo?: string;
-  pdNone?: string;
 }
 
 const SettingList = styled.div`
@@ -23,7 +22,7 @@ const SettingList = styled.div`
   align-items: center;
   justify-content: space-between;
   color: ${(props) => props.color || "var(--color-black)"};
-  padding: ${(props) => props.pdNone || "0 8px"};
+  padding: 0 8px;
   border-top: 1px dashed rgba(120, 120, 120, 0.2);
   &:first-child {
     border-top: 0;
@@ -31,7 +30,7 @@ const SettingList = styled.div`
 `;
 
 const SettingListComponent: React.FC<SettingListTypes> = (props) => {
-  const { typo, afterIcon, rightTypo, onClick, color, pdNone } = props;
+  const { typo, afterIcon, rightTypo, onClick, color } = props;
   const setAfterIcon = () => {
     switch (afterIcon) {
       case "arr-right":

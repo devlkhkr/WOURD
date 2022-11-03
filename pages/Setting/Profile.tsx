@@ -13,10 +13,8 @@ import ButtonWrapComponent from "pages/components/molecules/ButtonWrap";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
-import SettingListComponent from "../components/molecules/SettingList";
-import UserProfileComponent from "../components/molecules/UserProfile";
-import Accordion from "../components/molecules/Accordion";
 import ProfileWordComponent from "pages/components/molecules/ProfileWord";
+import ProfileWordTitleComponent from "pages/components/molecules/ProfileWordTitle";
 
 interface SettingProfileTypes extends styledInterface {}
 
@@ -98,10 +96,11 @@ const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
       </ProfileListWrap>
 
       <ProfileWordsWrap>
-        <SettingListComponent
-          typo="나의 단어 내역"
-          afterIcon={wordActivity ? "arr-up" : "arr-down"}
+        <ProfileWordTitleComponent
           pdNone="0"
+          typo="나의 활동 내역"
+          color="var(--color-point)"
+          afterIcon={wordActivity ? "arr-up" : "arr-down"}
           onClick={() => {
             setWordActivity((prev: boolean) => !prev);
           }}
