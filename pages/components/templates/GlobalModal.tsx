@@ -39,24 +39,31 @@ const ModalWrapStyled = styled.div`
   animation: popup 0.3s linear;
 `;
 
-const CloseModalStyled = styled.i`
+const CloseModalStyled = styled.div`
   display: inline-block;
   width: 24px;
   height: 24px;
-  position: absolute;
   right: 16px;
   top: 16px;
+  position: absolute;
   z-index: 1;
 `;
 
 const ModalCardStyled = styled.div`
   width: 100%;
   height: calc(100% - (var(--height-header) + var(--height-footer)));
-  padding: 20px;
+  padding: 16px;
   margin: 0 auto;
   position: relative;
   background-color: #fff;
   border-radius: 16px;
+  overflow: hidden;
+`;
+
+const ModalDetailsStyled = styled.div`
+  height: calc(100% - 32px);
+  position: relative;
+  top: 32px;
   overflow: auto;
 `;
 
@@ -88,7 +95,7 @@ const GlobalModalComponent: React.FC = () => {
             color="var(--color-black)"
           />
         </CloseModalStyled>
-        {getModalComponent()}
+        <ModalDetailsStyled>{getModalComponent()}</ModalDetailsStyled>
       </ModalCardStyled>
     </ModalWrapStyled>
   );

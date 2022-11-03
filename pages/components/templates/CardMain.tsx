@@ -256,7 +256,7 @@ const CardMainComponent: React.FC<CardMainTypes> = ({
   return (
     <>
       <MainWrapStyled ref={cardList}>
-        {wordList.map((objWord: any, index: any) => (
+        {wordList.map((objWord: any, index: number) => (
           <CardSwiper
             // key={objWord.word_seq}
             key={index}
