@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import styledInterface from "../Intefaces/styledComponent";
 interface FormTypes extends styledInterface {
-  children: any;
+  children: React.ReactNode;
   onSubmit?: React.FormEventHandler<HTMLFormElement>;
 }
 

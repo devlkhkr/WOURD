@@ -1,6 +1,6 @@
 import { MouseEventHandler } from "react";
 export default interface StyledComponentTypes {
-  children?: any;
+  children?: React.ReactNode;
   reference?: any;
 
   id?: string;
@@ -15,7 +15,7 @@ export default interface StyledComponentTypes {
   marginRight?: string;
   marginBottom?: string;
   marginLeft?: string;
-  
+
   paddingTop?: string;
   paddingRight?: string;
   paddingLeft?: string;

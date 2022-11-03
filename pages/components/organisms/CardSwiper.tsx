@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useRef } from "react";
 import styled from "styled-components";
 interface CardSwiperTypes {
-  children: any;
+  children: React.ReactNode;
   className?: any;
   wordInfo: object;
   cardHandler: {

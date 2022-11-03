@@ -4,7 +4,7 @@ import Link from "next/link";
 import styled from "styled-components";
 import styledInterface from "../Intefaces/styledComponent";
 interface AnchorType extends styledInterface {
-  children: any;
+  children: React.ReactNode;
   href: string;
 }
 
