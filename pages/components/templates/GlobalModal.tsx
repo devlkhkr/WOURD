@@ -4,7 +4,11 @@ import styledInterface from "../Intefaces/styledComponent";
 import Icon from "pages/components/atoms/Icon";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import DevLog from "pages/components/organisms/DevLog";
+import HelpMessage from "../organisms/HelpMessage";
+import Notice from "../organisms/Notice";
+import SystemSpec from "../organisms/SystemSpec";
 import { selectModal, openModal, closeModal } from "redux/slices/modal";
+
 
 interface ModalTypes {
   type: string;
@@ -24,8 +28,20 @@ const modalStringList = {
 
 const modalComponentList: Array<ModalTypes> = [
   {
+    type: modalStringList.NoticeModal,
+    component: <Notice />,
+  },
+  {
+    type: modalStringList.HelpMessageModal,
+    component: <HelpMessage />,
+  },
+  {
     type: modalStringList.DevLogModal,
     component: <DevLog />,
+  },
+  {
+    type: modalStringList.SystemSpecModal,
+    component: <SystemSpec />,
   },
 ];
 
