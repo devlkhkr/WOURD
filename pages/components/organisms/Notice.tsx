@@ -7,8 +7,9 @@ import NoticeListTitle from "../molecules/NoticeListTitle";
 import NoticeListArticle from "../molecules/NoticeListArticle";
 
 const NoticeListItem = styled.li`
-  padding: 24px 16px 16px 12px;
+  padding: 16px 16px 16px 12px;
   border-top: 1px solid #1388be70;
+  position: relative;
   &:last-child {
     border-bottom: 1px solid #1388be70;
   }
@@ -46,7 +47,7 @@ const Notice: React.FC = () => {
   return (
     <ul>
       {noticeLists.map((list, idx) => {
-        const active = idx === activeArcd ? 'active' : '';
+        const active = idx === activeArcd ? "active" : "";
         // console.log(active)
         return (
           <NoticeListItem>
@@ -54,10 +55,11 @@ const Notice: React.FC = () => {
               titleText={list.title}
               date={list.date}
               idx={idx}
+              active={active}
               activeArcd={activeArcd}
               setActiveArcd={setActiveArcd}
             ></NoticeListTitle>
-            <NoticeListArticle 
+            <NoticeListArticle
               article={list.article}
               idx={idx}
               activeArcd={activeArcd}

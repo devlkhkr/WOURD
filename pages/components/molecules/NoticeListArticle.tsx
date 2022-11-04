@@ -9,12 +9,12 @@ interface NoticeListArticleTypes {
 }
 
 const NoticeListArticleComponent = styled.div`
-  transition: all 0.3s ease;
-  height: 0;
-  overflow:hidden;
+  transition: all 0.3s linear;
+  max-height: 0;
+  overflow: hidden;
   &.active {
-    overflow:unset;
-    height: 50px;
+    overflow: unset;
+    max-height : 100vw;
   }
 `;
 
@@ -30,7 +30,6 @@ const NoticeListArticle: React.FC<NoticeListArticleTypes> = ({
         fontSize="14px"
         fontWeight="regular"
         textAlign="left"
-        lineClamp="2"
         marginTop="4px"
       >
         {article}
