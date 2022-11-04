@@ -7,8 +7,6 @@ import styledInterface from "pages/components/Intefaces/styledComponent";
 const gitOwner = "devlkhkr";
 const gitRepo = "DEV-WORDS";
 interface GitCommitListTypes {
-  author: object;
-  comments_url: string;
   commit: {
     message: string;
     committer: {
@@ -16,12 +14,6 @@ interface GitCommitListTypes {
       date: Date;
     };
   };
-  committer: object;
-  html_url: string;
-  node_id: string;
-  parents: Array<any>;
-  sha: string;
-  url: string;
 }
 
 interface CommitInfoTypes {
@@ -44,7 +36,12 @@ const commitTypeList: Array<string> = [
   "Merge pull request",
 ];
 
-const getCommitType = (type: string) => {
+const getCommitTitle = (msg: string) => {
+  console.log(msg.split("\n"));
+  return msg.split("\n")[0];
+};
+
+const getCommitTypeColor = (type: string) => {
   let commitType = -1;
   for (let t = 0; t < commitTypeList.length; t++) {
     type.indexOf(commitTypeList[t]) != -1
@@ -93,7 +90,7 @@ const CommitInfoStyled = styled.div<CommitInfoTypes>`
     width: 8px;
     height: 100%;
     left: 0;
-    background-color: ${(props) => getCommitType(props.type)};
+    background-color: ${(props) => getCommitTypeColor(props.type)};
   }
   & + & {
     margin-top: 16px;
@@ -129,7 +126,7 @@ const DevHistory: React.FC = () => {
               {data.commit.committer.name}
             </Typo>
             <Typo textAlign="left" marginTop="8px">
-              {data.commit.message}
+              {getCommitTitle(data.commit.message)}
             </Typo>
           </CommitInfoStyled>
         );
