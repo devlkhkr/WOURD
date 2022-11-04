@@ -35,7 +35,7 @@ const ProfileWordItem = styled.li`
 
 const ProfileWordIconWrap = styled.div`
   padding: 8px;
-  margin-bottom : 16px;
+  margin-bottom : 8px;
   border-radius : 50%;
   background-color : #eaeaea;
 `;
@@ -49,9 +49,9 @@ const ProfileWordItemComponent: React.FC<ProfileWordTitleTypes> = props => {
         return (
           <Icon
             iconShape={faLightbulb}
-            iconWidth="24px"
-            iconHeight="24px"
-            svgSize="24px"
+            iconWidth="16px"
+            iconHeight="16px"
+            svgSize="16px"
             color="var(--color-point)"
           />
         );
@@ -59,9 +59,9 @@ const ProfileWordItemComponent: React.FC<ProfileWordTitleTypes> = props => {
         return (
           <Icon
             iconShape={faCircleQuestion}
-            iconWidth="24px"
-            iconHeight="24px"
-            svgSize="24px"
+            iconWidth="16px"
+            iconHeight="16px"
+            svgSize="16px"
             color="var(--color-point)"
           />
         );
@@ -69,9 +69,9 @@ const ProfileWordItemComponent: React.FC<ProfileWordTitleTypes> = props => {
         return (
           <Icon
             iconShape={faStar}
-            iconWidth="24px"
-            iconHeight="24px"
-            svgSize="24px"
+            iconWidth="16px"
+            iconHeight="16px"
+            svgSize="16px"
             color="var(--color-point)"
           />
         );
@@ -79,9 +79,9 @@ const ProfileWordItemComponent: React.FC<ProfileWordTitleTypes> = props => {
         return (
           <Icon
             iconShape={faForward}
-            iconWidth="24px"
-            iconHeight="24px"
-            svgSize="24px"
+            iconWidth="16px"
+            iconHeight="16px"
+            svgSize="16px"
             color="var(--color-point)"
           />
         );
@@ -101,7 +101,7 @@ const ProfileWordItemComponent: React.FC<ProfileWordTitleTypes> = props => {
         {typo}
       </TypoComponent>
       <TypoComponent
-        fontSize="16px"
+        fontSize="14px"
         fontWeight="semi-bold"
         color="var(--color-point)"
       >

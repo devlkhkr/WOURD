@@ -23,7 +23,7 @@ const ProfileListWrap = styled.dl`
 
 const ProfileListComponent: React.FC<ProfileListTypes> = (props) => {
   const { typo, color, userInfo } = props;
-  console.log(userInfo);
+  // console.log(userInfo);
   return (
     <ProfileListWrap>
       <dt>

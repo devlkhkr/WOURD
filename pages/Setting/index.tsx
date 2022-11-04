@@ -63,13 +63,24 @@ const Setting: NextPage<SettingTypes> = () => {
   const [wordCtrlByState, setWordCtrlByState] = useState(false);
   const [wordCtrlByCate, setWordCtrlByCate] = useState(false);
   const dispatch = useDispatch();
-  const modalOpenClick = () => {
-    dispatch(
-      openModal({
-        modalType: "DevLogModal",
-        isOpen: true,
-      })
-    );
+  const modalOpenClick = (e) => {
+    console.log(e.target.innerText)
+    switch (e.target.innerText) {
+      case "개발히스토리":
+        dispatch(
+          openModal({
+            modalType: "DevLogModal",
+            isOpen: true,
+          })
+        );
+        break;
+      case "도움말(FAQ)":
+        console.log(1)
+        break;
+      default:
+        return
+    }
+    return
   };
   const objAcrdList: AcrdListTypes[] = [
     {
@@ -155,7 +166,7 @@ const Setting: NextPage<SettingTypes> = () => {
       <SettingBottomStyled>
         {/* FIXME: 추후에 list형식으로 바꾸어서 map ?_? */}
         <SettingListComponent typo="공지사항" />
-        <SettingListComponent typo="도움말(FAQ)" />
+        <SettingListComponent typo="도움말(FAQ)" onClick={modalOpenClick} />
         <SettingListComponent typo="개발히스토리" onClick={modalOpenClick} />
         <SettingListComponent typo="시스템스펙" />
         <SettingListComponent typo="버전정보" rightTypo="1.0.0" />

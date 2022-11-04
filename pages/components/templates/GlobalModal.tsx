@@ -12,7 +12,14 @@ interface ModalTypes {
 }
 
 const modalStringList = {
+  // 공지사항
+  NoticeModal: "NoticeModal",
+  // 도움말
+  HelpMessageModal: "HelpMessageModal",
+  // 개발히스토리
   DevLogModal: "DevLogModal",
+  // 시스템스펙
+  SystemSpecModal: "SystemSpecModal",
 };
 
 const modalComponentList: Array<ModalTypes> = [
