@@ -62,26 +62,26 @@ const Setting: NextPage<SettingTypes> = () => {
   const [wordCtrlByState, setWordCtrlByState] = useState(false);
   const [wordCtrlByCate, setWordCtrlByCate] = useState(false);
 
-  const [ modalComponents, setModalComponents ] = useState([
+  const [modalComponents, setModalComponents] = useState([
     {
-      typo: "공지사항"
+      typo: "공지사항",
     },
     {
-      typo: "도움말(FAQ)"
+      typo: "도움말(FAQ)",
     },
     {
-      typo: "개발히스토리"
+      typo: "개발히스토리",
     },
     {
-      typo: "시스템스펙"
+      typo: "시스템스펙",
     },
-  ])
-  console.log(modalComponents)
+  ]);
+  console.log(modalComponents);
 
   const dispatch = useDispatch();
   // FIXME : 이벤트객체 any타입 수정
   const modalOpenClick = (e: any) => {
-    console.log(e.target.innerText);
+    // console.log(e.target.innerText);
     switch (e.target.innerText) {
       case "공지사항":
         return dispatch(
@@ -112,7 +112,7 @@ const Setting: NextPage<SettingTypes> = () => {
           })
         );
       default:
-        return console.log('null page')
+        return console.log("null page");
     }
     return;
   };
@@ -198,19 +198,10 @@ const Setting: NextPage<SettingTypes> = () => {
       </SettingTopStyled>
 
       <SettingBottomStyled>
-        {/* FIXME: 추후에 list형식으로 바꾸어서 map ?_? */}
-        {
-          modalComponents.map(item => (
-            <SettingListComponent 
-              typo={item.typo}
-              onClick={modalOpenClick}
-            />
-          ))
-        }
-        {/* <SettingListComponent typo="공지사항" onClick={modalOpenClick}/>
-        <SettingListComponent typo="도움말(FAQ)" onClick={modalOpenClick} />
-        <SettingListComponent typo="개발히스토리" onClick={modalOpenClick} />
-        <SettingListComponent typo="시스템스펙" onClick={modalOpenClick} /> */}
+        {modalComponents.map(item => (
+          <SettingListComponent typo={item.typo} onClick={modalOpenClick} />
+        ))}
+
         <SettingListComponent typo="버전정보" rightTypo="1.0.0" />
         <SettingListComponent typo="로그아웃" color="var(--color-red)" />
       </SettingBottomStyled>
