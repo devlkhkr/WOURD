@@ -37,7 +37,6 @@ const commitTypeList: Array<string> = [
 ];
 
 const getCommitTitle = (msg: string) => {
-  console.log(msg.split("\n"));
   return msg.split("\n")[0];
 };
 
