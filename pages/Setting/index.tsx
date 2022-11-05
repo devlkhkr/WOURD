@@ -29,6 +29,17 @@ interface AcrdListTypes {
   }[];
 }
 
+interface wordArcdListTypes {
+  acrdTitle: string;
+  toggleFlag: boolean;
+  toggleFunc: Function;
+  acrdList: {
+    label: string;
+    color: string;
+    wordIcon: string;
+  }[];
+}
+
 interface modalComponentsTypes {
   typo: string;
 }
@@ -58,9 +69,8 @@ const SettingTopStyled = styled.div`
 
 const ProfileWordsWrap = styled.div`
   margin: 20px 0;
-  border-bottom: 1px solid var(--color-lightgrey);
+  border-bottom: 1px dashed #ddd;
 `;
-
 
 // app interface
 const SettingBottomStyled = styled.div`
@@ -73,6 +83,7 @@ const AcrdWrapStyled = styled.div`
 `;
 
 const Setting: NextPage<SettingTypes> = () => {
+  const [wordCtrlByActivity, setWordCtrlByActivity] = useState(true);
   const [wordCtrlByState, setWordCtrlByState] = useState(false);
   const [wordCtrlByCate, setWordCtrlByCate] = useState(false);
 
@@ -92,13 +103,10 @@ const Setting: NextPage<SettingTypes> = () => {
       typo: "시스템스펙",
     },
   ]);
-  console.log(modalComponents);
 
   const dispatch = useDispatch();
-  // FIXME : 이벤트객체 any타입 수정
-  const modalOpenClick = (e: any) => {
-    // console.log(e.target.innerText);
-    switch (e.target.innerText) {
+  const modalOpenClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    switch (e.currentTarget.innerText) {
       case "공지사항":
         return dispatch(
           openModal({
@@ -133,9 +141,35 @@ const Setting: NextPage<SettingTypes> = () => {
     return;
   };
 
-
-  const [wordActivity, setWordActivity] = useState(false);
-
+  const wordAcrdList: wordArcdListTypes[] = [
+    {
+      acrdTitle: "나의 활동 내역",
+      toggleFlag: wordCtrlByActivity,
+      toggleFunc: setWordCtrlByActivity,
+      acrdList: [
+        {
+          label: "아는단어",
+          color: "#aaa",
+          wordIcon: "know",
+        },
+        {
+          label: "모르는단어",
+          color: "#aaa",
+          wordIcon: "dontknow",
+        },
+        {
+          label: "즐겨찾는단어",
+          color: "#aaa",
+          wordIcon: "favorite",
+        },
+        {
+          label: "건너뛴단어",
+          color: "#aaa",
+          wordIcon: "skip",
+        },
+      ],
+    },
+  ];
 
   const objAcrdList: AcrdListTypes[] = [
     {
@@ -185,7 +219,6 @@ const Setting: NextPage<SettingTypes> = () => {
       ],
     },
   ];
-  
 
   return (
     <SettingWrap>
@@ -195,38 +228,30 @@ const Setting: NextPage<SettingTypes> = () => {
         </Anchor>
       </SettingProfileStyled>
 
-      <ProfileWordsWrap>
-        <ProfileWordTitleComponent
-          typo="나의 활동 내역"
-          color="var(--color-point)"
-          afterIcon={wordActivity ? "arr-up" : "arr-down"}
-          onClick={() => {
-            setWordActivity((prev: boolean) => !prev);
-          }}
-        />
-        <ProfileWordComponent isOpened={wordActivity}>
-          <ProfileWordItemComponent
-            typo="아는단어"
-            color="#aaaaaa"
-            wordIcon="know"
-          />
-          <ProfileWordItemComponent
-            typo="모르는단어"
-            color="#aaaaaa"
-            wordIcon="dontknow"
-          />
-          <ProfileWordItemComponent
-            typo="즐겨찾는단어"
-            color="#aaaaaa"
-            wordIcon="favorite"
-          />
-          <ProfileWordItemComponent
-            typo="건너뛴단어"
-            color="#aaaaaa"
-            wordIcon="skip"
-          />
-        </ProfileWordComponent>
-      </ProfileWordsWrap>
+      {wordAcrdList.map((wordAcrd, index) => {
+        console.log(wordAcrd);
+        return (
+          <ProfileWordsWrap key={index}>
+            <ProfileWordTitleComponent
+              typo={wordAcrd.acrdTitle}
+              afterIcon={wordAcrd.toggleFlag ? "arr-up" : "arr-down"}
+              onClick={() => {
+                wordAcrd.toggleFunc((prev: boolean) => !prev);
+              }}
+            />
+
+            <ProfileWordComponent isOpened={wordAcrd.toggleFlag}>
+              {wordAcrd.acrdList.map((list, index) => (
+                <ProfileWordItemComponent
+                  typo={list.label}
+                  color={list.color}
+                  wordIcon={list.wordIcon}
+                />
+              ))}
+            </ProfileWordComponent>
+          </ProfileWordsWrap>
+        );
+      })}
 
       <SettingTopStyled>
         {objAcrdList.map((objAcrd, index) => (

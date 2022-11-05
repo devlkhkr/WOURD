@@ -12,8 +12,8 @@ const ProfileWordWrapStyled = styled.ul<ProfileWordTypes>`
   transition-duration: 0.3s;
   overflow: hidden;
   max-height: 0;
-  ${props => (props.isOpened ? "padding: 16px 0" : ``)};
-  ${props => (props.isOpened ? "max-height: 200px" : ``)};
+  ${props => (props.isOpened ? "padding: 8px 0" : ``)};
+  ${props => (props.isOpened ? "max-height: 150px" : ``)};
 `;
 
 const ProfileWordComponent: React.FC<ProfileWordTypes> = ({

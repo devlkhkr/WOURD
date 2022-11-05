@@ -15,9 +15,14 @@ const NoticeListItem = styled.li`
   }
 `;
 
+interface noticeListTypes {
+  title: string;
+  date: string;
+  article: string;
+}
+
 const Notice: React.FC = () => {
-  // FIXME: object ? array ?
-  const [noticeLists, setNoticeLists] = useState([
+  const [noticeLists, setNoticeLists] = useState<noticeListTypes[]>([
     {
       title: "이번에 진짜 많이 업데이트했어요",
       date: "11.1 NOV",
@@ -41,6 +46,8 @@ const Notice: React.FC = () => {
       article: "짧게 넣을것인가욤? 눌렀을때 또한번 어디론가 이동해야하나욤?",
     },
   ]);
+
+  console.log(noticeLists)
 
   const [activeArcd, setActiveArcd] = useState();
 
