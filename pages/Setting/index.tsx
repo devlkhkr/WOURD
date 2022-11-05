@@ -26,6 +26,10 @@ interface AcrdListTypes {
   }[];
 }
 
+interface modalComponentsTypes {
+  typo: string;
+}
+
 const SettingWrap = styled.div`
   background-color: var(--color-white);
   border-radius: 16px;
@@ -62,7 +66,9 @@ const Setting: NextPage<SettingTypes> = () => {
   const [wordCtrlByState, setWordCtrlByState] = useState(false);
   const [wordCtrlByCate, setWordCtrlByCate] = useState(false);
 
-  const [modalComponents, setModalComponents] = useState([
+  const [modalComponents, setModalComponents] = useState<
+    modalComponentsTypes[]
+  >([
     {
       typo: "공지사항",
     },
@@ -198,7 +204,7 @@ const Setting: NextPage<SettingTypes> = () => {
       </SettingTopStyled>
 
       <SettingBottomStyled>
-        {modalComponents.map(item => (
+        {modalComponents.map((item: modalComponentsTypes, index: number) => (
           <SettingListComponent typo={item.typo} onClick={modalOpenClick} />
         ))}
 
