@@ -205,7 +205,11 @@ const Setting: NextPage<SettingTypes> = () => {
 
       <SettingBottomStyled>
         {modalComponents.map((item: modalComponentsTypes, index: number) => (
-          <SettingListComponent typo={item.typo} onClick={modalOpenClick} />
+          <SettingListComponent
+            key={index}
+            typo={item.typo}
+            onClick={modalOpenClick}
+          />
         ))}
 
         <SettingListComponent typo="버전정보" rightTypo="1.0.0" />
