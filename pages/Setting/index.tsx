@@ -10,6 +10,9 @@ import SettingListComponent from "../components/molecules/SettingList";
 import UserProfileComponent from "../components/molecules/UserProfile";
 import Accordion from "../components/molecules/Accordion";
 import { useDispatch } from "react-redux";
+import ProfileWordTitleComponent from "pages/components/molecules/ProfileWordTitle";
+import ProfileWordComponent from "pages/components/molecules/ProfileWord";
+import ProfileWordItemComponent from "pages/components/molecules/ProfileWordItem";
 interface SettingTypes extends styledInterface {
   typo: string;
   afterIcon?: string;
@@ -52,6 +55,13 @@ const SettingProfileStyled = styled.div`
 const SettingTopStyled = styled.div`
   border-top: 1px solid rgba(120, 120, 120, 0.4);
 `;
+
+const ProfileWordsWrap = styled.div`
+  margin: 20px 0;
+  border-bottom: 1px solid var(--color-lightgrey);
+`;
+
+
 // app interface
 const SettingBottomStyled = styled.div`
   border-top: 1px solid rgba(120, 120, 120, 0.4);
@@ -122,6 +132,11 @@ const Setting: NextPage<SettingTypes> = () => {
     }
     return;
   };
+
+
+  const [wordActivity, setWordActivity] = useState(false);
+
+
   const objAcrdList: AcrdListTypes[] = [
     {
       acrdTitle: "상태별 노출 관리",
@@ -170,6 +185,7 @@ const Setting: NextPage<SettingTypes> = () => {
       ],
     },
   ];
+  
 
   return (
     <SettingWrap>
@@ -178,6 +194,39 @@ const Setting: NextPage<SettingTypes> = () => {
           <UserProfileComponent />
         </Anchor>
       </SettingProfileStyled>
+
+      <ProfileWordsWrap>
+        <ProfileWordTitleComponent
+          typo="나의 활동 내역"
+          color="var(--color-point)"
+          afterIcon={wordActivity ? "arr-up" : "arr-down"}
+          onClick={() => {
+            setWordActivity((prev: boolean) => !prev);
+          }}
+        />
+        <ProfileWordComponent isOpened={wordActivity}>
+          <ProfileWordItemComponent
+            typo="아는단어"
+            color="#aaaaaa"
+            wordIcon="know"
+          />
+          <ProfileWordItemComponent
+            typo="모르는단어"
+            color="#aaaaaa"
+            wordIcon="dontknow"
+          />
+          <ProfileWordItemComponent
+            typo="즐겨찾는단어"
+            color="#aaaaaa"
+            wordIcon="favorite"
+          />
+          <ProfileWordItemComponent
+            typo="건너뛴단어"
+            color="#aaaaaa"
+            wordIcon="skip"
+          />
+        </ProfileWordComponent>
+      </ProfileWordsWrap>
 
       <SettingTopStyled>
         {objAcrdList.map((objAcrd, index) => (
