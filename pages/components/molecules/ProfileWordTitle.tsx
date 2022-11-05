@@ -27,6 +27,7 @@ const ProfileWordTitleList = styled.div`
 const ProfileWordTitleComponent: React.FC<ProfileWordTitleTypes> = (props) => {
   const { typo, afterIcon, onClick, color } = props;
   const setAfterIcon = () => {
+    // FIXME: 추후에 생성자함수로 공통적용
     switch (afterIcon) {
       case "arr-down":
         return (

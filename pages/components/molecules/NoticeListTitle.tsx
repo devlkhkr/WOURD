@@ -1,15 +1,14 @@
-import styled, { StyledInterface } from "styled-components";
+import styled from "styled-components";
+import styledInterface from "../Intefaces/styledComponent";
 import TypoComponent from "../atoms/Typo";
-
-import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import Icon from "../atoms/Icon";
-interface NoticeListTitleTypes {
+
+import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
+
+interface NoticeListTitleTypes extends styledInterface {
   titleText: string;
   date: string;
-  idx: number;
-  activeArcd: any;
-  setActiveArcd: any;
-  active: any;
+  afterIcon?: string;
 }
 
 const NoticeListTitleComponent = styled.div`
@@ -20,26 +19,41 @@ const ArrowIconWrap = styled.div`
   position: absolute;
   top: 16px;
   right: 12px;
-  transition: all 0.2s ease;
-  transform: rotate(360deg);
-  &.active {
-    transform: rotate(180deg);
-  }
 `;
 
 const NoticeListTitle: React.FC<NoticeListTitleTypes> = ({
   titleText,
   date,
-  idx,
-  setActiveArcd,
-  active,
+  afterIcon,
+  onClick
 }) => {
-  const handleActive = () => {
-    setActiveArcd(idx);
+  const setAfterIcon = () => {
+    switch (afterIcon) {
+      case "arr-down":
+        return (
+          <Icon
+            iconShape={faChevronDown}
+            iconWidth="16px"
+            iconHeight="16px"
+            svgSize="12px"
+          />
+        );
+      case "arr-up":
+        return (
+          <Icon
+            iconShape={faChevronUp}
+            iconWidth="16px"
+            iconHeight="16px"
+            svgSize="12px"
+          />
+        );
+      default:
+        return;
+    }
   };
 
   return (
-    <NoticeListTitleComponent onClick={handleActive}>
+    <NoticeListTitleComponent onClick={onClick}>
       <TypoComponent
         fontSize="16px"
         fontWeight="semi-bold"
@@ -57,14 +71,7 @@ const NoticeListTitle: React.FC<NoticeListTitleTypes> = ({
       >
         {date}
       </TypoComponent>
-      <ArrowIconWrap className={`${active}`}>
-        <Icon
-          iconShape={faChevronDown}
-          iconWidth="16px"
-          iconHeight="16px"
-          svgSize="12px"
-        />
-      </ArrowIconWrap>
+      <ArrowIconWrap>{afterIcon && setAfterIcon()}</ArrowIconWrap>
     </NoticeListTitleComponent>
   );
 };

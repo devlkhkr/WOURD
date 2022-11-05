@@ -3,29 +3,22 @@ import TypoComponent from "../atoms/Typo";
 
 interface NoticeListArticleTypes {
   article: string;
-  idx: number;
-  activeArcd: any;
-  active: any;
+  isOpened: boolean;
 }
 
-const NoticeListArticleComponent = styled.div`
+const NoticeListArticleComponent = styled.div<NoticeListArticleTypes>`
   transition: all 0.3s linear;
   max-height: 0;
   overflow: hidden;
-  &.active {
-    overflow: unset;
-    max-height : 100vw;
-  }
+  max-height: ${props => (props.isOpened ? "60vw" : "0")};
 `;
 
 const NoticeListArticle: React.FC<NoticeListArticleTypes> = ({
   article,
-  idx,
-  activeArcd,
-  active,
+  isOpened,
 }) => {
   return (
-    <NoticeListArticleComponent className={`${active}`}>
+    <NoticeListArticleComponent isOpened={isOpened} article={article}>
       <TypoComponent
         fontSize="14px"
         fontWeight="regular"
