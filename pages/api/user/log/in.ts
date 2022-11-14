@@ -1,5 +1,8 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
+import wrapper from "redux/store";
+// import { setUserData, UserDataTypes } from "redux/slices/user";
+// import { useState } from "react";
 const db = require("../../../../common/config/db");
 
 export default function Login(req: NextApiRequest, res: NextApiResponse) {
@@ -35,3 +38,12 @@ export default function Login(req: NextApiRequest, res: NextApiResponse) {
     }
   );
 }
+
+// export const getServerSideProps = wrapper.getServerSideProps(
+//   (store) =>
+//     async ({ params }) => {
+//       const data = 123;
+//       store.dispatch(setUserData({} as UserDataTypes));
+//       return { props: { data } };
+//     }
+// );

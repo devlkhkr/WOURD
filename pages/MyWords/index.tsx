@@ -8,9 +8,8 @@ import axios from "axios";
 import Typo from "pages/components/atoms/Typo";
 import CardMain, { ExposeWordTypes } from "pages/components/templates/CardMain";
 import { useSelector } from "react-redux";
-import { ReducerType } from "redux/rootReducer";
-import { UserData } from "redux/slices/user";
-import store from "redux/store";
+import { UserDataTypes } from "redux/slices/user";
+import wrapper from "redux/store";
 
 interface MyWordsListTypes {
   user_id: string;
@@ -153,7 +152,7 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
           height="40px"
           onClick={addNewWordClick}
         ></Button>
-        {myWordList.map((objMyWord: MyWordsListTypes, index: number) => (
+        {/* {myWordList.map((objMyWord: MyWordsListTypes, index: number) => (
           <MyWordListWrapStyled
             key={index}
             className={`state_${objMyWord.word_state}`}
@@ -187,28 +186,48 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
               {objMyWord.word_desc}
             </Typo>
           </MyWordListWrapStyled>
-        ))}
+        ))} */}
       </MyWordListStyled>
     </>
   );
 };
 
-store.getState().user.length === 1
-  ? (() => {
-      MyWordsComponent.getInitialProps = async () => {
-        const res = await axios.post(
-          "http://localhost:3000" + "/api/myword/list",
-          {
-            params: {
-              userId: store.getState().user[0].id,
-            },
-          }
-        );
-        return {
-          dataMyWordList: res.data,
-        };
-      };
-    })()
-  : void 0;
+// export const getServerSideProps = wrapper.getServerSideProps(
+//   (store) =>
+//     async ({ params }) => {
+//       const data = "123";
+//       // console.log("getState:::::");
+//       return { props: { data } };
+//     }
+// );
+
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) =>
+    async ({ params }) => {
+      console.log("store:::::", store);
+      console.log("serverSideStore:::::", store.getState());
+      // store.dispatch();
+      // console.log("rootReducer:::::", rootReducer);
+      return { props: {} };
+    }
+);
+
+// store.getState().user.length === 1
+//   ? (() => {
+//       MyWordsComponent.getInitialProps = async () => {
+//         const res = await axios.post(
+//           "http://localhost:3000" + "/api/myword/list",
+//           {
+//             params: {
+//               userId: store.getState().user[0].id,
+//             },
+//           }
+//         );
+//         return {
+//           dataMyWordList: res.data,
+//         };
+//       };
+//     })()
+//   : void 0;
 
 export default MyWordsComponent;

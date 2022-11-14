@@ -12,7 +12,8 @@ import axios from "axios";
 import Hash from "../components/atoms/Hash";
 
 import { useDispatch } from "react-redux";
-import { UserData, setUserData } from "redux/slices/user";
+import { UserDataTypes, setUserData } from "redux/slices/user";
+import { NextPage } from "next";
 
 interface LoginTypes {
   setIsTokenLive: Function;
@@ -40,7 +41,7 @@ const LoginStyled = styled.form<LoginTypes>`
   }
 `;
 
-const LoginComponent: React.FC<LoginTypes> = ({ setIsTokenLive }) => {
+const LoginComponent: NextPage<LoginTypes> = ({ setIsTokenLive }) => {
   const dispatch = useDispatch();
   const idInput: any = useRef();
   const pwInput: any = useRef();
@@ -77,7 +78,7 @@ const LoginComponent: React.FC<LoginTypes> = ({ setIsTokenLive }) => {
             nickName: res.data.userInfo.nickName,
             prfImg: res.data.userInfo.prfImg,
             lastLogin: res.data.userInfo.lastLogin,
-          } as UserData)
+          } as UserDataTypes)
         );
         insertLoginData(loginUserId);
         setIsTokenLive(res.data.loginFlag);

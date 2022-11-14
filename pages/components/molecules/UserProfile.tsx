@@ -6,7 +6,7 @@ import TypoComponent from "../atoms/Typo";
 
 import { useSelector } from "react-redux";
 import { ReducerType } from "redux/rootReducer";
-import { UserData } from "redux/slices/user";
+import { UserDataTypes } from "redux/slices/user";
 
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import Icon from "../atoms/Icon";
@@ -37,9 +37,11 @@ const UserInfoStyled = styled.div<UserProfileTypes>`
 `;
 
 const UserProfileComponent: React.FC<UserProfileTypes> = ({}) => {
-  const userData = useSelector<ReducerType, UserData[]>((state) => state.user);
+  const userData = useSelector<ReducerType, UserDataTypes>(
+    (state) => state.user
+  );
   const getLastLoginPeriod = () => {
-    let stDate = new Date(userData[0].lastLogin);
+    let stDate = new Date(userData.lastLogin);
     let endDate = new Date();
     let btMs = endDate.getTime() - stDate.getTime();
     let btDay = classifyTimestamp(btMs);
@@ -86,10 +88,15 @@ const UserProfileComponent: React.FC<UserProfileTypes> = ({}) => {
   };
   return (
     <UserProfileStyled>
-      <ImgComponent src={userData[0].prfImg} objectFit="cover" width="64" height="64"/>
+      <ImgComponent
+        src={userData.prfImg}
+        objectFit="cover"
+        width="64"
+        height="64"
+      />
       <UserInfoStyled>
         <TypoComponent fontSize="16px" fontWeight="semi-bold" textAlign="left">
-          {userData[0].nickName}
+          {userData.nickName}
         </TypoComponent>
         <TypoComponent
           fontSize="14px"
@@ -98,7 +105,7 @@ const UserProfileComponent: React.FC<UserProfileTypes> = ({}) => {
           color="var(--color-point)"
           marginTop="4px"
         >
-          {userData[0].id}
+          {userData.id}
         </TypoComponent>
         <TypoComponent
           fontSize="12px"

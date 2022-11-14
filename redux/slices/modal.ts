@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-interface ModalData {
+export interface ModalDataTypes {
   modalType: string;
   modalTitle: string;
   isOpen: boolean;
 }
 
-const initialState: ModalData = {
+const initialState: ModalDataTypes = {
   modalType: "",
   modalTitle: "",
   isOpen: false,
