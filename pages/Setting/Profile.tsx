@@ -13,10 +13,6 @@ import ButtonWrapComponent from "pages/components/molecules/ButtonWrap";
 import { useRouter } from "next/router";
 import { useState } from "react";
 
-import ProfileWordComponent from "pages/components/molecules/ProfileWord";
-import ProfileWordTitleComponent from "pages/components/molecules/ProfileWordTitle";
-import ProfileWordItemComponent from "pages/components/molecules/ProfileWordItem";
-
 interface SettingProfileTypes extends styledInterface {}
 
 const SettingProfileWrap = styled.div`
@@ -36,11 +32,6 @@ const SettingProfileUser = styled.div`
 `;
 
 const ProfileListWrap = styled.div``;
-
-const ProfileWordsWrap = styled.div`
-  margin: 20px 0;
-  border-bottom: 1px solid var(--color-lightgrey);
-`;
 
 const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
   const userData = useSelector<ReducerType, UserDataTypes>(
@@ -86,39 +77,6 @@ const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
         <ProfileListComponent typo="닉네임" userInfo={`${userData.nickName}`} />
         <ProfileListComponent typo="소개글" />
       </ProfileListWrap>
-
-      <ProfileWordsWrap>
-        <ProfileWordTitleComponent
-          typo="나의 활동 내역"
-          color="var(--color-point)"
-          afterIcon={wordActivity ? "arr-up" : "arr-down"}
-          onClick={() => {
-            setWordActivity((prev: boolean) => !prev);
-          }}
-        />
-        <ProfileWordComponent isOpened={wordActivity}>
-          <ProfileWordItemComponent
-            typo="아는단어"
-            color="#aaaaaa"
-            wordIcon="know"
-          />
-          <ProfileWordItemComponent
-            typo="모르는단어"
-            color="#aaaaaa"
-            wordIcon="dontknow"
-          />
-          <ProfileWordItemComponent
-            typo="즐겨찾는단어"
-            color="#aaaaaa"
-            wordIcon="favorite"
-          />
-          <ProfileWordItemComponent
-            typo="건너뛴단어"
-            color="#aaaaaa"
-            wordIcon="skip"
-          />
-        </ProfileWordComponent>
-      </ProfileWordsWrap>
 
       <ButtonWrapComponent>
         <ButtonCompontent desc="취소" height="32px" onClick={cancelBtnClick} />

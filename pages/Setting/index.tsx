@@ -10,6 +10,9 @@ import SettingListComponent from "../components/molecules/SettingList";
 import UserProfileComponent from "../components/molecules/UserProfile";
 import Accordion from "../components/molecules/Accordion";
 import { useDispatch } from "react-redux";
+import ProfileWordTitleComponent from "pages/components/molecules/ProfileWordTitle";
+import ProfileWordComponent from "pages/components/molecules/ProfileWord";
+import ProfileWordItemComponent from "pages/components/molecules/ProfileWordItem";
 interface SettingTypes extends styledInterface {
   typo: string;
   afterIcon?: string;
@@ -23,6 +26,17 @@ interface AcrdListTypes {
   acrdList: {
     label: string;
     checked: boolean;
+  }[];
+}
+
+interface wordArcdListTypes {
+  acrdTitle: string;
+  toggleFlag: boolean;
+  toggleFunc: Function;
+  acrdList: {
+    label: string;
+    color: string;
+    wordIcon: string;
   }[];
 }
 
@@ -52,6 +66,12 @@ const SettingProfileStyled = styled.div`
 const SettingTopStyled = styled.div`
   border-top: 1px solid rgba(120, 120, 120, 0.4);
 `;
+
+const ProfileWordsWrap = styled.div`
+  margin: 20px 0;
+  border-bottom: 1px dashed #ddd;
+`;
+
 // app interface
 const SettingBottomStyled = styled.div`
   border-top: 1px solid rgba(120, 120, 120, 0.4);
@@ -63,6 +83,7 @@ const AcrdWrapStyled = styled.div`
 `;
 
 const Setting: NextPage<SettingTypes> = () => {
+  const [wordCtrlByActivity, setWordCtrlByActivity] = useState(true);
   const [wordCtrlByState, setWordCtrlByState] = useState(false);
   const [wordCtrlByCate, setWordCtrlByCate] = useState(false);
 
@@ -82,13 +103,10 @@ const Setting: NextPage<SettingTypes> = () => {
       typo: "시스템스펙",
     },
   ]);
-  console.log(modalComponents);
 
   const dispatch = useDispatch();
-  // FIXME : 이벤트객체 any타입 수정
-  const modalOpenClick = (e: any) => {
-    // console.log(e.target.innerText);
-    switch (e.target.innerText) {
+  const modalOpenClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    switch (e.currentTarget.innerText) {
       case "공지사항":
         return dispatch(
           openModal({
@@ -122,6 +140,37 @@ const Setting: NextPage<SettingTypes> = () => {
     }
     return;
   };
+
+  const wordAcrdList: wordArcdListTypes[] = [
+    {
+      acrdTitle: "나의 활동 내역",
+      toggleFlag: wordCtrlByActivity,
+      toggleFunc: setWordCtrlByActivity,
+      acrdList: [
+        {
+          label: "아는단어",
+          color: "#aaa",
+          wordIcon: "know",
+        },
+        {
+          label: "모르는단어",
+          color: "#aaa",
+          wordIcon: "dontknow",
+        },
+        {
+          label: "즐겨찾는단어",
+          color: "#aaa",
+          wordIcon: "favorite",
+        },
+        {
+          label: "건너뛴단어",
+          color: "#aaa",
+          wordIcon: "skip",
+        },
+      ],
+    },
+  ];
+
   const objAcrdList: AcrdListTypes[] = [
     {
       acrdTitle: "상태별 노출 관리",
@@ -178,6 +227,31 @@ const Setting: NextPage<SettingTypes> = () => {
           <UserProfileComponent />
         </Anchor>
       </SettingProfileStyled>
+
+      {wordAcrdList.map((wordAcrd, index) => {
+        console.log(wordAcrd);
+        return (
+          <ProfileWordsWrap key={index}>
+            <ProfileWordTitleComponent
+              typo={wordAcrd.acrdTitle}
+              afterIcon={wordAcrd.toggleFlag ? "arr-up" : "arr-down"}
+              onClick={() => {
+                wordAcrd.toggleFunc((prev: boolean) => !prev);
+              }}
+            />
+
+            <ProfileWordComponent isOpened={wordAcrd.toggleFlag}>
+              {wordAcrd.acrdList.map((list, index) => (
+                <ProfileWordItemComponent
+                  typo={list.label}
+                  color={list.color}
+                  wordIcon={list.wordIcon}
+                />
+              ))}
+            </ProfileWordComponent>
+          </ProfileWordsWrap>
+        );
+      })}
 
       <SettingTopStyled>
         {objAcrdList.map((objAcrd, index) => (

@@ -16,6 +16,7 @@ interface ProfileWordTitleTypes extends styledInterface {
 
 const ProfileWordTitleList = styled.div`
   height: 40px;
+  padding : 0 8px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -26,6 +27,7 @@ const ProfileWordTitleList = styled.div`
 const ProfileWordTitleComponent: React.FC<ProfileWordTitleTypes> = (props) => {
   const { typo, afterIcon, onClick, color } = props;
   const setAfterIcon = () => {
+    // FIXME: 추후에 생성자함수로 공통적용
     switch (afterIcon) {
       case "arr-down":
         return (
@@ -34,7 +36,6 @@ const ProfileWordTitleComponent: React.FC<ProfileWordTitleTypes> = (props) => {
             iconWidth="16px"
             iconHeight="16px"
             svgSize="12px"
-            color="var(--color-point)"
           />
         );
       case "arr-up":
@@ -44,7 +45,6 @@ const ProfileWordTitleComponent: React.FC<ProfileWordTitleTypes> = (props) => {
             iconWidth="16px"
             iconHeight="16px"
             svgSize="12px"
-            color="var(--color-point)"
           />
         );
       default:
@@ -56,7 +56,7 @@ const ProfileWordTitleComponent: React.FC<ProfileWordTitleTypes> = (props) => {
     <ProfileWordTitleList onClick={onClick}>
       <TypoComponent
         fontSize="14px"
-        fontWeight="semi-bold"
+        fontWeight="regular"
         textAlign="left"
         color={color}
       >

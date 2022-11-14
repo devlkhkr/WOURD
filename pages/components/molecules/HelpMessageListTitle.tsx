@@ -5,13 +5,13 @@ import Icon from "../atoms/Icon";
 
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 
-interface NoticeListTitleTypes extends styledInterface {
+interface HelpMessageListTitleTypes extends styledInterface {
   titleText: string;
   date: string;
   afterIcon?: string;
 }
 
-const NoticeListTitleComponent = styled.div`
+const HelpMessageListTitleComponent = styled.div`
   cursor: pointer;
 `;
 
@@ -21,7 +21,7 @@ const ArrowIconWrap = styled.div`
   right: 12px;
 `;
 
-const NoticeListTitle: React.FC<NoticeListTitleTypes> = ({
+const HelpmessageListTitle: React.FC<HelpMessageListTitleTypes> = ({
   titleText,
   date,
   afterIcon,
@@ -53,7 +53,7 @@ const NoticeListTitle: React.FC<NoticeListTitleTypes> = ({
   };
 
   return (
-    <NoticeListTitleComponent onClick={onClick}>
+    <HelpMessageListTitleComponent onClick={onClick}>
       <TypoComponent
         fontSize="16px"
         fontWeight="semi-bold"
@@ -72,8 +72,8 @@ const NoticeListTitle: React.FC<NoticeListTitleTypes> = ({
         {date}
       </TypoComponent>
       <ArrowIconWrap>{afterIcon && setAfterIcon()}</ArrowIconWrap>
-    </NoticeListTitleComponent>
+    </HelpMessageListTitleComponent>
   );
 };
 
-export default NoticeListTitle;
+export default HelpmessageListTitle;

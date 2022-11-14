@@ -7,6 +7,7 @@ interface ButtonWrapTypes extends styledInterface {
 
 const ButtonWrapsetStyled = styled.div<ButtonWrapTypes>`
   display: flex;
+  margin-top : 24px;
   button {
     flex: auto;
     & + button {
