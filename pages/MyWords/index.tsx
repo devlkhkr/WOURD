@@ -10,6 +10,7 @@ import CardMain, { ExposeWordTypes } from "pages/components/templates/CardMain";
 import { useSelector } from "react-redux";
 import { UserDataTypes } from "redux/slices/user";
 import wrapper from "redux/store";
+import { store } from "redux/store";
 
 interface MyWordsListTypes {
   user_id: string;
@@ -201,16 +202,18 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
 //     }
 // );
 
-export const getServerSideProps = wrapper.getServerSideProps(
-  (store) =>
-    async ({ params }) => {
-      console.log("store:::::", store);
-      console.log("serverSideStore:::::", store.getState());
-      // store.dispatch();
-      // console.log("rootReducer:::::", rootReducer);
-      return { props: {} };
-    }
-);
+// export const getServerSideProps = wrapper.getServerSideProps(
+//   (store) =>
+//     async ({ params }) => {
+//       console.log("store:::::", store);
+//       console.log("serverSideStore:::::", store.getState());
+//       // store.dispatch();
+//       // console.log("rootReducer:::::", rootReducer);
+//       return { props: {} };
+//     }
+// );
+
+console.log(store.getState());
 
 // store.getState().user.length === 1
 //   ? (() => {

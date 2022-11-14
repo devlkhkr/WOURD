@@ -15,8 +15,11 @@ const rootReducer = (
 ): CombinedState<IState> => {
   switch (action.type) {
     case HYDRATE:
-      console.log("payload:::::", action.payload);
-      return action.payload;
+      // console.log("payload:::::", action.payload);
+      return {
+        ...state,
+        ...action.payload,
+      };
     default: {
       const combinedReducer = combineReducers({
         user: userReducer,

@@ -246,6 +246,7 @@ const Setting: NextPage<SettingTypes> = () => {
                   typo={list.label}
                   color={list.color}
                   wordIcon={list.wordIcon}
+                  key={index}
                 />
               ))}
             </ProfileWordComponent>
