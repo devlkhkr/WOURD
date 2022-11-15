@@ -15,6 +15,9 @@ import { useDispatch } from "react-redux";
 import { UserDataTypes, setUserData } from "redux/slices/user";
 import { NextPage } from "next";
 
+import { store } from "redux/store";
+console.log("loginTsxStore:::", store);
+
 interface LoginTypes {
   setIsTokenLive: Function;
 }
@@ -72,7 +75,7 @@ const LoginComponent: NextPage<LoginTypes> = ({ setIsTokenLive }) => {
         }
       );
       if (res.data.loginFlag === true) {
-        dispatch(
+        store.dispatch(
           setUserData({
             id: res.data.userInfo.id,
             nickName: res.data.userInfo.nickName,

@@ -86,6 +86,7 @@ const MyWordListWrapStyled = styled.div`
 const MyWordListStyled = styled.div``;
 
 const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
+  console.log("dataMyWordList:::", dataMyWordList);
   // const userData = useSelector<ReducerType, UserData[]>((state) => state.user);
   const router = useRouter();
   const addNewWordClick = () => {
@@ -202,27 +203,37 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
 //     }
 // );
 
-// export const getServerSideProps = wrapper.getServerSideProps(
-//   (store) =>
-//     async ({ params }) => {
-//       console.log("store:::::", store);
-//       console.log("serverSideStore:::::", store.getState());
-//       // store.dispatch();
-//       // console.log("rootReducer:::::", rootReducer);
-//       return { props: {} };
-//     }
-// );
+// console.log("outsideStore:::", store.getState());
 
-console.log(store.getState());
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) =>
+    async ({ params }) => {
+      // store = clientStore;
+      // console.log("serverSideStore:::::", store.getState());
+      // const res = await axios.post(
+      //   "http://localhost:3000" + "/api/myword/list",
+      //   {
+      //     params: {
+      //       userId: clientUserId,
+      //     },
+      //   }
+      // );
+      return {
+        props: {
+          // dataMyWordList: res.data,
+        },
+      };
+    }
+);
 
-// store.getState().user.length === 1
+// store.getState().user.id != ""
 //   ? (() => {
 //       MyWordsComponent.getInitialProps = async () => {
 //         const res = await axios.post(
 //           "http://localhost:3000" + "/api/myword/list",
 //           {
 //             params: {
-//               userId: store.getState().user[0].id,
+//               userId: store.getState().user.id,
 //             },
 //           }
 //         );
