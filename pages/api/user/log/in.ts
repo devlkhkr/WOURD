@@ -1,7 +1,8 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import wrapper from "redux/store";
-// import { setUserData, UserDataTypes } from "redux/slices/user";
+import { store } from "redux/store";
+console.log("apiStore:::", store);
+import { setUserData, UserDataTypes } from "redux/slices/user";
 // import { useState } from "react";
 const db = require("../../../../common/config/db");
 
@@ -19,6 +20,14 @@ export default function Login(req: NextApiRequest, res: NextApiResponse) {
     function (err: any, data: any) {
       if (!err && data.length === 1) {
         if (req.body.loginUserData.pw == data[0].user_password) {
+          store.dispatch(
+            setUserData({
+              id: data[0].user_id,
+              nickName: data[0].user_nickname,
+              prfImg: data[0].user_prf_img,
+              lastLogin: data[0].log_date,
+            } as UserDataTypes)
+          );
           res.send({
             loginFlag: true,
             userInfo: {
