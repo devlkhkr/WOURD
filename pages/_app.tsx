@@ -18,8 +18,8 @@ import wrapper from "redux/store";
 import GlobalModal from "pages/components/templates/GlobalModal";
 
 import { Provider } from "react-redux";
-import { SessionProvider } from "next-auth/react";
 import { Session } from "next-auth";
+import { SessionProvider, useSession, getSession } from "next-auth/react";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -57,7 +57,7 @@ function MyApp({
   const { store, props } = wrapper.useWrappedStore(rest);
   const router = useRouter();
   const [loadingStart, setLoadingStart] = useState(false);
-  const [isTokenLive, setIsTokenLive] = useState(false);
+
   useEffect(() => {
     const routesLoadStart = () => {
       setLoadingStart(true);

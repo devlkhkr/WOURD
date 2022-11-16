@@ -13,6 +13,10 @@ import { useDispatch } from "react-redux";
 import ProfileWordTitleComponent from "pages/components/molecules/ProfileWordTitle";
 import ProfileWordComponent from "pages/components/molecules/ProfileWord";
 import ProfileWordItemComponent from "pages/components/molecules/ProfileWordItem";
+
+import { signOut } from "next-auth/react";
+import { useRouter } from "next/router";
+
 interface SettingTypes extends styledInterface {
   typo: string;
   afterIcon?: string;
@@ -86,6 +90,7 @@ const Setting: NextPage<SettingTypes> = () => {
   const [wordCtrlByActivity, setWordCtrlByActivity] = useState(true);
   const [wordCtrlByState, setWordCtrlByState] = useState(false);
   const [wordCtrlByCate, setWordCtrlByCate] = useState(false);
+  const router = useRouter();
 
   const [modalComponents, setModalComponents] = useState<
     modalComponentsTypes[]
@@ -288,7 +293,16 @@ const Setting: NextPage<SettingTypes> = () => {
         ))}
 
         <SettingListComponent typo="버전정보" rightTypo="1.0.0" />
-        <SettingListComponent typo="로그아웃" color="var(--color-red)" />
+        <SettingListComponent
+          typo="로그아웃"
+          color="var(--color-red)"
+          onClick={() => {
+            signOut({
+              redirect: true,
+              callbackUrl: "/Login",
+            });
+          }}
+        />
       </SettingBottomStyled>
     </SettingWrap>
   );
