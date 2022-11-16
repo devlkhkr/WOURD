@@ -75,14 +75,14 @@ const LoginComponent: NextPage<LoginTypes> = ({ setIsTokenLive }) => {
         }
       );
       if (res.data.loginFlag === true) {
-        // store.dispatch(
-        //   setUserData({
-        //     id: res.data.userInfo.id,
-        //     nickName: res.data.userInfo.nickName,
-        //     prfImg: res.data.userInfo.prfImg,
-        //     lastLogin: res.data.userInfo.lastLogin,
-        //   } as UserDataTypes)
-        // );
+        store.dispatch(
+          setUserData({
+            id: res.data.userInfo.id,
+            nickName: res.data.userInfo.nickName,
+            prfImg: res.data.userInfo.prfImg,
+            lastLogin: res.data.userInfo.lastLogin,
+          } as UserDataTypes)
+        );
         insertLoginData(loginUserId);
         setIsTokenLive(res.data.loginFlag);
       } else {

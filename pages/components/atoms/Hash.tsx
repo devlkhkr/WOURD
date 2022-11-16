@@ -39,8 +39,8 @@ const Hash: HashTypes = {
       loginUserId: loginUserId,
     });
     if (res.data.dupLeng <= 0) {
-      alert("존재하지 않는 아이디 입니다.");
-      return false;
+      // alert("존재하지 않는 아이디 입니다.");
+      return null;
     } else if (res.data.dupLeng === 1) {
       const salt = res.data.salt;
       return new Promise(async (resolve, reject) => {

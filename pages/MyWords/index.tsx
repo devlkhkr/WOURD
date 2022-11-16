@@ -11,6 +11,8 @@ import { useSelector } from "react-redux";
 import { UserDataTypes } from "redux/slices/user";
 import wrapper from "redux/store";
 import { store } from "redux/store";
+import { unstable_getServerSession } from "next-auth";
+import { authOptions } from "pages/api/auth/[...nextauth]";
 
 interface MyWordsListTypes {
   user_id: string;
@@ -86,7 +88,6 @@ const MyWordListWrapStyled = styled.div`
 const MyWordListStyled = styled.div``;
 
 const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
-  console.log("dataMyWordList:::", dataMyWordList);
   // const userData = useSelector<ReducerType, UserData[]>((state) => state.user);
   const router = useRouter();
   const addNewWordClick = () => {
@@ -154,7 +155,7 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
           height="40px"
           onClick={addNewWordClick}
         ></Button>
-        {/* {myWordList.map((objMyWord: MyWordsListTypes, index: number) => (
+        {myWordList.map((objMyWord: MyWordsListTypes, index: number) => (
           <MyWordListWrapStyled
             key={index}
             className={`state_${objMyWord.word_state}`}
@@ -188,60 +189,29 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
               {objMyWord.word_desc}
             </Typo>
           </MyWordListWrapStyled>
-        ))} */}
+        ))}
       </MyWordListStyled>
     </>
   );
 };
 
-// export const getServerSideProps = wrapper.getServerSideProps(
-//   (store) =>
-//     async ({ params }) => {
-//       const data = "123";
-//       // console.log("getState:::::");
-//       return { props: { data } };
-//     }
-// );
+export async function getServerSideProps(context: any) {
+  const session = await unstable_getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  );
 
-// console.log("outsideStore:::", store.getState());
-
-export const getServerSideProps = wrapper.getServerSideProps(
-  (store) =>
-    async ({ params }) => {
-      // store = clientStore;
-      // console.log("serverSideStore:::::", store.getState());
-      // const res = await axios.post(
-      //   "http://localhost:3000" + "/api/myword/list",
-      //   {
-      //     params: {
-      //       userId: clientUserId,
-      //     },
-      //   }
-      // );
-      return {
-        props: {
-          // dataMyWordList: res.data,
-        },
-      };
-    }
-);
-
-// store.getState().user.id != ""
-//   ? (() => {
-//       MyWordsComponent.getInitialProps = async () => {
-//         const res = await axios.post(
-//           "http://localhost:3000" + "/api/myword/list",
-//           {
-//             params: {
-//               userId: store.getState().user.id,
-//             },
-//           }
-//         );
-//         return {
-//           dataMyWordList: res.data,
-//         };
-//       };
-//     })()
-//   : void 0;
+  const res = await axios.post("http://localhost:3000" + "/api/myword/list", {
+    params: {
+      userId: session?.user?.email,
+    },
+  });
+  return {
+    props: {
+      dataMyWordList: res.data,
+    },
+  };
+}
 
 export default MyWordsComponent;

@@ -1,36 +1,18 @@
-import type { NextPage } from "next";
-import { useEffect, useState } from "react";
-
-const MyWordsComponent: NextPage = () => {
-  const [info, setInfo] = useState(Array<any>);
-  function test() {
-    fetch("http://localhost:3000/api/test", {
-      method: "POST",
-      mode: "cors",
-      cache: "no-cache",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        parm1: "123",
-        parm2: "abc",
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setInfo(data);
-      });
+import { useSession, signIn, signOut } from "next-auth/react";
+export default function Component() {
+  const { data: session } = useSession();
+  if (session) {
+    return (
+      <>
+        Signed in as {session?.user?.email} <br />
+        <button onClick={() => signOut()}>Sign out</button>
+      </>
+    );
   }
-  useEffect(() => {
-    test();
-  }, []);
   return (
-    <div>
-      {info.map((i, index) => (
-        <div key={index}>{i.user_id}</div>
-      ))}
-    </div>
+    <>
+      Not signed in <br />
+      <button onClick={() => signIn()}>Sign in</button>
+    </>
   );
-};
-
-export default MyWordsComponent;
+}

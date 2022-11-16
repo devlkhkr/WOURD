@@ -22,11 +22,6 @@ const Home: NextPage = ({ dataWordList }: any) => {
   );
 };
 
-// export async function getServerSideProps() {
-//   const res = await axios.get("http://localhost:3000" + "/api/word/list");
-//   return { props: { dataWordList: res.data } };
-// }
-
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ params }) => {

@@ -68,14 +68,14 @@ const SettingTopStyled = styled.div`
 `;
 
 const ProfileWordsWrap = styled.div`
-  margin: 20px 0;
+  margin-bottom: 24px;
   border-bottom: 1px dashed #ddd;
 `;
 
 // app interface
 const SettingBottomStyled = styled.div`
   border-top: 1px solid rgba(120, 120, 120, 0.4);
-  margin-top: 32px;
+  margin-top: 24px;
 `;
 
 const AcrdWrapStyled = styled.div`
