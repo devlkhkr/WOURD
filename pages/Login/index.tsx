@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import Logo from "pages/components/atoms/Logo";
 import InputText from "pages/components/atoms/InputText";
@@ -16,7 +16,7 @@ import { UserDataTypes, setUserData } from "redux/slices/user";
 import { NextPage } from "next";
 
 import { store } from "redux/store";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 
 interface LoginTypes {
@@ -49,6 +49,15 @@ const LoginComponent: NextPage<LoginTypes> = ({ isAuth }) => {
   const idInput: any = useRef();
   const pwInput: any = useRef();
   const router = useRouter();
+  const session = useSession();
+
+  useEffect(() => {
+    console.log(session.status);
+    if (session.status === "authenticated") {
+      router.push("/");
+    }
+  }, [session]);
+
   const startLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (loginUserId.length <= 0) {
@@ -71,7 +80,7 @@ const LoginComponent: NextPage<LoginTypes> = ({ isAuth }) => {
             if (res.error === "CredentialsSignin") {
               alert("아이디 또는 비밀번호를 확인하세요.");
             } else if (res.status === 200 && res.error === null) {
-              router.push("/");
+              console.log("로그인 성공");
             } else {
               console.log("예외오류:::", res);
             }
