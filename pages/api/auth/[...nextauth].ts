@@ -23,7 +23,7 @@ export const authOptions = {
         // Add logic here to look up the user from the credentials supplied
         console.log("authorize:::", credentials);
         if (credentials?.loginUserId && credentials?.hashedPw) {
-          const user = startLogin(
+          const user = startAuthorize(
             credentials.loginUserId,
             credentials.hashedPw
           ).then((userInfo: UserDataTypes | undefined | null) => {
@@ -80,7 +80,7 @@ const insertLoginData = async (userId: string) => {
   console.log(`로그인 기록 Insert : ${logInsertResult}`);
 };
 
-const startLogin = async (
+const startAuthorize = async (
   userId: string | undefined,
   hashedPw: string | boolean
 ) => {
