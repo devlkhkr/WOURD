@@ -9,7 +9,7 @@ export const authOptions = {
   providers: [
     CredentialsProvider({
       id: "credentials",
-      type: 'credentials',
+      type: "credentials",
       name: "Email",
       credentials: {
         username: {
@@ -19,26 +19,27 @@ export const authOptions = {
         },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials:any, req) {
+      async authorize(credentials: any, req) {
         // Add logic here to look up the user from the credentials supplied
-        console.log("authorize:::", credentials)
+        console.log("authorize:::", credentials);
         if (credentials?.loginUserId && credentials?.hashedPw) {
-          const user = startLogin(credentials.loginUserId, credentials.hashedPw).then(
-            (userInfo: UserDataTypes | undefined | null) => {
-              if (userInfo != null) {
-                const userSessionData = {
-                  id: userInfo.id,
-                  name: userInfo.nickName,
-                  email: userInfo.id,
-                  image: userInfo.prfImg,
-                };
-                return userSessionData;
-              } else {
-                return null;
-              }
-              // Any object returned will be saved in `user` property of the JWT
+          const user = startLogin(
+            credentials.loginUserId,
+            credentials.hashedPw
+          ).then((userInfo: UserDataTypes | undefined | null) => {
+            if (userInfo != null) {
+              const userSessionData = {
+                id: userInfo.id,
+                name: userInfo.nickName,
+                email: userInfo.id,
+                image: userInfo.prfImg,
+              };
+              return userSessionData;
+            } else {
+              return null;
             }
-          );
+            // Any object returned will be saved in `user` property of the JWT
+          });
           return user;
           // Any object returned will be saved in `user` property of the JWT
         } else {
@@ -49,10 +50,13 @@ export const authOptions = {
     }),
   ],
   pages: {
-    signIn: '/Login',
+    signIn: "/Login",
   },
   secret: process.env.SECRET,
   callbacks: {
+    async redirect({ url, baseUrl }: any) {
+      return baseUrl;
+    },
     async jwt({ token, user, account, profile, isNewUser }: any) {
       return token;
     },
@@ -62,11 +66,24 @@ export const authOptions = {
   },
 };
 
+const insertLoginData = async (userId: string) => {
+  const res = await axios.post(
+    "http://localhost:3000" + "/api/user/log/history",
+    {
+      loginUserData: {
+        logUserId: userId,
+        logAction: 1,
+      },
+    }
+  );
+  let logInsertResult = res.data.affectedRows === 1 ? "true" : "false";
+  console.log(`로그인 기록 Insert : ${logInsertResult}`);
+};
+
 const startLogin = async (
   userId: string | undefined,
   hashedPw: string | boolean
 ) => {
-  console.log("Here ! ::: ", userId, hashedPw)
   const res = await axios.post("http://localhost:3000" + "/api/user/log/in", {
     loginUserData: {
       id: userId,
@@ -74,15 +91,14 @@ const startLogin = async (
     },
   });
   if (res.data.loginFlag === true) {
-    console.log("succeess")
+    console.log("Login Successfully");
+    insertLoginData(res.data.userInfo.id);
     return {
       id: res.data.userInfo.id,
       nickName: res.data.userInfo.nickName,
       prfImg: res.data.userInfo.prfImg,
       lastLogin: res.data.userInfo.lastLogin,
     } as UserDataTypes;
-    // insertLoginData(loginUserId);
-    // setIsTokenLive(res.data.loginFlag);
   } else {
     return null;
   }

@@ -19,7 +19,12 @@ import GlobalModal from "pages/components/templates/GlobalModal";
 
 import { Provider } from "react-redux";
 import { Session } from "next-auth";
-import { SessionProvider, useSession, getSession } from "next-auth/react";
+import {
+  SessionProvider,
+  useSession,
+  getSession,
+  signIn,
+} from "next-auth/react";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -77,6 +82,23 @@ function MyApp({
     };
   }, []);
 
+  function Auth({ children }: any) {
+    const { data: session, status } = useSession();
+    const isUser = !!session?.user;
+    useEffect(() => {
+      if (status === "loading") return; // Do nothing while loading
+      if (!isUser) signIn(); // If not authenticated, force log in
+    }, [isUser, status]);
+
+    if (isUser) {
+      return children;
+    }
+
+    // Session is being fetched, or no user.
+    // If no user, useEffect() will redirect.
+    return <Loading />;
+  }
+
   return (
     <SessionProvider session={pageProps.session}>
       <Provider store={store}>
@@ -101,9 +123,14 @@ function MyApp({
             <Header />
             {/* content */}
             <ComponentWrap className={router.pathname == "/" ? "isMain" : ""}>
-              <Component {...pageProps} />
+              {Component.defaultProps?.isAuth === true ? (
+                <Component {...pageProps} />
+              ) : (
+                <Auth>
+                  <Component {...pageProps} />
+                </Auth>
+              )}
             </ComponentWrap>
-
             <Footer />
           </Wrap>
         </Wrapper>

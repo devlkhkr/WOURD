@@ -234,7 +234,6 @@ const Setting: NextPage<SettingTypes> = () => {
       </SettingProfileStyled>
 
       {wordAcrdList.map((wordAcrd, index) => {
-        console.log(wordAcrd);
         return (
           <ProfileWordsWrap key={index}>
             <ProfileWordTitleComponent

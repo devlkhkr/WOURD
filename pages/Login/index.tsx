@@ -19,7 +19,9 @@ import { store } from "redux/store";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 
-interface LoginTypes {}
+interface LoginTypes {
+  isAuth?: boolean;
+}
 
 const LoginStyled = styled.form<LoginTypes>`
   position: fixed;
@@ -43,11 +45,10 @@ const LoginStyled = styled.form<LoginTypes>`
   }
 `;
 
-const LoginComponent: NextPage<LoginTypes> = ({}) => {
+const LoginComponent: NextPage<LoginTypes> = ({ isAuth }) => {
   const idInput: any = useRef();
   const pwInput: any = useRef();
   const router = useRouter();
-
   const startLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (loginUserId.length <= 0) {
@@ -148,6 +149,8 @@ const LoginComponent: NextPage<LoginTypes> = ({}) => {
   );
 };
 
-LoginComponent.defaultProps = {};
+LoginComponent.defaultProps = {
+  isAuth: true,
+};
 
 export default LoginComponent;
