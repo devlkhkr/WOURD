@@ -9,7 +9,7 @@ interface TypoType extends styledInterface {
 
 const TypoStyled = styled.div<TypoType>`
   font-size: ${(props) => props.fontSize || "14px"};
-  font-weight: ${(props) => `var(--weight-${props.fontWeight})`};
+  font-weight: ${(props) => `var(--weight-${props.fontWeight || "regular"})`};
   line-height: ${(props) => props.lineHeight || "1.2"};
   color: ${(props) => props.color || "inherit"};
   text-align: ${(props) => props.textAlign || "center"};

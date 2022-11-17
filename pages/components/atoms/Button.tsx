@@ -10,6 +10,7 @@ const ButtonStyled = styled.button<ButtonTypes>`
   width: ${(props) => props.width || "100%"};
   height: ${(props) => props.height};
   background-color: ${(props) => props.backgroundColor};
+  margin-top: ${(props) => props.marginTop};
   color: ${(props) => props.color};
   border-color: transparent;
   border-radius: 4px;
@@ -23,6 +24,7 @@ const ButtonCompontent: React.FC<ButtonTypes> = ({
   color,
   width,
   height,
+  marginTop,
   className,
   onClick,
   fontSize,
@@ -38,6 +40,7 @@ const ButtonCompontent: React.FC<ButtonTypes> = ({
       color={color}
       width={width}
       height={height}
+      marginTop={marginTop}
       className={className}
       onClick={onClick}
       desc={desc}
