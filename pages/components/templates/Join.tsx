@@ -22,7 +22,7 @@ import passwordValidator from "password-validator";
 import Hash from "../atoms/Hash";
 interface JoinTypes {
   setJoinPageOpened: Function;
-  startLogin: Function;
+  signIn: Function;
   insertLoginData: Function;
 }
 
@@ -75,7 +75,7 @@ const JoinStyled = styled.div<JoinTypes>`
 
 const JoinComponent: React.FC<JoinTypes> = ({
   setJoinPageOpened,
-  startLogin,
+  signIn,
   insertLoginData,
 }) => {
   /* S : DOM Element 동작 State Flag */
@@ -277,7 +277,12 @@ const JoinComponent: React.FC<JoinTypes> = ({
       ? (() => {
           insertLoginData(joinUserId);
           confirm("회원가입이 완료되었습니다.\n즉시 로그인하시겠습니까?")
-            ? startLogin(joinUserId, hashedPw)
+            ? // ? signIn(joinUserId, hashedPw)
+              signIn("credentials", {
+                joinUserId,
+                hashedPw,
+                redirect: false,
+              })
             : void 0;
           setJoinPageOpened(false);
         })()
@@ -290,7 +295,7 @@ const JoinComponent: React.FC<JoinTypes> = ({
     <>
       <JoinStyled
         setJoinPageOpened={setJoinPageOpened}
-        startLogin={startLogin}
+        signIn={signIn}
         insertLoginData={insertLoginData}
       >
         <Form>

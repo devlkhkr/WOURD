@@ -113,7 +113,7 @@ const LoginComponent: NextPage<LoginTypes> = ({ isAuth }) => {
       {joinPageOpened ? (
         <Join
           setJoinPageOpened={setJoinPageOpened}
-          startLogin={startLogin}
+          signIn={signIn}
           insertLoginData={insertLoginData}
         />
       ) : (
