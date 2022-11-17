@@ -7,7 +7,7 @@ import ProfileListComponent from "pages/components/molecules/SettingProfileList"
 
 import { useSelector } from "react-redux";
 import { ReducerType } from "redux/rootReducer";
-import { UserData } from "redux/slices/user";
+import { UserDataTypes } from "redux/slices/user";
 import ButtonCompontent from "pages/components/atoms/Button";
 import ButtonWrapComponent from "pages/components/molecules/ButtonWrap";
 import { useRouter } from "next/router";
@@ -34,8 +34,12 @@ const SettingProfileUser = styled.div`
 const ProfileListWrap = styled.div``;
 
 const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
-  const userData = useSelector<ReducerType, UserData[]>(state => state.user);
-  
+  const userData = useSelector<ReducerType, UserDataTypes>(
+    (state) => state.user
+  );
+
+  const [wordActivity, setWordActivity] = useState(false);
+
   const router = useRouter();
   const cancelBtnClick = () => {
     router.push("/Setting");
@@ -45,13 +49,12 @@ const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
   const modifyImg = () => {
     console.log("이미지 수정 함수");
   };
-  
 
   return (
     <SettingProfileWrap>
       <SettingProfileUser>
         <ImgComponent
-          src={userData[0].prfImg}
+          src={userData.prfImg}
           objectFit="cover"
           marginBottom="16px"
           width="80px"
@@ -70,11 +73,8 @@ const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
       </SettingProfileUser>
 
       <ProfileListWrap>
-        <ProfileListComponent typo="이름" userInfo={`${userData[0].id}`} />
-        <ProfileListComponent
-          typo="닉네임"
-          userInfo={`${userData[0].nickName}`}
-        />
+        <ProfileListComponent typo="이름" userInfo={`${userData.id}`} />
+        <ProfileListComponent typo="닉네임" userInfo={`${userData.nickName}`} />
         <ProfileListComponent typo="소개글" />
       </ProfileListWrap>
 

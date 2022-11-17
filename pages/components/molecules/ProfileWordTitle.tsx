@@ -4,10 +4,7 @@ import styledInterface from "../Intefaces/styledComponent";
 import Icon from "../atoms/Icon";
 import TypoComponent from "../atoms/Typo";
 
-import {
-  faChevronDown,
-  faChevronUp,
-} from "@fortawesome/free-solid-svg-icons";
+import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 
 interface ProfileWordTitleTypes extends styledInterface {
   typo: string;
@@ -16,7 +13,7 @@ interface ProfileWordTitleTypes extends styledInterface {
 
 const ProfileWordTitleList = styled.div`
   height: 40px;
-  padding : 0 8px;
+  padding: 0 8px;
   display: flex;
   align-items: center;
   justify-content: space-between;

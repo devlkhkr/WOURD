@@ -9,7 +9,6 @@ import Notice from "../organisms/Notice";
 import SystemSpec from "../organisms/SystemSpec";
 import { selectModal, openModal, closeModal } from "redux/slices/modal";
 
-
 interface ModalTypes {
   type: string;
   component: any;
@@ -57,7 +56,7 @@ const ModalWrapStyled = styled.div`
   max-width: 720px;
   height: 100%;
   padding: 20px;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(0, 0, 0, 0.2);
   z-index: 1;
   animation: popup 0.3s linear;
 `;
@@ -81,6 +80,7 @@ const ModalCardStyled = styled.div`
   background-color: #fff;
   border-radius: 16px;
   overflow: hidden;
+  box-shadow: 0px 4px 8px 4px rgba(0, 0, 0, 0.1);
 `;
 
 const ModalDetailsStyled = styled.div`

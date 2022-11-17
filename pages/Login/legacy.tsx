@@ -16,11 +16,9 @@ import { UserDataTypes, setUserData } from "redux/slices/user";
 import { NextPage } from "next";
 
 import { store } from "redux/store";
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/router";
 
 interface LoginTypes {
-  isAuth?: boolean;
+  setIsTokenLive: Function;
 }
 
 const LoginStyled = styled.form<LoginTypes>`
@@ -45,39 +43,50 @@ const LoginStyled = styled.form<LoginTypes>`
   }
 `;
 
-const LoginComponent: NextPage<LoginTypes> = ({ isAuth }) => {
+const LoginComponent: NextPage<LoginTypes> = ({ setIsTokenLive }) => {
+  const dispatch = useDispatch();
   const idInput: any = useRef();
   const pwInput: any = useRef();
-  const router = useRouter();
-  const startLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const loginButtonClick = async () => {
     if (loginUserId.length <= 0) {
       alert("아이디를 입력하세요");
       idInput.current.focus();
-      return;
     } else if (loginUserPw.length <= 0) {
       alert("비밀번호를 입력하세요");
       pwInput.current.focus();
-      return;
     } else {
       Hash.makePasswordHashed(loginUserId, loginUserPw).then(
-        async (hashedPw: string | boolean) => {
-          if (hashedPw) {
-            const res: any = await signIn("credentials", {
-              loginUserId,
-              hashedPw,
-              redirect: false,
-            });
-            if (res.error === "CredentialsSignin") {
-              alert("아이디 또는 비밀번호를 확인하세요.");
-            } else if (res.status === 200 && res.error === null) {
-              router.push("/");
-            } else {
-              console.log("예외오류:::", res);
-            }
-          }
+        (hashedPw: string | boolean) => {
+          startLogin(loginUserId, hashedPw);
         }
       );
+    }
+  };
+  const startLogin = async (userId: string, hashedPw: string | boolean) => {
+    if (hashedPw) {
+      const res = await axios.post(
+        "http://localhost:3000" + "/api/user/log/in",
+        {
+          loginUserData: {
+            id: userId,
+            pw: hashedPw,
+          },
+        }
+      );
+      if (res.data.loginFlag === true) {
+        store.dispatch(
+          setUserData({
+            id: res.data.userInfo.id,
+            nickName: res.data.userInfo.nickName,
+            prfImg: res.data.userInfo.prfImg,
+            lastLogin: res.data.userInfo.lastLogin,
+          } as UserDataTypes)
+        );
+        insertLoginData(loginUserId);
+        setIsTokenLive(res.data.loginFlag);
+      } else {
+        alert(res.data);
+      }
     }
   };
 
@@ -110,7 +119,7 @@ const LoginComponent: NextPage<LoginTypes> = ({ isAuth }) => {
       ) : (
         <></>
       )}
-      <LoginStyled onSubmit={startLogin}>
+      <LoginStyled setIsTokenLive={setIsTokenLive}>
         <Logo mainColor="var(--color-point)" subColor="#231815" />
         <Fieldset>
           <InputText
@@ -130,7 +139,7 @@ const LoginComponent: NextPage<LoginTypes> = ({ isAuth }) => {
             reference={pwInput}
           />
           <Button
-            type="submit"
+            onClick={loginButtonClick}
             desc="로그인"
             height="48px"
             color="#fff"
@@ -149,8 +158,6 @@ const LoginComponent: NextPage<LoginTypes> = ({ isAuth }) => {
   );
 };
 
-LoginComponent.defaultProps = {
-  isAuth: true,
-};
+LoginComponent.defaultProps = {};
 
 export default LoginComponent;

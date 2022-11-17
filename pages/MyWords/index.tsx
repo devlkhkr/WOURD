@@ -8,9 +8,11 @@ import axios from "axios";
 import Typo from "pages/components/atoms/Typo";
 import CardMain, { ExposeWordTypes } from "pages/components/templates/CardMain";
 import { useSelector } from "react-redux";
-import { ReducerType } from "redux/rootReducer";
-import { UserData } from "redux/slices/user";
-import store from "redux/store";
+import { UserDataTypes } from "redux/slices/user";
+import wrapper from "redux/store";
+import { store } from "redux/store";
+import { unstable_getServerSession } from "next-auth";
+import { authOptions } from "pages/api/auth/[...nextauth]";
 
 interface MyWordsListTypes {
   user_id: string;
@@ -193,22 +195,23 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
   );
 };
 
-store.getState().user.length === 1
-  ? (() => {
-      MyWordsComponent.getInitialProps = async () => {
-        const res = await axios.post(
-          "http://localhost:3000" + "/api/myword/list",
-          {
-            params: {
-              userId: store.getState().user[0].id,
-            },
-          }
-        );
-        return {
-          dataMyWordList: res.data,
-        };
-      };
-    })()
-  : void 0;
+export async function getServerSideProps(context: any) {
+  const session = await unstable_getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  );
+
+  const res = await axios.post("http://localhost:3000" + "/api/myword/list", {
+    params: {
+      userId: session?.user?.email,
+    },
+  });
+  return {
+    props: {
+      dataMyWordList: res.data,
+    },
+  };
+}
 
 export default MyWordsComponent;

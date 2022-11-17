@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import styledInterface from "../Intefaces/styledComponent"
+import styledInterface from "../Intefaces/styledComponent";
 interface ButtonTypes extends styledInterface {
   disabled?: boolean;
+  type?: "button" | "submit" | "reset";
 }
 
 const ButtonStyled = styled.button<ButtonTypes>`
@@ -26,12 +27,13 @@ const ButtonCompontent: React.FC<ButtonTypes> = ({
   onClick,
   fontSize,
   reference,
-  disabled
+  disabled,
+  type,
 }) => {
   return (
     <ButtonStyled
       id={id}
-      type="button"
+      type={type || "button"}
       backgroundColor={backgroundColor}
       color={color}
       width={width}

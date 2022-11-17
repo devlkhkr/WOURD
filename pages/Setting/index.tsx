@@ -13,6 +13,10 @@ import { useDispatch } from "react-redux";
 import ProfileWordTitleComponent from "pages/components/molecules/ProfileWordTitle";
 import ProfileWordComponent from "pages/components/molecules/ProfileWord";
 import ProfileWordItemComponent from "pages/components/molecules/ProfileWordItem";
+
+import { signOut } from "next-auth/react";
+import { useRouter } from "next/router";
+
 interface SettingTypes extends styledInterface {
   typo: string;
   afterIcon?: string;
@@ -68,14 +72,14 @@ const SettingTopStyled = styled.div`
 `;
 
 const ProfileWordsWrap = styled.div`
-  margin: 20px 0;
+  margin-bottom: 24px;
   border-bottom: 1px dashed #ddd;
 `;
 
 // app interface
 const SettingBottomStyled = styled.div`
   border-top: 1px solid rgba(120, 120, 120, 0.4);
-  margin-top: 32px;
+  margin-top: 24px;
 `;
 
 const AcrdWrapStyled = styled.div`
@@ -86,6 +90,7 @@ const Setting: NextPage<SettingTypes> = () => {
   const [wordCtrlByActivity, setWordCtrlByActivity] = useState(true);
   const [wordCtrlByState, setWordCtrlByState] = useState(false);
   const [wordCtrlByCate, setWordCtrlByCate] = useState(false);
+  const router = useRouter();
 
   const [modalComponents, setModalComponents] = useState<
     modalComponentsTypes[]
@@ -229,7 +234,6 @@ const Setting: NextPage<SettingTypes> = () => {
       </SettingProfileStyled>
 
       {wordAcrdList.map((wordAcrd, index) => {
-        console.log(wordAcrd);
         return (
           <ProfileWordsWrap key={index}>
             <ProfileWordTitleComponent
@@ -246,6 +250,7 @@ const Setting: NextPage<SettingTypes> = () => {
                   typo={list.label}
                   color={list.color}
                   wordIcon={list.wordIcon}
+                  key={index}
                 />
               ))}
             </ProfileWordComponent>
@@ -287,7 +292,16 @@ const Setting: NextPage<SettingTypes> = () => {
         ))}
 
         <SettingListComponent typo="버전정보" rightTypo="1.0.0" />
-        <SettingListComponent typo="로그아웃" color="var(--color-red)" />
+        <SettingListComponent
+          typo="로그아웃"
+          color="var(--color-red)"
+          onClick={() => {
+            signOut({
+              redirect: true,
+              callbackUrl: "/Login",
+            });
+          }}
+        />
       </SettingBottomStyled>
     </SettingWrap>
   );

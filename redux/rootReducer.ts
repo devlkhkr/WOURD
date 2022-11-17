@@ -1,13 +1,38 @@
-import { combineReducers } from "@reduxjs/toolkit";
-import user from './slices/user';
-import modal from './slices/modal';
+import { AnyAction, CombinedState, combineReducers } from "@reduxjs/toolkit";
+import { HYDRATE } from "next-redux-wrapper";
 
-// 만들어 놓은 리듀서들을 합친다.
-const reducer = combineReducers({
-  user,
-  modal
-});
+import userReducer, { UserDataTypes } from "redux/slices/user";
+import modalReducer, { ModalDataTypes } from "redux/slices/modal";
 
-// React에서 사용할 수 있도록 타입을 만들어 export 해준다.
-export type ReducerType = ReturnType<typeof reducer>;
-export default reducer;
+import { store } from "redux/store";
+
+export interface IState {
+  user: UserDataTypes;
+  modal: ModalDataTypes;
+}
+
+const rootReducer = (
+  state: IState,
+  action: AnyAction
+): CombinedState<IState> => {
+  switch (action.type) {
+    case HYDRATE:
+      let prevCliState = store.getState();
+      console.log("prevCliState:::", prevCliState);
+      const nextState: IState = {
+        user: prevCliState.user,
+        modal: prevCliState.modal,
+      };
+      return nextState;
+    default: {
+      const combinedReducer = combineReducers({
+        user: userReducer,
+        modal: modalReducer,
+      });
+      return combinedReducer(state, action);
+    }
+  }
+};
+
+export type ReducerType = ReturnType<typeof rootReducer>;
+export default rootReducer;

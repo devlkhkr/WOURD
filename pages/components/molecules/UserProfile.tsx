@@ -6,10 +6,11 @@ import TypoComponent from "../atoms/Typo";
 
 import { useSelector } from "react-redux";
 import { ReducerType } from "redux/rootReducer";
-import { UserData } from "redux/slices/user";
+import { UserDataTypes } from "redux/slices/user";
 
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import Icon from "../atoms/Icon";
+import { useSession } from "next-auth/react";
 
 interface UserProfileTypes extends styledInterface {
   username?: string;
@@ -37,59 +38,65 @@ const UserInfoStyled = styled.div<UserProfileTypes>`
 `;
 
 const UserProfileComponent: React.FC<UserProfileTypes> = ({}) => {
-  const userData = useSelector<ReducerType, UserData[]>((state) => state.user);
-  const getLastLoginPeriod = () => {
-    let stDate = new Date(userData[0].lastLogin);
-    let endDate = new Date();
-    let btMs = endDate.getTime() - stDate.getTime();
-    let btDay = classifyTimestamp(btMs);
-    return btDay;
-  };
+  const userData = useSession().data?.user;
 
-  const getPeriodType = (microSec: number) => {
-    const timeDiv: number[] = [1000, 60, 60, 24];
-    let result: string = "";
-    for (let type: number = timeDiv.length - 1; type > -1; type--) {
-      let divValue: number = 1;
-      for (let v = type; v > -1; v--) {
-        divValue *= timeDiv[v];
-      }
-      result = (microSec / divValue).toFixed();
-      // console.log(result);
-      if (result != "0") {
-        return { type, result };
-      }
-    }
-  };
+  // const getLastLoginPeriod = () => {
+  //   let stDate = new Date(userData.lastLogin);
+  //   let endDate = new Date();
+  //   let btMs = endDate.getTime() - stDate.getTime();
+  //   let btDay = classifyTimestamp(btMs);
+  //   return btDay;
+  // };
 
-  const classifyTimestamp = (ms: number) => {
-    let periodSuffix: string = "";
+  // const getPeriodType = (microSec: number) => {
+  //   const timeDiv: number[] = [1000, 60, 60, 24];
+  //   let result: string = "";
+  //   for (let type: number = timeDiv.length - 1; type > -1; type--) {
+  //     let divValue: number = 1;
+  //     for (let v = type; v > -1; v--) {
+  //       divValue *= timeDiv[v];
+  //     }
+  //     result = (microSec / divValue).toFixed();
+  //     // console.log(result);
+  //     if (result != "0") {
+  //       return { type, result };
+  //     }
+  //   }
+  // };
 
-    let lastLoginPeriod: PeriodTypes = getPeriodType(ms)!;
+  // const classifyTimestamp = (ms: number) => {
+  //   let periodSuffix: string = "";
 
-    switch (lastLoginPeriod.type) {
-      case 0:
-        periodSuffix = "초";
-        break;
-      case 1:
-        periodSuffix = "분";
-        break;
-      case 2:
-        periodSuffix = "시간";
-        break;
-      case 3:
-        periodSuffix = "일";
-        break;
-    }
+  //   let lastLoginPeriod: PeriodTypes = getPeriodType(ms)!;
 
-    return `${lastLoginPeriod.result + periodSuffix} 전`;
-  };
+  //   switch (lastLoginPeriod.type) {
+  //     case 0:
+  //       periodSuffix = "초";
+  //       break;
+  //     case 1:
+  //       periodSuffix = "분";
+  //       break;
+  //     case 2:
+  //       periodSuffix = "시간";
+  //       break;
+  //     case 3:
+  //       periodSuffix = "일";
+  //       break;
+  //   }
+
+  //   return `${lastLoginPeriod.result + periodSuffix} 전`;
+  // };
   return (
     <UserProfileStyled>
-      <ImgComponent src={userData[0].prfImg} objectFit="cover" width="64" height="64"/>
+      <ImgComponent
+        src={userData?.image!}
+        objectFit="cover"
+        width="64"
+        height="64"
+      />
       <UserInfoStyled>
         <TypoComponent fontSize="16px" fontWeight="semi-bold" textAlign="left">
-          {userData[0].nickName}
+          {userData?.name}
         </TypoComponent>
         <TypoComponent
           fontSize="14px"
@@ -98,7 +105,7 @@ const UserProfileComponent: React.FC<UserProfileTypes> = ({}) => {
           color="var(--color-point)"
           marginTop="4px"
         >
-          {userData[0].id}
+          {userData?.email}
         </TypoComponent>
         <TypoComponent
           fontSize="12px"
@@ -107,7 +114,7 @@ const UserProfileComponent: React.FC<UserProfileTypes> = ({}) => {
           textAlign="left"
           marginTop="8px"
         >
-          {`마지막 접속: ${getLastLoginPeriod()}`}
+          {/* {`마지막 접속: ${getLastLoginPeriod()}`} */}
         </TypoComponent>
       </UserInfoStyled>
       <Icon

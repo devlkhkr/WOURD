@@ -12,7 +12,8 @@ import styledInterface from "../Intefaces/styledComponent";
 
 import { useSelector } from "react-redux";
 import { ReducerType } from "redux/rootReducer";
-import { UserData } from "redux/slices/user";
+import { UserDataTypes } from "redux/slices/user";
+import { useSession } from "next-auth/react";
 
 interface CardMainTypes {
   exposeWord: ExposeWordTypes[];
@@ -194,7 +195,7 @@ const CardMainComponent: React.FC<CardMainTypes> = ({
   closeCardModal,
   afterMyWordState,
 }) => {
-  const userData = useSelector<ReducerType, UserData[]>((state) => state.user);
+  const userData = useSession();
 
   const cardList: any = useRef();
   const cardHandler = {
@@ -225,7 +226,7 @@ const CardMainComponent: React.FC<CardMainTypes> = ({
       "http://localhost:3000" + "/api/user/word/state",
       {
         wordInfo: {
-          userId: userData[0].id,
+          userId: userData.data?.user?.email,
           wordId: _objWord.word_id,
           wordState: _state,
         },
