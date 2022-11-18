@@ -88,7 +88,6 @@ const MyWordListWrapStyled = styled.div`
 const MyWordListStyled = styled.div``;
 
 const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
-  // const userData = useSelector<ReducerType, UserData[]>((state) => state.user);
   const router = useRouter();
   const addNewWordClick = () => {
     router.push("/MyWords/Regist");
@@ -99,7 +98,6 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
   const [currentCardIdx, setCurrentCardIdx] = useState(0);
 
   const myCardClick = (_objMyWord: MyWordsListTypes, _index: number) => {
-    console.log(_objMyWord, _index);
     setCurrentCardIdx(_index);
     let obj = [
       {
