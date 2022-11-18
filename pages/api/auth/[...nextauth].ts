@@ -21,7 +21,6 @@ export const authOptions = {
       },
       async authorize(credentials: any, req) {
         // Add logic here to look up the user from the credentials supplied
-        console.log("authorize:::", credentials);
         if (credentials?.loginUserId && credentials?.hashedPw) {
           const user = startAuthorize(
             credentials.loginUserId,
@@ -33,6 +32,7 @@ export const authOptions = {
                 name: userInfo.nickName,
                 email: userInfo.id,
                 image: userInfo.prfImg,
+                lastLogin: userInfo.lastLogin,
               };
               return userSessionData;
             } else {
@@ -49,18 +49,42 @@ export const authOptions = {
       },
     }),
   ],
+  session: {
+    maxAge: 6 * 60 * 60, // 6 hours
+    updateAge: 1 * 60 * 60, // 1 hours
+  },
+  jwt: {
+    maxAge: 6 * 60 * 60, // 6 hours
+    secret: "asdfasdf",
+  },
   pages: {
     signIn: "/Login",
   },
   secret: process.env.SECRET,
   callbacks: {
+    async signIn({ user, account }: any) {
+      account.lastLogin = user.lastLogin;
+      return true;
+    },
     async redirect({ url, baseUrl }: any) {
+      // Allows relative callback URLs
+      if (url.startsWith("/")) return `${baseUrl}${url}`;
+      // Allows callback URLs on the same origin
+      else if (new URL(url).origin === baseUrl) return url;
       return baseUrl;
     },
-    async jwt({ token, user, account, profile, isNewUser }: any) {
+    async jwt({ token, account }: any) {
+      if (account) {
+        // console.log("account:::", account);
+        token.accessToken = account.access_token;
+        token.lastLogin = account.lastLogin;
+      }
       return token;
     },
-    async session({ session, userOrToken }: any) {
+    async session({ session, token }: any) {
+      session.accessToken = token.accessToken;
+      session.user.lastLogin = token.lastLogin;
+
       return session;
     },
   },
