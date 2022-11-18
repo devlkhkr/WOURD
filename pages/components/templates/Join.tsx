@@ -178,6 +178,7 @@ const JoinComponent: React.FC<JoinTypes> = ({
   };
 
   const authCodeCheck = () => {
+    console.log(joinUserAuthCode, resAuthCode);
     joinUserAuthCode === resAuthCode
       ? successAuthCheck()
       : alert("인증코드가 일치하지 않습니다.");
@@ -277,14 +278,18 @@ const JoinComponent: React.FC<JoinTypes> = ({
       ? (() => {
           insertLoginData(joinUserId);
           confirm("회원가입이 완료되었습니다.\n즉시 로그인하시겠습니까?")
-            ? // ? signIn(joinUserId, hashedPw)
-              signIn("credentials", {
-                joinUserId,
-                hashedPw,
-                redirect: false,
-              })
+            ? (async () => {
+                let loginUserId = joinUserId;
+                const res = await signIn("credentials", {
+                  loginUserId,
+                  hashedPw,
+                  redirect: false,
+                });
+                if (res.error != null) {
+                  console.log("error:::", res.error);
+                }
+              })()
             : void 0;
-          setJoinPageOpened(false);
         })()
       : (() => {
           console.log("에러 발생:::::", res.data);

@@ -25,6 +25,7 @@ import {
   getSession,
   signIn,
 } from "next-auth/react";
+import axios from "axios";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -62,8 +63,37 @@ function MyApp({
   const { store, props } = wrapper.useWrappedStore(rest);
   const router = useRouter();
   const [loadingStart, setLoadingStart] = useState(false);
+  const [axiosLoading, setAxiosLoading] = useState(false);
 
   useEffect(() => {
+    // S : Axios 로딩 세팅
+    //axios 호출시 인터셉트
+    axios.interceptors.request.use(
+      function (config) {
+        console.log("axiosConfigUrl:::", config.url);
+        if (!config.url?.includes("/api/user/word/state")) {
+          setAxiosLoading(true);
+        }
+        return config;
+      },
+      function (error) {
+        return Promise.reject(error);
+      }
+    );
+    //axios 호출 종료시 인터셉트
+    axios.interceptors.response.use(
+      function (response) {
+        setAxiosLoading(false);
+        return response;
+      },
+      function (error) {
+        setAxiosLoading(false);
+        return Promise.reject(error);
+      }
+    );
+    // E : Axios 로딩 세팅
+
+    // S : 라우터 로딩 세팅
     const routesLoadStart = () => {
       setLoadingStart(true);
     };
@@ -80,6 +110,7 @@ function MyApp({
       router.events.off("routeChangeComplete", routesLoadEnd);
       router.events.off("routeChangeError", routesLoadEnd);
     };
+    // E : 라우터 로딩 세팅
   }, []);
 
   function Auth({ children }: any) {
@@ -113,9 +144,7 @@ function MyApp({
         </Head>
         {/* body */}
         {loadingStart ? <Loading /> : <></>}
-        {/* {!isTokenLive ? (
-          <Login setIsTokenLive={setIsTokenLive} />
-        ) : ( */}
+        {axiosLoading ? <Loading /> : <></>}
         <Wrapper>
           {/* modal */}
           <GlobalModal />
