@@ -290,6 +290,7 @@ const JoinComponent: React.FC<JoinTypes> = ({
                 }
               })()
             : void 0;
+          setJoinPageOpened(false);
         })()
       : (() => {
           console.log("에러 발생:::::", res.data);
