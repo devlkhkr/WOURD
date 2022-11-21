@@ -39,7 +39,7 @@ const Hash: HashTypes = {
       loginUserId: loginUserId,
     });
     if (res.data.dupLeng <= 0) {
-      // alert("존재하지 않는 아이디 입니다.");
+      alert("존재하지 않는 아이디 입니다.");
       return null;
     } else if (res.data.dupLeng === 1) {
       const salt = res.data.salt;
@@ -57,7 +57,7 @@ const Hash: HashTypes = {
         );
       });
     } else {
-      console.log("아이디 중복 체크 오류, Length:::::", res.data.dupLeng);
+      console.log("error:::", res.data);
       return false;
     }
   },
