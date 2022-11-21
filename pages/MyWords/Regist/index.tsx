@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import { MutableRefObject, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 
@@ -14,17 +14,18 @@ import Fieldset from "../../components/molecules/Fieldset";
 import InputWrap from "../../components/molecules/InputWrap";
 import ButtonWrap from "../../components/molecules/ButtonWrap";
 import Form from "../../components/organisms/Form";
-
+import axios from "axios";
+import uuid from "uuid4";
 interface RegistWordTypes {}
 
 const RegistWordWrap = styled.div``;
 
 const RegistWord: NextPage<RegistWordTypes> = ({}) => {
   const [isIntl, setIsIntl] = useState(true);
-  const [wordTitInput, setWordTitInput] = useState("");
+  const [wordTit, setwordTit] = useState("");
   const wordIntlFlag: any = useRef();
-  const [wordExplnInput, setWordExplnInput] = useState("");
-  const [wordDescTextarea, setWordDescTextarea] = useState("");
+  const [wordExpln, setwordExpln] = useState("");
+  const [wordDesc, setwordDesc] = useState("");
   const wordCtgr: any = useRef();
   const onAfterRegState: any = useRef();
 
@@ -37,22 +38,36 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
   const cancleRegWordClick = () => {
     router.back();
   };
-  const startWordReg = () => {
-    wordTitInput; // 단어명
+  const startWordReg = async () => {
+    wordTit; // 단어명
     wordIntlFlag.current.getValue(); // 약어 YN
-    wordExplnInput; // 약어 풀이
-    wordDescTextarea; //단어 설명
+    wordExpln; // 약어 풀이
+    wordDesc; //단어 설명
     wordCtgr.current.getValue(); // 카테고리
     onAfterRegState.current.value; // 등록후 단어관리
 
     console.log(
-      wordTitInput,
+      wordTit,
       wordIntlFlag.current.getValue(),
-      wordExplnInput,
-      wordDescTextarea,
+      wordExpln,
+      wordDesc,
       wordCtgr.current.getValue(),
       onAfterRegState.current.value
     );
+
+    const res = await axios.post("http://localhost:3000" + "/api/word/reg", {
+      wordRegistData: {
+        wordId: uuid(),
+        wordTit: wordTit,
+        wordIntlFlag: wordIntlFlag.current.getValue(),
+        wordExpln: wordExpln,
+        wordDesc: wordDesc,
+        wordCtgr: wordCtgr.current.getValue(),
+        // wordState: onAfterRegState.current.value,
+      },
+    });
+
+    res.data.affectedRows === 1 ? alert("등록완료") : void 0;
   };
   return (
     <RegistWordWrap>
@@ -68,7 +83,7 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
             placeHolder="예) SSR"
             id="wordName"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setWordTitInput(e.currentTarget.value);
+              setwordTit(e.currentTarget.value);
             }}
           />
         </Fieldset>
@@ -108,7 +123,7 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
               type="text"
               placeHolder="예) Server Side Rendering"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setWordExplnInput(e.currentTarget.value);
+                setwordExpln(e.currentTarget.value);
               }}
             />
           </Fieldset>
@@ -123,9 +138,9 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
             id="wordDesc"
             height="300px"
             placeholder="예) SSR이란 서버사이드 렌더링(Server Side Rendering)의 약자로 서버로부터 완전하게 만들어진 HTML 파일을 받아와 페이지 전체를 렌더링 하는 방식이다."
-            reference={wordDescTextarea}
+            reference={wordDesc}
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-              setWordDescTextarea(e.currentTarget.value);
+              setwordDesc(e.currentTarget.value);
             }}
           />
         </Fieldset>
