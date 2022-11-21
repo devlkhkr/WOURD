@@ -24,7 +24,7 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
   const [isIntl, setIsIntl] = useState(true);
   const [wordTit, setwordTit] = useState("");
   const wordIntlFlag: any = useRef();
-  const [wordExpln, setwordExpln] = useState("");
+  const [wordUnravel, setWordUnravel] = useState("");
   const [wordDesc, setwordDesc] = useState("");
   const wordCtgr: any = useRef();
   const onAfterRegState: any = useRef();
@@ -41,7 +41,7 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
   const startWordReg = async () => {
     wordTit; // 단어명
     wordIntlFlag.current.getValue(); // 약어 YN
-    wordExpln; // 약어 풀이
+    wordUnravel; // 약어 풀이
     wordDesc; //단어 설명
     wordCtgr.current.getValue(); // 카테고리
     onAfterRegState.current.value; // 등록후 단어관리
@@ -49,7 +49,7 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
     console.log(
       wordTit,
       wordIntlFlag.current.getValue(),
-      wordExpln,
+      wordUnravel,
       wordDesc,
       wordCtgr.current.getValue(),
       onAfterRegState.current.value
@@ -57,10 +57,10 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
 
     const res = await axios.post("http://localhost:3000" + "/api/word/reg", {
       wordRegistData: {
-        wordId: uuid(),
+        wordId: uuid().replaceAll("-", ""),
         wordTit: wordTit,
         wordIntlFlag: wordIntlFlag.current.getValue(),
-        wordExpln: wordExpln,
+        wordUnravel: wordUnravel,
         wordDesc: wordDesc,
         wordCtgr: wordCtgr.current.getValue(),
         // wordState: onAfterRegState.current.value,
@@ -123,7 +123,7 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
               type="text"
               placeHolder="예) Server Side Rendering"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setwordExpln(e.currentTarget.value);
+                setWordUnravel(e.currentTarget.value);
               }}
             />
           </Fieldset>
