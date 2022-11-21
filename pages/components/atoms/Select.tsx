@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import styledInterface from "../Intefaces/styledComponent"
+import styledInterface from "../Intefaces/styledComponent";
 interface SelectTypes extends styledInterface {
   name: string;
-  options: any;
+  options: object[];
+  reference?: any;
 }
 
 const SelectStyled = styled.select<SelectTypes>`
@@ -15,9 +16,14 @@ const SelectStyled = styled.select<SelectTypes>`
   padding: 0 8px;
 `;
 
-const SelectComponent: React.FC<SelectTypes> = ({ id, name, options }) => {
+const SelectComponent: React.FC<SelectTypes> = ({
+  id,
+  name,
+  options,
+  reference,
+}) => {
   return (
-    <SelectStyled id={id} name={name} options={options}>
+    <SelectStyled id={id} name={name} options={options} ref={reference}>
       {options.map((o: any) => {
         return (
           <option key={o.value} value={o.value}>

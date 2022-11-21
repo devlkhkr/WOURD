@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useImperativeHandle, useRef } from "react";
 import styled from "styled-components";
 import Label from "../../components/atoms/Label";
 import InputWrap from "../../components/molecules/InputWrap";
-import styledInterface from "../Intefaces/styledComponent"
+import styledInterface from "../Intefaces/styledComponent";
 interface RadioTypes extends styledInterface {
   name: string;
   options: OptionTypes[];
+  reference: any;
 }
 
 interface OptionTypes {
@@ -45,10 +46,21 @@ const RadioComponent: React.FC<RadioTypes> = ({
   name,
   onClick,
   options,
+  reference,
 }) => {
+  const radioRefs: any = useRef([]);
+  const getValue = () => {
+    let checkedDom = radioRefs.current.filter(
+      (radio: HTMLInputElement) => radio.checked == true
+    );
+    return checkedDom[0].value;
+  };
+  useImperativeHandle(reference, () => ({
+    getValue,
+  }));
   return (
-    <>
-      {options.map((o: any) => {
+    <div ref={reference}>
+      {options.map((o: any, index: number) => {
         return (
           <InputWrap key={o.value}>
             <RadioStyled
@@ -58,12 +70,15 @@ const RadioComponent: React.FC<RadioTypes> = ({
               value={o.value}
               onClick={onClick}
               defaultChecked={o.defaultChecked}
+              ref={(radioDom: HTMLInputElement) =>
+                (radioRefs.current[index] = radioDom)
+              }
             ></RadioStyled>
             <Label htmlFor={`${name}_${o.value}`} desc={o.name} />
           </InputWrap>
-        )
+        );
       })}
-    </>
+    </div>
   );
 };
 
