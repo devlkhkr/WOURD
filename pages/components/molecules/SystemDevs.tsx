@@ -4,7 +4,10 @@ import ImgComponent from "../atoms/Img";
 import TypoComponent from "../atoms/Typo";
 import styledInterface from "../Intefaces/styledComponent";
 import Icon from "../atoms/Icon";
-import { faGithub, faInstagramSquare } from "@fortawesome/free-brands-svg-icons";
+import {
+  faGithub,
+  faInstagramSquare,
+} from "@fortawesome/free-brands-svg-icons";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 interface SystemDevType extends styledInterface {
   pos: string;
@@ -31,9 +34,9 @@ const DevsInfo = styled.div`
 const DevSocial = styled.div`
   padding: 16px 24px 16px 24px;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
-  display : flex;
-  align-items : center;
-  justify-content : center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   gap: 8px;
 `;
 
@@ -71,7 +74,11 @@ const SystemDevsComponent: React.FC<SystemDevType> = ({
       </DevsInfo>
       <DevSocial>
         <Icon iconShape={faGithub} iconWidth="22px" iconHeight="22px" />
-        <Icon iconShape={faInstagramSquare} iconWidth="22px" iconHeight="22px" />
+        <Icon
+          iconShape={faInstagramSquare}
+          iconWidth="22px"
+          iconHeight="22px"
+        />
         <Icon iconShape={faEnvelope} iconWidth="22px" iconHeight="22px" />
       </DevSocial>
     </DevsItem>
