@@ -92,8 +92,8 @@ const UserProfileComponent: React.FC<UserProfileTypes> = ({}) => {
       <ImgComponent
         src={userData?.image!}
         objectFit="cover"
-        width="64"
-        height="64"
+        width="64px"
+        height="64px"
       />
       <UserInfoStyled>
         <TypoComponent fontSize="16px" fontWeight="semi-bold" textAlign="left">
