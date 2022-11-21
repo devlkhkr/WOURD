@@ -1,4 +1,5 @@
 import { StyledInterface } from "styled-components";
+import TypoComponent from "../atoms/Typo";
 
 interface SystemSpecTypes extends StyledInterface {
 
@@ -7,9 +8,16 @@ interface SystemSpecTypes extends StyledInterface {
 const SystemSpec: React.FC = () => {
 
   return (
-    <div>
-      시스템 스펙 좌르르 ~
-    </div>
+    <>
+      <TypoComponent
+        fontSize="18px"
+        fontWeight="medium"
+        textAlign="left"
+        color="#202020"
+      >
+        Developers
+      </TypoComponent>
+    </>
   );
 };
 
