@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import styledInterface from "../Intefaces/styledComponent"
+import styledInterface from "../Intefaces/styledComponent";
 interface TextAreaTypes extends styledInterface {
   placeholder?: string;
+  onChange?: any;
 }
 
 const TextAreaStyled = styled.textarea<TextAreaTypes>`
@@ -17,12 +18,14 @@ const TextAreaComponent: React.FC<TextAreaTypes> = ({
   id,
   placeholder,
   height,
+  onChange,
 }) => {
   return (
     <TextAreaStyled
       id={id}
       placeholder={placeholder}
       height={height}
+      onChange={onChange}
     ></TextAreaStyled>
   );
 };

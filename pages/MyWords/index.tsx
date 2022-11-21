@@ -23,6 +23,9 @@ interface MyWordsListTypes {
   word_reg_userid: string;
   word_unravel: string;
   word_state: string;
+  word_is_cs_flag: number;
+  word_is_web_flag: number;
+  word_is_native_flag: number;
   state_modified_date: Date;
 }
 
@@ -110,6 +113,9 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
         word_unravel: _objMyWord.word_unravel,
         fliped: true,
         state: _objMyWord.word_state,
+        word_is_cs_flag: _objMyWord.word_is_cs_flag,
+        word_is_web_flag: _objMyWord.word_is_web_flag,
+        word_is_native_flag: _objMyWord.word_is_native_flag,
       },
     ];
     setClickedWord(obj);

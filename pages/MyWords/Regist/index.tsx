@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 
@@ -14,20 +14,60 @@ import Fieldset from "../../components/molecules/Fieldset";
 import InputWrap from "../../components/molecules/InputWrap";
 import ButtonWrap from "../../components/molecules/ButtonWrap";
 import Form from "../../components/organisms/Form";
-
+import axios from "axios";
+import uuid from "uuid4";
 interface RegistWordTypes {}
 
 const RegistWordWrap = styled.div``;
 
 const RegistWord: NextPage<RegistWordTypes> = ({}) => {
   const [isIntl, setIsIntl] = useState(true);
+  const [wordTit, setwordTit] = useState("");
+  const wordIntlFlag: any = useRef();
+  const [wordExpln, setwordExpln] = useState("");
+  const [wordDesc, setwordDesc] = useState("");
+  const wordCtgr: any = useRef();
+  const onAfterRegState: any = useRef();
+
   const intlYNOnclick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    console.log(wordIntlFlag.current.getValue());
     const target = event.target as HTMLInputElement;
     target.id === "intlYN_0" ? setIsIntl(true) : setIsIntl(false);
   };
   const router = useRouter();
   const cancleRegWordClick = () => {
     router.back();
+  };
+  const startWordReg = async () => {
+    wordTit; // 단어명
+    wordIntlFlag.current.getValue(); // 약어 YN
+    wordExpln; // 약어 풀이
+    wordDesc; //단어 설명
+    wordCtgr.current.getValue(); // 카테고리
+    onAfterRegState.current.value; // 등록후 단어관리
+
+    console.log(
+      wordTit,
+      wordIntlFlag.current.getValue(),
+      wordExpln,
+      wordDesc,
+      wordCtgr.current.getValue(),
+      onAfterRegState.current.value
+    );
+
+    const res = await axios.post("http://localhost:3000" + "/api/word/reg", {
+      wordRegistData: {
+        wordId: uuid(),
+        wordTit: wordTit,
+        wordIntlFlag: wordIntlFlag.current.getValue(),
+        wordExpln: wordExpln,
+        wordDesc: wordDesc,
+        wordCtgr: wordCtgr.current.getValue(),
+        // wordState: onAfterRegState.current.value,
+      },
+    });
+
+    res.data.affectedRows === 1 ? alert("등록완료") : void 0;
   };
   return (
     <RegistWordWrap>
@@ -38,7 +78,14 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
             desc="단어를 입력해주세요."
             mandatory={true}
           />
-          <InputText type="text" placeHolder="예) SSR" id="wordName" />
+          <InputText
+            type="text"
+            placeHolder="예) SSR"
+            id="wordName"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setwordTit(e.currentTarget.value);
+            }}
+          />
         </Fieldset>
 
         <Fieldset>
@@ -47,6 +94,7 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
             <Radio
               name="intlYN"
               onClick={intlYNOnclick}
+              reference={wordIntlFlag}
               options={[
                 {
                   name: "예, 약어입니다.",
@@ -74,6 +122,9 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
               id="wordsExpln"
               type="text"
               placeHolder="예) Server Side Rendering"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setwordExpln(e.currentTarget.value);
+              }}
             />
           </Fieldset>
         ) : (
@@ -87,6 +138,10 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
             id="wordDesc"
             height="300px"
             placeholder="예) SSR이란 서버사이드 렌더링(Server Side Rendering)의 약자로 서버로부터 완전하게 만들어진 HTML 파일을 받아와 페이지 전체를 렌더링 하는 방식이다."
+            reference={wordDesc}
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+              setwordDesc(e.currentTarget.value);
+            }}
           />
         </Fieldset>
 
@@ -103,20 +158,17 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
                 value: 0,
               },
               {
-                name: "FrontEnd",
+                name: "Web",
                 value: 1,
               },
               {
-                name: "BackEnd",
-                value: 2,
-              },
-              {
                 name: "App",
-                value: 3,
+                value: 2,
               },
             ]}
             id="wordsCtgrCbx"
             name="wordsCategoryCbx"
+            reference={wordCtgr}
           />
         </Fieldset>
 
@@ -127,22 +179,27 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
             mandatory={true}
           />
           <Select
+            reference={onAfterRegState}
             options={[
               {
                 name: "선택안함",
-                value: 0,
+                value: "",
               },
               {
                 name: "아는 단어에 추가",
-                value: 1,
+                value: "k",
               },
               {
                 name: "모르는 단어에 추가",
-                value: 2,
+                value: "d",
               },
               {
                 name: "즐겨찾은 단어에 추가",
-                value: 3,
+                value: "f",
+              },
+              {
+                name: "건너뛴 단어에 추가",
+                value: "s",
               },
             ]}
             id="wordsCtgrSlct"
@@ -168,6 +225,7 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
               color="#fff"
               width="60%"
               height="40px"
+              onClick={startWordReg}
             />
           </ButtonWrap>
         </Fieldset>
