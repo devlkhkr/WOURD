@@ -41,15 +41,6 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
     router.back();
   };
   const startWordReg = async () => {
-    // console.log(
-    //   wordTit,
-    //   wordIntlFlag.current.getValue(),
-    //   wordUnravel,
-    //   wordDesc,
-    //   wordCtgr.current.getValue(),
-    //   onAfterRegState.current.value
-    // );
-
     console.log("작성된 단어명: ", wordTit);
     console.log("선택된 약어 Y/N: ", wordIntlFlag.current.getValue());
     console.log("작성된 약어 풀이: ", wordUnravel);
