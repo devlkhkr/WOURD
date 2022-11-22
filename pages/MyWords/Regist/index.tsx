@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 
@@ -16,59 +16,105 @@ import ButtonWrap from "../../components/molecules/ButtonWrap";
 import Form from "../../components/organisms/Form";
 import axios from "axios";
 import uuid from "uuid4";
+import { useSession } from "next-auth/react";
 interface RegistWordTypes {}
 
 const RegistWordWrap = styled.div``;
 
 const RegistWord: NextPage<RegistWordTypes> = ({}) => {
+  const userData = useSession();
   const [isIntl, setIsIntl] = useState(true);
   const [wordTit, setwordTit] = useState("");
   const wordIntlFlag: any = useRef();
-  const [wordExpln, setwordExpln] = useState("");
+  const [wordUnravel, setWordUnravel] = useState("");
   const [wordDesc, setwordDesc] = useState("");
   const wordCtgr: any = useRef();
   const onAfterRegState: any = useRef();
 
   const intlYNOnclick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    console.log(wordIntlFlag.current.getValue());
+    setWordUnravel("");
     const target = event.target as HTMLInputElement;
-    target.id === "intlYN_0" ? setIsIntl(true) : setIsIntl(false);
+    target.id === "intlYN_1" ? setIsIntl(true) : setIsIntl(false);
   };
   const router = useRouter();
   const cancleRegWordClick = () => {
     router.back();
   };
   const startWordReg = async () => {
-    wordTit; // 단어명
-    wordIntlFlag.current.getValue(); // 약어 YN
-    wordExpln; // 약어 풀이
-    wordDesc; //단어 설명
-    wordCtgr.current.getValue(); // 카테고리
-    onAfterRegState.current.value; // 등록후 단어관리
+    // console.log(
+    //   wordTit,
+    //   wordIntlFlag.current.getValue(),
+    //   wordUnravel,
+    //   wordDesc,
+    //   wordCtgr.current.getValue(),
+    //   onAfterRegState.current.value
+    // );
 
-    console.log(
-      wordTit,
-      wordIntlFlag.current.getValue(),
-      wordExpln,
-      wordDesc,
-      wordCtgr.current.getValue(),
-      onAfterRegState.current.value
-    );
+    console.log("작성된 단어명: ", wordTit);
+    console.log("선택된 약어 Y/N: ", wordIntlFlag.current.getValue());
+    console.log("작성된 약어 풀이: ", wordUnravel);
+    console.log("작성된 단어 설명: ", wordDesc);
+    console.log("선택된 단어 카테고리: ", wordCtgr.current.getValue());
 
-    const res = await axios.post("http://localhost:3000" + "/api/word/reg", {
-      wordRegistData: {
-        wordId: uuid(),
+    console.log("-----------------------------");
+    if (wordTit.length <= 0) {
+      alert("단어명을 입력하세요.");
+      return;
+    } else if (
+      wordIntlFlag.current.getValue() === "1" &&
+      wordUnravel.length <= 0
+    ) {
+      alert("약어를 각각의 낱말로 풀어서 적어주세요.");
+      return;
+    } else if (wordDesc.length <= 0) {
+      alert("단어 설명을 입력해주세요.");
+      return;
+    } else if (wordCtgr.current.getValue().indexOf("1") === -1) {
+      alert("단어의 카테고리를 선택해주세요.");
+      return;
+    } else {
+      // S : 단어 Insert 로직
+      const wordRegistData = {
+        userId: userData.data?.user?.email,
+        wordId: uuid().replaceAll("-", ""),
         wordTit: wordTit,
         wordIntlFlag: wordIntlFlag.current.getValue(),
-        wordExpln: wordExpln,
+        wordUnravel: wordUnravel,
         wordDesc: wordDesc,
         wordCtgr: wordCtgr.current.getValue(),
-        // wordState: onAfterRegState.current.value,
-      },
-    });
+        wordState: onAfterRegState.current.value,
+      };
+      const resReg = await axios.post(
+        "http://localhost:3000" + "/api/word/reg",
+        {
+          wordRegistData: wordRegistData,
+        }
+      );
 
-    res.data.affectedRows === 1 ? alert("등록완료") : void 0;
+      if (resReg.data.affectedRows === 1) {
+        if (wordRegistData.wordState != "unset") {
+          (async () => {
+            const resState = await axios.post(
+              "http://localhost:3000" + "/api/user/word/state",
+              {
+                wordInfo: {
+                  userId: wordRegistData.userId,
+                  wordId: wordRegistData.wordId,
+                  wordState: wordRegistData.wordState,
+                },
+              }
+            );
+            resState.status === 200
+              ? alert("단어 상태변경 완료.")
+              : alert("단어 상태변경 실패.");
+          })();
+        }
+        alert("단어 등록완료");
+      }
+      // E : 단어 Insert 로직
+    }
   };
+
   return (
     <RegistWordWrap>
       <Form>
@@ -97,13 +143,13 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
               reference={wordIntlFlag}
               options={[
                 {
-                  name: "예, 약어입니다.",
+                  name: "아니요, 낱말입니다.",
                   value: 0,
-                  defaultChecked: true,
                 },
                 {
-                  name: "아니요, 낱말입니다.",
+                  name: "예, 약어입니다.",
                   value: 1,
+                  defaultChecked: true,
                 },
               ]}
             />
@@ -123,7 +169,7 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
               type="text"
               placeHolder="예) Server Side Rendering"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setwordExpln(e.currentTarget.value);
+                setWordUnravel(e.currentTarget.value);
               }}
             />
           </Fieldset>
@@ -183,7 +229,7 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
             options={[
               {
                 name: "선택안함",
-                value: "",
+                value: "unset",
               },
               {
                 name: "아는 단어에 추가",
