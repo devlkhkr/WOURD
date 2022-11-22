@@ -1,6 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import { getSession } from "next-auth/react";
 const db = require("../../../common/config/db");
 
 export default function RegistUser(req: NextApiRequest, res: NextApiResponse) {
