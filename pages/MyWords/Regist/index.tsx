@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 
@@ -16,11 +16,13 @@ import ButtonWrap from "../../components/molecules/ButtonWrap";
 import Form from "../../components/organisms/Form";
 import axios from "axios";
 import uuid from "uuid4";
+import { useSession } from "next-auth/react";
 interface RegistWordTypes {}
 
 const RegistWordWrap = styled.div``;
 
 const RegistWord: NextPage<RegistWordTypes> = ({}) => {
+  const userData = useSession();
   const [isIntl, setIsIntl] = useState(true);
   const [wordTit, setwordTit] = useState("");
   const wordIntlFlag: any = useRef();
@@ -31,6 +33,7 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
 
   const intlYNOnclick = (event: React.MouseEvent<HTMLButtonElement>) => {
     console.log(wordIntlFlag.current.getValue());
+    setWordUnravel("");
     const target = event.target as HTMLInputElement;
     target.id === "intlYN_0" ? setIsIntl(true) : setIsIntl(false);
   };
@@ -39,36 +42,50 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
     router.back();
   };
   const startWordReg = async () => {
-    wordTit; // 단어명
-    wordIntlFlag.current.getValue(); // 약어 YN
-    wordUnravel; // 약어 풀이
-    wordDesc; //단어 설명
-    wordCtgr.current.getValue(); // 카테고리
-    onAfterRegState.current.value; // 등록후 단어관리
-
-    console.log(
-      wordTit,
-      wordIntlFlag.current.getValue(),
-      wordUnravel,
-      wordDesc,
-      wordCtgr.current.getValue(),
-      onAfterRegState.current.value
-    );
-
-    const res = await axios.post("http://localhost:3000" + "/api/word/reg", {
-      wordRegistData: {
-        wordId: uuid().replaceAll("-", ""),
-        wordTit: wordTit,
-        wordIntlFlag: wordIntlFlag.current.getValue(),
-        wordUnravel: wordUnravel,
-        wordDesc: wordDesc,
-        wordCtgr: wordCtgr.current.getValue(),
-        // wordState: onAfterRegState.current.value,
-      },
+    // console.log(
+    //   wordTit,
+    //   wordIntlFlag.current.getValue(),
+    //   wordUnravel,
+    //   wordDesc,
+    //   wordCtgr.current.getValue(),
+    //   onAfterRegState.current.value
+    // );
+    const wordRegistData = {
+      userId: userData.data?.user?.email,
+      wordId: uuid().replaceAll("-", ""),
+      wordTit: wordTit,
+      wordIntlFlag: wordIntlFlag.current.getValue(),
+      wordUnravel: wordUnravel,
+      wordDesc: wordDesc,
+      wordCtgr: wordCtgr.current.getValue(),
+      wordState: onAfterRegState.current.value,
+    };
+    const resReg = await axios.post("http://localhost:3000" + "/api/word/reg", {
+      wordRegistData: wordRegistData,
     });
 
-    res.data.affectedRows === 1 ? alert("등록완료") : void 0;
+    if (resReg.data.affectedRows === 1) {
+      if (wordRegistData.wordState != "") {
+        (async () => {
+          const resState = await axios.post(
+            "http://localhost:3000" + "/api/user/word/state",
+            {
+              wordInfo: {
+                userId: wordRegistData.userId,
+                wordId: wordRegistData.wordId,
+                wordState: wordRegistData.wordState,
+              },
+            }
+          );
+          resState.status === 200
+            ? alert("단어 상태변경 완료.")
+            : alert("단어 상태변경 실패.");
+        })();
+      }
+      alert("단어 등록완료");
+    }
   };
+
   return (
     <RegistWordWrap>
       <Form>
