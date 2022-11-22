@@ -61,9 +61,9 @@ const Footer: React.FC = () => {
             <a>
               <Icon
                 iconShape={faFolder}
-                iconWidth="24px"
-                iconHeight="24px"
-                bottom="4px"
+                iconWidth="16px"
+                iconHeight="16px"
+                bottom="6px"
                 align="auto"
               />
               <IconText text="단어장" />
@@ -75,9 +75,9 @@ const Footer: React.FC = () => {
             <a>
               <Icon
                 iconShape={faHouse}
-                iconWidth="24px"
-                iconHeight="24px"
-                bottom="4px"
+                iconWidth="16px"
+                iconHeight="16px"
+                bottom="6px"
                 align="auto"
               />
               <IconText text="메인" />
@@ -89,9 +89,9 @@ const Footer: React.FC = () => {
             <a>
               <Icon
                 iconShape={faGear}
-                iconWidth="24px"
-                iconHeight="24px"
-                bottom="4px"
+                iconWidth="16px"
+                iconHeight="16px"
+                bottom="6px"
                 align="auto"
               />
               <IconText text="설정" />

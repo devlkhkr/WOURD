@@ -15,13 +15,16 @@ const IconWrap = styled.i<IconWrapTypes>`
   color: ${(props) => props.color || "inherit"};
   svg {
     font-size: ${(props) => props.svgSize || "16px"};
+    width : 100%;
+    height : 100%;
   }
 `;
 
 // margin: 0 ${props => props.align}px ${props => (props.bottom ? props.bottom : 4)}px;
 
 interface IconTypes {
-  iconShape: IconDefinition;
+  // FIXME: SystemDevs의 github 아이콘때문에 유니온 타입으로 잠시 지정
+  iconShape: IconDefinition | any;
 }
 interface IconWrapTypes extends styledInterface {
   iconWidth?: string;
