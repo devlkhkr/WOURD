@@ -26,6 +26,33 @@ import {
   signIn,
 } from "next-auth/react";
 import axios from "axios";
+import { DefaultSeo } from "next-seo";
+
+const DEFAULT_SEO = {
+  title: "meta head title 값",
+  description: "meta head description 값",
+  canonical: "https://www.carrotins.com",
+  openGraph: {
+    type: "website",
+    locale: "ko_KR",
+    url: "카카오톡, 페이스북에 링크 넣으면 연결되는 url",
+    title: "카카오톡, 페이스북에 링크 넣으면 올라올 타이틀",
+    site_name: "사이트이름",
+    images: [
+      {
+        url: "카카오톡, 페이스북에에 링크 넣으면 올라올 이미지",
+        width: 285,
+        height: 167,
+        alt: "이미지"
+      }
+    ]
+  },
+  twitter: {
+      handle: '@handle',
+      site: '@site',
+      cardType: 'summary_large_image',
+  },
+};
 
 const Wrapper = styled.div`
   width: 100%;
@@ -129,6 +156,7 @@ function MyApp({
     // If no user, useEffect() will redirect.
     return <Loading />;
   }
+  
 
   return (
     <SessionProvider session={pageProps.session}>
@@ -142,6 +170,10 @@ function MyApp({
           ></meta>
           <link rel="icon" href="/favicon.ico" />
         </Head>
+
+        {/* SEO */}
+        <DefaultSeo {...DEFAULT_SEO} />
+
         {/* body */}
         {loadingStart ? <Loading /> : <></>}
         {axiosLoading ? <Loading /> : <></>}
