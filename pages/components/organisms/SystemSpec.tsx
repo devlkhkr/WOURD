@@ -25,14 +25,16 @@ const SystemSpec: React.FC = () => {
       pos: "Full-Stack Dev",
       name: "Kany Kang",
       github: "devlkhkr",
-      mail: "www.naver.com"
+      mail: "www.naver.com",
+      instagram: "cnpea"
     },
     {
       id: 2,
       pos: "Front-end Dev",
       name: "Amazing2bobii",
       github: "chromeheartz",
-      mail: "www.naver.com"
+      mail: "barnesquiat@gmail.com",
+      instagram: "barnesquiat"
     }
   ])
 
@@ -60,6 +62,7 @@ const SystemSpec: React.FC = () => {
               name={dev.name}
               github={dev.github}
               mail={dev.mail}
+              instagram={dev.instagram}
             />
           ))
         }

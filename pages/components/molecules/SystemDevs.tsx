@@ -9,10 +9,12 @@ import {
   faInstagramSquare,
 } from "@fortawesome/free-brands-svg-icons";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import Link from "next/link";
 interface SystemDevType extends styledInterface {
   pos: string;
   name: string;
   github: string;
+  instagram: string;
   mail: string;
 }
 
@@ -26,9 +28,9 @@ const DevsItem = styled.li`
 `;
 
 const DevsInfo = styled.div`
-  max-width : 120px;
-  width : 40%;
-  padding : 0 24px;
+  max-width: 120px;
+  width: 40%;
+  padding: 0 24px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -36,9 +38,9 @@ const DevsInfo = styled.div`
 `;
 
 const DevSocial = styled.div`
-  width : 60%;
+  width: 60%;
   border-left: 1px solid rgba(0, 0, 0, 0.1);
-  padding-left : 24px;
+  padding-left: 24px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -52,10 +54,15 @@ const IconWrap = styled.div`
   align-items: center;
 `;
 
+const LinkTo = styled.a`
+  color: black;
+`;
+
 const SystemDevsComponent: React.FC<SystemDevType> = ({
   pos,
   name,
   github,
+  instagram,
   mail,
 }) => {
   return (
@@ -86,12 +93,20 @@ const SystemDevsComponent: React.FC<SystemDevType> = ({
           {pos}
         </TypoComponent>
         <IconWrap>
-          <Icon iconShape={faGithub} iconWidth="22px" iconHeight="22px" />
-          <Icon
-            iconShape={faInstagramSquare}
-            iconWidth="22px"
-            iconHeight="22px"
-          />
+          <Link href={`https://github.com/${github}`} passHref>
+            <LinkTo target="_blank" rel="noopener noreferrer">
+              <Icon iconShape={faGithub} iconWidth="22px" iconHeight="22px" />
+            </LinkTo>
+          </Link>
+          <Link href={`https://www.instagram.com/${instagram}`} passHref>
+            <LinkTo target="_blank" rel="noopener noreferrer">
+              <Icon
+                iconShape={faInstagramSquare}
+                iconWidth="22px"
+                iconHeight="22px"
+              />
+            </LinkTo>
+          </Link>
           <Icon iconShape={faEnvelope} iconWidth="22px" iconHeight="22px" />
         </IconWrap>
       </DevSocial>
