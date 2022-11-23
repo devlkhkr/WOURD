@@ -211,6 +211,7 @@ export async function getServerSideProps(context: any) {
       userId: session?.user?.email,
     },
   });
+  console.log(res)
   return {
     props: {
       dataMyWordList: res.data,

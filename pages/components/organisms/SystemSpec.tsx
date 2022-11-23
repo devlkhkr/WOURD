@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react";
 import styled, { StyledInterface } from "styled-components";
 import TypoComponent from "../atoms/Typo";
@@ -34,6 +35,11 @@ const SystemSpec: React.FC = () => {
     }
   ])
 
+  const getApi = async () => {
+    const res = await axios.get("http://localhost:3000" + "/api/word/list");
+    console.log(res)
+  }
+
   return (
     <>
       <TypoComponent
@@ -57,6 +63,9 @@ const SystemSpec: React.FC = () => {
           ))
         }
       </SystemDevsWrap>
+      <div>
+        
+      </div>
     </>
   );
 };
