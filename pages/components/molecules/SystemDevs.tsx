@@ -17,14 +17,18 @@ interface SystemDevType extends styledInterface {
 }
 
 const DevsItem = styled.li`
-  width: 50%;
+  width: 100%;
   border-radius: 16px;
   box-shadow: 0px 2px 4px 2px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  padding: 16px;
 `;
 
 const DevsInfo = styled.div`
-  width: 100%;
-  padding: 24px 24px 8px 24px;
+  max-width : 120px;
+  width : 40%;
+  padding : 0 24px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -32,12 +36,20 @@ const DevsInfo = styled.div`
 `;
 
 const DevSocial = styled.div`
-  padding: 16px 24px 16px 24px;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  width : 60%;
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  padding-left : 24px;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
   justify-content: center;
   gap: 8px;
+`;
+
+const IconWrap = styled.div`
+  display: flex;
+  gap: 8px;
+  align-items: center;
 `;
 
 const SystemDevsComponent: React.FC<SystemDevType> = ({
@@ -55,6 +67,8 @@ const SystemDevsComponent: React.FC<SystemDevType> = ({
           width="64px"
           height="64px"
         />
+      </DevsInfo>
+      <DevSocial>
         <TypoComponent
           fontSize="16px"
           fontWeight="bold"
@@ -71,15 +85,15 @@ const SystemDevsComponent: React.FC<SystemDevType> = ({
         >
           {pos}
         </TypoComponent>
-      </DevsInfo>
-      <DevSocial>
-        <Icon iconShape={faGithub} iconWidth="22px" iconHeight="22px" />
-        <Icon
-          iconShape={faInstagramSquare}
-          iconWidth="22px"
-          iconHeight="22px"
-        />
-        <Icon iconShape={faEnvelope} iconWidth="22px" iconHeight="22px" />
+        <IconWrap>
+          <Icon iconShape={faGithub} iconWidth="22px" iconHeight="22px" />
+          <Icon
+            iconShape={faInstagramSquare}
+            iconWidth="22px"
+            iconHeight="22px"
+          />
+          <Icon iconShape={faEnvelope} iconWidth="22px" iconHeight="22px" />
+        </IconWrap>
       </DevSocial>
     </DevsItem>
   );
