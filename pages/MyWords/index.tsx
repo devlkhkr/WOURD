@@ -206,15 +206,24 @@ export async function getServerSideProps(context: any) {
     authOptions
   );
 
-  const res = await axios.post("http://localhost:3000" + "/api/myword/list", {
-    params: {
-      userId: session?.user?.email,
-    },
-  });
-  console.log(res)
+  // const res = await axios.post("http://localhost:3000" + "/api/myword/list", {
+  //   params: {
+  //     userId: session?.user?.email,
+  //   },
+  // });
+
+  const res = await fetch(
+    "http://localhost:3000" +
+      "/api/myword/list?" +
+      new URLSearchParams({
+        userId: session?.user?.email!,
+      })
+  );
+  const data = await res.json();
+
   return {
     props: {
-      dataMyWordList: res.data,
+      dataMyWordList: data,
     },
   };
 }

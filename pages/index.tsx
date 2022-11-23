@@ -31,12 +31,9 @@ const Home: NextPage = ({ dataWordList }: any) => {
 // );
 
 export const getServerSideProps = async () => {
-  const res = await fetch(
-    "http://localhost:3000" + "/api/word/list"
-  );
+  const res = await fetch("http://localhost:3000" + "/api/word/list");
   const data = await res.json();
-  console.log("+++++++++++++++++++++", data)
-  return { props: { dataWordList: data }, };
+  return { props: { dataWordList: data } };
 };
 
 export default Home;

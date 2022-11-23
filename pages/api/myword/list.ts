@@ -21,7 +21,7 @@ export default function getMyWordlist(
       "word_is_web_flag," +
       "word_is_native_flag" +
       " FROM USER_WORD_TB LEFT OUTER JOIN WORD_TB ON USER_WORD_TB.word_id = WORD_TB.word_id WHERE user_id='" +
-      req.body.params.userId +
+      req.query.userId +
       "' AND NOT word_state='s' AND word_use_flag=1 ORDER BY state_modified_date desc",
     function (err: any, data: any) {
       if (!err) {
