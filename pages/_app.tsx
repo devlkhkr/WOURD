@@ -28,6 +28,8 @@ import {
 import axios from "axios";
 import { DefaultSeo } from "next-seo";
 
+/* S: default SEO */
+// 각 페이지별로 custom SEO 만들기
 const DEFAULT_SEO = {
   title: "meta head title 값",
   description: "meta head description 값",
@@ -53,6 +55,8 @@ const DEFAULT_SEO = {
       cardType: 'summary_large_image',
   },
 };
+
+/* E: default SEO */
 
 const Wrapper = styled.div`
   width: 100%;
