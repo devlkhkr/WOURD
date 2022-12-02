@@ -210,15 +210,11 @@ const Setting: NextPage<SettingTypes> = () => {
           checked: true,
         },
         {
-          label: "FrontEnd",
+          label: "Web",
           checked: true,
         },
         {
-          label: "BackEnd",
-          checked: true,
-        },
-        {
-          label: "App",
+          label: "Native",
           checked: true,
         },
       ],

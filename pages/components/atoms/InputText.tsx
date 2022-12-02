@@ -8,7 +8,7 @@ const Input = styled.input`
   border-style: solid;
   border-width: 0 0 1px;
   border-color: var(--color-lightgrey);
-  background-color: #fff;
+  background-color: transparent;
   padding: 0 8px;
   border-radius: 0;
   position: relative;

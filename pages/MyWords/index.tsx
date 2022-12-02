@@ -13,6 +13,9 @@ import wrapper from "redux/store";
 import { store } from "redux/store";
 import { unstable_getServerSession } from "next-auth";
 import { authOptions } from "pages/api/auth/[...nextauth]";
+import InputText from "pages/components/atoms/InputText";
+import Icon from "pages/components/atoms/Icon";
+import { faFilter, faSliders } from "@fortawesome/free-solid-svg-icons";
 
 interface MyWordsListTypes {
   user_id: string;
@@ -89,6 +92,22 @@ const MyWordListWrapStyled = styled.div`
 `;
 
 const MyWordListStyled = styled.div``;
+const WordCtrlStyled = styled.div`
+  width: 100%;
+  > * {
+    vertical-align: middle;
+  }
+`;
+const FilterStyled = styled.div`
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  right: 20px;
+  z-index: 1;
+`;
 
 const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
   const router = useRouter();
@@ -151,14 +170,27 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
         <></>
       )}
       <MyWordListStyled>
-        <Button
-          desc="+ 새로운 단어 등록하기"
-          id="cancleRegWord"
-          backgroundColor="transparent"
-          color="var(--color-grey)"
-          height="40px"
-          onClick={addNewWordClick}
-        ></Button>
+        <WordCtrlStyled>
+          <Button
+            width="200px"
+            height="40px"
+            type="button"
+            desc="+ 새로운 단어 등록"
+            backgroundColor="var(--color-point)"
+            color="#fff"
+            onClick={addNewWordClick}
+            fontSize="12px"
+            fontWeight="bold"
+          ></Button>
+          <FilterStyled>
+            <Icon
+              iconShape={faSliders}
+              iconWidth="24px"
+              iconHeight="24px"
+              color="var(--color-grey)"
+            />
+          </FilterStyled>
+        </WordCtrlStyled>
         {myWordList.map((objMyWord: MyWordsListTypes, index: number) => (
           <MyWordListWrapStyled
             key={index}
