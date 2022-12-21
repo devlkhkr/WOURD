@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import styledInterface from "../Intefaces/styledComponent"
+import styledInterface from "../Intefaces/styledComponent";
 interface LabelType extends styledInterface {
   htmlFor?: string;
   mandatory?: boolean;
@@ -12,7 +12,7 @@ const LabelStyled = styled.label<LabelType>`
   line-height: 24px;
   vertical-align: middle;
   font-weight: var(--weight-medium);
-  font-size: ${(props) => (props.fontSize || "14px")};
+  font-size: ${(props) => props.fontSize || "14px"};
   &:before {
     content: "\\2022";
     color: ${(props) => (props.mandatory ? "var(--color-red)" : "inherit")};
@@ -30,11 +30,7 @@ const LabelStyled = styled.label<LabelType>`
   }
 `;
 
-const LabelComponent: React.FC<LabelType> = ({
-  htmlFor,
-  desc,
-  mandatory,
-}) => {
+const LabelComponent: React.FC<LabelType> = ({ htmlFor, desc, mandatory }) => {
   return (
     <LabelStyled htmlFor={htmlFor} mandatory={mandatory}>
       {desc}

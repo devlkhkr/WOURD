@@ -4,6 +4,8 @@ import axios from "axios";
 import CardMain, { ExposeWordTypes } from "./components/templates/CardMain";
 import wrapper from "redux/store";
 import { UserDataTypes, setUserData } from "redux/slices/user";
+import { unstable_getServerSession } from "next-auth";
+import { authOptions } from "./api/auth/[...nextauth]";
 
 interface dataWordListTypes {
   dataWordList: ExposeWordTypes;
@@ -22,16 +24,20 @@ const Home: NextPage = ({ dataWordList }: any) => {
   );
 };
 
-// export const getServerSideProps = wrapper.getServerSideProps(
-//   (store) =>
-//     async ({ params }) => {
-//       const res = await axios.get("http://localhost:3000" + "/api/word/list");
-//       return { props: { dataWordList: res.data } };
-//     }
-// );
+export const getServerSideProps = async (context: any) => {
+  const session = await unstable_getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  );
 
-export const getServerSideProps = async () => {
-  const res = await fetch("http://localhost:3000" + "/api/word/list");
+  const res = await fetch(
+    "http://localhost:3000" +
+      "/api/word/list?" +
+      new URLSearchParams({
+        userId: session?.user?.email!,
+      })
+  );
   const data = await res.json();
   return { props: { dataWordList: data } };
 };
