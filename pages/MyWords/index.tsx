@@ -15,7 +15,9 @@ import { unstable_getServerSession } from "next-auth";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 import InputText from "pages/components/atoms/InputText";
 import Icon from "pages/components/atoms/Icon";
-import { faFilter, faSliders } from "@fortawesome/free-solid-svg-icons";
+import { faFilter, faPlus, faSliders } from "@fortawesome/free-solid-svg-icons";
+import Checkbox from "pages/components/atoms/Checkbox";
+import Label from "pages/components/atoms/Label";
 
 interface MyWordsListTypes {
   user_id: string;
@@ -56,6 +58,9 @@ const MyWordListWrapStyled = styled.div`
   position: relative;
   overflow: hidden;
   &[class*="state"] {
+    &:first-child {
+      margin-top: 0;
+    }
     &::before,
     &::after {
       content: "";
@@ -91,22 +96,72 @@ const MyWordListWrapStyled = styled.div`
   }
 `;
 
-const MyWordListStyled = styled.div``;
+const WordScrollStyled = styled.div`
+  height: 100%;
+  overflow: auto;
+  padding-bottom: 64px;
+`;
+
+const MyWordListStyled = styled.div`
+  height: calc(100% - 40px);
+  margin-top: 20px;
+  overflow: hidden;
+  position: relative;
+  &::after {
+    content: "";
+    display: inline-block;
+    width: 100%;
+    height: 64px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(transparent, #f3f3f3);
+    pointer-events: none;
+  }
+`;
+
 const WordCtrlStyled = styled.div`
   width: 100%;
+  height: 20px;
+  overflow: hidden;
+  i {
+    display: inline-block;
+    overflow: hidden;
+  }
   > * {
     vertical-align: middle;
   }
 `;
-const FilterStyled = styled.div`
-  width: 40px;
-  height: 40px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  position: fixed;
+
+const WordCtrlIconWrap = styled.div`
+  display: inline-block;
+  position: absolute;
+  &:first-child {
+    left: 20px;
+  }
+  &:last-child {
+    right: 20px;
+  }
+`;
+
+const WordFilterList = styled.div`
+  width: 240px;
+  height: 200px;
+  padding: 16px;
+  background-color: #fff;
+  position: absolute;
   right: 20px;
+  top: calc(var(--height-header) + 60px);
   z-index: 1;
+  border-radius: 8px;
+  box-shadow: 0px 4px 12px 8px rgba(0, 0, 0, 0.05);
+  opacity: 0;
+  pointer-events: none;
+  transition-duration: 0.3s;
+  &.active {
+    opacity: 1;
+    pointer-events: all;
+  }
 `;
 
 const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
@@ -118,6 +173,7 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
   const [clickedWord, setClickedWord] = useState<ExposeWordTypes[]>([]);
   const [myWordList, setMyWordList] = useState<MyWordsListTypes[]>([]);
   const [currentCardIdx, setCurrentCardIdx] = useState(0);
+  const [wordFilterOpened, setWordFilterOpened] = useState(false);
 
   const myCardClick = (_objMyWord: MyWordsListTypes, _index: number) => {
     setCurrentCardIdx(_index);
@@ -169,63 +225,68 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
       ) : (
         <></>
       )}
+      <WordCtrlStyled>
+        <WordCtrlIconWrap onClick={addNewWordClick}>
+          <Icon
+            iconShape={faPlus}
+            iconWidth="20px"
+            iconHeight="20px"
+            color="var(--color-grey)"
+          />
+        </WordCtrlIconWrap>
+        <WordCtrlIconWrap
+          onClick={() => setWordFilterOpened(!wordFilterOpened)}
+        >
+          <Icon
+            iconShape={faSliders}
+            iconWidth="20px"
+            iconHeight="20px"
+            color="var(--color-grey)"
+          />
+        </WordCtrlIconWrap>
+      </WordCtrlStyled>
+      <WordFilterList className={wordFilterOpened ? "active" : ""}>
+        <Checkbox id="aaa" />
+        <Label desc="아는 단어" htmlFor="aaa" />
+      </WordFilterList>
       <MyWordListStyled>
-        <WordCtrlStyled>
-          <Button
-            width="200px"
-            height="40px"
-            type="button"
-            desc="+ 새로운 단어 등록"
-            backgroundColor="var(--color-point)"
-            color="#fff"
-            onClick={addNewWordClick}
-            fontSize="12px"
-            fontWeight="bold"
-          ></Button>
-          <FilterStyled>
-            <Icon
-              iconShape={faSliders}
-              iconWidth="24px"
-              iconHeight="24px"
-              color="var(--color-grey)"
-            />
-          </FilterStyled>
-        </WordCtrlStyled>
-        {myWordList.map((objMyWord: MyWordsListTypes, index: number) => (
-          <MyWordListWrapStyled
-            key={index}
-            className={`state_${objMyWord.word_state}`}
-            onClick={() => myCardClick(objMyWord, index)}
-          >
-            <Typo
-              lineClamp="1"
-              fontSize="18px"
-              fontWeight="bold"
-              textAlign="left"
+        <WordScrollStyled>
+          {myWordList.map((objMyWord: MyWordsListTypes, index: number) => (
+            <MyWordListWrapStyled
+              key={index}
+              className={`state_${objMyWord.word_state}`}
+              onClick={() => myCardClick(objMyWord, index)}
             >
-              {objMyWord.word_name}
-            </Typo>
-            {objMyWord.word_unravel != null ? (
               <Typo
                 lineClamp="1"
+                fontSize="18px"
+                fontWeight="bold"
                 textAlign="left"
-                marginTop="4px"
-                color="var(--color-grey)"
               >
-                {objMyWord.word_unravel}
+                {objMyWord.word_name}
               </Typo>
-            ) : (
-              <></>
-            )}
-            <Typo
-              lineClamp={objMyWord.word_unravel == null ? "3" : "2"}
-              textAlign="left"
-              marginTop="10px"
-            >
-              {objMyWord.word_desc}
-            </Typo>
-          </MyWordListWrapStyled>
-        ))}
+              {objMyWord.word_unravel != null ? (
+                <Typo
+                  lineClamp="1"
+                  textAlign="left"
+                  marginTop="4px"
+                  color="var(--color-grey)"
+                >
+                  {objMyWord.word_unravel}
+                </Typo>
+              ) : (
+                <></>
+              )}
+              <Typo
+                lineClamp={objMyWord.word_unravel == null ? "3" : "2"}
+                textAlign="left"
+                marginTop="10px"
+              >
+                {objMyWord.word_desc}
+              </Typo>
+            </MyWordListWrapStyled>
+          ))}
+        </WordScrollStyled>
       </MyWordListStyled>
     </>
   );
