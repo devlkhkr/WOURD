@@ -30,14 +30,11 @@ export const getServerSideProps = async (context: any) => {
     context.res,
     authOptions
   );
-
-  const res = await fetch(
-    "http://localhost:3000" +
-      "/api/word/list?" +
-      new URLSearchParams({
-        userId: session?.user?.email!,
-      })
-  );
+  const res = await fetch("http://localhost:3000" + "/api/word/list", {
+    headers: {
+      cookie: context.req.headers.cookie || "",
+    },
+  });
   const data = await res.json();
   return { props: { dataWordList: data } };
 };
