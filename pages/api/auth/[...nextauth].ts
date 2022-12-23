@@ -32,6 +32,7 @@ export const authOptions = {
                 name: userInfo.nickName,
                 email: userInfo.id,
                 image: userInfo.prfImg,
+                mainWordExpOpts: userInfo.mainWordExpOpts,
                 lastLogin: userInfo.lastLogin,
               };
               return userSessionData;
@@ -64,6 +65,7 @@ export const authOptions = {
   callbacks: {
     async signIn({ user, account }: any) {
       account.lastLogin = user.lastLogin;
+      account.mainWordExpOpts = user.mainWordExpOpts;
       return true;
     },
     async redirect({ url, baseUrl }: any) {
@@ -78,12 +80,14 @@ export const authOptions = {
         // console.log("account:::", account);
         token.accessToken = account.access_token;
         token.lastLogin = account.lastLogin;
+        token.mainWordExpOpts = account.mainWordExpOpts;
       }
       return token;
     },
     async session({ session, token }: any) {
       session.accessToken = token.accessToken;
       session.user.lastLogin = token.lastLogin;
+      session.user.mainWordExpOpts = token.mainWordExpOpts;
 
       return session;
     },
@@ -121,6 +125,7 @@ const startAuthorize = async (
       id: res.data.userInfo.id,
       nickName: res.data.userInfo.nickName,
       prfImg: res.data.userInfo.prfImg,
+      mainWordExpOpts: res.data.userInfo.mainWordExpOpts,
       lastLogin: res.data.userInfo.lastLogin,
     } as UserDataTypes;
   } else {
