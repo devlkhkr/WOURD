@@ -4,6 +4,7 @@ export interface UserDataTypes {
   id: string;
   nickName: string;
   prfImg: string;
+  mainWordExpOpts: object;
   lastLogin: Date | string;
 }
 
@@ -11,6 +12,7 @@ const initialState: UserDataTypes = {
   id: "",
   nickName: "",
   prfImg: "",
+  mainWordExpOpts: {},
   lastLogin: "",
 };
 

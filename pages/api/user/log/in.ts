@@ -9,6 +9,15 @@ export default function Login(req: NextApiRequest, res: NextApiResponse) {
       "user_password," +
       "user_nickname," +
       "user_prf_img," +
+      /* S : 메인 단어 노출 플래그 */
+      "user_main_k_flag," +
+      "user_main_d_flag," +
+      "user_main_f_flag," +
+      "user_main_s_flag," +
+      "user_main_cs_flag," +
+      "user_main_web_flag," +
+      "user_main_ntv_flag," +
+      /* E : 메인 단어 노출 플래그 */
       "log_date " +
       "FROM USER_TB, LOG_HISTORY_TB WHERE user_id='" +
       req.body.loginUserData.id +
@@ -22,6 +31,15 @@ export default function Login(req: NextApiRequest, res: NextApiResponse) {
               id: data[0].user_id,
               nickName: data[0].user_nickname,
               prfImg: data[0].user_prf_img,
+              mainWordExpOpts: {
+                exp_k_flag: data[0].user_main_k_flag,
+                exp_d_flag: data[0].user_main_d_flag,
+                exp_f_flag: data[0].user_main_f_flag,
+                exp_s_flag: data[0].user_main_s_flag,
+                exp_cs_flag: data[0].user_main_cs_flag,
+                exp_web_flag: data[0].user_main_web_flag,
+                exp_ntv_flag: data[0].user_main_ntv_flag,
+              },
               lastLogin: data[0].log_date,
             },
           });
