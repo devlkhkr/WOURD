@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import ToggleCheckComponent from "pages/components/atoms/Toggle";
 import Anchor from "pages/components/atoms/Anchor";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import styled from "styled-components";
 import styledInterface from "../components/Intefaces/styledComponent";
 import { openModal, closeModal } from "redux/slices/modal";
@@ -13,6 +13,7 @@ import { useDispatch } from "react-redux";
 import ProfileWordTitleComponent from "pages/components/molecules/ProfileWordTitle";
 import ProfileWordComponent from "pages/components/molecules/ProfileWord";
 import ProfileWordItemComponent from "pages/components/molecules/ProfileWordItem";
+import { reloadSession } from "pages/components/atoms/Session";
 
 import { getSession, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
@@ -112,6 +113,7 @@ const Setting: NextPage<SettingTypes> = () => {
   ]);
 
   const dispatch = useDispatch();
+
   const modalOpenClick = (e: React.MouseEvent<HTMLDivElement>) => {
     switch (e.currentTarget.innerText) {
       case "공지사항":
@@ -281,14 +283,8 @@ const Setting: NextPage<SettingTypes> = () => {
                   typo={list.label}
                   defaultChecked={list.checked}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    // console.log(list.column);
-                    if (session?.user.mainWordExpOpts && list.column) {
-                      // session.user.mainWordExpOpts[list.column]
-                      session.user.mainWordExpOpts[list.column] =
-                        e.currentTarget.checked;
-                      // console.log(e.currentTarget.checked);
-                      console.log(session.user.mainWordExpOpts);
-                    }
+                    console.log(list.column);
+                    reloadSession();
                   }}
                 />
               ))}
@@ -322,4 +318,7 @@ const Setting: NextPage<SettingTypes> = () => {
   );
 };
 
+export const getServerSideProps = async (context: any) => {
+  return { props: {} };
+};
 export default Setting;
