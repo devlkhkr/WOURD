@@ -99,9 +99,7 @@ const JoinComponent: React.FC<JoinTypes> = ({
   const [joinUserId, setJoinUserId] = useState(""); //사용자가 입력한 id 이메일
   const [joinUserPw, setJoinUserPw] = useState(""); //사용자가 입력한 pw
   const [joinUserName, setJoinUserName] = useState(""); //사용자가 입력한 이름
-  const [joinUserImg, setJoinUserImg] = useState(
-    `https://avatars.dicebear.com/api/personas/${joinUserName}.svg`
-  );
+  const [joinUserImg, setJoinUserImg] = useState("");
   /* E : 서버로 보낼 데이터 State */
 
   const pwInput: any = useRef();
@@ -413,6 +411,9 @@ const JoinComponent: React.FC<JoinTypes> = ({
                 maxLength={5}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   setJoinUserName(e.currentTarget.value);
+                  setJoinUserImg(
+                    `https://avatars.dicebear.com/api/personas/${e.currentTarget.value}.svg`
+                  );
                 }}
               />
             </InputWrap>
