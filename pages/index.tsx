@@ -30,6 +30,7 @@ export const getServerSideProps = async (context: any) => {
     context.res,
     authOptions
   );
+
   const res = await fetch("http://localhost:3000" + "/api/word/list", {
     headers: {
       cookie: context.req.headers.cookie || "",

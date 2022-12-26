@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import ToggleCheckComponent from "pages/components/atoms/Toggle";
 import Anchor from "pages/components/atoms/Anchor";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import styled from "styled-components";
 import styledInterface from "../components/Intefaces/styledComponent";
 import { openModal, closeModal } from "redux/slices/modal";
@@ -91,6 +91,7 @@ const Setting: NextPage<SettingTypes> = () => {
   const [wordCtrlByActivity, setWordCtrlByActivity] = useState(true);
   const [wordCtrlByState, setWordCtrlByState] = useState(false);
   const [wordCtrlByCate, setWordCtrlByCate] = useState(false);
+  const { data: session, status } = useSession();
   const router = useRouter();
 
   const [modalComponents, setModalComponents] = useState<
@@ -176,8 +177,6 @@ const Setting: NextPage<SettingTypes> = () => {
       ],
     },
   ];
-
-  const { data: session, status } = useSession();
 
   const objAcrdList: AcrdListTypes[] = [
     {
@@ -281,8 +280,15 @@ const Setting: NextPage<SettingTypes> = () => {
                   key={index}
                   typo={list.label}
                   defaultChecked={list.checked}
-                  onClick={() => {
-                    console.log(list.column);
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    // console.log(list.column);
+                    if (session?.user.mainWordExpOpts && list.column) {
+                      // session.user.mainWordExpOpts[list.column]
+                      session.user.mainWordExpOpts[list.column] =
+                        e.currentTarget.checked;
+                      // console.log(e.currentTarget.checked);
+                      console.log(session.user.mainWordExpOpts);
+                    }
                   }}
                 />
               ))}

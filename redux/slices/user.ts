@@ -6,7 +6,6 @@ export interface UserDataTypes {
   prfImg: string;
   mainWordExpOpts: object;
   lastLogin: Date | string;
-  accessToken: string;
 }
 
 const initialState: UserDataTypes = {
@@ -15,7 +14,6 @@ const initialState: UserDataTypes = {
   prfImg: "",
   mainWordExpOpts: {},
   lastLogin: "",
-  accessToken: "",
 };
 
 export const userSlice = createSlice({

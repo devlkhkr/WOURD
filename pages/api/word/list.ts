@@ -14,9 +14,7 @@ export default async function getWordlist(
     res.status(401).json({ message: "You must be logged in." });
     return;
   }
-
-  console.log(session);
-
+  console.log(session.user);
   db.query("SELECT * FROM WORD_TB", function (err: any, result: any) {
     if (err) {
       console.log(err);
