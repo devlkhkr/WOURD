@@ -100,8 +100,8 @@ const JoinComponent: React.FC<JoinTypes> = ({
   const [joinUserPw, setJoinUserPw] = useState(""); //사용자가 입력한 pw
   const [joinUserName, setJoinUserName] = useState(""); //사용자가 입력한 이름
   const [joinUserImg, setJoinUserImg] = useState(
-    "/images/img_user_default.jpg"
-  ); //사용자가 입력한 이름
+    `https://avatars.dicebear.com/api/personas/${joinUserName}.svg`
+  );
   /* E : 서버로 보낼 데이터 State */
 
   const pwInput: any = useRef();
