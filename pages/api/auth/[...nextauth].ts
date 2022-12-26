@@ -64,6 +64,7 @@ export const authOptions = {
   secret: process.env.SECRET,
   callbacks: {
     async signIn({ user, account }: any) {
+      console.log("account::::", account);
       account.lastLogin = user.lastLogin;
       account.mainWordExpOpts = user.mainWordExpOpts;
       return true;
@@ -77,7 +78,8 @@ export const authOptions = {
     },
     async jwt({ token, account }: any) {
       if (account) {
-        // console.log("account:::", account);
+        console.log("account:::", account);
+        console.log("token:::", token);
         token.accessToken = account.access_token;
         token.lastLogin = account.lastLogin;
         token.mainWordExpOpts = account.mainWordExpOpts;

@@ -14,7 +14,7 @@ import ProfileWordTitleComponent from "pages/components/molecules/ProfileWordTit
 import ProfileWordComponent from "pages/components/molecules/ProfileWord";
 import ProfileWordItemComponent from "pages/components/molecules/ProfileWordItem";
 
-import { signOut } from "next-auth/react";
+import { getSession, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 
 interface SettingTypes extends styledInterface {
@@ -29,6 +29,7 @@ interface AcrdListTypes {
   toggleFunc: Function;
   acrdList: {
     label: string;
+    column?: string;
     checked: boolean;
   }[];
 }
@@ -176,6 +177,8 @@ const Setting: NextPage<SettingTypes> = () => {
     },
   ];
 
+  const { data: session, status } = useSession();
+
   const objAcrdList: AcrdListTypes[] = [
     {
       acrdTitle: "상태별 노출 관리",
@@ -184,19 +187,23 @@ const Setting: NextPage<SettingTypes> = () => {
       acrdList: [
         {
           label: "아는단어",
-          checked: false,
+          column: "user_main_k_flag",
+          checked: session?.user.mainWordExpOpts?.user_main_k_flag!,
         },
         {
           label: "모르는단어",
-          checked: true,
+          column: "user_main_d_flag",
+          checked: session?.user.mainWordExpOpts?.user_main_d_flag!,
         },
         {
           label: "즐겨찾은단어",
-          checked: true,
+          column: "user_main_f_flag",
+          checked: session?.user.mainWordExpOpts?.user_main_f_flag!,
         },
         {
           label: "건너뛴단어",
-          checked: false,
+          column: "user_main_s_flag",
+          checked: session?.user.mainWordExpOpts?.user_main_s_flag!,
         },
       ],
     },
@@ -207,15 +214,18 @@ const Setting: NextPage<SettingTypes> = () => {
       acrdList: [
         {
           label: "CS",
-          checked: true,
+          column: "user_main_cs_flag",
+          checked: session?.user.mainWordExpOpts?.user_main_cs_flag!,
         },
         {
           label: "Web",
-          checked: true,
+          column: "user_main_web_flag",
+          checked: session?.user.mainWordExpOpts?.user_main_web_flag!,
         },
         {
           label: "Native",
-          checked: true,
+          column: "user_main_ntv_flag",
+          checked: session?.user.mainWordExpOpts?.user_main_ntv_flag!,
         },
       ],
     },
@@ -271,6 +281,9 @@ const Setting: NextPage<SettingTypes> = () => {
                   key={index}
                   typo={list.label}
                   defaultChecked={list.checked}
+                  onClick={() => {
+                    console.log(list.column);
+                  }}
                 />
               ))}
             </Accordion>

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import styledInterface from "../Intefaces/styledComponent"
+import styledInterface from "../Intefaces/styledComponent";
 import CheckboxComponent from "./Checkbox";
 import TypoComponent from "./Typo";
 interface ToggleCheckTypes extends styledInterface {
@@ -9,28 +9,31 @@ interface ToggleCheckTypes extends styledInterface {
 }
 
 const ToggleCheckStyled = styled.div`
-  display : flex;
+  display: flex;
   height: 40px;
   padding: 0 12px;
-  align-items : center;
+  align-items: center;
   justify-content: space-between;
   border-bottom: 1px dashed rgba(120, 120, 120, 0.2);
-  &:last-of-type{
+  &:last-of-type {
     border-bottom: 0;
   }
-`
+`;
 
 const ToggleCheckComponent: React.FC<ToggleCheckTypes> = ({
-  typo, defaultChecked
+  typo,
+  defaultChecked,
+  onClick,
 }) => {
   return (
     <ToggleCheckStyled>
       <TypoComponent fontSize="13px" fontWeight="regular" textAlign="left">
         {typo}
       </TypoComponent>
-      <CheckboxComponent 
+      <CheckboxComponent
         isToggle={true}
         defaultChecked={defaultChecked}
+        onClick={onClick}
       />
     </ToggleCheckStyled>
   );
