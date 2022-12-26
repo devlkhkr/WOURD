@@ -250,7 +250,7 @@ const JoinComponent: React.FC<JoinTypes> = ({
     } else if (!isPwCfValid) {
       alert("비밀번호가 일치하지 않습니다.");
     } else if (joinUserName.length <= 0) {
-      alert("성함을 입력해주세요.");
+      alert("닉네임을 입력해주세요.");
     } else if (!isInvtValid) {
       alert("초대코드가 유효하지 않습니다.");
     } else {
@@ -405,10 +405,10 @@ const JoinComponent: React.FC<JoinTypes> = ({
 
           <Fieldset>
             <InputWrap>
-              <Label htmlFor="joinName" desc="성함" mandatory={true} />
+              <Label htmlFor="joinName" desc="닉네임" mandatory={true} />
               <InputText
                 type="text"
-                placeHolder="실명을 입력하세요."
+                placeHolder="닉네임을 입력하세요."
                 id="joinName"
                 maxLength={5}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
