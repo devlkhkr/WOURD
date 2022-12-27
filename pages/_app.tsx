@@ -12,7 +12,7 @@ import Loading from "pages/components/atoms/Loading";
 import Login from "pages/Login";
 import styled from "styled-components";
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { UserDataTypes } from "redux/slices/user";
 import wrapper from "redux/store";
 import GlobalModal from "pages/components/templates/GlobalModal";
