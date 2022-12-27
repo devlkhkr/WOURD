@@ -30,21 +30,23 @@ export default async function Login(req: NextApiRequest, res: NextApiResponse) {
       req.body.email +
       "'",
     function (err: any, data: any) {
-      res.send({
-        userInfo: {
-          nickName: data[0].user_nickname,
-          prfImg: data[0].user_prf_img,
-          mainWordExpOpts: {
-            user_main_k_flag: data[0].user_main_k_flag,
-            user_main_d_flag: data[0].user_main_d_flag,
-            user_main_f_flag: data[0].user_main_f_flag,
-            user_main_s_flag: data[0].user_main_s_flag,
-            user_main_cs_flag: data[0].user_main_cs_flag,
-            user_main_web_flag: data[0].user_main_web_flag,
-            user_main_ntv_flag: data[0].user_main_ntv_flag,
+      if (data.length === 1) {
+        res.send({
+          userInfo: {
+            nickName: data[0].user_nickname,
+            prfImg: data[0].user_prf_img,
+            mainWordExpOpts: {
+              user_main_k_flag: data[0].user_main_k_flag,
+              user_main_d_flag: data[0].user_main_d_flag,
+              user_main_f_flag: data[0].user_main_f_flag,
+              user_main_s_flag: data[0].user_main_s_flag,
+              user_main_cs_flag: data[0].user_main_cs_flag,
+              user_main_web_flag: data[0].user_main_web_flag,
+              user_main_ntv_flag: data[0].user_main_ntv_flag,
+            },
           },
-        },
-      });
+        });
+      }
     }
   );
 }

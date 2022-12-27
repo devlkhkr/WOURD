@@ -17,6 +17,9 @@ import { reloadSession } from "pages/components/atoms/Session";
 
 import { getSession, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import axios from "axios";
+import { clearMsg, setMsg } from "redux/slices/alert";
+import uuid from "uuid4";
 
 interface SettingTypes extends styledInterface {
   typo: string;
@@ -283,8 +286,40 @@ const Setting: NextPage<SettingTypes> = () => {
                   typo={list.label}
                   defaultChecked={list.checked}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    console.log(list.column);
-                    reloadSession();
+                    const res = axios.post(
+                      "http://localhost:3000" + "/api/user/opt",
+                      {
+                        column: list.column,
+                        value: e.target.checked ? 1 : 0,
+                      }
+                    );
+                    res.then((result) => {
+                      result.status === 200
+                        ? (() => {
+                            const msgId = uuid();
+                            dispatch(
+                              setMsg({
+                                msg: {
+                                  text: `${list.label} 노출옵션이 ${
+                                    e.target.checked ? "활성" : "비활성"
+                                  }화 되었습니다.`,
+                                  id: msgId,
+                                },
+                              })
+                            );
+                            setTimeout(() => {
+                              dispatch(
+                                clearMsg({
+                                  msg: {
+                                    id: msgId,
+                                  },
+                                })
+                              );
+                            }, 2500);
+                            reloadSession();
+                          })()
+                        : void 0;
+                    });
                   }}
                 />
               ))}
