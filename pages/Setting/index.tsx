@@ -5,7 +5,6 @@ import { ChangeEvent, useEffect, useState } from "react";
 import styled from "styled-components";
 import styledInterface from "../components/Intefaces/styledComponent";
 import { openModal, closeModal } from "redux/slices/modal";
-import { clearMsg, setMsg } from "redux/slices/alert";
 
 import SettingListComponent from "../components/molecules/SettingList";
 import UserProfileComponent from "../components/molecules/UserProfile";
@@ -115,21 +114,6 @@ const Setting: NextPage<SettingTypes> = () => {
   ]);
 
   const dispatch = useDispatch();
-
-  const test = (msg: string) => {
-    dispatch(
-      setMsg({
-        msg: msg,
-      })
-    );
-    setTimeout(() => {
-      dispatch(
-        clearMsg({
-          msg: msg,
-        })
-      );
-    }, 2000);
-  };
 
   const modalOpenClick = (e: React.MouseEvent<HTMLDivElement>) => {
     switch (e.currentTarget.innerText) {
@@ -265,7 +249,6 @@ const Setting: NextPage<SettingTypes> = () => {
               afterIcon={wordAcrd.toggleFlag ? "arr-up" : "arr-down"}
               onClick={() => {
                 wordAcrd.toggleFunc((prev: boolean) => !prev);
-                test("메세지입니다");
               }}
             />
 

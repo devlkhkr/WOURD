@@ -2,8 +2,8 @@ import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import styledInterface from "../Intefaces/styledComponent";
 
-import { newAlert, setMsg } from "redux/slices/alert";
-import { useState } from "react";
+import { clearMsg, selectAlert, setMsg } from "redux/slices/alert";
+import { useEffect, useState } from "react";
 
 interface AlertTypes {
   msg: string[];
@@ -20,7 +20,7 @@ const AlertWrapStyled = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  pointer-events: none;
+  /* pointer-events: none; */
   span {
     padding: 24px;
     background-color: rgba(0, 0, 0, 0.25);
@@ -29,8 +29,28 @@ const AlertWrapStyled = styled.div`
 `;
 
 const GlobalModalComponent: React.FC = () => {
-  const { msg, isEmpty } = useSelector(newAlert);
+  const { msg, isEmpty } = useSelector(selectAlert);
   const [allMsg, setAllMsg] = useState([]);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    newAlert("테스트입니다");
+  }, []);
+
+  const newAlert = (msg: string) => {
+    dispatch(
+      setMsg({
+        msg: msg,
+      })
+    );
+    setTimeout(() => {
+      dispatch(
+        clearMsg({
+          msg: msg,
+        })
+      );
+    }, 2000);
+  };
 
   return (
     <AlertWrapStyled>
