@@ -105,6 +105,17 @@ const CardBackStyled = styled.div`
   }
 `;
 
+const CardEndStyled = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  font-size: 14px;
+`;
+
 const setButtonPosition: Function = function () {
   let styles = "";
 
@@ -257,13 +268,17 @@ const CardMainComponent: React.FC<CardMainTypes> = ({
   return (
     <>
       <MainWrapStyled ref={cardList}>
+        <CardEndStyled>
+          더 이상 표시할 단어가 없습니다. 설정에서 단어 노출 옵션을
+          변경해보시거나, 새로운 단어를 등록해보는건 어떨까요?
+        </CardEndStyled>
         {wordList.map((objWord: any, index: number) => (
           <CardSwiper
             // key={objWord.word_seq}
             key={index}
             className={`card ${objWord.fliped ? "fliped" : ""} ${
               objWord.state || ""
-            }`}
+            } ${index === 0 ? "first" : ""}`}
             wordInfo={objWord}
             cardHandler={cardHandler}
             setButtonState={setButtonState}

@@ -21,6 +21,10 @@ const CardSwiperSyled = styled.div<CardSwiperTypes>`
   left: 0px;
   user-select: none;
   will-change: left, transform;
+  opacity: 0;
+  &.first {
+    opacity: 1;
+  }
   &.fliped,
   &[class*="state_"] {
     .cardMain {
@@ -99,6 +103,9 @@ const CardSwiperComponent: React.FC<CardSwiperTypes> = ({
     cardDOM.current.style.transform = `rotate(${
       (cardDOM.current.offsetLeft - posX) / 16
     }deg)`;
+    console.log(cardDOM.current.offsetLeft);
+    cardDOM.current.previousSibling.style.opacity =
+      cardDOM.current.offsetLeft - posX / 16;
 
     let movedDistanceX = Math.abs(_x - startPointX);
     let movedDistanceY = Math.abs(_y - startPointY);

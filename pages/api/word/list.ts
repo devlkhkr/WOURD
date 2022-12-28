@@ -6,18 +6,24 @@ import { authOptions } from "pages/api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
 import { mainWordExpOpts } from "next-auth";
 
-const getMainWordExpQuery = (
-  mainWordExpOpts: mainWordExpOpts | null | undefined
-) => {
-  const query =
-    "SELECT " +
-    "user_id," +
-    "user_password," +
-    "log_date " +
-    "FROM USER_TB, LOG_HISTORY_TB WHERE user_id='" +
-    "req.body.loginUserData.id" +
-    "' && USER_TB.user_id = LOG_HISTORY_TB.log_user_id && log_action=1 ORDER BY log_date DESC LIMIT 1;";
-  return "";
+const getStateFlagQuery = (stateFlags: object | null | undefined) => {
+  if (stateFlags) {
+    const transition = "SELECT * FROM WORD_TB WHERE";
+    let query = transition;
+    Object.entries(stateFlags).map((oIterable: Array<any>, index: number) => {
+      query +=
+        oIterable[1] === 1
+          ? `${query == transition ? "" : " OR"} ${oIterable[0].replace(
+              "user_main",
+              "word_is"
+            )}=1`
+          : "";
+    });
+    console.log(query);
+    return query;
+  } else {
+    console.error("세션 에러:::메인 카드 스테이트 옵션 쿼리 제너레이터");
+  }
 };
 
 export default async function getWordlist(
@@ -31,12 +37,15 @@ export default async function getWordlist(
   }
   console.log(session.user.email);
   console.log(session.user.mainWordExpOpts);
-  getMainWordExpQuery(session.user.mainWordExpOpts);
-  db.query("SELECT * FROM WORD_TB", function (err: any, result: any) {
-    if (err) {
-      console.log(err);
-    } else {
-      res.send(result);
+  getStateFlagQuery(session.user.mainWordExpOpts?.cateFlags);
+  db.query(
+    getStateFlagQuery(session.user.mainWordExpOpts?.cateFlags),
+    function (err: any, result: any) {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
     }
-  });
+  );
 }
