@@ -192,22 +192,22 @@ const Setting: NextPage<SettingTypes> = () => {
         {
           label: "아는단어",
           column: "user_main_k_flag",
-          checked: session?.user.mainWordExpOpts?.user_main_k_flag!,
+          checked: session?.user.mainWordExpOpts?.stateFlags.user_main_k_flag!,
         },
         {
           label: "모르는단어",
           column: "user_main_d_flag",
-          checked: session?.user.mainWordExpOpts?.user_main_d_flag!,
+          checked: session?.user.mainWordExpOpts?.stateFlags.user_main_d_flag!,
         },
         {
           label: "즐겨찾은단어",
           column: "user_main_f_flag",
-          checked: session?.user.mainWordExpOpts?.user_main_f_flag!,
+          checked: session?.user.mainWordExpOpts?.stateFlags.user_main_f_flag!,
         },
         {
           label: "건너뛴단어",
           column: "user_main_s_flag",
-          checked: session?.user.mainWordExpOpts?.user_main_s_flag!,
+          checked: session?.user.mainWordExpOpts?.stateFlags.user_main_s_flag!,
         },
       ],
     },
@@ -219,17 +219,17 @@ const Setting: NextPage<SettingTypes> = () => {
         {
           label: "CS",
           column: "user_main_cs_flag",
-          checked: session?.user.mainWordExpOpts?.user_main_cs_flag!,
+          checked: session?.user.mainWordExpOpts?.cateFlags.user_main_cs_flag!,
         },
         {
           label: "Web",
           column: "user_main_web_flag",
-          checked: session?.user.mainWordExpOpts?.user_main_web_flag!,
+          checked: session?.user.mainWordExpOpts?.cateFlags.user_main_web_flag!,
         },
         {
           label: "Native",
           column: "user_main_ntv_flag",
-          checked: session?.user.mainWordExpOpts?.user_main_ntv_flag!,
+          checked: session?.user.mainWordExpOpts?.cateFlags.user_main_ntv_flag!,
         },
       ],
     },
