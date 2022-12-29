@@ -261,6 +261,7 @@ const CardMainComponent: React.FC<CardMainTypes> = ({
   };
 
   useEffect(() => {
+    console.log("wordList:::", exposeWord);
     setWordList([...exposeWord].reverse());
   }, [exposeWord]);
 

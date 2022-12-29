@@ -7,7 +7,14 @@ import { unstable_getServerSession } from "next-auth/next";
 
 const getCateFlagQuery = (cateFlags: object | null | undefined) => {
   if (cateFlags) {
-    const transition = "SELECT * FROM WORD_TB WHERE";
+    const transition =
+      // "SELECT DISTINCT" +
+      "SELECT " +
+      "word_seq, word_id, word_name, word_intl_flag, word_unravel, " +
+      "word_desc, word_reg_userid, word_reg_date, " +
+      "word_use_flag, word_is_cs_flag, word_is_web_flag, word_is_ntv_flag " +
+      "FROM WORD_TB WHERE (" +
+      "";
     let query = transition;
     Object.entries(cateFlags).map((oIterable: Array<any>, index: number) => {
       query +=
@@ -17,6 +24,7 @@ const getCateFlagQuery = (cateFlags: object | null | undefined) => {
               "word_is"
             )}=1`
           : "";
+      query += index === Object.keys(cateFlags).length - 1 ? ")" : "";
     });
     return query;
   } else {
@@ -25,14 +33,26 @@ const getCateFlagQuery = (cateFlags: object | null | undefined) => {
   }
 };
 
-const getStateFlagQuery = (stateFlags: object | null | undefined) => {
+const getStateFlagQuery = (
+  stateFlags: object | null | undefined,
+  userId: string | null | undefined
+) => {
   if (stateFlags) {
-    const transition = " AND word_state NOT IN (";
+    const transition =
+      " AND (word_id) NOT IN (SELECT word_id FROM USER_WORD_TB WHERE user_id='" +
+      userId +
+      "' AND word_state IN (";
+
     let query = transition;
     Object.entries(stateFlags).map((oIterable: Array<any>, index: number) => {
-      query += oIterable[1] === 0 ? `'${oIterable[0][10]}'` : "";
-      query += index === Object.keys(stateFlags).length - 1 ? ")" : "";
+      let isFirst = index === 0;
+      if (isFirst) {
+        query += "''";
+      }
+      query += oIterable[1] === 0 ? `,'${oIterable[0][10]}'` : "";
     });
+    query += "))";
+
     return query;
   } else {
     console.error("세션 에러:::메인 카드 스테이트 옵션 쿼리 제너레이터");
@@ -52,8 +72,16 @@ export default async function getWordlist(
   console.log(session.user.mainWordExpOpts);
   const ReqFullQuery =
     getCateFlagQuery(session.user.mainWordExpOpts?.cateFlags) +
-    // getStateFlagQuery(session.user.mainWordExpOpts?.stateFlags) +
+    getStateFlagQuery(
+      session.user.mainWordExpOpts?.stateFlags,
+      session.user.email
+    ) +
     " ORDER BY RAND ()";
+  // const ReqFullQuery = `SELECT DISTINCT
+  // word_seq, word_id, word_name, word_intl_flag, word_unravel,
+  // word_desc, word_reg_userid, word_reg_date, word_use_flag,
+  // word_is_cs_flag, word_is_web_flag, word_is_ntv_flag FROM WORD_TB WHERE (word_id) NOT IN
+  // (SELECT word_id FROM USER_WORD_TB WHERE user_id='dev' AND word_state IN ('k'))`;
   console.log(ReqFullQuery);
   db.query(ReqFullQuery, function (err: any, result: any) {
     if (err) {
