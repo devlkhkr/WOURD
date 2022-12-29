@@ -8,6 +8,7 @@ import styledInterface from "../Intefaces/styledComponent";
 interface ProfileListTypes extends styledInterface {
   typo: string;
   userInfo?: string;
+  readonly?: boolean;
 }
 
 const ProfileListWrap = styled.dl`
@@ -22,7 +23,7 @@ const ProfileListWrap = styled.dl`
 `;
 
 const ProfileListComponent: React.FC<ProfileListTypes> = (props) => {
-  const { typo, color, userInfo } = props;
+  const { typo, color, userInfo, readonly } = props;
   // console.log(userInfo);
   return (
     <ProfileListWrap>
@@ -42,6 +43,7 @@ const ProfileListComponent: React.FC<ProfileListTypes> = (props) => {
           type="text"
           placeHolder={`${typo}을 입력해주세요`}
           defaultValue={userInfo}
+          readonly={readonly}
         />
       </dd>
     </ProfileListWrap>

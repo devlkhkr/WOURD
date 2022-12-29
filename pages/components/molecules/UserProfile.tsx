@@ -94,6 +94,7 @@ const UserProfileComponent: React.FC<UserProfileTypes> = ({}) => {
         objectFit="cover"
         width="64px"
         height="64px"
+        borderColor="transparent"
       />
       <UserInfoStyled>
         <TypoComponent fontSize="16px" fontWeight="semi-bold" textAlign="left">

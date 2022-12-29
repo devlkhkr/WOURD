@@ -72,7 +72,11 @@ const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
       </SettingProfileUser>
 
       <ProfileListWrap>
-        <ProfileListComponent typo="이름" userInfo={`${session?.user.email}`} />
+        <ProfileListComponent
+          typo="이메일"
+          userInfo={`${session?.user.email}`}
+          readonly={true}
+        />
         <ProfileListComponent
           typo="닉네임"
           userInfo={`${session?.user.name}`}
