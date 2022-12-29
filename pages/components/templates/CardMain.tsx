@@ -275,12 +275,16 @@ const CardMainComponent: React.FC<CardMainTypes> = ({
   return (
     <>
       <MainWrapStyled ref={cardList}>
-        <DataEmptyComponent
-          title="더 이상 표시할 단어카드가 없습니다."
-          detail="설정에서 단어 노출 옵션을 변경해보세요.<br/>새로운 단어를 등록해보시는 건 어떨까요?"
-          ppsTit="단어 등록하기"
-          ppsFunc={goToWordReg}
-        />
+        {isMyWord ? (
+          <></>
+        ) : (
+          <DataEmptyComponent
+            title="더 이상 표시할 단어카드가 없습니다."
+            detail="설정에서 단어 노출 옵션을 변경해보세요.<br/>새로운 단어를 등록해보시는 건 어떨까요?"
+            ppsTit="단어 등록하기"
+            ppsFunc={goToWordReg}
+          />
+        )}
         {wordList.map((objWord: any, index: number) => (
           <CardSwiper
             // key={objWord.word_seq}
