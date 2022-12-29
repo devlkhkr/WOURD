@@ -93,6 +93,7 @@ const SystemDevsComponent: React.FC<SystemDevType> = ({
           objectFit="cover"
           width="64px"
           height="64px"
+          borderColor="rgba(0,0,0,0.2)"
         />
       </DevsInfo>
       <DevSocial>

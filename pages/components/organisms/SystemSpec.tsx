@@ -17,6 +17,9 @@ const SystemDevsWrap = styled.ul`
   margin-top : 16px;
 `
 
+const stackWrap = styled.li`
+`
+
 const SystemSpec: React.FC = () => {
 
   const [ devs, setDevs ] = useState([
@@ -67,9 +70,28 @@ const SystemSpec: React.FC = () => {
           ))
         }
       </SystemDevsWrap>
+      <TypoComponent
+        fontSize="18px"
+        fontWeight="bold"
+        textAlign="left"
+        color="#202020"
+        marginTop="16px"
+        marginBottom="16px"
+      >
+        
+        Specification
+      </TypoComponent>
       <div>
         
       </div>
+      <TypoComponent
+        fontSize="18px"
+        fontWeight="bold"
+        textAlign="left"
+        color="#202020"
+      >
+        Modules
+      </TypoComponent>
     </>
   );
 };
