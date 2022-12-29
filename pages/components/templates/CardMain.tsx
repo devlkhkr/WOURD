@@ -14,6 +14,8 @@ import { useSelector } from "react-redux";
 import { ReducerType } from "redux/rootReducer";
 import { UserDataTypes } from "redux/slices/user";
 import { useSession } from "next-auth/react";
+import DataEmptyComponent from "../molecules/DataEmpty";
+import { useRouter } from "next/router";
 
 interface CardMainTypes {
   exposeWord: ExposeWordTypes[];
@@ -265,20 +267,27 @@ const CardMainComponent: React.FC<CardMainTypes> = ({
   const [wordList, setWordList] = useState<ExposeWordTypes[]>([]);
   const [currentCardIdx, setCurrentCardIdx] = useState(0);
   const [buttonState, setButtonState] = useState("");
+  const router = useRouter();
+
+  const goToWordReg = () => {
+    router.push("/MyWords/Regist");
+  };
   return (
     <>
       <MainWrapStyled ref={cardList}>
-        <CardEndStyled>
-          더 이상 표시할 단어가 없습니다. 설정에서 단어 노출 옵션을
-          변경해보시거나, 새로운 단어를 등록해보는건 어떨까요?
-        </CardEndStyled>
+        <DataEmptyComponent
+          title="더 이상 표시할 단어카드가 없습니다."
+          detail="설정에서 단어 노출 옵션을 변경해보세요.<br/>새로운 단어를 등록해보시는 건 어떨까요?"
+          ppsTit="단어 등록하기"
+          ppsFunc={goToWordReg}
+        />
         {wordList.map((objWord: any, index: number) => (
           <CardSwiper
             // key={objWord.word_seq}
             key={index}
             className={`card ${objWord.fliped ? "fliped" : ""} ${
               objWord.state || ""
-            } ${index === 0 ? "first" : ""}`}
+            }`} //${index === 0 ? "first" : ""}
             wordInfo={objWord}
             cardHandler={cardHandler}
             setButtonState={setButtonState}
