@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import ImgComponent from "../atoms/Img";
 import TypoComponent from "../atoms/Typo";
@@ -10,6 +10,7 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
+import axios from "axios";
 interface SystemDevType extends styledInterface {
   pos: string;
   name: string;
@@ -65,11 +66,30 @@ const SystemDevsComponent: React.FC<SystemDevType> = ({
   instagram,
   mail,
 }) => {
+  const [userImgUrl, setUserImgUsrl] = useState()
+  const getUserImg = async (userId: string) => {
+    try {
+      await axios
+      .get(`https://api.github.com/users/${userId}`)
+      .then(res => {
+        // console.log(res)
+        const { data : { avatar_url } } = res
+        setUserImgUsrl(avatar_url)
+      });
+    } catch {
+      console.log("오류");
+    }
+  };
+
+  useEffect(() => {
+    getUserImg(github)
+  }, [])
+
   return (
     <DevsItem>
       <DevsInfo>
         <ImgComponent
-          src="/images/img_user_default.jpg"
+          src={userImgUrl}
           objectFit="cover"
           width="64px"
           height="64px"
