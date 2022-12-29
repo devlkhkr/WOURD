@@ -14,6 +14,7 @@ const TypoStyled = styled.div<TypoType>`
   color: ${(props) => props.color || "inherit"};
   text-align: ${(props) => props.textAlign || "center"};
   margin-top: ${(props) => props.marginTop || "unset"};
+  margin-bottom: ${(props) => props.marginBottom || "unset"};
   text-overflow: ellipsis;
   overflow: hidden;
   word-break: break-word;
@@ -33,6 +34,7 @@ const TypoComponent: React.FC<TypoType> = ({
   children,
   className,
   onClick,
+  marginBottom
 }) => {
   return (
     <TypoStyled
@@ -45,6 +47,7 @@ const TypoComponent: React.FC<TypoType> = ({
       lineClamp={lineClamp}
       className={className}
       onClick={onClick}
+      marginBottom={marginBottom}
     >
       {children}
     </TypoStyled>

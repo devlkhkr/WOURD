@@ -5,6 +5,7 @@ interface ImgTypes extends styledInterface{
   src?: string;
   alt?: string;
   objectFit?: string;
+  borderColor?: string;
 }
 
 const ImgStyled = styled.img<ImgTypes>`
@@ -12,15 +13,15 @@ const ImgStyled = styled.img<ImgTypes>`
   width: ${(props => props.width)};
   height: ${(props => props.height)};
   border-radius: 50%;
-  border: 1px solid var(--color-deepgray);
+  border: ${(props) => props.borderColor ? (`1px solid ${props.borderColor}`) : ( '1px solid var(--color-deepgrey)' )};
   object-fit: ${(props) => props.objectFit || "unset"};
   margin-bottom : ${(props) => props.marginBottom || "0"};
 `;
 const ImgComponent: React.FC<ImgTypes>  = ({
-  src, objectFit, marginBottom, width, height
+  src, objectFit, marginBottom, width, height, borderColor
 }) => {
   return(
-    <ImgStyled src={src} alt="user-image" width={width} height={height} objectFit={objectFit} marginBottom={marginBottom}/>
+    <ImgStyled src={src} alt="user-image" width={width} height={height} objectFit={objectFit} marginBottom={marginBottom} borderColor={borderColor} />
   )
 };
 

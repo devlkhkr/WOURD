@@ -309,6 +309,7 @@ const Setting: NextPage<SettingTypes> = () => {
                             );
                             setTimeout(() => {
                               dispatch(
+                                // alert
                                 clearMsg({
                                   msg: {
                                     id: msgId,
