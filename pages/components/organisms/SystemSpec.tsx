@@ -25,7 +25,7 @@ const SystemSpec: React.FC = () => {
       pos: "Full-Stack Dev",
       name: "Kany Kang",
       github: "devlkhkr",
-      mail: "www.naver.com",
+      mail: "devlkhkr@gmail.com",
       instagram: "cnpea"
     },
     {

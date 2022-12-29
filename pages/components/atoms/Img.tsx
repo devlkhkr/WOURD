@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import styledInterface from "../Intefaces/styledComponent"
 interface ImgTypes extends styledInterface{
-  src?: any;
+  src?: string;
   alt?: string;
   objectFit?: string;
 }

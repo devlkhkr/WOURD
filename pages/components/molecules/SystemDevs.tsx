@@ -11,6 +11,7 @@ import {
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import axios from "axios";
+import Mailto from "../atoms/Mailto";
 interface SystemDevType extends styledInterface {
   pos: string;
   name: string;
@@ -72,7 +73,6 @@ const SystemDevsComponent: React.FC<SystemDevType> = ({
       await axios
       .get(`https://api.github.com/users/${userId}`)
       .then(res => {
-        // console.log(res)
         const { data : { avatar_url } } = res
         setUserImgUsrl(avatar_url)
       });
@@ -127,7 +127,9 @@ const SystemDevsComponent: React.FC<SystemDevType> = ({
               />
             </LinkTo>
           </Link>
-          <Icon iconShape={faEnvelope} iconWidth="22px" iconHeight="22px" />
+          <Mailto name={name} addr={mail}>
+            <Icon iconShape={faEnvelope} iconWidth="22px" iconHeight="22px" />
+          </Mailto>
         </IconWrap>
       </DevSocial>
     </DevsItem>
