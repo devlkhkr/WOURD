@@ -15,8 +15,8 @@ const IconWrap = styled.i<IconWrapTypes>`
   color: ${(props) => props.color || "inherit"};
   svg {
     font-size: ${(props) => props.svgSize || "16px"};
-    width : 100%;
-    height : 100%;
+    width: 100%;
+    height: 100%;
   }
 `;
 

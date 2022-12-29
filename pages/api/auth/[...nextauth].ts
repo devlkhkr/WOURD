@@ -29,9 +29,10 @@ export const authOptions = {
             if (userInfo != null) {
               const userSessionData = {
                 id: userInfo.id,
-                name: userInfo.nickName,
+                name: "",
                 email: userInfo.id,
-                image: userInfo.prfImg,
+                image: "",
+                mainWordExpOpts: {},
                 lastLogin: userInfo.lastLogin,
               };
               return userSessionData;
@@ -55,7 +56,7 @@ export const authOptions = {
   },
   jwt: {
     maxAge: 6 * 60 * 60, // 6 hours
-    secret: "asdfasdf",
+    secret: "nextauthjwtsecret",
   },
   pages: {
     signIn: "/Login",
@@ -64,6 +65,7 @@ export const authOptions = {
   callbacks: {
     async signIn({ user, account }: any) {
       account.lastLogin = user.lastLogin;
+      account.mainWordExpOpts = user.mainWordExpOpts;
       return true;
     },
     async redirect({ url, baseUrl }: any) {
@@ -75,15 +77,22 @@ export const authOptions = {
     },
     async jwt({ token, account }: any) {
       if (account) {
-        // console.log("account:::", account);
         token.accessToken = account.access_token;
         token.lastLogin = account.lastLogin;
+        token.mainWordExpOpts = account.mainWordExpOpts;
       }
       return token;
     },
     async session({ session, token }: any) {
-      session.accessToken = token.accessToken;
+      const res = await axios.post("http://localhost:3000" + "/api/user/info", {
+        email: session.user.email,
+      });
+      session.user.image = res.data.userInfo.prfImg;
+      session.user.name = res.data.userInfo.nickName;
+      session.user.mainWordExpOpts = res.data.userInfo.mainWordExpOpts;
       session.user.lastLogin = token.lastLogin;
+
+      session.accessToken = token.accessToken;
 
       return session;
     },
@@ -119,8 +128,9 @@ const startAuthorize = async (
     insertLoginData(res.data.userInfo.id);
     return {
       id: res.data.userInfo.id,
-      nickName: res.data.userInfo.nickName,
-      prfImg: res.data.userInfo.prfImg,
+      nickName: "",
+      prfImg: "",
+      mainWordExpOpts: {},
       lastLogin: res.data.userInfo.lastLogin,
     } as UserDataTypes;
   } else {

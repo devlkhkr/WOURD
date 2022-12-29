@@ -99,9 +99,7 @@ const JoinComponent: React.FC<JoinTypes> = ({
   const [joinUserId, setJoinUserId] = useState(""); //사용자가 입력한 id 이메일
   const [joinUserPw, setJoinUserPw] = useState(""); //사용자가 입력한 pw
   const [joinUserName, setJoinUserName] = useState(""); //사용자가 입력한 이름
-  const [joinUserImg, setJoinUserImg] = useState(
-    "/images/img_user_default.jpg"
-  ); //사용자가 입력한 이름
+  const [joinUserImg, setJoinUserImg] = useState("");
   /* E : 서버로 보낼 데이터 State */
 
   const pwInput: any = useRef();
@@ -250,7 +248,7 @@ const JoinComponent: React.FC<JoinTypes> = ({
     } else if (!isPwCfValid) {
       alert("비밀번호가 일치하지 않습니다.");
     } else if (joinUserName.length <= 0) {
-      alert("성함을 입력해주세요.");
+      alert("닉네임을 입력해주세요.");
     } else if (!isInvtValid) {
       alert("초대코드가 유효하지 않습니다.");
     } else {
@@ -405,14 +403,17 @@ const JoinComponent: React.FC<JoinTypes> = ({
 
           <Fieldset>
             <InputWrap>
-              <Label htmlFor="joinName" desc="성함" mandatory={true} />
+              <Label htmlFor="joinName" desc="닉네임" mandatory={true} />
               <InputText
                 type="text"
-                placeHolder="실명을 입력하세요."
+                placeHolder="닉네임을 입력하세요."
                 id="joinName"
                 maxLength={5}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   setJoinUserName(e.currentTarget.value);
+                  setJoinUserImg(
+                    `https://avatars.dicebear.com/api/personas/${e.currentTarget.value}.svg`
+                  );
                 }}
               />
             </InputWrap>

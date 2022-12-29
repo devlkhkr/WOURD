@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import styledInterface from "../Intefaces/styledComponent";
 interface CheckboxTypes extends styledInterface {
-  onClick?: any;
+  onChange?: any;
   defaultChecked?: boolean;
   value?: number;
   isToggle?: boolean;
@@ -79,6 +79,7 @@ const InputRadioComponent: React.FC<CheckboxTypes> = ({
   name,
   value,
   onClick,
+  onChange,
   defaultChecked,
   isToggle,
   referance,
@@ -90,6 +91,7 @@ const InputRadioComponent: React.FC<CheckboxTypes> = ({
       name={name}
       value={value}
       onClick={onClick}
+      onChange={onChange}
       defaultChecked={defaultChecked}
       isToggle={isToggle}
       ref={referance}

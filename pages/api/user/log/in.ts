@@ -7,8 +7,6 @@ export default function Login(req: NextApiRequest, res: NextApiResponse) {
     "SELECT " +
       "user_id," +
       "user_password," +
-      "user_nickname," +
-      "user_prf_img," +
       "log_date " +
       "FROM USER_TB, LOG_HISTORY_TB WHERE user_id='" +
       req.body.loginUserData.id +
@@ -20,8 +18,6 @@ export default function Login(req: NextApiRequest, res: NextApiResponse) {
             loginFlag: true,
             userInfo: {
               id: data[0].user_id,
-              nickName: data[0].user_nickname,
-              prfImg: data[0].user_prf_img,
               lastLogin: data[0].log_date,
             },
           });

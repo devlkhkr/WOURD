@@ -27,7 +27,7 @@ export default function RegistUser(req: NextApiRequest, res: NextApiResponse) {
       "','" +
       req.body.wordRegistData.wordCtgr[1] + //word_is_web_flag
       "','" +
-      req.body.wordRegistData.wordCtgr[2] + //word_is_native_flag
+      req.body.wordRegistData.wordCtgr[2] + //word_is_ntv_flag
       "')",
     function (err: any, data: any) {
       if (!err) {

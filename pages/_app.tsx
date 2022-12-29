@@ -12,7 +12,7 @@ import Loading from "pages/components/atoms/Loading";
 import Login from "pages/Login";
 import styled from "styled-components";
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { UserDataTypes } from "redux/slices/user";
 import wrapper from "redux/store";
 import GlobalModal from "pages/components/templates/GlobalModal";
@@ -27,6 +27,7 @@ import {
 } from "next-auth/react";
 import axios from "axios";
 import { DefaultSeo } from "next-seo";
+import Alert from "./components/atoms/Alert";
 
 /* S: default SEO */
 // 각 페이지별로 custom SEO 만들기
@@ -45,14 +46,14 @@ const DEFAULT_SEO = {
         url: "카카오톡, 페이스북에에 링크 넣으면 올라올 이미지",
         width: 285,
         height: 167,
-        alt: "이미지"
-      }
-    ]
+        alt: "이미지",
+      },
+    ],
   },
   twitter: {
-      handle: '@handle',
-      site: '@site',
-      cardType: 'summary_large_image',
+    handle: "@handle",
+    site: "@site",
+    cardType: "summary_large_image",
   },
 };
 
@@ -102,7 +103,10 @@ function MyApp({
     axios.interceptors.request.use(
       function (config) {
         console.log("axiosConfigUrl:::", config.url);
-        if (!config.url?.includes("/api/user/word/state")) {
+        if (
+          !config.url?.includes("/api/user/word/state") &&
+          !config.url?.includes("/api/user/opt")
+        ) {
           setAxiosLoading(true);
         }
         return config;
@@ -160,7 +164,6 @@ function MyApp({
     // If no user, useEffect() will redirect.
     return <Loading />;
   }
-  
 
   return (
     <SessionProvider session={pageProps.session}>
@@ -179,10 +182,10 @@ function MyApp({
         <DefaultSeo {...DEFAULT_SEO} />
 
         {/* body */}
-        {loadingStart ? <Loading /> : <></>}
-        {axiosLoading ? <Loading /> : <></>}
+        {loadingStart || axiosLoading ? <Loading /> : <></>}
         <Wrapper>
           {/* modal */}
+          <Alert />
           <GlobalModal />
           <Wrap>
             <Header />

@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import ToggleCheckComponent from "pages/components/atoms/Toggle";
 import Anchor from "pages/components/atoms/Anchor";
-import { useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import styled from "styled-components";
 import styledInterface from "../components/Intefaces/styledComponent";
 import { openModal, closeModal } from "redux/slices/modal";
@@ -13,9 +13,13 @@ import { useDispatch } from "react-redux";
 import ProfileWordTitleComponent from "pages/components/molecules/ProfileWordTitle";
 import ProfileWordComponent from "pages/components/molecules/ProfileWord";
 import ProfileWordItemComponent from "pages/components/molecules/ProfileWordItem";
+import { reloadSession } from "pages/components/atoms/Session";
 
-import { signOut } from "next-auth/react";
+import { getSession, signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import axios from "axios";
+import { clearMsg, setMsg } from "redux/slices/alert";
+import uuid from "uuid4";
 
 interface SettingTypes extends styledInterface {
   typo: string;
@@ -29,6 +33,7 @@ interface AcrdListTypes {
   toggleFunc: Function;
   acrdList: {
     label: string;
+    column?: string;
     checked: boolean;
   }[];
 }
@@ -90,6 +95,7 @@ const Setting: NextPage<SettingTypes> = () => {
   const [wordCtrlByActivity, setWordCtrlByActivity] = useState(true);
   const [wordCtrlByState, setWordCtrlByState] = useState(false);
   const [wordCtrlByCate, setWordCtrlByCate] = useState(false);
+  const { data: session, status } = useSession();
   const router = useRouter();
 
   const [modalComponents, setModalComponents] = useState<
@@ -110,6 +116,7 @@ const Setting: NextPage<SettingTypes> = () => {
   ]);
 
   const dispatch = useDispatch();
+
   const modalOpenClick = (e: React.MouseEvent<HTMLDivElement>) => {
     switch (e.currentTarget.innerText) {
       case "공지사항":
@@ -184,19 +191,23 @@ const Setting: NextPage<SettingTypes> = () => {
       acrdList: [
         {
           label: "아는단어",
-          checked: false,
+          column: "user_main_k_flag",
+          checked: session?.user.mainWordExpOpts?.stateFlags.user_main_k_flag!,
         },
         {
           label: "모르는단어",
-          checked: true,
+          column: "user_main_d_flag",
+          checked: session?.user.mainWordExpOpts?.stateFlags.user_main_d_flag!,
         },
         {
           label: "즐겨찾은단어",
-          checked: true,
+          column: "user_main_f_flag",
+          checked: session?.user.mainWordExpOpts?.stateFlags.user_main_f_flag!,
         },
         {
           label: "건너뛴단어",
-          checked: false,
+          column: "user_main_s_flag",
+          checked: session?.user.mainWordExpOpts?.stateFlags.user_main_s_flag!,
         },
       ],
     },
@@ -207,15 +218,18 @@ const Setting: NextPage<SettingTypes> = () => {
       acrdList: [
         {
           label: "CS",
-          checked: true,
+          column: "user_main_cs_flag",
+          checked: session?.user.mainWordExpOpts?.cateFlags.user_main_cs_flag!,
         },
         {
           label: "Web",
-          checked: true,
+          column: "user_main_web_flag",
+          checked: session?.user.mainWordExpOpts?.cateFlags.user_main_web_flag!,
         },
         {
           label: "Native",
-          checked: true,
+          column: "user_main_ntv_flag",
+          checked: session?.user.mainWordExpOpts?.cateFlags.user_main_ntv_flag!,
         },
       ],
     },
@@ -271,6 +285,42 @@ const Setting: NextPage<SettingTypes> = () => {
                   key={index}
                   typo={list.label}
                   defaultChecked={list.checked}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    const res = axios.post(
+                      "http://localhost:3000" + "/api/user/opt",
+                      {
+                        column: list.column,
+                        value: e.target.checked ? 1 : 0,
+                      }
+                    );
+                    res.then((result) => {
+                      result.status === 200
+                        ? (() => {
+                            const msgId = uuid();
+                            dispatch(
+                              setMsg({
+                                msg: {
+                                  text: `${list.label} 노출옵션이 ${
+                                    e.target.checked ? "활성" : "비활성"
+                                  }화 되었습니다.`,
+                                  id: msgId,
+                                },
+                              })
+                            );
+                            setTimeout(() => {
+                              dispatch(
+                                clearMsg({
+                                  msg: {
+                                    id: msgId,
+                                  },
+                                })
+                              );
+                            }, 2500);
+                            reloadSession();
+                          })()
+                        : void 0;
+                    });
+                  }}
                 />
               ))}
             </Accordion>
@@ -303,4 +353,7 @@ const Setting: NextPage<SettingTypes> = () => {
   );
 };
 
+export const getServerSideProps = async (context: any) => {
+  return { props: {} };
+};
 export default Setting;

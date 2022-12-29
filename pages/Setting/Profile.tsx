@@ -12,6 +12,7 @@ import ButtonCompontent from "pages/components/atoms/Button";
 import ButtonWrapComponent from "pages/components/molecules/ButtonWrap";
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { useSession } from "next-auth/react";
 
 interface SettingProfileTypes extends styledInterface {}
 
@@ -34,9 +35,7 @@ const SettingProfileUser = styled.div`
 const ProfileListWrap = styled.div``;
 
 const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
-  const userData = useSelector<ReducerType, UserDataTypes>(
-    (state) => state.user
-  );
+  const { data: session, status } = useSession();
 
   const [wordActivity, setWordActivity] = useState(false);
 
@@ -54,7 +53,7 @@ const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
     <SettingProfileWrap>
       <SettingProfileUser>
         <ImgComponent
-          src={userData.prfImg}
+          src={session?.user.image!}
           objectFit="cover"
           marginBottom="16px"
           width="80px"
@@ -73,9 +72,12 @@ const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
       </SettingProfileUser>
 
       <ProfileListWrap>
-        <ProfileListComponent typo="이름" userInfo={`${userData.id}`} />
-        <ProfileListComponent typo="닉네임" userInfo={`${userData.nickName}`} />
-        <ProfileListComponent typo="소개글" />
+        <ProfileListComponent typo="이름" userInfo={`${session?.user.email}`} />
+        <ProfileListComponent
+          typo="닉네임"
+          userInfo={`${session?.user.name}`}
+        />
+        {/* <ProfileListComponent typo="소개글" /> */}
       </ProfileListWrap>
 
       <ButtonWrapComponent>
