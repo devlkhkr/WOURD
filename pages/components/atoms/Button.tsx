@@ -9,6 +9,7 @@ interface ButtonTypes extends styledInterface {
 const ButtonStyled = styled.button<ButtonTypes>`
   width: ${(props) => props.width || "100%"};
   height: ${(props) => props.height};
+  padding: 0 ${(props) => (props.width === "auto" ? "32px" : "")};
   background-color: ${(props) => props.backgroundColor};
   margin-top: ${(props) => props.marginTop};
   color: ${(props) => props.color};
