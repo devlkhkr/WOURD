@@ -7,7 +7,7 @@ import { unstable_getServerSession } from "next-auth/next";
 
 const getCateFlagQuery = (cateFlags: object | null | undefined) => {
   if (cateFlags) {
-    const transition = "SELECT * FROM WORD_TB, USER_WORD_TB WHERE";
+    const transition = "SELECT * FROM WORD_TB WHERE";
     let query = transition;
     Object.entries(cateFlags).map((oIterable: Array<any>, index: number) => {
       query +=
@@ -52,7 +52,7 @@ export default async function getWordlist(
   console.log(session.user.mainWordExpOpts);
   const ReqFullQuery =
     getCateFlagQuery(session.user.mainWordExpOpts?.cateFlags) +
-    getStateFlagQuery(session.user.mainWordExpOpts?.stateFlags) +
+    // getStateFlagQuery(session.user.mainWordExpOpts?.stateFlags) +
     " ORDER BY RAND ()";
   console.log(ReqFullQuery);
   db.query(ReqFullQuery, function (err: any, result: any) {
