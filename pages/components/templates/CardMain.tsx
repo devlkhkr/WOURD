@@ -86,6 +86,7 @@ const CardBackStyled = styled.div`
   ${CardBaseStyle}
   transform: rotateY(180deg);
   background: linear-gradient(#3f88ef, #0047ab);
+  color: #fff;
   &.state {
     &_k {
       background: linear-gradient(#80d069, #38991c);
@@ -99,7 +100,6 @@ const CardBackStyled = styled.div`
     &_s {
     }
   }
-  color: #fff;
   > div {
     & + div {
       margin-top: 4px;
@@ -200,6 +200,35 @@ const ButtonCardClose = styled.i`
   right: 16px;
   top: 16px;
   z-index: 1;
+`;
+
+const WordRegInfoStyled = styled.div`
+  display: inline-block;
+  position: absolute;
+  left: 16px;
+  top: 16px;
+  &::before {
+    /* content: "등록자:";
+    font-size: 14px;
+    margin-right: 16px;
+    vertical-align: middle;
+    opacity: 0.8; */
+  }
+  img,
+  span {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  img {
+    width: 24px;
+    height: 24px;
+    background-color: #fff;
+    border-radius: 100%;
+  }
+  span {
+    margin-left: 8px;
+    font-size: 14px;
+  }
 `;
 
 const CardMainComponent: React.FC<CardMainTypes> = ({
@@ -336,6 +365,10 @@ const CardMainComponent: React.FC<CardMainTypes> = ({
                   ) : (
                     <></>
                   )}
+                  <WordRegInfoStyled>
+                    <img src={objWord.user_prf_img}></img>
+                    <span>{objWord.user_nickname}</span>
+                  </WordRegInfoStyled>
                   <Typo fontSize="24px" fontWeight="bold">
                     {objWord.word_name}
                   </Typo>

@@ -8,21 +8,23 @@ export default function getMyWordlist(
 ) {
   db.query(
     "SELECT " +
-      "user_word_key," +
-      "user_id," +
+      "USER_WORD_TB.user_word_key," +
+      "USER_TB.user_id," +
       "USER_WORD_TB.word_id," +
-      "word_name," +
-      "word_unravel," +
-      "word_desc," +
-      "word_state," +
-      "state_modified_date," +
-      "word_reg_userid," +
-      "word_is_cs_flag," +
-      "word_is_web_flag," +
-      "word_is_ntv_flag" +
-      " FROM USER_WORD_TB LEFT OUTER JOIN WORD_TB ON USER_WORD_TB.word_id = WORD_TB.word_id WHERE user_id='" +
+      "USER_TB.user_prf_img," +
+      "USER_TB.user_nickname," +
+      "WORD_TB.word_name," +
+      "WORD_TB.word_unravel," +
+      "WORD_TB.word_desc," +
+      "USER_WORD_TB.word_state," +
+      "USER_WORD_TB.state_modified_date," +
+      "WORD_TB.word_reg_userid," +
+      "WORD_TB.word_is_cs_flag," +
+      "WORD_TB.word_is_web_flag," +
+      "WORD_TB.word_is_ntv_flag" +
+      " FROM USER_WORD_TB LEFT OUTER JOIN WORD_TB ON USER_WORD_TB.word_id = WORD_TB.word_id LEFT JOIN USER_TB ON WORD_TB.word_reg_userid = USER_TB.user_id WHERE USER_WORD_TB.user_id='" +
       req.query.userId +
-      "' AND NOT word_state='s' AND word_use_flag=1 ORDER BY state_modified_date desc",
+      "' AND word_use_flag=1 ORDER BY state_modified_date desc",
     function (err: any, data: any) {
       if (!err) {
         res.send(data);

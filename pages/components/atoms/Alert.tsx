@@ -3,6 +3,14 @@ import styled from "styled-components";
 import styledInterface from "../Intefaces/styledComponent";
 
 import { clearMsg, RdxMsgTypes, selectAlert, setMsg } from "redux/slices/alert";
+import uuid from "uuid4";
+import { store } from "redux/store";
+import { useStore } from "react-redux";
+import { useState } from "react";
+
+interface AlertMsgTypes {
+  state?: string;
+}
 
 const AlertWrapStyled = styled.div`
   position: fixed;
@@ -20,14 +28,17 @@ const AlertWrapStyled = styled.div`
   pointer-events: none;
 `;
 
-const AlertMsgStyled = styled.div`
+const AlertMsgStyled = styled.div<AlertMsgTypes>`
   width: 100%;
   padding: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  background-color: rgba(0, 0, 0, 0.75);
+  background-color: ${(props) =>
+    props.state === "pstv"
+      ? "rgba(20, 136, 190, 0.75)"
+      : "rgba(240, 130, 142, 0.75)"};
   color: #fff;
   font-size: 12px;
   border-radius: 8px;
@@ -40,13 +51,29 @@ const AlertMsgStyled = styled.div`
   }
 `;
 
+export function newAlert(text: string, state: string) {
+  const msgId = uuid();
+  store.dispatch(setMsg({ msg: { text: text, id: msgId, state: state } }));
+  setTimeout(() => {
+    store.dispatch(clearMsg({ msg: { id: msgId } }));
+  }, 2500);
+}
+
 const AlertComponent: React.FC = ({}) => {
-  const { msg } = useSelector(selectAlert);
+  const [msg, setMsg] = useState({});
+  store.subscribe(() => {
+    setMsg(store.getState().alert.msg);
+  });
+  //   const { msg } = useSelector(selectAlert);
   if (Object.keys(msg).length != 0) {
     return (
       <AlertWrapStyled>
         {Object.entries(msg).map((mIterable: any, index: number) => {
-          return <AlertMsgStyled key={index}>{mIterable[1]}</AlertMsgStyled>;
+          return (
+            <AlertMsgStyled key={index} state={mIterable[1].state}>
+              {mIterable[1].text}
+            </AlertMsgStyled>
+          );
         })}
       </AlertWrapStyled>
     );

@@ -7,6 +7,7 @@ interface ToggleCheckTypes extends styledInterface {
   typo?: string;
   defaultChecked?: boolean;
   onChange?: Function;
+  reference?: any;
 }
 
 const ToggleCheckStyled = styled.div`
@@ -25,6 +26,7 @@ const ToggleCheckComponent: React.FC<ToggleCheckTypes> = ({
   typo,
   defaultChecked,
   onChange,
+  reference,
 }) => {
   return (
     <ToggleCheckStyled>
@@ -35,6 +37,7 @@ const ToggleCheckComponent: React.FC<ToggleCheckTypes> = ({
         isToggle={true}
         defaultChecked={defaultChecked}
         onChange={onChange}
+        reference={reference}
       />
     </ToggleCheckStyled>
   );

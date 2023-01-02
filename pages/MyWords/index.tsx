@@ -28,6 +28,8 @@ interface MyWordsListTypes {
   word_reg_userid: string;
   word_unravel: string;
   word_state: string;
+  user_prf_img: string;
+  user_nickname: string;
   word_is_cs_flag: number;
   word_is_web_flag: number;
   word_is_ntv_flag: number;
@@ -174,7 +176,7 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
   const [myWordList, setMyWordList] = useState<MyWordsListTypes[]>([]);
   const [currentCardIdx, setCurrentCardIdx] = useState(0);
   const [wordFilterOpened, setWordFilterOpened] = useState(false);
-
+  console.log(myWordList);
   const myCardClick = (_objMyWord: MyWordsListTypes, _index: number) => {
     setCurrentCardIdx(_index);
     let obj = [
@@ -188,6 +190,8 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
         word_unravel: _objMyWord.word_unravel,
         fliped: true,
         state: _objMyWord.word_state,
+        user_prf_img: _objMyWord.user_prf_img,
+        user_nickname: _objMyWord.user_nickname,
         word_is_cs_flag: _objMyWord.word_is_cs_flag,
         word_is_web_flag: _objMyWord.word_is_web_flag,
         word_is_ntv_flag: _objMyWord.word_is_ntv_flag,
