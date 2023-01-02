@@ -76,11 +76,6 @@ export default async function getWordlist(
       session.user.email
     ) +
     " ORDER BY RAND ()";
-  // const ReqFullQuery = `SELECT DISTINCT
-  // word_seq, word_id, word_name, word_intl_flag, word_unravel,
-  // word_desc, word_reg_userid, word_reg_date, word_use_flag,
-  // word_is_cs_flag, word_is_web_flag, word_is_ntv_flag FROM WORD_TB WHERE (word_id) NOT IN
-  // (SELECT word_id FROM USER_WORD_TB WHERE user_id='dev' AND word_state IN ('k'))`;
   db.query(ReqFullQuery, function (err: any, result: any) {
     if (err) {
       console.log(err);
