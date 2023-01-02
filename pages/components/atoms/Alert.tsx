@@ -3,6 +3,10 @@ import styled from "styled-components";
 import styledInterface from "../Intefaces/styledComponent";
 
 import { clearMsg, RdxMsgTypes, selectAlert, setMsg } from "redux/slices/alert";
+import uuid from "uuid4";
+import { store } from "redux/store";
+import { useStore } from "react-redux";
+import { useState } from "react";
 
 const AlertWrapStyled = styled.div`
   position: fixed;
@@ -40,8 +44,20 @@ const AlertMsgStyled = styled.div`
   }
 `;
 
+export function newAlert(text: string) {
+  const msgId = uuid();
+  store.dispatch(setMsg({ msg: { text: text, id: msgId } }));
+  setTimeout(() => {
+    store.dispatch(clearMsg({ msg: { id: msgId } }));
+  }, 2500);
+}
+
 const AlertComponent: React.FC = ({}) => {
-  const { msg } = useSelector(selectAlert);
+  const [msg, setMsg] = useState({});
+  store.subscribe(() => {
+    setMsg(store.getState().alert.msg);
+  });
+  //   const { msg } = useSelector(selectAlert);
   if (Object.keys(msg).length != 0) {
     return (
       <AlertWrapStyled>
