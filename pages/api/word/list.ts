@@ -11,9 +11,9 @@ const getCateFlagQuery = (cateFlags: object | null | undefined) => {
       // "SELECT DISTINCT" +
       "SELECT " +
       "word_seq, word_id, word_name, word_intl_flag, word_unravel, " +
-      "word_desc, word_reg_userid, word_reg_date, " +
+      "word_desc, word_reg_userid, user_prf_img, user_nickname, word_reg_date, " +
       "word_use_flag, word_is_cs_flag, word_is_web_flag, word_is_ntv_flag " +
-      "FROM WORD_TB WHERE (" +
+      "FROM WORD_TB LEFT JOIN USER_TB ON WORD_TB.word_reg_userid = USER_TB.user_id WHERE (" +
       "";
     let query = transition;
     Object.entries(cateFlags).map((oIterable: Array<any>, index: number) => {
@@ -69,7 +69,6 @@ export default async function getWordlist(
     res.status(401).json({ message: "You must be logged in." });
     return;
   }
-  console.log(session.user.mainWordExpOpts);
   const ReqFullQuery =
     getCateFlagQuery(session.user.mainWordExpOpts?.cateFlags) +
     getStateFlagQuery(
@@ -82,7 +81,6 @@ export default async function getWordlist(
   // word_desc, word_reg_userid, word_reg_date, word_use_flag,
   // word_is_cs_flag, word_is_web_flag, word_is_ntv_flag FROM WORD_TB WHERE (word_id) NOT IN
   // (SELECT word_id FROM USER_WORD_TB WHERE user_id='dev' AND word_state IN ('k'))`;
-  console.log(ReqFullQuery);
   db.query(ReqFullQuery, function (err: any, result: any) {
     if (err) {
       console.log(err);
