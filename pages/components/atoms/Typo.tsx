@@ -34,7 +34,7 @@ const TypoComponent: React.FC<TypoType> = ({
   children,
   className,
   onClick,
-  marginBottom
+  marginBottom,
 }) => {
   return (
     <TypoStyled

@@ -21,6 +21,7 @@ import axios from "axios";
 import { clearMsg, setMsg } from "redux/slices/alert";
 import uuid from "uuid4";
 import { newAlert } from "pages/components/atoms/Alert";
+import TypoComponent from "pages/components/atoms/Typo";
 
 interface SettingTypes extends styledInterface {
   typo: string;
@@ -81,14 +82,12 @@ const SettingTopStyled = styled.div`
 `;
 
 const ProfileWordsWrap = styled.div`
-  margin-bottom: 24px;
   border-bottom: 1px dashed #ddd;
 `;
 
 // app interface
 const SettingBottomStyled = styled.div`
   border-top: 1px solid rgba(120, 120, 120, 0.4);
-  margin-top: 24px;
 `;
 
 const AcrdWrapStyled = styled.div`
@@ -291,7 +290,14 @@ const Setting: NextPage<SettingTypes> = () => {
           </ProfileWordsWrap>
         );
       })}
-
+      <TypoComponent
+        textAlign="left"
+        marginTop="20px"
+        marginBottom="12px"
+        color="var(--color-grey)"
+      >
+        &bull;메인카드 노출 옵션
+      </TypoComponent>
       <SettingTopStyled>
         {objAcrdList.map((objAcrd, index) => (
           <AcrdWrapStyled key={index}>
@@ -360,6 +366,14 @@ const Setting: NextPage<SettingTypes> = () => {
         ))}
       </SettingTopStyled>
 
+      <TypoComponent
+        textAlign="left"
+        marginTop="20px"
+        marginBottom="12px"
+        color="var(--color-grey)"
+      >
+        &bull;이 앱에 대해서
+      </TypoComponent>
       <SettingBottomStyled>
         {modalComponents.map((item: modalComponentsTypes, index: number) => (
           <SettingListComponent
