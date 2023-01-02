@@ -325,7 +325,8 @@ const Setting: NextPage<SettingTypes> = () => {
                       ? (() => {
                           e.target.checked = true;
                           newAlert(
-                            "카테고리 토글은 최소 한개이상 설정되어야 합니다."
+                            "카테고리 토글은 최소 한개이상 설정되어야 합니다.",
+                            "ngtv"
                           );
                           return;
                         })()
@@ -343,7 +344,8 @@ const Setting: NextPage<SettingTypes> = () => {
                                   newAlert(
                                     `${list.label} 노출옵션이 ${
                                       e.target.checked ? "활성" : "비활성"
-                                    }화 되었습니다.`
+                                    }화 되었습니다.`,
+                                    "pstv"
                                   );
                                   reloadSession();
                                 })()

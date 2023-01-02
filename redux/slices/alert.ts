@@ -50,6 +50,7 @@ export interface RdxMsgTypes {
   [prop: string]: any;
   text?: string;
   id?: string;
+  state?: string;
 }
 export interface AlertDataTypes {
   msg: RdxMsgTypes;
@@ -66,7 +67,7 @@ export const alertSlice = createSlice({
   initialState,
   reducers: {
     setMsg: (state, actions) => {
-      state.msg[actions.payload.msg.id] = actions.payload.msg.text;
+      state.msg[actions.payload.msg.id] = actions.payload.msg;
       state.isEmpty = Object.keys(state.msg).length === 0 ? true : false;
     },
     clearMsg: (state, actions) => {
