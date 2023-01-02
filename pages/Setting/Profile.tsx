@@ -75,7 +75,6 @@ const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
         <ProfileListComponent
           typo="이메일"
           userInfo={`${session?.user.email}`}
-          readonly={true}
         />
         <ProfileListComponent
           typo="닉네임"

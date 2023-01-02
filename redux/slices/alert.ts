@@ -25,7 +25,7 @@
 //       state.isEmpty = state.msg.length === 0 ? true : false;
 //     },
 //     foldMsg: (state, actions) => {
-      
+
 //     },
 //     clearMsg: (state, actions) => {
 //       for (let i = 0; i < state.msg.length; i++) {
@@ -47,7 +47,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface RdxMsgTypes {
-  [prop:string]: any;
+  [prop: string]: any;
   text?: string;
   id?: string;
 }
@@ -70,7 +70,7 @@ export const alertSlice = createSlice({
       state.isEmpty = Object.keys(state.msg).length === 0 ? true : false;
     },
     clearMsg: (state, actions) => {
-      delete state.msg[actions.payload.msg.id]
+      delete state.msg[actions.payload.msg.id];
       state.isEmpty = Object.keys(state.msg).length === 0 ? true : false;
     },
   },
