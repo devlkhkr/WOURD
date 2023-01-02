@@ -202,11 +202,30 @@ const ButtonCardClose = styled.i`
   z-index: 1;
 `;
 
+const WordCateListStyled = styled.div`
+  margin-bottom: 6px;
+  span {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.5);
+    & + span {
+      &::before {
+        content: "";
+        display: inline-block;
+        width: 1px;
+        height: 9px;
+        background-color: rgba(255, 255, 255, 0.15);
+        margin: 0 8px;
+      }
+    }
+  }
+`;
+
 const WordRegInfoStyled = styled.div`
   display: inline-block;
   position: absolute;
   left: 16px;
   top: 16px;
+  text-align: left;
   &::before {
     /* content: "등록자:";
     font-size: 14px;
@@ -215,7 +234,7 @@ const WordRegInfoStyled = styled.div`
     opacity: 0.8; */
   }
   img,
-  span {
+  .card_user_nickname {
     display: inline-block;
     vertical-align: middle;
   }
@@ -225,7 +244,7 @@ const WordRegInfoStyled = styled.div`
     background-color: #fff;
     border-radius: 100%;
   }
-  span {
+  .card_user_nickname {
     margin-left: 8px;
     font-size: 14px;
   }
@@ -367,8 +386,15 @@ const CardMainComponent: React.FC<CardMainTypes> = ({
                   )}
                   <WordRegInfoStyled>
                     <img src={objWord.user_prf_img}></img>
-                    <span>{objWord.user_nickname}</span>
+                    <span className="card_user_nickname">
+                      {objWord.user_nickname}
+                    </span>
                   </WordRegInfoStyled>
+                  <WordCateListStyled>
+                    {objWord.word_is_cs_flag ? <span>CS</span> : <></>}
+                    {objWord.word_is_web_flag ? <span>WEB</span> : <></>}
+                    {objWord.word_is_ntv_flag ? <span>NATIVE</span> : <></>}
+                  </WordCateListStyled>
                   <Typo fontSize="24px" fontWeight="bold">
                     {objWord.word_name}
                   </Typo>
