@@ -57,7 +57,7 @@ const MultiSelectComponent: React.FC<MultiSelectTypes> = ({
               name={name}
               value={o.value}
               id={name + o.value}
-              referance={(checkbox: HTMLInputElement) =>
+              reference={(checkbox: HTMLInputElement) =>
                 (multiSelectRefs.current[index] = checkbox)
               }
             />
