@@ -36,10 +36,12 @@ const LoginStyled = styled.form<LoginTypes>`
   &::before {
     content: "";
     position: absolute;
-    left: 0;
+    left: 50%;
     top: 0;
+    transform: translate(-50%, 0);
     display: inline-block;
     width: 100%;
+    max-width: 720px;
     height: 100%;
     background-image: url(../images/bg_login.png);
     background-size: 100%;
