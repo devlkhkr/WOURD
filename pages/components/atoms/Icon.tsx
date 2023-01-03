@@ -42,6 +42,7 @@ const Icon: React.FC<IconWrapTypes & IconTypes> = ({
   align,
   svgSize,
   color,
+  onClick,
 }) => {
   return (
     <IconWrap
@@ -51,6 +52,7 @@ const Icon: React.FC<IconWrapTypes & IconTypes> = ({
       align={align}
       svgSize={svgSize}
       color={color}
+      onClick={onClick}
     >
       <FontAwesomeIcon icon={iconShape} />
     </IconWrap>
