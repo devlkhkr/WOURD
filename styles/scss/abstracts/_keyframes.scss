@@ -36,3 +36,30 @@
     opacity: 1;
   }
 }
+
+@keyframes breath {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes vibrate {
+  0% {
+    margin-left: -2px;
+  }
+  25% {
+    margin-left: 2px;
+  }
+  75% {
+    margin-left: -2px;
+  }
+  100% {
+    margin-left: 2px;
+  }
+}

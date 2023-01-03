@@ -7,7 +7,7 @@ const Input = styled.input`
   height: 40px;
   border-style: solid;
   border-width: 0 0 1px;
-  border-color: var(--color-lightgrey);
+  border-color: #e3e3e3;
   background-color: transparent;
   padding: 0 8px;
   border-radius: 0;
@@ -20,13 +20,19 @@ const Input = styled.input`
     border-color: #222;
   }
   &:read-only {
-    background-color: #f3f3f3;
+    background-color: #f6f7f8;
   }
   &[data-valid-state="valid"] {
     border-color: #3bc831;
   }
+  &[data-valid-state="valid"]:not(:focus) {
+    animation: breath 0.4s ease-in-out;
+  }
   &[data-valid-state="err"] {
     border-color: #e51937;
+  }
+  &[data-valid-state="err"]:not(:focus) {
+    animation: vibrate 0.2s ease-in-out 0s 2;
   }
 `;
 

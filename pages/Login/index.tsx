@@ -24,19 +24,30 @@ interface LoginTypes {
 }
 
 const LoginStyled = styled.form<LoginTypes>`
-  position: fixed;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
   z-index: 19998;
   display: flex;
   flex-flow: column;
-  align-items: center;
   justify-content: center;
-  padding: 16px;
+  padding: 20px;
   background-color: #fff;
   overflow: hidden;
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    background-image: url(../images/bg_login.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    z-index: -1;
+    opacity: 0.5;
+  }
   input {
     margin-top: 8px;
   }
@@ -120,7 +131,15 @@ const LoginComponent: NextPage<LoginTypes> = ({ isAuth }) => {
         <></>
       )}
       <LoginStyled onSubmit={startLogin}>
-        <Logo mainColor="var(--color-point)" subColor="#231815" />
+        {/* <Logo mainColor="var(--color-point)" subColor="#231815" /> */}
+        <Typo
+          textAlign="left"
+          fontSize="24px"
+          fontWeight="bold"
+          color="var(--color-darkblue)"
+        >
+          로그인
+        </Typo>
         <Fieldset>
           <InputText
             type="text"
@@ -148,7 +167,7 @@ const LoginComponent: NextPage<LoginTypes> = ({ isAuth }) => {
         </Fieldset>
         <Typo
           fontSize="14px"
-          color="rgba(0,0,0,.5)"
+          color="var(--color-grey)"
           onClick={(e) => setJoinPageOpened(true)}
         >
           회원가입

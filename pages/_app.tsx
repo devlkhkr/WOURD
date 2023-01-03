@@ -62,7 +62,7 @@ const DEFAULT_SEO = {
 const Wrapper = styled.div`
   width: 100%;
   height: 100%;
-  background-color: #f3f3f3;
+  background-color: #f6f7f8;
   overflow: hidden;
 `;
 
@@ -188,18 +188,20 @@ function MyApp({
           <Alert />
           <GlobalModal />
           <Wrap>
-            <Header />
             {/* content */}
-            <ComponentWrap className={router.pathname == "/" ? "isMain" : ""}>
-              {Component.defaultProps?.isAuth === true ? (
-                <Component {...pageProps} />
-              ) : (
-                <Auth>
+            {Component.defaultProps?.isAuth === true ? (
+              <Component {...pageProps} />
+            ) : (
+              <Auth>
+                <Header />
+                <ComponentWrap
+                  className={router.pathname == "/" ? "isMain" : ""}
+                >
                   <Component {...pageProps} />
-                </Auth>
-              )}
-            </ComponentWrap>
-            <Footer />
+                </ComponentWrap>
+                <Footer />
+              </Auth>
+            )}
           </Wrap>
         </Wrapper>
         {/* )} */}

@@ -21,7 +21,7 @@ const AccordionWrapsetStyled = styled.div<AccordionTypes>`
       : ``}
 
   & + * {
-    border-top: 1px dashed #ddd;
+    border-top: 1px dashed #838da2;
   }
 `;
 

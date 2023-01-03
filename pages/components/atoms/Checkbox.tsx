@@ -53,7 +53,7 @@ const CheckboxStyled = styled.input<CheckboxTypes>`
           vertical-align: middle;
           background-color: #fff;
           border: 1px solid var(--color-lightgrey);
-          border-radius: 2px;
+          border-radius: 4px;
           position: relative;
           &:before {
             display: none;

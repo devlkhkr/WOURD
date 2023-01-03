@@ -32,6 +32,7 @@ const HeaderLogo = styled.div`
   h2 {
     font-size: 16px;
     font-weight: var(--weight-bold);
+    color: var(--color-darkblue);
   }
 `;
 
@@ -66,7 +67,12 @@ const HeaderComponent: React.FC<HeaderComponentTypes> = ({}) => {
   const getHdrTitle = (path: string) => {
     switch (path) {
       case "/":
-        return <Logo mainColor="var(--color-point)" subColor="#231815" />;
+        return (
+          <Logo
+            mainColor="var(--color-point)"
+            subColor="var(--color-darkblue)"
+          />
+        );
       case "/MyWords":
         return <h2>단어장</h2>;
       case "/MyWords/Regist":

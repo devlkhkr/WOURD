@@ -7,7 +7,7 @@ interface UsageComponent extends styledInterface {
 
 const UsageStyled = styled.ul<UsageComponent>`
   /* background-color: #ebf7ff; */
-  background-color: #f1f4f7;
+  background-color: #f4f7ff;
   padding: 16px 16px 16px 10px;
   li {
     padding-left: 12px;

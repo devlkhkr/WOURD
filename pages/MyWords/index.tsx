@@ -75,7 +75,7 @@ const MyWordListWrapStyled = styled.div`
     }
     &::after {
       border-width: 0 20px 20px 0;
-      border-color: transparent #f3f3f3 transparent transparent;
+      border-color: transparent #f6f7f8 transparent transparent;
     }
     &::before {
       border-width: 20px 0 0 20px;
@@ -117,7 +117,7 @@ const MyWordListStyled = styled.div`
     position: absolute;
     bottom: 0;
     left: 0;
-    background: linear-gradient(transparent, #f3f3f3);
+    background: linear-gradient(transparent, #f6f7f8);
     pointer-events: none;
   }
 `;

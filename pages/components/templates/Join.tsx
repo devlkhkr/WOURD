@@ -68,7 +68,7 @@ const JoinStyled = styled.div<JoinTypes>`
   height: 100%;
   z-index: 19999;
   padding: 16px;
-  background-color: #f3f3f3;
+  background-color: #f6f7f8;
   overflow-y: auto;
   animation: popup 0.3s linear;
 `;

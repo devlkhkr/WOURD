@@ -69,7 +69,7 @@ const getCommitTypeColor = (type: string) => {
     case 10: //BREAKING CHANGE
       return "#c19e426f";
     default:
-      return "#f3f3f3";
+      return "#c2c8cf";
   }
   return "";
 };
@@ -77,7 +77,7 @@ const getCommitTypeColor = (type: string) => {
 const CommitInfoStyled = styled.div<CommitInfoTypes>`
   width: 100%;
   padding: 16px 16px 16px 20px;
-  background-color: #f3f3f3;
+  background-color: #f6f7f8;
   border-radius: 8px;
   position: relative;
   overflow: hidden;

@@ -14,7 +14,7 @@ const ButtonStyled = styled.button<ButtonTypes>`
   margin-top: ${(props) => props.marginTop};
   color: ${(props) => props.color};
   border-color: transparent;
-  border-radius: 4px;
+  border-radius: 8px;
   font-size: ${(props) => props.fontSize || "14px"};
 `;
 
