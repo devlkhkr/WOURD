@@ -17,6 +17,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const FooterWrap = styled.footer`
+  box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, 0.05);
   ul {
     display: flex;
     align-items: center;

@@ -67,6 +67,7 @@ const SettingWrap = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 100%;
+  box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, 0.05);
 `;
 
 // user profile
@@ -392,7 +393,7 @@ const Setting: NextPage<SettingTypes> = () => {
         ))}
 
         <SettingListComponent typo="버전정보" rightTypo="1.0.0" />
-        <SettingListComponent
+        {/* <SettingListComponent
           typo="로그아웃"
           color="var(--color-red)"
           onClick={() => {
@@ -401,7 +402,7 @@ const Setting: NextPage<SettingTypes> = () => {
               callbackUrl: "/Login",
             });
           }}
-        />
+        /> */}
       </SettingBottomStyled>
     </SettingWrap>
   );

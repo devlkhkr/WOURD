@@ -1,5 +1,4 @@
 import type { NextPage } from "next";
-import { useRouter } from "next/router";
 import Button from "../components/atoms/Button";
 import styled from "styled-components";
 import styledInterface from "../components/Intefaces/styledComponent";
@@ -59,6 +58,7 @@ const MyWordListWrapStyled = styled.div`
   margin-top: 16px;
   position: relative;
   overflow: hidden;
+  /* box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, 0.05); */
   &[class*="state"] {
     &:first-child {
       margin-top: 0;
@@ -167,11 +167,6 @@ const WordFilterList = styled.div`
 `;
 
 const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
-  const router = useRouter();
-  const addNewWordClick = () => {
-    router.push("/MyWords/Regist");
-  };
-
   const [clickedWord, setClickedWord] = useState<ExposeWordTypes[]>([]);
   const [myWordList, setMyWordList] = useState<MyWordsListTypes[]>([]);
   const [currentCardIdx, setCurrentCardIdx] = useState(0);
@@ -230,14 +225,6 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
         <></>
       )}
       <WordCtrlStyled>
-        <WordCtrlIconWrap onClick={addNewWordClick}>
-          <Icon
-            iconShape={faPlus}
-            iconWidth="20px"
-            iconHeight="20px"
-            color="var(--color-grey)"
-          />
-        </WordCtrlIconWrap>
         <WordCtrlIconWrap
           onClick={() => setWordFilterOpened(!wordFilterOpened)}
         >
