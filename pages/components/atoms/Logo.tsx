@@ -1,13 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import styledInterface from "../Intefaces/styledComponent"
+import styledInterface from "../Intefaces/styledComponent";
 interface LogoTypes extends styledInterface {
   mainColor: string;
   subColor: string;
 }
 
 const LogoStyled = styled.div<LogoTypes>`
-  width: ${(props) => props.width || "80px"};
+  width: ${(props) => props.width || "60px"};
   height: ${(props) => props.height || "unset"};
 `;
 
