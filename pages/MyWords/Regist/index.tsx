@@ -199,7 +199,7 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
                 value: 1,
               },
               {
-                name: "App",
+                name: "Native",
                 value: 2,
               },
             ]}
