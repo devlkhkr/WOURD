@@ -52,7 +52,7 @@ const ProfileWordItemComponent: React.FC<ProfileWordTitleTypes> = (props) => {
             iconWidth="14px"
             iconHeight="14px"
             svgSize="14px"
-            color="var(--color-point)"
+            color="var(--color-grey)"
           />
         );
       case "dontknow":
@@ -62,7 +62,7 @@ const ProfileWordItemComponent: React.FC<ProfileWordTitleTypes> = (props) => {
             iconWidth="14px"
             iconHeight="14px"
             svgSize="14px"
-            color="var(--color-point)"
+            color="var(--color-grey)"
           />
         );
       case "favorite":
@@ -72,7 +72,7 @@ const ProfileWordItemComponent: React.FC<ProfileWordTitleTypes> = (props) => {
             iconWidth="14px"
             iconHeight="14px"
             svgSize="14px"
-            color="var(--color-point)"
+            color="var(--color-grey)"
           />
         );
       case "skip":
@@ -82,7 +82,7 @@ const ProfileWordItemComponent: React.FC<ProfileWordTitleTypes> = (props) => {
             iconWidth="14px"
             iconHeight="14px"
             svgSize="14px"
-            color="var(--color-point)"
+            color="var(--color-grey)"
           />
         );
       default:
