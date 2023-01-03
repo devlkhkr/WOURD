@@ -19,6 +19,10 @@ const AccordionWrapsetStyled = styled.div<AccordionTypes>`
       max-height: ${props.childrenLength! * 40 + "px" || "0"};
     `
       : ``}
+
+  & + * {
+    border-top: 1px dashed #ddd;
+  }
 `;
 
 const AccordionComponent: React.FC<AccordionTypes> = ({
@@ -28,7 +32,7 @@ const AccordionComponent: React.FC<AccordionTypes> = ({
   return (
     <AccordionWrapsetStyled
       isOpened={isOpened}
-      childrenLength={children.length}
+      childrenLength={children?.length}
     >
       {children}
     </AccordionWrapsetStyled>

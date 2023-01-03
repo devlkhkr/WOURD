@@ -196,7 +196,7 @@ const Setting: NextPage<SettingTypes> = () => {
       toggleFunc: setWordCtrlByState,
       usageList: [
         "상태별 노출 관리를 통해 이미 상태 변경 된 단어를 다시 메인에 노출할지 결정합니다.",
-        "단어장에 없는 새로운 단어만 보고싶으시다면 상태별 노출관리 토글을 모두 해제해보세요.",
+        "단어장에 없는 새로운 단어만 보시려면 상태별 노출관리 토글을 모두 해제해보세요.",
       ],
       acrdList: {
         type: "state",
@@ -261,12 +261,6 @@ const Setting: NextPage<SettingTypes> = () => {
       },
     },
   ];
-
-  const getIsCateOptsVld = (opts: object, list: object) => {
-    console.log(opts);
-    console.log(list);
-    return true;
-  };
 
   return (
     <SettingWrap>
