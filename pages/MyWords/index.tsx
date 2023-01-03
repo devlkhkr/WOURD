@@ -296,13 +296,11 @@ export async function getServerSideProps(context: any) {
   //   },
   // });
 
-  const res = await fetch(
-    "http://localhost:3000" +
-      "/api/myword/list?" +
-      new URLSearchParams({
-        userId: session?.user?.email!,
-      })
-  );
+  const res = await fetch("http://localhost:3000" + "/api/myword/list", {
+    headers: {
+      cookie: context.req.headers.cookie || "",
+    },
+  });
   const data = await res.json();
 
   return {

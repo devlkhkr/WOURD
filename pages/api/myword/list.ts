@@ -1,11 +1,18 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
+import { unstable_getServerSession } from "next-auth";
+import { authOptions } from "../auth/[...nextauth]";
 const db = require("../../../common/config/db");
 
-export default function getMyWordlist(
+export default async function getMyWordlist(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  const session = await unstable_getServerSession(req, res, authOptions);
+  if (!session) {
+    res.status(401).json({ message: "You must be logged in." });
+    return;
+  }
   db.query(
     "SELECT " +
       "USER_WORD_TB.user_word_key," +
@@ -23,7 +30,7 @@ export default function getMyWordlist(
       "WORD_TB.word_is_web_flag," +
       "WORD_TB.word_is_ntv_flag" +
       " FROM USER_WORD_TB LEFT OUTER JOIN WORD_TB ON USER_WORD_TB.word_id = WORD_TB.word_id LEFT JOIN USER_TB ON WORD_TB.word_reg_userid = USER_TB.user_id WHERE USER_WORD_TB.user_id='" +
-      req.query.userId +
+      session.user.email +
       "' AND word_use_flag=1 ORDER BY state_modified_date desc",
     function (err: any, data: any) {
       if (!err) {
