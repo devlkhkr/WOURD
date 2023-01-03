@@ -22,6 +22,7 @@ import { clearMsg, setMsg } from "redux/slices/alert";
 import uuid from "uuid4";
 import { newAlert } from "pages/components/atoms/Alert";
 import TypoComponent from "pages/components/atoms/Typo";
+import UsageComponent from "pages/components/molecules/Usage";
 
 interface SettingTypes extends styledInterface {
   typo: string;
@@ -33,6 +34,7 @@ interface AcrdListTypes {
   acrdTitle: string;
   toggleFlag: boolean;
   toggleFunc: Function;
+  usageList?: string[];
   acrdList: {
     type: string;
     data: {
@@ -192,6 +194,10 @@ const Setting: NextPage<SettingTypes> = () => {
       acrdTitle: "상태별 노출 관리",
       toggleFlag: wordCtrlByState,
       toggleFunc: setWordCtrlByState,
+      usageList: [
+        "상태별 노출 관리를 통해 이미 상태 변경 된 단어를 다시 메인에 노출할지 결정합니다.",
+        "단어장에 없는 새로운 단어만 보고싶으시다면 상태별 노출관리 토글을 모두 해제해보세요.",
+      ],
       acrdList: {
         type: "state",
         data: [
@@ -226,6 +232,10 @@ const Setting: NextPage<SettingTypes> = () => {
       acrdTitle: "카테고리별 노출 관리",
       toggleFlag: wordCtrlByCate,
       toggleFunc: setWordCtrlByCate,
+      usageList: [
+        "카테고리별 노출 관리를 통해 특정 카테고리에 해당하는 단어만 메인에 노출할지 결정합니다.",
+        "카테고리별 노출 관리 토글은 최소 한개 이상 선택되어야 합니다.",
+      ],
       acrdList: {
         type: "category",
         data: [
@@ -362,10 +372,14 @@ const Setting: NextPage<SettingTypes> = () => {
                 />
               ))}
             </Accordion>
+            {objAcrd.usageList && objAcrd.toggleFlag ? (
+              <UsageComponent usageList={objAcrd.usageList} />
+            ) : (
+              <></>
+            )}
           </AcrdWrapStyled>
         ))}
       </SettingTopStyled>
-
       <TypoComponent
         textAlign="left"
         marginTop="20px"
