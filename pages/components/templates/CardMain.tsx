@@ -281,8 +281,9 @@ const CardMainComponent: React.FC<CardMainTypes> = ({
     _objWord.state = `state_${state}`;
     setCardData(_objWord, state);
     setWordList([...wordList]);
+    console.log(_objWord);
     newAlert(
-      `${_objWord.word_name}의 상태가 ${_objWord.state}로 변경되었습니다.`,
+      `${_objWord.word_name}의 상태가 ${state}로 변경되었습니다.`,
       "pstv"
     );
   };
