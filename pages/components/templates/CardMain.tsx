@@ -16,6 +16,7 @@ import { UserDataTypes } from "redux/slices/user";
 import { useSession } from "next-auth/react";
 import DataEmptyComponent from "../molecules/DataEmpty";
 import { useRouter } from "next/router";
+import { newAlert } from "../atoms/Alert";
 
 interface CardMainTypes {
   exposeWord: ExposeWordTypes[];
@@ -280,6 +281,10 @@ const CardMainComponent: React.FC<CardMainTypes> = ({
     _objWord.state = `state_${state}`;
     setCardData(_objWord, state);
     setWordList([...wordList]);
+    newAlert(
+      `${_objWord.word_name}의 상태가 ${_objWord.state}로 변경되었습니다.`,
+      "pstv"
+    );
   };
 
   const setCardData = async (_objWord: ExposeWordTypes, _state: string) => {
