@@ -13,6 +13,7 @@ const Input = styled.input`
   border-radius: 0;
   position: relative;
   outline: none;
+  transition-duration: 0.3s;
 
   &[class*="input_bg"] {
     background-repeat: no-repeat;
