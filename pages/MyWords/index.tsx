@@ -55,7 +55,7 @@ const MyWordListWrapStyled = styled.div`
   background-color: #fff;
   border-radius: 8px;
   padding: 16px;
-  margin-top: 16px;
+  margin-top: 12px;
   position: relative;
   overflow: hidden;
   /* box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, 0.05); */
@@ -101,19 +101,19 @@ const MyWordListWrapStyled = styled.div`
 const WordScrollStyled = styled.div`
   height: 100%;
   overflow: auto;
-  padding-bottom: 64px;
+  padding-bottom: 32px;
 `;
 
 const MyWordListStyled = styled.div`
-  height: calc(100% - 60px);
-  margin-top: 20px;
+  height: calc(100% - 56px);
+  margin-top: 16px;
   overflow: hidden;
   position: relative;
   &::after {
     content: "";
     display: inline-block;
     width: 100%;
-    height: 64px;
+    height: 32px;
     position: absolute;
     bottom: 0;
     left: 0;
@@ -234,8 +234,8 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
         <WordCtrlIconWrap>
           <Icon
             iconShape={faSliders}
-            iconWidth="20px"
-            iconHeight="20px"
+            iconWidth="16px"
+            iconHeight="16px"
             color="var(--color-grey)"
             onClick={() => setWordFilterOpened(!wordFilterOpened)}
           />
@@ -255,7 +255,7 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
             >
               <Typo
                 lineClamp="1"
-                fontSize="18px"
+                fontSize="16px"
                 fontWeight="bold"
                 textAlign="left"
               >

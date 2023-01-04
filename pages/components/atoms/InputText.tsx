@@ -17,7 +17,7 @@ const Input = styled.input`
   &[class*="input_bg"] {
     background-repeat: no-repeat;
     background-position: center left 8px;
-    background-size: 20px;
+    background-size: 16px;
     padding-left: 40px;
   }
   &.input_bg {

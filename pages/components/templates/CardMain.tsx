@@ -366,7 +366,7 @@ const CardMainComponent: React.FC<CardMainTypes> = ({
                   <></>
                 ) : (
                   <CardFrontStyled>
-                    <Typo fontSize="24px" fontWeight="bold">
+                    <Typo fontSize="20px" fontWeight="bold">
                       {objWord.word_name}
                     </Typo>
                   </CardFrontStyled>
@@ -401,7 +401,7 @@ const CardMainComponent: React.FC<CardMainTypes> = ({
                     {objWord.word_is_web_flag ? <span>WEB</span> : <></>}
                     {objWord.word_is_ntv_flag ? <span>NATIVE</span> : <></>}
                   </WordCateListStyled>
-                  <Typo fontSize="24px" fontWeight="bold">
+                  <Typo fontSize="20px" fontWeight="bold">
                     {objWord.word_name}
                   </Typo>
                   <Typo fontSize="16px" fontWeight="semi-bold">
