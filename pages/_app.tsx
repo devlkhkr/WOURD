@@ -64,6 +64,9 @@ const Wrapper = styled.div`
   height: 100%;
   background-color: #f6f7f8;
   overflow: hidden;
+  &.isLogin {
+    background-color: #fff;
+  }
 `;
 
 const Wrap = styled.div`
@@ -183,7 +186,7 @@ function MyApp({
 
         {/* body */}
         {loadingStart || axiosLoading ? <Loading /> : <></>}
-        <Wrapper>
+        <Wrapper className={router.pathname == "/Login" ? "isLogin" : ""}>
           {/* modal */}
           <Alert />
           <GlobalModal />
