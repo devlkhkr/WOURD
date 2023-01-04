@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import Button from "../components/atoms/Button";
 import styled from "styled-components";
 import styledInterface from "../components/Intefaces/styledComponent";
-import { useEffect, useState } from "react";
+import { FormEventHandler, SyntheticEvent, useEffect, useState } from "react";
 import axios from "axios";
 import Typo from "pages/components/atoms/Typo";
 import CardMain, { ExposeWordTypes } from "pages/components/templates/CardMain";
@@ -172,7 +172,7 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
   const [myWordList, setMyWordList] = useState<MyWordsListTypes[]>([]);
   const [currentCardIdx, setCurrentCardIdx] = useState(0);
   const [wordFilterOpened, setWordFilterOpened] = useState(false);
-  console.log(myWordList);
+
   const myCardClick = (_objMyWord: MyWordsListTypes, _index: number) => {
     setCurrentCardIdx(_index);
     let obj = [
@@ -207,6 +207,17 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
     setClickedWord([]);
   };
 
+  const myWordSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(event.target.value);
+    let searchedData = myWordList.filter(
+      (word) =>
+        word.word_name
+          .toUpperCase()
+          .indexOf(event.target.value.toUpperCase()) != -1
+    );
+    console.log("searchedData:::", searchedData);
+  };
+
   useEffect(() => {
     setMyWordList(dataMyWordList);
   }, []);
@@ -230,6 +241,9 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
           type="text"
           placeHolder="단어명으로 검색"
           className="input_bg_search"
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+            myWordSearchChange(event);
+          }}
         />
         <WordCtrlIconWrap>
           <Icon
