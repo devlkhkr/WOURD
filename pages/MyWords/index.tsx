@@ -216,6 +216,10 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
           .indexOf(event.target.value.toUpperCase()) != -1
     );
     console.log("searchedData:::", searchedData);
+    console.log("length:::", event.target.value.length);
+    event.target.value.length == 0 || searchedData.length == 0
+      ? setMyWordList(dataMyWordList)
+      : setMyWordList(searchedData);
   };
 
   useEffect(() => {
