@@ -105,7 +105,7 @@ const WordScrollStyled = styled.div`
 `;
 
 const MyWordListStyled = styled.div`
-  height: calc(100% - 40px);
+  height: calc(100% - 60px);
   margin-top: 20px;
   overflow: hidden;
   position: relative;
