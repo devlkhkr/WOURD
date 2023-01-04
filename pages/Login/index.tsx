@@ -58,6 +58,11 @@ const LoginStyled = styled.form<LoginTypes>`
   }
 `;
 
+const LoginWithOtherSys = styled.div`
+  button {
+  }
+`;
+
 const LoginComponent: NextPage<LoginTypes> = ({ isAuth }) => {
   const idInput: any = useRef();
   const pwInput: any = useRef();
@@ -150,6 +155,7 @@ const LoginComponent: NextPage<LoginTypes> = ({ isAuth }) => {
               setLoginUserId(e.currentTarget.value);
             }}
             reference={idInput}
+            className="input_bg_email"
           />
           <InputText
             type="password"
@@ -158,6 +164,7 @@ const LoginComponent: NextPage<LoginTypes> = ({ isAuth }) => {
               setLoginUserPw(e.currentTarget.value);
             }}
             reference={pwInput}
+            className="input_bg_pw"
           />
           <Button
             type="submit"
@@ -174,6 +181,16 @@ const LoginComponent: NextPage<LoginTypes> = ({ isAuth }) => {
         >
           회원가입
         </Typo>
+        {/* <LoginWithOtherSys>
+          <Button
+            type="submit"
+            desc="카카오로 로그인"
+            height="48px"
+            color="#333"
+            backgroundColor="#fada0a"
+            onClick={() => signIn("kakao")}
+          />
+        </LoginWithOtherSys> */}
       </LoginStyled>
     </>
   );

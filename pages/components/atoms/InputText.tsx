@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import styledInterface from "../Intefaces/styledComponent";
-
+import { svgEmailIcon, svgPwIcon, svgSearchIcon } from "./SvgIcons";
 const Input = styled.input`
   width: ${(props) => props.width || "100%"};
   height: 40px;
@@ -13,6 +13,25 @@ const Input = styled.input`
   border-radius: 0;
   position: relative;
   outline: none;
+
+  &[class*="input_bg"] {
+    background-repeat: no-repeat;
+    background-position: center left 8px;
+    background-size: 20px;
+    padding-left: 40px;
+  }
+  &.input_bg {
+    &_search {
+      background-image: ${svgSearchIcon("838da2")};
+    }
+    &_email {
+      background-image: ${svgEmailIcon("838da2")};
+    }
+    &_pw {
+      background-image: ${svgPwIcon("838da2")};
+    }
+  }
+
   &::placeholder {
     color: var(--color-grey);
   }
@@ -46,6 +65,7 @@ interface InputTextTypes extends styledInterface {
   reference?: any;
   maxLength?: number;
   defaultValue?: string;
+  bgType?: string;
 }
 
 const InputText: React.FC<InputTextTypes> = ({
@@ -60,7 +80,11 @@ const InputText: React.FC<InputTextTypes> = ({
   onKeyUp,
   reference,
   defaultValue,
+  className,
 }) => {
+  const getInputBgClass = (bgType: string) => {
+    return "test";
+  };
   return (
     <Input
       type={type}
@@ -74,6 +98,8 @@ const InputText: React.FC<InputTextTypes> = ({
       onKeyUp={onKeyUp}
       ref={reference}
       defaultValue={defaultValue}
+      className={className}
+      // className={bgType ? getInputBgClass(bgType) : ""}
     />
   );
 };

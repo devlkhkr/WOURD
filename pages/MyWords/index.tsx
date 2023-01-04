@@ -123,12 +123,16 @@ const MyWordListStyled = styled.div`
 `;
 
 const WordCtrlStyled = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
-  height: 20px;
+  height: 40px;
   overflow: hidden;
   i {
     display: inline-block;
     overflow: hidden;
+    margin-left: 16px;
   }
   > * {
     vertical-align: middle;
@@ -137,13 +141,6 @@ const WordCtrlStyled = styled.div`
 
 const WordCtrlIconWrap = styled.div`
   display: inline-block;
-  position: absolute;
-  &:first-child {
-    left: 20px;
-  }
-  &:last-child {
-    right: 20px;
-  }
 `;
 
 const WordFilterList = styled.div`
@@ -225,14 +222,18 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
         <></>
       )}
       <WordCtrlStyled>
-        <WordCtrlIconWrap
-          onClick={() => setWordFilterOpened(!wordFilterOpened)}
-        >
+        <InputText
+          type="text"
+          placeHolder="단어명으로 검색"
+          className="input_bg_search"
+        />
+        <WordCtrlIconWrap>
           <Icon
             iconShape={faSliders}
             iconWidth="20px"
             iconHeight="20px"
             color="var(--color-grey)"
+            onClick={() => setWordFilterOpened(!wordFilterOpened)}
           />
         </WordCtrlIconWrap>
       </WordCtrlStyled>
