@@ -123,16 +123,20 @@ const MyWordListStyled = styled.div`
 `;
 
 const WordCtrlStyled = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: relative;
   width: 100%;
   height: 40px;
   overflow: hidden;
   i {
     display: inline-block;
     overflow: hidden;
-    margin-left: 16px;
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translate(0, -50%);
+  }
+  input {
+    padding-right: 40px;
   }
   > * {
     vertical-align: middle;

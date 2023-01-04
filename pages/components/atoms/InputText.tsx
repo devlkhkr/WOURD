@@ -13,7 +13,6 @@ const Input = styled.input`
   border-radius: 0;
   position: relative;
   outline: none;
-  transition-duration: 0.3s;
 
   &[class*="input_bg"] {
     background-repeat: no-repeat;
@@ -38,6 +37,7 @@ const Input = styled.input`
   }
   &:focus {
     border-color: #222;
+    transition-duration: 0.3s;
   }
   &:read-only {
     background-color: #f6f7f8;
