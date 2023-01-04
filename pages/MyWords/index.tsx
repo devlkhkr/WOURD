@@ -17,6 +17,7 @@ import Icon from "pages/components/atoms/Icon";
 import { faFilter, faPlus, faSliders } from "@fortawesome/free-solid-svg-icons";
 import Checkbox from "pages/components/atoms/Checkbox";
 import Label from "pages/components/atoms/Label";
+import ToggleCheckComponent from "pages/components/atoms/Toggle";
 
 interface MyWordsListTypes {
   user_id: string;
@@ -149,8 +150,7 @@ const WordCtrlIconWrap = styled.div`
 
 const WordFilterList = styled.div`
   width: 240px;
-  height: 200px;
-  padding: 16px;
+  padding: 8px;
   background-color: #fff;
   position: absolute;
   right: 20px;
@@ -260,8 +260,13 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
         </WordCtrlIconWrap>
       </WordCtrlStyled>
       <WordFilterList className={wordFilterOpened ? "active" : ""}>
-        <Checkbox id="aaa" />
-        <Label desc="아는 단어" htmlFor="aaa" />
+        <ToggleCheckComponent typo={"아는단어"} defaultChecked={true} />
+        <ToggleCheckComponent typo={"모르는단어"} defaultChecked={true} />
+        <ToggleCheckComponent typo={"즐겨찾은단어"} defaultChecked={true} />
+        <ToggleCheckComponent typo={"건너뛴단어"} defaultChecked={true} />
+        <ToggleCheckComponent typo={"CS"} defaultChecked={true} />
+        <ToggleCheckComponent typo={"Web"} defaultChecked={true} />
+        <ToggleCheckComponent typo={"Native"} defaultChecked={true} />
       </WordFilterList>
       <MyWordListStyled>
         <WordScrollStyled>
