@@ -14,6 +14,7 @@ const StackWrap = styled.ul`
   gap: 16px;
   padding: 0 4px;
   margin-top: 16px;
+  margin-bottom: 16px;
 `;
 
 // const StackComponent = styled.li`
@@ -111,11 +112,24 @@ const SystemSpec: React.FC = () => {
           <StackComponent
             name="Next-js"
             src="spec-nextjs.png"
-            by="Vercel"
+            by="vercel"
             docs="https://nextjs.org/"
             desc="The React Framework for Production"
           />
-          
+          <StackComponent
+            name="React"
+            src="spec-react.png"
+            by="meta"
+            docs="https://reactjs.org/"
+            desc="A JavaScript library for building user interfaces"
+          />
+          <StackComponent
+            name="React-router-dom"
+            src="spec-react-router-dom.png"
+            by="remix"
+            docs="https://reactrouter.com/en/main"
+            desc="an npm package that enables you to implement dynamic routing in a web app"
+          />
           
         </StackWrap>
       </section>

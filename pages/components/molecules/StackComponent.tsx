@@ -13,6 +13,15 @@ interface StackComponentType extends styledInterface {
   desc: string;
 }
 
+const StackItem = styled.li`
+  width: 100%;
+  border-radius: 16px;
+  box-shadow: 0px 2px 4px 2px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+`;
+
 const StackItemTop = styled.div`
   width: 100%;
   display: flex;
@@ -25,24 +34,16 @@ const StackItemTitle = styled.div``;
 
 const LinkTo = styled.a`
   text-decoration: none;
-  &:visited, &{
+  &:visited,
+  & {
     color: #202020;
   }
 `;
 
-const StackItem = styled.li`
-  width: 100%;
-  border-radius: 16px;
-  box-shadow: 0px 2px 4px 2px rgba(0, 0, 0, 0.1);
-  display: flex;
-  align-items: center;
-  padding: 16px;
-`;
-
 const StackImgIcon = styled.i`
   display: inline-block;
-  width: 56px;
-  height: 56px;
+  width: 48px;
+  height: 48px;
   background-color: #fff;
   display: flex;
   align-items: center;
@@ -56,11 +57,7 @@ const StackImgIcon = styled.i`
   }
 `;
 
-const StackItemBottom = styled.div`
-
-`
-
-
+const StackItemBottom = styled.div``;
 
 const StackComponent: React.FC<StackComponentType> = ({
   name,
@@ -74,32 +71,34 @@ const StackComponent: React.FC<StackComponentType> = ({
       <StackItemTop>
         <StackItemTitle>
           <TypoComponent
-            fontSize="16px"
+            fontSize="14px"
             fontWeight="bold"
             textAlign="left"
             color="#202020"
             marginBottom="4px"
           >
             <Link href={docs} passHref>
-            <LinkTo target="_blank" rel="noopener noreferrer">
-              {name}
-            </LinkTo>
+              <LinkTo target="_blank" rel="noopener noreferrer">
+                {name}
+              </LinkTo>
             </Link>
           </TypoComponent>
-          <TypoComponent
-            fontSize="14px"
-            textAlign="left"
-            color="#202020"
-          >
+          <TypoComponent fontSize="12px" textAlign="left" color="#6e7781">
             By {by}
-          </TypoComponent>          
+          </TypoComponent>
         </StackItemTitle>
         <StackImgIcon>
           <ImgComponent src={`/images/spec/${src}`} />
         </StackImgIcon>
       </StackItemTop>
       <StackItemBottom>
-
+        <TypoComponent
+          fontSize="14px"
+          textAlign="left"
+          color="#6e7781"
+        >
+          {desc}
+        </TypoComponent>
       </StackItemBottom>
     </StackItem>
   );

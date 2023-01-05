@@ -101,7 +101,6 @@ const SystemDevsComponent: React.FC<SystemDevType> = ({
           fontSize="16px"
           fontWeight="bold"
           color="#202020"
-          marginTop="8px"
         >
           {name}
         </TypoComponent>

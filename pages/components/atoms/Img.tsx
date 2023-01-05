@@ -16,7 +16,7 @@ const ImgStyled = styled.img<ImgTypes>`
   border: ${(props) =>
     props.borderColor
       ? `1px solid ${props.borderColor}`
-      : "1px solid var(--color-deepgrey)"};
+      : "1px solid transparent"};
   object-fit: ${(props) => props.objectFit || "unset"};
   margin-bottom: ${(props) => props.marginBottom || "0"};
 `;
