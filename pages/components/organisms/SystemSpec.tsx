@@ -109,12 +109,14 @@ const SystemSpec: React.FC = () => {
         </TypoComponent>
         <StackWrap>
           <StackComponent
-            name="next-js"
+            name="Next-js"
             src="spec-nextjs.png"
             by="Vercel"
             docs="https://nextjs.org/"
             desc="The React Framework for Production"
           />
+          
+          
         </StackWrap>
       </section>
     </>
