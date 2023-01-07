@@ -212,7 +212,30 @@ const SystemSpec: React.FC = () => {
             docs="https://nodemailer.com/about/"
             desc="Nodemailer is a module for Node.js applications to allow easy as cake email sending."
           />
-          
+        </StackWrap>
+      </section>
+
+      {/* state management */}
+      <section className="state-section">
+        <TypoComponent
+          fontSize="18px"
+          fontWeight="bold"
+          textAlign="left"
+          color="#202020"
+          marginTop="16px"
+          marginBottom="16px"
+          paddingLeft="4px"
+        >
+          State Management
+        </TypoComponent>
+        <StackWrap>
+          <StackComponent
+            name="Redux-Toolkit"
+            src="spec-redux.svg"
+            by="dan abramov"
+            docs="https://redux-toolkit.js.org/"
+            desc="The Redux Toolkit package is intended to be the standard way to write Redux logic."
+          />
         </StackWrap>
       </section>
     </>
