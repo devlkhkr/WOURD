@@ -238,6 +238,52 @@ const SystemSpec: React.FC = () => {
           />
         </StackWrap>
       </section>
+
+       {/* view */}
+       <section className="view-section">
+        <TypoComponent
+          fontSize="18px"
+          fontWeight="bold"
+          textAlign="left"
+          color="#202020"
+          marginTop="16px"
+          marginBottom="16px"
+          paddingLeft="4px"
+        >
+          View
+        </TypoComponent>
+        <StackWrap>
+          <StackComponent
+            name="Sass"
+            src="spec-sass.png"
+            by="macstadium"
+            docs="https://sass-lang.com/"
+            desc="Sass is the most mature, stable, and powerful professional grade CSS extension language in the world."
+          />
+          <StackComponent
+            name="Styled-Component"
+            src="spec-styledcomponent.png"
+            by="open source"
+            docs="https://styled-components.com/"
+            desc="Visual primitives for the component age."
+          />
+          <StackComponent
+            name="Font-Awesome"
+            src="spec-fontawesome.svg"
+            by="Dave Gandy"
+            docs="https://fontawesome.com/"
+            desc="Take the hassle out of icons"
+          />
+          <StackComponent
+            name="Font-Awesome"
+            src="spec-dicebear.svg"
+            by="FlorianKoerner"
+            docs="https://avatars.dicebear.com/"
+            desc="Can choose between simple identicons and lovely designed characters."
+          />
+          
+        </StackWrap>
+      </section>
     </>
   );
 };
