@@ -173,11 +173,46 @@ const SystemSpec: React.FC = () => {
           <StackComponent
             name="Crypto-js"
             src="spec-crypto.png"
-            by="vercel"
+            by="open source"
             docs="https://cryptojs.gitbook.io/docs/"
             desc="JavaScript implementations of standard and secure cryptographic algorithms"
           />
-          {/* https://cryptojs.gitbook.io/docs/ */}
+          <StackComponent
+            name="Uuid4"
+            src="spec-uuid4.png"
+            by="open source"
+            docs="https://github.com/tracker1/node-uuid4"
+            desc="A Node.js module for generating and validation V4 UUIDs"
+          />
+          <StackComponent
+            name="Validator"
+            src="spec-validator.png"
+            by="open source"
+            docs="https://github.com/validatorjs/validator.js"
+            desc="A library of string validators and sanitizers."
+          />
+          <StackComponent
+            name="Password Validator"
+            src="spec-pwvalidator.png"
+            by="open source"
+            docs="https://github.com/tarunbatra/password-validator#readme"
+            desc="Validates password according to flexible and intuitive specifications"
+          />
+          <StackComponent
+            name="Cors"
+            src="spec-cors.png"
+            by="express"
+            docs="https://expressjs.com/en/resources/middleware/cors.html"
+            desc="CORS is a node.js package for providing a Connect/Express middleware that can be used to enable CORS with various options."
+          />
+          <StackComponent
+            name="Node-Mailer"
+            src="spec-nodemailer.png"
+            by="emailengine"
+            docs="https://nodemailer.com/about/"
+            desc="Nodemailer is a module for Node.js applications to allow easy as cake email sending."
+          />
+          
         </StackWrap>
       </section>
     </>
