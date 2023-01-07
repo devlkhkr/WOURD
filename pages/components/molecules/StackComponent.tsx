@@ -54,6 +54,7 @@ const StackImgIcon = styled.i`
     max-width: 60%;
     height: auto;
     max-height: 55%;
+    border-radius: 0;
   }
 `;
 
@@ -96,6 +97,7 @@ const StackComponent: React.FC<StackComponentType> = ({
           fontSize="14px"
           textAlign="left"
           color="#6e7781"
+          lineHeight="1.4"
         >
           {desc}
         </TypoComponent>

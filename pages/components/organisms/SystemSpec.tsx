@@ -61,7 +61,7 @@ const SystemSpec: React.FC = () => {
         by: "",
         docs: "",
         desc: "",
-      }
+      },
     },
   };
 
@@ -79,6 +79,7 @@ const SystemSpec: React.FC = () => {
           fontWeight="bold"
           textAlign="left"
           color="#202020"
+          paddingLeft="4px"
         >
           Developers
         </TypoComponent>
@@ -105,6 +106,7 @@ const SystemSpec: React.FC = () => {
           color="#202020"
           marginTop="16px"
           marginBottom="16px"
+          paddingLeft="4px"
         >
           Specification
         </TypoComponent>
@@ -130,7 +132,52 @@ const SystemSpec: React.FC = () => {
             docs="https://reactrouter.com/en/main"
             desc="an npm package that enables you to implement dynamic routing in a web app"
           />
-          
+          <StackComponent
+            name="TypeScript"
+            src="spec-typescript.png"
+            by="microsoft"
+            docs="https://www.typescriptlang.org/"
+            desc="TypeScript is a strongly typed programming language that builds on JavaScript"
+          />
+          <StackComponent
+            name="Next-seo"
+            src="spec-nextjs.png"
+            by="vercel"
+            docs="https://nextjs.org/learn/seo/introduction-to-seo"
+            desc="a plugin that makes managing your SEO easier in Next.js projects."
+          />
+        </StackWrap>
+      </section>
+
+      {/* Auth */}
+      <section className="auth-section">
+        <TypoComponent
+          fontSize="18px"
+          fontWeight="bold"
+          textAlign="left"
+          color="#202020"
+          marginTop="16px"
+          marginBottom="16px"
+          paddingLeft="4px"
+        >
+          Auth
+        </TypoComponent>
+        <StackWrap>
+          <StackComponent
+            name="Next-auth"
+            src="spec-nextauth.png"
+            by="vercel"
+            docs="https://next-auth.js.org/"
+            desc="A complete open-source authentication solution for Next.js applications."
+          />
+          <StackComponent
+            name="Crypto-js"
+            src="spec-crypto.png"
+            by="vercel"
+            docs="https://cryptojs.gitbook.io/docs/"
+            desc="JavaScript implementations of standard and secure cryptographic algorithms"
+          />
+          {/* https://cryptojs.gitbook.io/docs/ */}
         </StackWrap>
       </section>
     </>

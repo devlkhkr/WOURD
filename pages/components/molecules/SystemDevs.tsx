@@ -30,9 +30,7 @@ const DevsItem = styled.li`
 `;
 
 const DevsInfo = styled.div`
-  max-width: 120px;
-  width: 40%;
-  padding: 0 24px;
+  width: 72px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -40,9 +38,8 @@ const DevsInfo = styled.div`
 `;
 
 const DevSocial = styled.div`
-  width: 60%;
-  border-left: 1px solid rgba(0, 0, 0, 0.1);
-  padding-left: 24px;
+  width: calc(100% - 72px);
+  padding-left: 16px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -108,7 +105,6 @@ const SystemDevsComponent: React.FC<SystemDevType> = ({
           fontSize="14px"
           fontWeight="medium"
           color="#999999"
-          marginTop="4px"
         >
           {pos}
         </TypoComponent>

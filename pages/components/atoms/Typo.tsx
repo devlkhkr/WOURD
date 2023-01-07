@@ -19,6 +19,7 @@ const TypoStyled = styled.div<TypoType>`
   overflow: hidden;
   word-break: break-word;
   display: -webkit-box;
+  padding-left: ${(props) => props.paddingLeft || "0"};
   -webkit-line-clamp: ${(props) => props.lineClamp || "unset"};
   -webkit-box-orient: vertical;
 `;
@@ -35,6 +36,7 @@ const TypoComponent: React.FC<TypoType> = ({
   className,
   onClick,
   marginBottom,
+  paddingLeft,
 }) => {
   return (
     <TypoStyled
@@ -48,6 +50,7 @@ const TypoComponent: React.FC<TypoType> = ({
       className={className}
       onClick={onClick}
       marginBottom={marginBottom}
+      paddingLeft={paddingLeft}
     >
       {children}
     </TypoStyled>
