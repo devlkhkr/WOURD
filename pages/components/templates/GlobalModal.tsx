@@ -8,8 +8,10 @@ import HelpMessage from "../organisms/HelpMessage";
 import Notice from "../organisms/Notice";
 import SystemSpec from "../organisms/SystemSpec";
 import { selectModal, openModal, closeModal } from "redux/slices/modal";
+import TypoComponent from "../atoms/Typo";
 
 interface ModalTypes {
+  title?: string;
   type: string;
   component: any;
 }
@@ -27,18 +29,22 @@ const modalStringList = {
 
 const modalComponentList: Array<ModalTypes> = [
   {
+    title: "공지사항",
     type: modalStringList.NoticeModal,
     component: <Notice />,
   },
   {
+    title: "도움말",
     type: modalStringList.HelpMessageModal,
     component: <HelpMessage />,
   },
   {
+    title: "개발히스토리",
     type: modalStringList.DevLogModal,
     component: <DevLog />,
   },
   {
+    title: "시스템스펙",
     type: modalStringList.SystemSpecModal,
     component: <SystemSpec />,
   },
@@ -63,10 +69,10 @@ const ModalWrapStyled = styled.div`
 
 const CloseModalStyled = styled.div`
   display: inline-block;
-  width: 24px;
-  height: 24px;
-  right: 16px;
-  top: 16px;
+  width: 16px;
+  height: 16px;
+  right: 24px;
+  top: 12px;
   position: absolute;
   z-index: 1;
 `;
@@ -74,7 +80,6 @@ const CloseModalStyled = styled.div`
 const ModalCardStyled = styled.div`
   width: 100%;
   height: calc(100% - (var(--height-header) + var(--height-footer)));
-  padding: 16px;
   margin: 0 auto;
   position: relative;
   background-color: #fff;
@@ -84,10 +89,17 @@ const ModalCardStyled = styled.div`
 `;
 
 const ModalDetailsStyled = styled.div`
-  height: calc(100% - 32px);
+  height: calc(100% - 48px);
   position: relative;
-  top: 32px;
+  /* top: 32px; */
   overflow: auto;
+  padding: 16px;
+`;
+
+const TitModalStyled = styled.div`
+  height: 48px;
+  padding-left: 16px;
+  background-color: var(--color-point);
 `;
 
 const GlobalModalComponent: React.FC = () => {
@@ -99,6 +111,12 @@ const GlobalModalComponent: React.FC = () => {
     return modal.type === modalType;
   });
 
+  const getModalTitle = () => {
+    if (findModal != undefined) {
+      return findModal.title;
+    }
+  };
+
   const getModalComponent = () => {
     if (findModal != undefined) {
       return findModal.component;
@@ -108,6 +126,16 @@ const GlobalModalComponent: React.FC = () => {
   return (
     <ModalWrapStyled>
       <ModalCardStyled>
+        <TitModalStyled>
+          <TypoComponent
+            textAlign="left"
+            lineHeight="48px"
+            color="#fff"
+            fontWeight="bold"
+          >
+            {getModalTitle()}
+          </TypoComponent>
+        </TitModalStyled>
         <CloseModalStyled onClick={() => dispatch(closeModal())}>
           <Icon
             iconShape={faXmark}
@@ -115,7 +143,7 @@ const GlobalModalComponent: React.FC = () => {
             iconHeight="24px"
             svgSize="24px"
             align="auto"
-            color="var(--color-black)"
+            color="#fff"
           />
         </CloseModalStyled>
         <ModalDetailsStyled>{getModalComponent()}</ModalDetailsStyled>
