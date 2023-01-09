@@ -338,6 +338,7 @@ const CardMainComponent: React.FC<CardMainTypes> = ({
             detail="설정에서 단어 노출 옵션을 변경해보세요.<br/>새로운 단어를 등록해보시는 건 어떨까요?"
             ppsTit="단어 등록하기"
             ppsFunc={goToWordReg}
+            fullsize={true}
           />
         )}
         {wordList.map((objWord: any, index: number) => (
@@ -404,7 +405,7 @@ const CardMainComponent: React.FC<CardMainTypes> = ({
                   <Typo fontSize="20px" fontWeight="bold">
                     {objWord.word_name}
                   </Typo>
-                  <Typo fontSize="16px" fontWeight="semi-bold">
+                  <Typo fontSize="14px" fontWeight="semi-bold">
                     {objWord.word_unravel}
                   </Typo>
                   <Typo fontSize="14px" fontWeight="regular" textAlign="left">
