@@ -99,7 +99,8 @@ const ModalDetailsStyled = styled.div`
 const TitModalStyled = styled.div`
   height: 48px;
   padding-left: 16px;
-  background-color: var(--color-point);
+  /* background-color: var(--color-point); */
+  background-color: #555;
 `;
 
 const GlobalModalComponent: React.FC = () => {
