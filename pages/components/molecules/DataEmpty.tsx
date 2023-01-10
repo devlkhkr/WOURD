@@ -9,6 +9,7 @@ interface DataEmptyTypes extends styledInterface {
   detail?: string;
   ppsTit?: string;
   ppsFunc?: MouseEventHandler;
+  fullsize?: boolean;
 }
 
 const DataEmptyStyled = styled.div<DataEmptyTypes>`
@@ -17,8 +18,9 @@ const DataEmptyStyled = styled.div<DataEmptyTypes>`
   justify-content: center;
   flex-flow: column;
   width: 100%;
-  height: 100%;
-  position: absolute;
+  height: ${(props) => (props.fullsize ? "100%" : "auto")};
+  padding: ${(props) => (props.fullsize ? "" : "24px 0")};
+  position: ${(props) => (props.fullsize ? "absolute" : "static")};
 `;
 
 const DataEmptyComponent: React.FC<DataEmptyTypes> = ({
@@ -26,9 +28,10 @@ const DataEmptyComponent: React.FC<DataEmptyTypes> = ({
   detail,
   ppsTit,
   ppsFunc,
+  fullsize,
 }) => {
   return (
-    <DataEmptyStyled>
+    <DataEmptyStyled fullsize={fullsize}>
       <Typo fontSize="18px" fontWeight="bold" color="var(--color-deepgrey)">
         {title}
       </Typo>
@@ -39,15 +42,19 @@ const DataEmptyComponent: React.FC<DataEmptyTypes> = ({
       ) : (
         <></>
       )}
-      <ButtonCompontent
-        desc={ppsTit}
-        onClick={ppsFunc}
-        width="auto"
-        height="40px"
-        backgroundColor="var(--color-deepgrey)"
-        marginTop="24px"
-        color="#fff"
-      ></ButtonCompontent>
+      {ppsTit && ppsFunc ? (
+        <ButtonCompontent
+          desc={ppsTit}
+          onClick={ppsFunc}
+          width="auto"
+          height="40px"
+          backgroundColor="var(--color-deepgrey)"
+          marginTop="24px"
+          color="#fff"
+        ></ButtonCompontent>
+      ) : (
+        <></>
+      )}
     </DataEmptyStyled>
   );
 };
