@@ -2,7 +2,13 @@ import type { NextPage } from "next";
 import Button from "../components/atoms/Button";
 import styled from "styled-components";
 import styledInterface from "../components/Intefaces/styledComponent";
-import { FormEventHandler, SyntheticEvent, useEffect, useState } from "react";
+import {
+  FormEventHandler,
+  MouseEventHandler,
+  SyntheticEvent,
+  useEffect,
+  useState,
+} from "react";
 import axios from "axios";
 import Typo from "pages/components/atoms/Typo";
 import CardMain, { ExposeWordTypes } from "pages/components/templates/CardMain";
@@ -14,10 +20,21 @@ import { unstable_getServerSession } from "next-auth";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 import InputText from "pages/components/atoms/InputText";
 import Icon from "pages/components/atoms/Icon";
-import { faFilter, faPlus, faSliders } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEllipsis,
+  faFilter,
+  faPen,
+  faPencil,
+  faPlus,
+  faSliders,
+} from "@fortawesome/free-solid-svg-icons";
 import Checkbox from "pages/components/atoms/Checkbox";
 import Label from "pages/components/atoms/Label";
 import ToggleCheckComponent from "pages/components/atoms/Toggle";
+import DataEmptyComponent from "pages/components/molecules/DataEmpty";
+import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
+import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 
 interface MyWordsListTypes {
   user_id: string;
@@ -52,14 +69,14 @@ const MyClickedCardStyled = styled.div`
 
 const MyWordListWrapStyled = styled.div`
   width: 100%;
-  height: 120px;
+  /* height: 136px; */
   background-color: #fff;
   border-radius: 8px;
   padding: 16px;
   margin-top: 12px;
   position: relative;
   overflow: hidden;
-  /* box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, 0.05); */
+  box-shadow: 0px 4px 0px 0px rgba(0, 0, 0, 0.05);
   &[class*="state"] {
     &:first-child {
       margin-top: 0;
@@ -106,8 +123,8 @@ const WordScrollStyled = styled.div`
 `;
 
 const MyWordListStyled = styled.div`
-  height: calc(100% - 56px);
-  margin-top: 16px;
+  height: calc(100% - 80px);
+  /* margin-top: 16px; */
   overflow: hidden;
   position: relative;
   &::after {
@@ -145,7 +162,8 @@ const WordCtrlStyled = styled.div`
 `;
 
 const WordCtrlIconWrap = styled.div`
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
 `;
 
 const WordFilterList = styled.div`
@@ -153,8 +171,9 @@ const WordFilterList = styled.div`
   padding: 8px;
   background-color: #fff;
   position: absolute;
-  right: 20px;
-  top: calc(var(--height-header) + 60px);
+  right: 0;
+  /* top: calc(var(--height-header) + 60px); */
+  top: 0;
   z-index: 1;
   border-radius: 8px;
   box-shadow: 0px 4px 12px 8px rgba(0, 0, 0, 0.05);
@@ -167,11 +186,66 @@ const WordFilterList = styled.div`
   }
 `;
 
+const WordCount = styled.div`
+  /* text-align: right; */
+  display: flex;
+  font-size: 12px;
+  color: var(--color-grey);
+  height: 40px;
+  line-height: 40px;
+  span {
+    display: inline-block;
+    width: 100%;
+    i {
+      color: #333;
+    }
+  }
+`;
+
+const MyWordCateListStyled = styled.div`
+  span {
+    & + span {
+      &::before {
+        content: "";
+        display: inline-block;
+        width: 1px;
+        height: 9px;
+        background-color: var(--color-grey);
+        margin: 0 8px;
+        opacity: 0.35;
+        vertical-align: middle;
+      }
+    }
+  }
+  img {
+    width: 16px;
+    height: 16px;
+    border-radius: 100%;
+    background-color: #f6f7f8;
+  }
+`;
+
+const WordEditWrapStyeld = styled.div`
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  i {
+    display: inline-block;
+    & + i {
+      margin-left: 12px;
+    }
+  }
+`;
+
 const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
+  const userData: any = useSession().data?.user;
   const [clickedWord, setClickedWord] = useState<ExposeWordTypes[]>([]);
   const [myWordList, setMyWordList] = useState<MyWordsListTypes[]>([]);
   const [currentCardIdx, setCurrentCardIdx] = useState(0);
   const [wordFilterOpened, setWordFilterOpened] = useState(false);
+  const [searchKeyword, setSearchKeyword] = useState("");
+  const [searchResult, setSearchResult] = useState<ExposeWordTypes[]>([]);
+  const router = useRouter();
 
   const myCardClick = (_objMyWord: MyWordsListTypes, _index: number) => {
     setCurrentCardIdx(_index);
@@ -208,18 +282,44 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
   };
 
   const myWordSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(event.target.value);
+    setSearchKeyword(event.target.value);
+
     let searchedData = myWordList.filter(
       (word) =>
         word.word_name
           .toUpperCase()
           .indexOf(event.target.value.toUpperCase()) != -1
     );
-    console.log("searchedData:::", searchedData);
-    console.log("length:::", event.target.value.length);
+
+    searchedData.length == 0
+      ? (() => {
+          setSearchResult(dataMyWordList);
+        })()
+      : (() => {
+          setSearchResult(searchedData);
+          setMyWordList(searchedData);
+        })();
     event.target.value.length == 0 || searchedData.length == 0
       ? setMyWordList(dataMyWordList)
       : setMyWordList(searchedData);
+  };
+
+  const goToWordReg = () => {
+    router.push("/MyWords/Regist");
+  };
+
+  const goToMain = () => {
+    router.push("/");
+  };
+
+  const editOnclick = (event: React.MouseEvent<HTMLElement>) => {
+    event.stopPropagation();
+    console.log("edit word");
+  };
+
+  const contextOnclick = (event: React.MouseEvent<HTMLElement>) => {
+    event.stopPropagation();
+    console.log("context onclick");
   };
 
   useEffect(() => {
@@ -249,6 +349,11 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
             myWordSearchChange(event);
           }}
         />
+      </WordCtrlStyled>
+      <WordCount>
+        <span>
+          총 <i>{myWordList.length}</i>개의 카드
+        </span>
         <WordCtrlIconWrap>
           <Icon
             iconShape={faSliders}
@@ -258,53 +363,103 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
             onClick={() => setWordFilterOpened(!wordFilterOpened)}
           />
         </WordCtrlIconWrap>
-      </WordCtrlStyled>
-      <WordFilterList className={wordFilterOpened ? "active" : ""}>
-        <ToggleCheckComponent typo={"아는단어"} defaultChecked={true} />
-        <ToggleCheckComponent typo={"모르는단어"} defaultChecked={true} />
-        <ToggleCheckComponent typo={"즐겨찾은단어"} defaultChecked={true} />
-        <ToggleCheckComponent typo={"건너뛴단어"} defaultChecked={true} />
-        <ToggleCheckComponent typo={"CS"} defaultChecked={true} />
-        <ToggleCheckComponent typo={"Web"} defaultChecked={true} />
-        <ToggleCheckComponent typo={"Native"} defaultChecked={true} />
-      </WordFilterList>
+      </WordCount>
       <MyWordListStyled>
+        <WordFilterList className={wordFilterOpened ? "active" : ""}>
+          <ToggleCheckComponent typo={"아는단어"} defaultChecked={true} />
+          <ToggleCheckComponent typo={"모르는단어"} defaultChecked={true} />
+          <ToggleCheckComponent typo={"즐겨찾은단어"} defaultChecked={true} />
+          <ToggleCheckComponent typo={"건너뛴단어"} defaultChecked={true} />
+          <ToggleCheckComponent typo={"CS"} defaultChecked={true} />
+          <ToggleCheckComponent typo={"Web"} defaultChecked={true} />
+          <ToggleCheckComponent typo={"Native"} defaultChecked={true} />
+        </WordFilterList>
         <WordScrollStyled>
-          {myWordList.map((objMyWord: MyWordsListTypes, index: number) => (
-            <MyWordListWrapStyled
-              key={index}
-              className={`state_${objMyWord.word_state}`}
-              onClick={() => myCardClick(objMyWord, index)}
-            >
-              <Typo
-                lineClamp="1"
-                fontSize="16px"
-                fontWeight="bold"
-                textAlign="left"
+          {myWordList.length === 0 ? (
+            searchKeyword.length === 0 ? (
+              <DataEmptyComponent
+                title={`등록된 단어가 없습니다.`}
+                detail="메인화면에서 단어카드를 둘러보는 건 어떨까요?"
+                ppsTit={`메인화면으로`}
+                ppsFunc={goToMain}
+                fullsize={true}
+              />
+            ) : (
+              <DataEmptyComponent
+                title={`${searchKeyword}에 대한 검색결과가 없습니다.`}
+                detail="이 단어를 새로 등록해보시는 건 어떨까요?"
+                ppsTit={`${searchKeyword} 등록하기`}
+                ppsFunc={goToWordReg}
+                fullsize={true}
+              />
+            )
+          ) : (
+            myWordList.map((objMyWord: MyWordsListTypes, index: number) => (
+              <MyWordListWrapStyled
+                key={index}
+                className={`state_${objMyWord.word_state}`}
+                onClick={() => myCardClick(objMyWord, index)}
               >
-                {objMyWord.word_name}
-              </Typo>
-              {objMyWord.word_unravel != null ? (
                 <Typo
                   lineClamp="1"
+                  fontSize="16px"
+                  fontWeight="bold"
                   textAlign="left"
-                  marginTop="4px"
-                  color="var(--color-grey)"
                 >
-                  {objMyWord.word_unravel}
+                  {objMyWord.word_name}
                 </Typo>
-              ) : (
-                <></>
-              )}
-              <Typo
-                lineClamp={objMyWord.word_unravel == null ? "3" : "2"}
-                textAlign="left"
-                marginTop="10px"
-              >
-                {objMyWord.word_desc}
-              </Typo>
-            </MyWordListWrapStyled>
-          ))}
+                {objMyWord.word_unravel ? (
+                  <Typo
+                    lineClamp="1"
+                    textAlign="left"
+                    marginTop="4px"
+                    color="var(--color-grey)"
+                  >
+                    {objMyWord.word_unravel}
+                  </Typo>
+                ) : (
+                  <></>
+                )}
+                <Typo
+                  lineClamp={objMyWord.word_unravel == null ? "3" : "2"}
+                  textAlign="left"
+                  marginTop="10px"
+                >
+                  {objMyWord.word_desc}
+                </Typo>
+                <MyWordCateListStyled>
+                  <Typo
+                    fontSize="12px"
+                    color="var(--color-grey)"
+                    marginTop="12px"
+                    textAlign="left"
+                  >
+                    {objMyWord.word_is_cs_flag ? <span>CS</span> : <></>}
+                    {objMyWord.word_is_web_flag ? <span>Web</span> : <></>}
+                    {objMyWord.word_is_ntv_flag ? <span>Native</span> : <></>}
+                  </Typo>
+                  <WordEditWrapStyeld>
+                    {objMyWord.user_id === userData.email ? (
+                      <>
+                        <Icon
+                          iconShape={faEllipsis}
+                          iconWidth="14px"
+                          iconHeight="14px"
+                          align="auto"
+                          color="#acb8cf"
+                          onClick={(event: React.MouseEvent<HTMLElement>) => {
+                            contextOnclick(event);
+                          }}
+                        />
+                      </>
+                    ) : (
+                      <img src={objMyWord.user_prf_img} />
+                    )}
+                  </WordEditWrapStyeld>
+                </MyWordCateListStyled>
+              </MyWordListWrapStyled>
+            ))
+          )}
         </WordScrollStyled>
       </MyWordListStyled>
     </>
@@ -312,11 +467,11 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
 };
 
 export async function getServerSideProps(context: any) {
-  const session = await unstable_getServerSession(
-    context.req,
-    context.res,
-    authOptions
-  );
+  // const session = await unstable_getServerSession(
+  //   context.req,
+  //   context.res,
+  //   authOptions
+  // );
 
   // const res = await axios.post("http://localhost:3000" + "/api/myword/list", {
   //   params: {
