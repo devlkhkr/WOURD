@@ -87,6 +87,7 @@ const CardBackStyled = styled.div`
   ${CardBaseStyle}
   transform: rotateY(180deg);
   background: linear-gradient(#3f88ef, #0047ab);
+  /* background: linear-gradient(#747f8f, #48515f); */
   color: #fff;
   &.state {
     &_k {
@@ -242,7 +243,7 @@ const WordRegInfoStyled = styled.div`
   img {
     width: 24px;
     height: 24px;
-    background-color: #fff;
+    background-color: #ffffff75;
     border-radius: 100%;
   }
   .card_user_nickname {
@@ -275,6 +276,19 @@ const CardMainComponent: React.FC<CardMainTypes> = ({
     },
   };
 
+  const getStateStrKr = (state: string) => {
+    switch (state) {
+      case "k":
+        return "아는단어";
+      case "d":
+        return "모르는단어";
+      case "f":
+        return "즐겨찾은단어";
+      case "s":
+        return "건너뛴단어";
+    }
+  };
+
   const afterCardHandler = function (_objWord: ExposeWordTypes, state: string) {
     setButtonState("");
     _objWord.fliped = false;
@@ -283,7 +297,9 @@ const CardMainComponent: React.FC<CardMainTypes> = ({
     setWordList([...wordList]);
     console.log(_objWord);
     newAlert(
-      `${_objWord.word_name}의 상태가 ${state}로 변경되었습니다.`,
+      `${_objWord.word_name}의 상태가 ${getStateStrKr(
+        state
+      )}로 변경되었습니다.`,
       "pstv"
     );
   };
