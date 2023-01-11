@@ -81,7 +81,7 @@ const Footer: React.FC = () => {
                 bottom="6px"
                 align="auto"
               />
-              <IconText text="메인" />
+              <IconText text="홈" />
             </a>
           </Link>
         </li>
