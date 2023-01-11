@@ -7,6 +7,7 @@ import {
   MouseEventHandler,
   SyntheticEvent,
   useEffect,
+  useRef,
   useState,
 } from "react";
 import axios from "axios";
@@ -159,6 +160,7 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
   const [wordFilterOpened, setWordFilterOpened] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState("");
   const [searchResult, setSearchResult] = useState<MyWordsListTypes[]>([]);
+  const searchInput = useRef<HTMLInputElement>();
   const router = useRouter();
 
   const myCardClick = (_objMyWord: MyWordsListTypes, _index: number) => {
@@ -253,7 +255,11 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
 
   useEffect(() => {
     setMyWordList(dataMyWordList);
-  }, []);
+  }, [dataMyWordList]);
+
+  useEffect(() => {
+    searchInput.current ? setSearchedData(searchInput.current.value) : void 0;
+  }, [myWordList]);
 
   return (
     <>
@@ -274,6 +280,7 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
           type="text"
           placeHolder="단어명으로 검색"
           className="input_bg_search"
+          reference={searchInput}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
             myWordSearchChange(event);
           }}
