@@ -112,7 +112,7 @@ const WordFilterList = styled.div`
   right: 0;
   /* top: calc(var(--height-header) + 60px); */
   top: 0;
-  /* z-index: 1; */
+  z-index: 9999;
   border-radius: 8px;
   box-shadow: 0px 4px 12px 8px rgba(0, 0, 0, 0.05);
   opacity: 0;
@@ -288,7 +288,7 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
       </WordCtrlStyled>
       <WordCount>
         <span>
-          총{" "}
+          총
           <i>
             {searchKeyword.length > 0 ? searchResult.length : myWordList.length}
           </i>
