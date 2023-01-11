@@ -288,7 +288,11 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
       </WordCtrlStyled>
       <WordCount>
         <span>
-          총 <i>{myWordList.length}</i>개의 카드
+          총{" "}
+          <i>
+            {searchKeyword.length > 0 ? searchResult.length : myWordList.length}
+          </i>
+          개의 카드
         </span>
         <WordCtrlIconWrap>
           <Icon
@@ -313,6 +317,17 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
 
         {searchKeyword.length != 0 ? (
           <WordSearchResultStyled>
+            {searchResult.length === 0 ? (
+              <DataEmptyComponent
+                title={`${searchKeyword}에 대한 검색결과가 없습니다.`}
+                detail="이 단어를 새로 등록해보시는 건 어떨까요?"
+                ppsTit={`${searchKeyword} 등록하기`}
+                ppsFunc={goToWordReg}
+                fullsize={true}
+              />
+            ) : (
+              <></>
+            )}
             {searchResult.map((objMyWord: MyWordsListTypes, index: number) => (
               <MyWordCardComponent
                 objMyWord={objMyWord}
@@ -328,24 +343,14 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
         )}
 
         <WordScrollStyled>
-          {myWordList.length === 0 ? (
-            searchKeyword.length === 0 ? (
-              <DataEmptyComponent
-                title={`등록된 단어가 없습니다.`}
-                detail="메인화면에서 단어카드를 둘러보는 건 어떨까요?"
-                ppsTit={`메인화면으로`}
-                ppsFunc={goToMain}
-                fullsize={true}
-              />
-            ) : (
-              <DataEmptyComponent
-                title={`${searchKeyword}에 대한 검색결과가 없습니다.`}
-                detail="이 단어를 새로 등록해보시는 건 어떨까요?"
-                ppsTit={`${searchKeyword} 등록하기`}
-                ppsFunc={goToWordReg}
-                fullsize={true}
-              />
-            )
+          {myWordList.length === 0 && searchKeyword.length === 0 ? (
+            <DataEmptyComponent
+              title={`등록된 단어가 없습니다.`}
+              detail="메인화면에서 단어카드를 둘러보는 건 어떨까요?"
+              ppsTit={`메인화면으로`}
+              ppsFunc={goToMain}
+              fullsize={true}
+            />
           ) : (
             myWordList.map((objMyWord: MyWordsListTypes, index: number) => (
               <MyWordCardComponent
