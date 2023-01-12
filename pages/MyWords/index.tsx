@@ -302,6 +302,8 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
     },
   ];
 
+  const myWordOptTglOnChange = () => {};
+
   useEffect(() => {
     setMyWordList(dataMyWordList);
   }, [dataMyWordList]);
@@ -373,6 +375,7 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
                   <ToggleCheckComponent
                     typo={optList.title}
                     defaultChecked={optList.checked}
+                    onChange={myWordOptTglOnChange}
                   />
                 )
               )}
