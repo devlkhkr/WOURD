@@ -288,7 +288,7 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
       </WordCtrlStyled>
       <WordCount>
         <span>
-          총
+          총{" "}
           <i>
             {searchKeyword.length > 0 ? searchResult.length : myWordList.length}
           </i>
@@ -345,9 +345,9 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
         <WordScrollStyled>
           {myWordList.length === 0 && searchKeyword.length === 0 ? (
             <DataEmptyComponent
-              title={`등록된 단어가 없습니다.`}
-              detail="메인화면에서 단어카드를 둘러보는 건 어떨까요?"
-              ppsTit={`메인화면으로`}
+              title={`단어장에 등록된 단어가 없습니다.`}
+              detail="홈 화면에서 단어카드를 둘러보는 건 어떨까요?"
+              ppsTit={`홈 화면으로`}
               ppsFunc={goToMain}
               fullsize={true}
             />
