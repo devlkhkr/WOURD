@@ -9,9 +9,16 @@ interface TextAreaTypes extends styledInterface {
 const TextAreaStyled = styled.textarea<TextAreaTypes>`
   width: 100%;
   height: ${(props) => props.height};
-  border: 1px solid var(--color-lightgrey);
-  padding: 8px;
+  /* border: 1px solid var(--color-lightgrey); */
+  border: 0;
+  /* background-color: #f1f4fc; */
+  background-color: #f4f7ff;
+  padding: 12px;
   resize: none;
+  border-radius: 8px;
+  &::placeholder {
+    color: var(--color-grey);
+  }
 `;
 
 const TextAreaComponent: React.FC<TextAreaTypes> = ({
