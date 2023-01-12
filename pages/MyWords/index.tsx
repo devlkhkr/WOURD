@@ -253,6 +253,55 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
     console.log("context onclick");
   };
 
+  interface wordOptListTypes {
+    title: string;
+    checked: boolean;
+  }
+  interface wordOptTglsTypes {
+    optTitle: string;
+    optList: wordOptListTypes[];
+  }
+  const wordOptTgls: wordOptTglsTypes[] = [
+    {
+      optTitle: "상태별",
+      optList: [
+        {
+          title: "아는단어",
+          checked: true,
+        },
+        {
+          title: "모르는단어",
+          checked: true,
+        },
+        {
+          title: "즐겨찾은단어",
+          checked: true,
+        },
+        {
+          title: "건너뛴단어",
+          checked: true,
+        },
+      ],
+    },
+    {
+      optTitle: "카테고리별",
+      optList: [
+        {
+          title: "CS",
+          checked: true,
+        },
+        {
+          title: "Web",
+          checked: true,
+        },
+        {
+          title: "Native",
+          checked: true,
+        },
+      ],
+    },
+  ];
+
   useEffect(() => {
     setMyWordList(dataMyWordList);
   }, [dataMyWordList]);
@@ -306,13 +355,29 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
       </WordCount>
       <MyWordListStyled>
         <WordFilterList className={wordFilterOpened ? "active" : ""}>
-          <ToggleCheckComponent typo={"아는단어"} defaultChecked={true} />
-          <ToggleCheckComponent typo={"모르는단어"} defaultChecked={true} />
-          <ToggleCheckComponent typo={"즐겨찾은단어"} defaultChecked={true} />
-          <ToggleCheckComponent typo={"건너뛴단어"} defaultChecked={true} />
-          <ToggleCheckComponent typo={"CS"} defaultChecked={true} />
-          <ToggleCheckComponent typo={"Web"} defaultChecked={true} />
-          <ToggleCheckComponent typo={"Native"} defaultChecked={true} />
+          {wordOptTgls.map((objOpt: wordOptTglsTypes, index: number) => (
+            <>
+              <Typo
+                textAlign="left"
+                marginTop="16px"
+                marginBottom="4px"
+                fontSize="12px"
+                fontWeight="semi-bold"
+                color="var(--color-grey)"
+                paddingLeft="8px"
+              >
+                {objOpt.optTitle}
+              </Typo>
+              {objOpt.optList.map(
+                (optList: wordOptListTypes, index: number) => (
+                  <ToggleCheckComponent
+                    typo={optList.title}
+                    defaultChecked={optList.checked}
+                  />
+                )
+              )}
+            </>
+          ))}
         </WordFilterList>
 
         {searchKeyword.length != 0 ? (
