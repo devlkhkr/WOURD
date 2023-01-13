@@ -3,8 +3,8 @@ import styled from "styled-components";
 import TypoComponent from "../atoms/Typo";
 import styledInterface from "../Intefaces/styledComponent";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
-import HelpmessageListTitle from "../molecules/HelpMessageListTitle";
-import HelpMessageListArticle from "../molecules/HelpMessageListArticle";
+import ArcodianBoardList from "../molecules/ArcodianBoardList";
+import ArcodianBoardTitle from "../molecules/ArcodianBoardTitle";
 
 
 const HelpMessageListItem = styled.li`
@@ -56,7 +56,7 @@ const HelpMessage: React.FC = () => {
         <ul key={index}>
           {helpMessageAcrd.acrdList.map((list, index) => (
             <HelpMessageListItem key={index}>
-              <HelpmessageListTitle
+              <ArcodianBoardTitle
                 titleText={list.title}
                 date={list.date}
                 afterIcon={list.isOpened ? "arr-up" : "arr-down"}
@@ -64,12 +64,12 @@ const HelpMessage: React.FC = () => {
                   list.isOpened = !list.isOpened
                   setHelpMessageArcdList(mapHelpMessageArcdList)
                 }}
-              ></HelpmessageListTitle>
+              ></ArcodianBoardTitle>
 
-              <HelpMessageListArticle
+              <ArcodianBoardList
                 isOpened={list.isOpened}
                 article={list.article}
-              ></HelpMessageListArticle>
+              ></ArcodianBoardList>
             </HelpMessageListItem>
           ))}
         </ul>

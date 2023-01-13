@@ -104,7 +104,7 @@ const SystemSpec: React.FC = () => {
           fontWeight="bold"
           textAlign="left"
           color="#202020"
-          marginTop="16px"
+          marginTop="32px"
           marginBottom="16px"
           paddingLeft="4px"
         >
@@ -156,7 +156,7 @@ const SystemSpec: React.FC = () => {
           fontWeight="bold"
           textAlign="left"
           color="#202020"
-          marginTop="16px"
+          marginTop="32px"
           marginBottom="16px"
           paddingLeft="4px"
         >
@@ -222,7 +222,7 @@ const SystemSpec: React.FC = () => {
           fontWeight="bold"
           textAlign="left"
           color="#202020"
-          marginTop="16px"
+          marginTop="32px"
           marginBottom="16px"
           paddingLeft="4px"
         >
@@ -246,7 +246,7 @@ const SystemSpec: React.FC = () => {
           fontWeight="bold"
           textAlign="left"
           color="#202020"
-          marginTop="16px"
+          marginTop="32px"
           marginBottom="16px"
           paddingLeft="4px"
         >
@@ -284,6 +284,7 @@ const SystemSpec: React.FC = () => {
           
         </StackWrap>
       </section>
+
     </>
   );
 };

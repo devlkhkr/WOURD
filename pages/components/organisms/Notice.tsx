@@ -1,10 +1,8 @@
 import { useState } from "react";
 import styled from "styled-components";
-import TypoComponent from "../atoms/Typo";
 import styledInterface from "../Intefaces/styledComponent";
-import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
-import NoticeListTitle from "../molecules/NoticeListTitle";
-import NoticeListArticle from "../molecules/NoticeListArticle";
+import ArcodianBoardList from "../molecules/ArcodianBoardList";
+import ArcodianBoardTitle from "../molecules/ArcodianBoardTitle";
 
 const NoticeListItem = styled.li`
   padding: 16px 16px 16px 12px;
@@ -71,7 +69,7 @@ const Notice: React.FC = () => {
         <ul key={index}>
           {noticeAcrd.acrdList.map((list, index) => (
             <NoticeListItem key={index}>
-              <NoticeListTitle
+              <ArcodianBoardTitle
                 titleText={list.title}
                 date={list.date}
                 afterIcon={list.isOpened ? "arr-up" : "arr-down"}
@@ -79,12 +77,12 @@ const Notice: React.FC = () => {
                   list.isOpened = !list.isOpened
                   setNoticeArcdList(mapNoticeArcdList)
                 }}
-              ></NoticeListTitle>
+              ></ArcodianBoardTitle>
 
-              <NoticeListArticle
+              <ArcodianBoardList
                 isOpened={list.isOpened}
                 article={list.article}
-              ></NoticeListArticle>
+              ></ArcodianBoardList>
             </NoticeListItem>
           ))}
         </ul>
