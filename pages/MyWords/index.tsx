@@ -3,6 +3,7 @@ import Button from "../components/atoms/Button";
 import styled from "styled-components";
 import styledInterface from "../components/Intefaces/styledComponent";
 import {
+  ChangeEvent,
   FormEventHandler,
   MouseEventHandler,
   SyntheticEvent,
@@ -12,7 +13,10 @@ import {
 } from "react";
 import axios from "axios";
 import Typo from "pages/components/atoms/Typo";
-import CardMain, { ExposeWordTypes } from "pages/components/templates/CardMain";
+import CardMain, {
+  ExposeWordTypes,
+  getStateStrKr,
+} from "pages/components/templates/CardMain";
 import { useSelector } from "react-redux";
 import { UserDataTypes } from "redux/slices/user";
 import wrapper from "redux/store";
@@ -60,10 +64,7 @@ const WordScrollStyled = styled.div`
   padding-bottom: 32px;
 `;
 
-const MyWordListStyled = styled.div`
-  height: calc(100% - 80px);
-  /* margin-top: 16px; */
-  overflow: hidden;
+const bottomFadeOutCss = `
   position: relative;
   &::after {
     content: "";
@@ -76,6 +77,26 @@ const MyWordListStyled = styled.div`
     background: linear-gradient(transparent, #f6f7f8);
     pointer-events: none;
   }
+`;
+
+const MyWordListStyled = styled.div`
+  height: calc(100% - 80px);
+  /* margin-top: 16px; */
+  overflow: hidden;
+  ${bottomFadeOutCss};
+`;
+
+const WordSearchResultStyled = styled.div`
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 9998;
+  background-color: #f5f6f7;
+  overflow: hidden;
+  ${bottomFadeOutCss};
 `;
 
 const WordCtrlStyled = styled.div`
@@ -140,16 +161,8 @@ const WordCount = styled.div`
   }
 `;
 
-const WordSearchResultStyled = styled.div`
-  display: inline-block;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 9998;
-  background-color: #f5f6f7;
-  overflow: auto;
+const MyWordEndContents = styled.div`
+  margin-top: 24px;
 `;
 
 const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
@@ -160,6 +173,7 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
   const [wordFilterOpened, setWordFilterOpened] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState("");
   const [searchResult, setSearchResult] = useState<MyWordsListTypes[]>([]);
+  const [totalPgn, setTotalPgn] = useState(1);
   const searchInput = useRef<HTMLInputElement>();
   const router = useRouter();
 
@@ -230,9 +244,6 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
   const myWordSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchKeyword(event.target.value);
     setSearchedData(event.target.value);
-    // event.target.value.length == 0 || searchedData.length == 0
-    //   ? setMyWordList(dataMyWordList)
-    //   : setMyWordList(searchedData);
   };
 
   const goToWordReg = () => {
@@ -266,19 +277,19 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
       optTitle: "상태별",
       optList: [
         {
-          title: "아는단어",
+          title: "k",
           checked: true,
         },
         {
-          title: "모르는단어",
+          title: "d",
           checked: true,
         },
         {
-          title: "즐겨찾은단어",
+          title: "f",
           checked: true,
         },
         {
-          title: "건너뛴단어",
+          title: "s",
           checked: true,
         },
       ],
@@ -302,15 +313,27 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
     },
   ];
 
-  const myWordOptTglOnChange = () => {};
+  const myWordOptTglOnChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    optList: wordOptListTypes
+  ) => {
+    console.log(event.target.checked);
+    console.log(optList);
+  };
 
   useEffect(() => {
     setMyWordList(dataMyWordList);
   }, [dataMyWordList]);
 
   useEffect(() => {
+    console.log(myWordList);
     searchInput.current ? setSearchedData(searchInput.current.value) : void 0;
   }, [myWordList]);
+
+  const isMyWordCardActive = (objMyWord: MyWordsListTypes) => {
+    // return objMyWord.word_state === "k" ? true : false;
+    return true;
+  };
 
   return (
     <>
@@ -358,7 +381,7 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
       <MyWordListStyled>
         <WordFilterList className={wordFilterOpened ? "active" : ""}>
           {wordOptTgls.map((objOpt: wordOptTglsTypes, index: number) => (
-            <>
+            <div key={index}>
               <Typo
                 textAlign="left"
                 marginTop="16px"
@@ -373,63 +396,94 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
               {objOpt.optList.map(
                 (optList: wordOptListTypes, index: number) => (
                   <ToggleCheckComponent
-                    typo={optList.title}
+                    key={index}
+                    typo={getStateStrKr(optList.title)}
                     defaultChecked={optList.checked}
-                    onChange={myWordOptTglOnChange}
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                      myWordOptTglOnChange(event, optList)
+                    }
                   />
                 )
               )}
-            </>
+            </div>
           ))}
         </WordFilterList>
-
+        {/* 
         {searchKeyword.length != 0 ? (
           <WordSearchResultStyled>
-            {searchResult.length === 0 ? (
-              <DataEmptyComponent
-                title={`${searchKeyword}에 대한 검색결과가 없습니다.`}
-                detail="이 단어를 새로 등록해보시는 건 어떨까요?"
-                ppsTit={`${searchKeyword} 등록하기`}
-                ppsFunc={goToWordReg}
-                fullsize={true}
-              />
-            ) : (
-              <></>
-            )}
-            {searchResult.map((objMyWord: MyWordsListTypes, index: number) => (
-              <MyWordCardComponent
-                objMyWord={objMyWord}
-                key={index}
-                index={index}
-                onCardClick={myCardClick}
-                contextOnclick={contextOnclick}
-              />
-            ))}
+            <WordScrollStyled>
+              {searchResult.length === 0 ? (
+                <DataEmptyComponent
+                  title={`${searchKeyword}에 대한 검색결과가 없습니다.`}
+                  detail="이 단어를 새로 등록해보시는 건 어떨까요?"
+                  ppsTit={`${searchKeyword} 등록하기`}
+                  ppsFunc={goToWordReg}
+                  fullsize={true}
+                />
+              ) : (
+                <></>
+              )}
+              {searchResult.map(
+                (objMyWord: MyWordsListTypes, index: number) => (
+                  <MyWordCardComponent
+                    key={index}
+                    objMyWord={objMyWord}
+                    onCardClick={myCardClick}
+                    contextOnclick={contextOnclick}
+                    active={true}
+                  />
+                )
+              )}
+            </WordScrollStyled>
           </WordSearchResultStyled>
         ) : (
           <></>
-        )}
+        )} */}
 
         <WordScrollStyled>
           {myWordList.length === 0 && searchKeyword.length === 0 ? (
             <DataEmptyComponent
               title={`단어장에 등록된 단어가 없습니다.`}
               detail="홈 화면에서 단어카드를 둘러보는 건 어떨까요?"
-              ppsTit={`홈 화면으로`}
+              ppsTit={`카드 둘러보기`}
               ppsFunc={goToMain}
               fullsize={true}
             />
           ) : (
-            myWordList.map((objMyWord: MyWordsListTypes, index: number) => (
-              <MyWordCardComponent
-                objMyWord={objMyWord}
-                key={index}
-                index={index}
-                onCardClick={myCardClick}
-                contextOnclick={contextOnclick}
-              />
-            ))
+            myWordList.map((objMyWord: MyWordsListTypes, index: number) =>
+              index < totalPgn * 5 ? (
+                <MyWordCardComponent
+                  objMyWord={objMyWord}
+                  key={index}
+                  onCardClick={myCardClick}
+                  contextOnclick={contextOnclick}
+                  active={isMyWordCardActive(objMyWord)}
+                  // active={true}
+                />
+              ) : (
+                void 0
+              )
+            )
           )}
+          <MyWordEndContents>
+            {myWordList.length >= totalPgn * 5 ? (
+              <Button
+                onClick={() => setTotalPgn(totalPgn + 1)}
+                desc="더 보기"
+                height="48px"
+                backgroundColor="var(--color-grey)"
+                color="#fff"
+              />
+            ) : (
+              <DataEmptyComponent
+                title={`더 이상 표시할 카드가 없습니다.`}
+                detail="홈 화면에서 단어카드를 둘러보는 건 어떨까요?"
+                ppsTit={`카드 둘러보기`}
+                ppsFunc={goToMain}
+                fullsize={false}
+              />
+            )}
+          </MyWordEndContents>
         </WordScrollStyled>
       </MyWordListStyled>
     </>

@@ -21,15 +21,13 @@ export interface MyWordsListTypes {
   word_is_web_flag: number;
   word_is_ntv_flag: number;
   state_modified_date: Date;
-
-  card_index?: number;
 }
 
 interface MyWordCardTypes {
   objMyWord: MyWordsListTypes;
-  index: number;
   onCardClick: Function;
   contextOnclick: Function;
+  active: boolean;
 }
 
 const MyWordListWrapStyled = styled.div`
@@ -120,12 +118,11 @@ const MyWordCardComponent: React.FC<MyWordCardTypes> = ({
   objMyWord,
   onCardClick,
   contextOnclick,
-  index,
+  active,
 }) => {
   const userData: any = useSession().data?.user;
-  return (
+  return active ? (
     <MyWordListWrapStyled
-      // key={index}
       className={`state_${objMyWord.word_state}`}
       onClick={() => onCardClick(objMyWord)}
     >
@@ -182,6 +179,8 @@ const MyWordCardComponent: React.FC<MyWordCardTypes> = ({
         </WordEditWrapStyeld>
       </MyWordCateListStyled>
     </MyWordListWrapStyled>
+  ) : (
+    <></>
   );
 };
 
