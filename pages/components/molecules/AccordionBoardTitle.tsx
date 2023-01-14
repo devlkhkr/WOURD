@@ -5,13 +5,13 @@ import Icon from "../atoms/Icon";
 
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 
-interface ArcodianBoardTitleTypes extends styledInterface {
+interface AccordionBoardTitleTypes extends styledInterface {
   titleText: string;
   date: string;
   afterIcon?: string;
 }
 
-const ArcodianBoardTitleComponent = styled.div`
+const AccordionBoardTitleComponent = styled.div`
   cursor: pointer;
 `;
 
@@ -21,7 +21,7 @@ const ArrowIconWrap = styled.div`
   right: 12px;
 `;
 
-const ArcodianBoardTitle: React.FC<ArcodianBoardTitleTypes> = ({
+const AccordionBoardTitle: React.FC<AccordionBoardTitleTypes> = ({
   titleText,
   date,
   afterIcon,
@@ -53,7 +53,7 @@ const ArcodianBoardTitle: React.FC<ArcodianBoardTitleTypes> = ({
   };
 
   return (
-    <ArcodianBoardTitleComponent onClick={onClick}>
+    <AccordionBoardTitleComponent onClick={onClick}>
       <TypoComponent
         fontSize="16px"
         fontWeight="semi-bold"
@@ -72,8 +72,8 @@ const ArcodianBoardTitle: React.FC<ArcodianBoardTitleTypes> = ({
         {date}
       </TypoComponent>
       <ArrowIconWrap>{afterIcon && setAfterIcon()}</ArrowIconWrap>
-    </ArcodianBoardTitleComponent>
+    </AccordionBoardTitleComponent>
   );
 };
 
-export default ArcodianBoardTitle;
+export default AccordionBoardTitle;

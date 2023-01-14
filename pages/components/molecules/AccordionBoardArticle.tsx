@@ -1,24 +1,25 @@
 import styled, { StyledInterface } from "styled-components";
 import TypoComponent from "../atoms/Typo";
 
-interface ArcodianBoardListTypes {
+interface AccordionBoardArticleTypes {
   article: string;
   isOpened: boolean;
 }
 
-const ArcodianBoardListComponent = styled.div<ArcodianBoardListTypes>`
+const AccordionBoardArticleComponent = styled.div<AccordionBoardArticleTypes>`
   transition: all 0.3s linear;
   max-height: 0;
   overflow: hidden;
   max-height: ${props => (props.isOpened ? "60vw" : "0")};
 `;
 
-const ArcodianBoardList: React.FC<ArcodianBoardListTypes> = ({
+const AccordionBoardArticle: React.FC<AccordionBoardArticleTypes> = ({
   article,
   isOpened,
 }) => {
+
   return (
-    <ArcodianBoardListComponent isOpened={isOpened} article={article}>
+    <AccordionBoardArticleComponent isOpened={isOpened} article={article}>
       <TypoComponent
         fontSize="14px"
         fontWeight="regular"
@@ -27,8 +28,8 @@ const ArcodianBoardList: React.FC<ArcodianBoardListTypes> = ({
       >
         {article}
       </TypoComponent>
-    </ArcodianBoardListComponent>
+    </AccordionBoardArticleComponent>
   );
 };
 
-export default ArcodianBoardList;
+export default AccordionBoardArticle;
