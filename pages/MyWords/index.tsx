@@ -272,7 +272,8 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
     optTitle: string;
     optList: wordOptListTypes[];
   }
-  const wordOptTgls: wordOptTglsTypes[] = [
+
+  const [wordOptTgls, setWordOptTgls] = useState<wordOptTglsTypes[]>([
     {
       optTitle: "상태별",
       optList: [
@@ -311,13 +312,15 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
         },
       ],
     },
-  ];
+  ]);
 
   const myWordOptTglOnChange = (
     event: React.ChangeEvent<HTMLInputElement>,
+    cateIdx: number,
     optList: wordOptListTypes
   ) => {
     console.log(event.target.checked);
+    console.log(cateIdx);
     console.log(optList);
   };
 
@@ -384,8 +387,8 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
       </WordCount>
       <MyWordListStyled>
         <WordFilterList className={wordFilterOpened ? "active" : ""}>
-          {wordOptTgls.map((objOpt: wordOptTglsTypes, index: number) => (
-            <div key={index}>
+          {wordOptTgls.map((objOpt: wordOptTglsTypes, cateIdx: number) => (
+            <div key={cateIdx}>
               <Typo
                 textAlign="left"
                 marginTop="16px"
@@ -404,7 +407,7 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
                     typo={getStateStrKr(optList.title)}
                     defaultChecked={optList.checked}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                      myWordOptTglOnChange(event, optList)
+                      myWordOptTglOnChange(event, cateIdx, optList)
                     }
                   />
                 )
