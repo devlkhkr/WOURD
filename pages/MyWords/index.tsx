@@ -173,6 +173,10 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
   const [wordFilterOpened, setWordFilterOpened] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState("");
   const [searchResult, setSearchResult] = useState<MyWordsListTypes[]>([]);
+  const [filteredWordList, setFilteredWordList] = useState<MyWordsListTypes[]>(
+    []
+  );
+
   const [totalPgn, setTotalPgn] = useState(1);
   const searchInput = useRef<HTMLInputElement>();
   const router = useRouter();
@@ -215,31 +219,35 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
     let tempWord = sprdMyWordList.filter(
       (word) => word.word_id === clickedWord[0].word_id
     );
+    console.log("currentCardIdx::", currentCardIdx);
     tempWord[0].word_state = userSelectState;
     sprdMyWordList.splice(currentCardIdx, 1);
     sprdMyWordList.unshift(tempWord[0]);
     setMyWordList(sprdMyWordList);
-    console.log("clickedWord::", clickedWord);
+    // setFilteredWordList(sprdMyWordList);
 
-    searchKeyword.length > 0 ? setSearchedData("s") : void 0;
+    // searchKeyword.length > 0 ? setSearchedData("s") : void 0;
 
     setClickedWord([]);
   };
 
   const setSearchedData = (keyword: string) => {
-    let searchedData = myWordList.filter(
+    let searchedData = filteredWordList.filter(
       (word) =>
         word.word_name.toUpperCase().indexOf(keyword.toUpperCase()) != -1
     );
+    setSearchResult(searchedData);
+  };
 
-    searchedData.length == 0
+  useEffect(() => {
+    searchResult.length === 0 || searchKeyword.length === 0
       ? (() => {
-          setSearchResult([]);
+          setFilteredWordList(myWordList);
         })()
       : (() => {
-          setSearchResult(searchedData);
+          setFilteredWordList(searchResult);
         })();
-  };
+  }, [searchResult]);
 
   const myWordSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchKeyword(event.target.value);
@@ -272,7 +280,7 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
     optTitle: string;
     optList: wordOptListTypes[];
   }
-  const wordOptTgls: wordOptTglsTypes[] = [
+  const [wordOptTgls, setWordOptTgls] = useState<wordOptTglsTypes[]>([
     {
       optTitle: "상태별",
       optList: [
@@ -311,29 +319,46 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
         },
       ],
     },
-  ];
+  ]);
 
   const myWordOptTglOnChange = (
     event: React.ChangeEvent<HTMLInputElement>,
+    cateIdx: number,
     optList: wordOptListTypes
   ) => {
-    console.log(event.target.checked);
-    console.log(optList);
+    let tempWordOptTgls: wordOptTglsTypes[] = [...wordOptTgls];
+    let tempOpt = tempWordOptTgls[cateIdx].optList.filter(
+      (opt) => opt.title === optList.title
+    );
+    tempOpt[0].checked = event.target.checked;
+    // setCateData()
+    setWordOptTgls(tempWordOptTgls);
   };
+
+  useEffect(() => {
+    // console.log(wordOptTgls);
+    // let tempFilteredWordList = [...filteredWordList];
+    // console.log(tempFilteredWordList);
+    // tempFilteredWordList.filter(
+    //   (word) => word.
+    // );
+    // setFilteredWordList()
+  }, [wordOptTgls]);
 
   useEffect(() => {
     setMyWordList(dataMyWordList);
+    setFilteredWordList(dataMyWordList);
   }, [dataMyWordList]);
 
   useEffect(() => {
-    console.log(myWordList);
-    searchInput.current ? setSearchedData(searchInput.current.value) : void 0;
+    // console.log("myWordList::", myWordList);
+    setFilteredWordList(myWordList);
+    // searchInput.current && searchKeyword.length > 0
+    //   ? setSearchedData(searchInput.current.value)
+    //   : void 0;
   }, [myWordList]);
 
-  const isMyWordCardActive = (objMyWord: MyWordsListTypes) => {
-    // return objMyWord.word_state === "k" ? true : false;
-    return true;
-  };
+  useEffect(() => {}, [filteredWordList]);
 
   return (
     <>
@@ -364,7 +389,9 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
         <span>
           총{" "}
           <i>
-            {searchKeyword.length > 0 ? searchResult.length : myWordList.length}
+            {searchKeyword.length > 0
+              ? filteredWordList.length
+              : myWordList.length}
           </i>
           개의 카드
         </span>
@@ -380,8 +407,8 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
       </WordCount>
       <MyWordListStyled>
         <WordFilterList className={wordFilterOpened ? "active" : ""}>
-          {wordOptTgls.map((objOpt: wordOptTglsTypes, index: number) => (
-            <div key={index}>
+          {wordOptTgls.map((objOpt: wordOptTglsTypes, cateIdx: number) => (
+            <div key={cateIdx}>
               <Typo
                 textAlign="left"
                 marginTop="16px"
@@ -400,7 +427,7 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
                     typo={getStateStrKr(optList.title)}
                     defaultChecked={optList.checked}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                      myWordOptTglOnChange(event, optList)
+                      myWordOptTglOnChange(event, cateIdx, optList)
                     }
                   />
                 )
@@ -449,16 +476,22 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
               ppsFunc={goToMain}
               fullsize={true}
             />
+          ) : searchResult.length === 0 && searchKeyword.length > 0 ? (
+            <DataEmptyComponent
+              title={`${searchKeyword}에 대한 검색결과가 없습니다.`}
+              detail="이 단어를 새로 등록해보시는 건 어떨까요?"
+              ppsTit={`${searchKeyword} 등록하기`}
+              ppsFunc={goToWordReg}
+              fullsize={true}
+            />
           ) : (
-            myWordList.map((objMyWord: MyWordsListTypes, index: number) =>
+            filteredWordList.map((objMyWord: MyWordsListTypes, index: number) =>
               index < totalPgn * 5 ? (
                 <MyWordCardComponent
                   objMyWord={objMyWord}
                   key={index}
                   onCardClick={myCardClick}
                   contextOnclick={contextOnclick}
-                  active={isMyWordCardActive(objMyWord)}
-                  // active={true}
                 />
               ) : (
                 void 0
@@ -466,7 +499,7 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
             )
           )}
           <MyWordEndContents>
-            {myWordList.length >= totalPgn * 5 ? (
+            {filteredWordList.length > totalPgn * 5 ? (
               <Button
                 onClick={() => setTotalPgn(totalPgn + 1)}
                 desc="더 보기"

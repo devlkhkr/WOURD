@@ -27,7 +27,6 @@ interface MyWordCardTypes {
   objMyWord: MyWordsListTypes;
   onCardClick: Function;
   contextOnclick: Function;
-  active: boolean;
 }
 
 const MyWordListWrapStyled = styled.div`
@@ -118,10 +117,9 @@ const MyWordCardComponent: React.FC<MyWordCardTypes> = ({
   objMyWord,
   onCardClick,
   contextOnclick,
-  active,
 }) => {
   const userData: any = useSession().data?.user;
-  return active ? (
+  return (
     <MyWordListWrapStyled
       className={`state_${objMyWord.word_state}`}
       onClick={() => onCardClick(objMyWord)}
@@ -179,8 +177,6 @@ const MyWordCardComponent: React.FC<MyWordCardTypes> = ({
         </WordEditWrapStyeld>
       </MyWordCateListStyled>
     </MyWordListWrapStyled>
-  ) : (
-    <></>
   );
 };
 
