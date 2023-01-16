@@ -329,6 +329,20 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
     console.log("tempOpt:::", tempOpt[0]);
     console.log("fltrdWordList:::", fltrdWordList);
 
+    let tempFltrdWordList: MyWordsListTypes[] = [...fltrdWordList];
+    switch (cateIdx) {
+      case 0:
+        console.log("상태별 토글 Change");
+        tempFltrdWordList = tempFltrdWordList.filter(
+          (word) => word.word_id === clickedWord[0].word_id
+        );
+        break;
+      case 1:
+        console.log("카테고리별 토글 Change");
+        break;
+      default:
+        console.log("토글 타입 미정의 에러");
+    }
     setWordOptTgls(tempWordOptTgls);
   };
 
