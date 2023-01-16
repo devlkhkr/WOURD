@@ -319,9 +319,17 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
     cateIdx: number,
     optList: wordOptListTypes
   ) => {
-    console.log(event.target.checked);
-    console.log(cateIdx);
-    console.log(optList);
+    let tempWordOptTgls: wordOptTglsTypes[] = [...wordOptTgls];
+    let tempOpt = tempWordOptTgls[cateIdx].optList.filter(
+      (opt) => opt.title === optList.title
+    );
+    tempOpt[0].checked = event.target.checked;
+
+    console.log("tempWordOptTgls:::", tempWordOptTgls);
+    console.log("tempOpt:::", tempOpt[0]);
+    console.log("fltrdWordList:::", fltrdWordList);
+
+    setWordOptTgls(tempWordOptTgls);
   };
 
   useEffect(() => {
