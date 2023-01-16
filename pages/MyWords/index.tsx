@@ -169,6 +169,7 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
   const userData: any = useSession().data?.user;
   const [clickedWord, setClickedWord] = useState<ExposeWordTypes[]>([]);
   const [myWordList, setMyWordList] = useState<MyWordsListTypes[]>([]);
+  const [fltrdWordList, setFltrdWordList] = useState<MyWordsListTypes[]>([]);
   // const [currentCardIdx, setCurrentCardIdx] = useState(0);
   const [wordFilterOpened, setWordFilterOpened] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState("");
@@ -219,7 +220,6 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
     sprdMyWordList.splice(currentCardIdx, 1);
     sprdMyWordList.unshift(tempWord[0]);
     setMyWordList(sprdMyWordList);
-    console.log("clickedWord::", clickedWord);
 
     searchKeyword.length > 0 ? setSearchedData("s") : void 0;
 
@@ -227,7 +227,7 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
   };
 
   const setSearchedData = (keyword: string) => {
-    let searchedData = myWordList.filter(
+    let searchedData = fltrdWordList.filter(
       (word) =>
         word.word_name.toUpperCase().indexOf(keyword.toUpperCase()) != -1
     );
@@ -323,12 +323,16 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
 
   useEffect(() => {
     setMyWordList(dataMyWordList);
+    setFltrdWordList(dataMyWordList);
   }, [dataMyWordList]);
 
   useEffect(() => {
-    console.log(myWordList);
-    searchInput.current ? setSearchedData(searchInput.current.value) : void 0;
+    setFltrdWordList(myWordList);
   }, [myWordList]);
+
+  useEffect(() => {
+    searchInput.current ? setSearchedData(searchInput.current.value) : void 0;
+  }, [fltrdWordList]);
 
   const isMyWordCardActive = (objMyWord: MyWordsListTypes) => {
     // return objMyWord.word_state === "k" ? true : false;
@@ -408,7 +412,7 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
             </div>
           ))}
         </WordFilterList>
-        {/* 
+
         {searchKeyword.length != 0 ? (
           <WordSearchResultStyled>
             <WordScrollStyled>
@@ -438,7 +442,7 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
           </WordSearchResultStyled>
         ) : (
           <></>
-        )} */}
+        )}
 
         <WordScrollStyled>
           {myWordList.length === 0 && searchKeyword.length === 0 ? (
@@ -450,7 +454,7 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
               fullsize={true}
             />
           ) : (
-            myWordList.map((objMyWord: MyWordsListTypes, index: number) =>
+            fltrdWordList.map((objMyWord: MyWordsListTypes, index: number) =>
               index < totalPgn * 5 ? (
                 <MyWordCardComponent
                   objMyWord={objMyWord}
@@ -466,7 +470,7 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
             )
           )}
           <MyWordEndContents>
-            {myWordList.length >= totalPgn * 5 ? (
+            {fltrdWordList.length >= totalPgn * 5 ? (
               <Button
                 onClick={() => setTotalPgn(totalPgn + 1)}
                 desc="더 보기"
