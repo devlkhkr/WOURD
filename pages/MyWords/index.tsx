@@ -4,8 +4,10 @@ import styled from "styled-components";
 import styledInterface from "../components/Intefaces/styledComponent";
 import {
   ChangeEvent,
+  Dispatch,
   FormEventHandler,
   MouseEventHandler,
+  SetStateAction,
   SyntheticEvent,
   useEffect,
   useRef,
@@ -221,7 +223,7 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
       (opt) => opt.optType === userSelectState
     )[0].checked;
 
-    tempWord[0].active = isToggleActive ? true : false;
+    tempWord[0].active_state_flag = isToggleActive ? true : false;
 
     sprdMyWordList.splice(currentCardIdx, 1);
     sprdMyWordList.unshift(tempWord[0]);
@@ -272,35 +274,33 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
   interface optListTypes {
     optType: string;
     checked: boolean;
-    changeState?: any;
+    // changeState?: Dispatch<SetStateAction<boolean>>;
   }
   interface wordOptTglsTypes {
     optTitle: string;
     optList: optListTypes[];
   }
 
-  const [activeKFlag, setActiveKFlag] = useState(true);
-  const [activeDFlag, setActiveDFlag] = useState(true);
-  const [activeFFlag, setActiveFFlag] = useState(true);
-  const [activeSFlag, setActiveSFlag] = useState(true);
+  const [activeStateFlags, setActiveStateFlags] = useState<optListTypes[]>([
+    { optType: "k", checked: true },
+    { optType: "d", checked: true },
+    { optType: "f", checked: true },
+    { optType: "s", checked: true },
+  ]);
+  const [activeCateFlags, setActiveCateFlags] = useState<optListTypes[]>([
+    { optType: "cs", checked: true },
+    { optType: "web", checked: true },
+    { optType: "ntv", checked: true },
+  ]);
 
   const wordOptTgls: wordOptTglsTypes[] = [
     {
       optTitle: "상태별",
-      optList: [
-        { optType: "k", checked: activeKFlag, changeState: setActiveKFlag },
-        { optType: "d", checked: activeDFlag, changeState: setActiveDFlag },
-        { optType: "f", checked: activeFFlag, changeState: setActiveFFlag },
-        { optType: "s", checked: activeSFlag, changeState: setActiveSFlag },
-      ],
+      optList: activeStateFlags,
     },
     {
       optTitle: "카테고리별",
-      optList: [
-        { optType: "cs", checked: true },
-        { optType: "web", checked: true },
-        { optType: "ntv", checked: true },
-      ],
+      optList: activeCateFlags,
     },
   ];
 
@@ -308,34 +308,66 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
     event: React.ChangeEvent<HTMLInputElement>,
     optType: string
   ) => {
-    let tempMyWordList: MyWordsListTypes[] = [...myWordList];
     switch (optType) {
       case "k":
       case "d":
       case "f":
       case "s":
+        let tempMyWordList: MyWordsListTypes[] = [...myWordList];
+        let tempActiveStateFlags = [...activeStateFlags];
+        let targetStateOpt = tempActiveStateFlags.filter(
+          (opt) => opt.optType === optType
+        );
+        targetStateOpt[0].checked = event.target.checked;
+        setActiveStateFlags(tempActiveStateFlags);
+
         tempMyWordList.map((word: MyWordsListTypes, index: number) => {
           word.word_state === optType
-            ? (word.active = event.target.checked)
+            ? (word.active_state_flag = event.target.checked)
             : void 0;
         });
+
         setMyWordList(tempMyWordList);
+
         break;
-      case "k":
       case "cs":
       case "web":
       case "ntv":
-        let cateKey = `word_is_${optType}_flag`;
-        let test = tempMyWordList.filter((word) => word[cateKey]);
-        console.log("test:::", test);
-        event.target.checked
-          ? console.log(optType, true)
-          : console.log(optType, false);
+        let tempActiveCateFlags = [...activeCateFlags];
+        let targetCateOpt = tempActiveCateFlags.filter(
+          (opt) => opt.optType === optType
+        );
+        targetCateOpt[0].checked = event.target.checked;
+        setActiveCateFlags(tempActiveCateFlags);
         break;
       default:
         console.log("토글 타입 미정의 에러");
     }
   };
+
+  useEffect(() => {
+    let disabledOpt: string[] = [];
+    let abledOpt: string[] = [];
+    //disable 후 able 해주어야 중복 카테고리도 표시할 수 있으므로 map으로 disabledOpt, abledOpt 분리
+    activeCateFlags.map((opt, index) => {
+      opt.checked ? abledOpt.push(opt.optType) : disabledOpt.push(opt.optType);
+    });
+
+    let tempMyWordList: MyWordsListTypes[] = [...myWordList];
+    tempMyWordList.map((word: MyWordsListTypes, index: number) => {
+      for (let d = 0; d < disabledOpt.length; d++) {
+        word[`word_is_${disabledOpt[d]}_flag`]
+          ? (word.active_cate_flag = false)
+          : void 0;
+      }
+      for (let a = 0; a < abledOpt.length; a++) {
+        word[`word_is_${abledOpt[a]}_flag`]
+          ? (word.active_cate_flag = true)
+          : void 0;
+      }
+    });
+    setMyWordList(tempMyWordList);
+  }, [activeCateFlags]);
 
   useEffect(() => {
     setMyWordList(dataMyWordList);
@@ -409,9 +441,9 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
                   typo={getStateStrKr(optList.optType)}
                   defaultChecked={optList.checked}
                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                    optList.changeState
-                      ? optList.changeState(event.target.checked)
-                      : void 0;
+                    // optList.changeState
+                    //   ? optList.changeState(event.target.checked)
+                    //   : void 0;
                     myWordOptTglOnChange(event, optList.optType);
                   }}
                 />

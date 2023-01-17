@@ -7,6 +7,7 @@ import Typo from "../atoms/Typo";
 import styledInterface from "../Intefaces/styledComponent";
 
 export interface MyWordsListTypes {
+  [key: string]: string | number | Date | boolean;
   user_id: string;
   user_word_key: string;
   word_id: string;
@@ -21,7 +22,8 @@ export interface MyWordsListTypes {
   word_is_web_flag: number;
   word_is_ntv_flag: number;
   state_modified_date: Date;
-  active: boolean;
+  active_state_flag: boolean;
+  active_cate_flag: boolean;
 }
 
 interface MyWordCardTypes {
@@ -120,7 +122,7 @@ const MyWordCardComponent: React.FC<MyWordCardTypes> = ({
   contextOnclick,
 }) => {
   const userData: any = useSession().data?.user;
-  return objMyWord.active ? (
+  return objMyWord.active_state_flag && objMyWord.active_cate_flag ? (
     <MyWordListWrapStyled
       className={`state_${objMyWord.word_state}`}
       onClick={() => onCardClick(objMyWord)}
