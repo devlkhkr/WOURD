@@ -2,46 +2,21 @@ import type { NextPage } from "next";
 import Button from "../components/atoms/Button";
 import styled from "styled-components";
 import styledInterface from "../components/Intefaces/styledComponent";
-import {
-  ChangeEvent,
-  Dispatch,
-  FormEventHandler,
-  MouseEventHandler,
-  SetStateAction,
-  SyntheticEvent,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import Typo from "pages/components/atoms/Typo";
 import CardMain, {
   ExposeWordTypes,
   getStateStrKr,
 } from "pages/components/templates/CardMain";
-import { useSelector } from "react-redux";
-import { UserDataTypes } from "redux/slices/user";
-import wrapper from "redux/store";
-import { store } from "redux/store";
-import { unstable_getServerSession } from "next-auth";
-import { authOptions } from "pages/api/auth/[...nextauth]";
+
 import InputText from "pages/components/atoms/InputText";
 import Icon from "pages/components/atoms/Icon";
-import {
-  faEllipsis,
-  faFilter,
-  faPen,
-  faPencil,
-  faPlus,
-  faSliders,
-} from "@fortawesome/free-solid-svg-icons";
-import Checkbox from "pages/components/atoms/Checkbox";
-import Label from "pages/components/atoms/Label";
+import { faSliders } from "@fortawesome/free-solid-svg-icons";
 import ToggleCheckComponent from "pages/components/atoms/Toggle";
 import DataEmptyComponent from "pages/components/molecules/DataEmpty";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
-import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import MyWordCardComponent, {
   MyWordsListTypes,
 } from "pages/components/organisms/MyWordCard";
@@ -83,7 +58,6 @@ const bottomFadeOutCss = `
 
 const MyWordListStyled = styled.div`
   height: calc(100% - 80px);
-  /* margin-top: 16px; */
   overflow: hidden;
   ${bottomFadeOutCss};
 `;
@@ -148,7 +122,6 @@ const WordFilterList = styled.div`
 `;
 
 const WordCount = styled.div`
-  /* text-align: right; */
   display: flex;
   font-size: 12px;
   color: var(--color-grey);
@@ -531,18 +504,6 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
 };
 
 export async function getServerSideProps(context: any) {
-  // const session = await unstable_getServerSession(
-  //   context.req,
-  //   context.res,
-  //   authOptions
-  // );
-
-  // const res = await axios.post("http://localhost:3000" + "/api/myword/list", {
-  //   params: {
-  //     userId: session?.user?.email,
-  //   },
-  // });
-
   const res = await fetch("http://localhost:3000" + "/api/myword/list", {
     headers: {
       cookie: context.req.headers.cookie || "",
