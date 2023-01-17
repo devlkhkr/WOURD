@@ -128,8 +128,8 @@ const MyWordCardComponent: React.FC<MyWordCardTypes> = ({
     let markIdx = title.toUpperCase().indexOf(keyword.toUpperCase());
     let markdownStr =
       title.substr(0, markIdx) +
-      `<mark>${title[markIdx]}</mark>` +
-      title.substr(markIdx + 1, title.length);
+      `<mark>${title.substr(markIdx, keyword.length)}</mark>` +
+      title.substr(markIdx + keyword.length, title.length);
 
     return markdownStr;
   };
