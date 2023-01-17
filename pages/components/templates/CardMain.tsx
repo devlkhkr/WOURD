@@ -262,6 +262,12 @@ export function getStateStrKr(state: string) {
       return "즐겨찾은단어";
     case "s":
       return "건너뛴단어";
+    case "cs":
+      return "CS";
+    case "web":
+      return "Web";
+    case "ntv":
+      return "Native";
     default:
       return state;
   }

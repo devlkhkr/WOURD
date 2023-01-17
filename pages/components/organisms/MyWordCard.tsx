@@ -21,13 +21,13 @@ export interface MyWordsListTypes {
   word_is_web_flag: number;
   word_is_ntv_flag: number;
   state_modified_date: Date;
+  active: boolean;
 }
 
 interface MyWordCardTypes {
   objMyWord: MyWordsListTypes;
   onCardClick: Function;
   contextOnclick: Function;
-  active: boolean;
 }
 
 const MyWordListWrapStyled = styled.div`
@@ -118,10 +118,9 @@ const MyWordCardComponent: React.FC<MyWordCardTypes> = ({
   objMyWord,
   onCardClick,
   contextOnclick,
-  active,
 }) => {
   const userData: any = useSession().data?.user;
-  return active ? (
+  return objMyWord.active ? (
     <MyWordListWrapStyled
       className={`state_${objMyWord.word_state}`}
       onClick={() => onCardClick(objMyWord)}

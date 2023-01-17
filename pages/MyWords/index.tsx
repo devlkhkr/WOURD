@@ -167,19 +167,18 @@ const MyWordEndContents = styled.div`
 
 const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
   const userData: any = useSession().data?.user;
+
   const [clickedWord, setClickedWord] = useState<ExposeWordTypes[]>([]);
   const [myWordList, setMyWordList] = useState<MyWordsListTypes[]>([]);
-  const [fltrdWordList, setFltrdWordList] = useState<MyWordsListTypes[]>([]);
-  // const [currentCardIdx, setCurrentCardIdx] = useState(0);
   const [wordFilterOpened, setWordFilterOpened] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState("");
   const [searchResult, setSearchResult] = useState<MyWordsListTypes[]>([]);
   const [totalPgn, setTotalPgn] = useState(1);
+
   const searchInput = useRef<HTMLInputElement>();
   const router = useRouter();
 
   const myCardClick = (_objMyWord: MyWordsListTypes, _index: number) => {
-    // setCurrentCardIdx(_index);
     let obj = [
       {
         word_desc: _objMyWord.word_desc,
@@ -203,7 +202,6 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
 
   const afterMyWordState = (userSelectState: string) => {
     let sprdMyWordList = [...myWordList];
-    // let tempWord = sprdMyWordList[currentCardIdx];
     let currentCardIdx = 0;
     for (let w = 0; w < sprdMyWordList.length; w++) {
       if (sprdMyWordList[w].word_id === clickedWord[0].word_id) {
@@ -213,21 +211,28 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
         continue;
       }
     }
+
     let tempWord = sprdMyWordList.filter(
       (word) => word.word_id === clickedWord[0].word_id
     );
     tempWord[0].word_state = userSelectState;
+
+    let isToggleActive = wordOptTgls[0].optList.filter(
+      (opt) => opt.optType === userSelectState
+    )[0].checked;
+
+    tempWord[0].active = isToggleActive ? true : false;
+
     sprdMyWordList.splice(currentCardIdx, 1);
     sprdMyWordList.unshift(tempWord[0]);
-    setMyWordList(sprdMyWordList);
 
-    searchKeyword.length > 0 ? setSearchedData("s") : void 0;
+    setMyWordList(sprdMyWordList);
 
     setClickedWord([]);
   };
 
   const setSearchedData = (keyword: string) => {
-    let searchedData = fltrdWordList.filter(
+    let searchedData = myWordList.filter(
       (word) =>
         word.word_name.toUpperCase().indexOf(keyword.toUpperCase()) != -1
     );
@@ -264,105 +269,81 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
     console.log("context onclick");
   };
 
-  interface wordOptListTypes {
-    title: string;
+  interface optListTypes {
+    optType: string;
     checked: boolean;
+    changeState?: any;
   }
   interface wordOptTglsTypes {
     optTitle: string;
-    optList: wordOptListTypes[];
+    optList: optListTypes[];
   }
 
-  const [wordOptTgls, setWordOptTgls] = useState<wordOptTglsTypes[]>([
+  const [activeKFlag, setActiveKFlag] = useState(true);
+  const [activeDFlag, setActiveDFlag] = useState(true);
+  const [activeFFlag, setActiveFFlag] = useState(true);
+  const [activeSFlag, setActiveSFlag] = useState(true);
+
+  const wordOptTgls: wordOptTglsTypes[] = [
     {
       optTitle: "상태별",
       optList: [
-        {
-          title: "k",
-          checked: true,
-        },
-        {
-          title: "d",
-          checked: true,
-        },
-        {
-          title: "f",
-          checked: true,
-        },
-        {
-          title: "s",
-          checked: true,
-        },
+        { optType: "k", checked: activeKFlag, changeState: setActiveKFlag },
+        { optType: "d", checked: activeDFlag, changeState: setActiveDFlag },
+        { optType: "f", checked: activeFFlag, changeState: setActiveFFlag },
+        { optType: "s", checked: activeSFlag, changeState: setActiveSFlag },
       ],
     },
     {
       optTitle: "카테고리별",
       optList: [
-        {
-          title: "CS",
-          checked: true,
-        },
-        {
-          title: "Web",
-          checked: true,
-        },
-        {
-          title: "Native",
-          checked: true,
-        },
+        { optType: "cs", checked: true },
+        { optType: "web", checked: true },
+        { optType: "ntv", checked: true },
       ],
     },
-  ]);
+  ];
 
   const myWordOptTglOnChange = (
     event: React.ChangeEvent<HTMLInputElement>,
-    cateIdx: number,
-    optList: wordOptListTypes
+    optType: string
   ) => {
-    let tempWordOptTgls: wordOptTglsTypes[] = [...wordOptTgls];
-    let tempOpt = tempWordOptTgls[cateIdx].optList.filter(
-      (opt) => opt.title === optList.title
-    );
-    tempOpt[0].checked = event.target.checked;
-
-    console.log("tempWordOptTgls:::", tempWordOptTgls);
-    console.log("tempOpt:::", tempOpt[0]);
-    console.log("fltrdWordList:::", fltrdWordList);
-
-    let tempFltrdWordList: MyWordsListTypes[] = [...fltrdWordList];
-    switch (cateIdx) {
-      case 0:
-        console.log("상태별 토글 Change");
-        tempFltrdWordList = tempFltrdWordList.filter(
-          (word) => word.word_id === clickedWord[0].word_id
-        );
+    let tempMyWordList: MyWordsListTypes[] = [...myWordList];
+    switch (optType) {
+      case "k":
+      case "d":
+      case "f":
+      case "s":
+        tempMyWordList.map((word: MyWordsListTypes, index: number) => {
+          word.word_state === optType
+            ? (word.active = event.target.checked)
+            : void 0;
+        });
+        setMyWordList(tempMyWordList);
         break;
-      case 1:
-        console.log("카테고리별 토글 Change");
+      case "k":
+      case "cs":
+      case "web":
+      case "ntv":
+        let cateKey = `word_is_${optType}_flag`;
+        let test = tempMyWordList.filter((word) => word[cateKey]);
+        console.log("test:::", test);
+        event.target.checked
+          ? console.log(optType, true)
+          : console.log(optType, false);
         break;
       default:
         console.log("토글 타입 미정의 에러");
     }
-    setWordOptTgls(tempWordOptTgls);
   };
 
   useEffect(() => {
     setMyWordList(dataMyWordList);
-    setFltrdWordList(dataMyWordList);
   }, [dataMyWordList]);
 
   useEffect(() => {
-    setFltrdWordList(myWordList);
-  }, [myWordList]);
-
-  useEffect(() => {
     searchInput.current ? setSearchedData(searchInput.current.value) : void 0;
-  }, [fltrdWordList]);
-
-  const isMyWordCardActive = (objMyWord: MyWordsListTypes) => {
-    // return objMyWord.word_state === "k" ? true : false;
-    return true;
-  };
+  }, [myWordList]);
 
   return (
     <>
@@ -422,18 +403,19 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
               >
                 {objOpt.optTitle}
               </Typo>
-              {objOpt.optList.map(
-                (optList: wordOptListTypes, index: number) => (
-                  <ToggleCheckComponent
-                    key={index}
-                    typo={getStateStrKr(optList.title)}
-                    defaultChecked={optList.checked}
-                    onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                      myWordOptTglOnChange(event, cateIdx, optList)
-                    }
-                  />
-                )
-              )}
+              {objOpt.optList.map((optList: optListTypes, index: number) => (
+                <ToggleCheckComponent
+                  key={index}
+                  typo={getStateStrKr(optList.optType)}
+                  defaultChecked={optList.checked}
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                    optList.changeState
+                      ? optList.changeState(event.target.checked)
+                      : void 0;
+                    myWordOptTglOnChange(event, optList.optType);
+                  }}
+                />
+              ))}
             </div>
           ))}
         </WordFilterList>
@@ -459,7 +441,6 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
                     objMyWord={objMyWord}
                     onCardClick={myCardClick}
                     contextOnclick={contextOnclick}
-                    active={true}
                   />
                 )
               )}
@@ -479,15 +460,13 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
               fullsize={true}
             />
           ) : (
-            fltrdWordList.map((objMyWord: MyWordsListTypes, index: number) =>
+            myWordList.map((objMyWord: MyWordsListTypes, index: number) =>
               index < totalPgn * 5 ? (
                 <MyWordCardComponent
                   objMyWord={objMyWord}
                   key={index}
                   onCardClick={myCardClick}
                   contextOnclick={contextOnclick}
-                  active={isMyWordCardActive(objMyWord)}
-                  // active={true}
                 />
               ) : (
                 void 0
@@ -495,7 +474,7 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
             )
           )}
           <MyWordEndContents>
-            {fltrdWordList.length >= totalPgn * 5 ? (
+            {myWordList.length >= totalPgn * 5 ? (
               <Button
                 onClick={() => setTotalPgn(totalPgn + 1)}
                 desc="더 보기"
@@ -538,7 +517,6 @@ export async function getServerSideProps(context: any) {
     },
   });
   const data = await res.json();
-
   return {
     props: {
       dataMyWordList: data,
