@@ -30,6 +30,7 @@ interface MyWordCardTypes {
   objMyWord: MyWordsListTypes;
   onCardClick: Function;
   contextOnclick: Function;
+  searchKeyword?: string;
 }
 
 const MyWordListWrapStyled = styled.div`
@@ -120,15 +121,31 @@ const MyWordCardComponent: React.FC<MyWordCardTypes> = ({
   objMyWord,
   onCardClick,
   contextOnclick,
+  searchKeyword,
 }) => {
   const userData: any = useSession().data?.user;
+  const setTitleMark = (title: string, keyword: string) => {
+    let markIdx = title.toUpperCase().indexOf(keyword.toUpperCase());
+    let markdownStr =
+      title.substr(0, markIdx) +
+      `<mark>${title[markIdx]}</mark>` +
+      title.substr(markIdx + 1, title.length);
+
+    return markdownStr;
+  };
   return objMyWord.active_state_flag && objMyWord.active_cate_flag ? (
     <MyWordListWrapStyled
       className={`state_${objMyWord.word_state}`}
       onClick={() => onCardClick(objMyWord)}
     >
       <Typo lineClamp="1" fontSize="16px" fontWeight="bold" textAlign="left">
-        {objMyWord.word_name}
+        <p
+          dangerouslySetInnerHTML={{
+            __html: searchKeyword
+              ? setTitleMark(objMyWord.word_name, searchKeyword)
+              : objMyWord.word_name,
+          }}
+        ></p>
       </Typo>
       {objMyWord.word_unravel ? (
         <Typo

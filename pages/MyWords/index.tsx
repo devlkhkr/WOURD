@@ -446,6 +446,7 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
                     objMyWord={objMyWord}
                     onCardClick={myCardClick}
                     contextOnclick={contextOnclick}
+                    searchKeyword={searchKeyword}
                   />
                 )
               )}
