@@ -21,6 +21,7 @@ const DataEmptyStyled = styled.div<DataEmptyTypes>`
   height: ${(props) => (props.fullsize ? "100%" : "auto")};
   padding: ${(props) => (props.fullsize ? "" : "24px 0")};
   position: ${(props) => (props.fullsize ? "absolute" : "static")};
+  margin-top: ${(props) => (props.fullsize ? void 0 : "24px")}; ;
 `;
 
 const DataEmptyComponent: React.FC<DataEmptyTypes> = ({

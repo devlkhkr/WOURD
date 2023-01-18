@@ -137,7 +137,7 @@ const WordCount = styled.div`
 `;
 
 const MyWordEndContents = styled.div`
-  margin-top: 24px;
+  /* margin-top: 24px; */
 `;
 
 const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
@@ -145,6 +145,9 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
 
   const [clickedWord, setClickedWord] = useState<ExposeWordTypes[]>([]);
   const [myWordList, setMyWordList] = useState<MyWordsListTypes[]>([]);
+  const [fltrdMyWordList, setFltrdMyWordList] = useState<MyWordsListTypes[]>([
+    ...myWordList,
+  ]);
   const [wordFilterOpened, setWordFilterOpened] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState("");
   const [searchResult, setSearchResult] = useState<MyWordsListTypes[]>([]);
@@ -207,9 +210,11 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
   };
 
   const setSearchedData = (keyword: string) => {
-    let searchedData = myWordList.filter(
+    let searchedData = fltrdMyWordList.filter(
       (word) =>
-        word.word_name.toUpperCase().indexOf(keyword.toUpperCase()) != -1
+        word.word_name.toUpperCase().indexOf(keyword.toUpperCase()) != -1 &&
+        word.active_state_flag &&
+        word.active_cate_flag
     );
 
     searchedData.length == 0
@@ -347,8 +352,15 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
   }, [dataMyWordList]);
 
   useEffect(() => {
-    searchInput.current ? setSearchedData(searchInput.current.value) : void 0;
+    let tempFltrdMyWordList = myWordList.filter(
+      (word) => word.active_cate_flag && word.active_state_flag
+    );
+    setFltrdMyWordList(tempFltrdMyWordList);
   }, [myWordList]);
+
+  useEffect(() => {
+    searchInput.current ? setSearchedData(searchInput.current.value) : void 0;
+  }, [fltrdMyWordList]);
 
   return (
     <>
@@ -379,7 +391,9 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
         <span>
           총{" "}
           <i>
-            {searchKeyword.length > 0 ? searchResult.length : myWordList.length}
+            {searchKeyword.length > 0
+              ? searchResult.length
+              : fltrdMyWordList.length}
           </i>
           개의 카드
         </span>
@@ -414,9 +428,6 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
                   typo={getStateStrKr(optList.optType)}
                   defaultChecked={optList.checked}
                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                    // optList.changeState
-                    //   ? optList.changeState(event.target.checked)
-                    //   : void 0;
                     myWordOptTglOnChange(event, optList.optType);
                   }}
                 />
@@ -457,36 +468,35 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
         )}
 
         <WordScrollStyled>
-          {myWordList.length === 0 && searchKeyword.length === 0 ? (
-            <DataEmptyComponent
-              title={`단어장에 등록된 단어가 없습니다.`}
-              detail="홈 화면에서 단어카드를 둘러보는 건 어떨까요?"
-              ppsTit={`카드 둘러보기`}
-              ppsFunc={goToMain}
-              fullsize={true}
-            />
-          ) : (
-            myWordList.map((objMyWord: MyWordsListTypes, index: number) =>
-              index < totalPgn * 5 ? (
-                <MyWordCardComponent
-                  objMyWord={objMyWord}
-                  key={index}
-                  onCardClick={myCardClick}
-                  contextOnclick={contextOnclick}
-                />
-              ) : (
-                void 0
-              )
+          {fltrdMyWordList.map((objMyWord: MyWordsListTypes, index: number) =>
+            index < totalPgn * 5 ? (
+              <MyWordCardComponent
+                objMyWord={objMyWord}
+                key={index}
+                onCardClick={myCardClick}
+                contextOnclick={contextOnclick}
+              />
+            ) : (
+              void 0
             )
           )}
           <MyWordEndContents>
-            {myWordList.length >= totalPgn * 5 ? (
+            {fltrdMyWordList.length >= totalPgn * 5 ? (
               <Button
                 onClick={() => setTotalPgn(totalPgn + 1)}
                 desc="더 보기"
                 height="48px"
                 backgroundColor="var(--color-grey)"
                 color="#fff"
+                marginTop="24px"
+              />
+            ) : myWordList.length === 0 && searchKeyword.length === 0 ? (
+              <DataEmptyComponent
+                title={`단어장에 등록된 단어가 없습니다.`}
+                detail="홈 화면에서 단어카드를 둘러보는 건 어떨까요?"
+                ppsTit={`카드 둘러보기`}
+                ppsFunc={goToMain}
+                fullsize={true}
               />
             ) : (
               <DataEmptyComponent
