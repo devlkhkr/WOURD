@@ -34,6 +34,8 @@ const SettingProfileUser = styled.div`
 
 const ProfileListWrap = styled.div``;
 
+const ChangeImgButtons = styled.div``;
+
 const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
   const { data: session, status } = useSession();
 
@@ -41,7 +43,7 @@ const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
 
   const router = useRouter();
   const cancelBtnClick = () => {
-    router.push("/Setting");
+    router.back();
   };
 
   // FIXME: 이미지 수정할수있는 함수
@@ -60,15 +62,17 @@ const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
           height="80px"
         />
         {/* FIXME: 추후 버튼으로 바꾸어야할까요? */}
-        <TypoComponent
-          fontSize="16px"
-          fontWeight="semi-bold"
-          textAlign="left"
-          color="var(--color-point)"
-          onClick={modifyImg}
-        >
-          프로필 사진 바꾸기
-        </TypoComponent>
+        <ChangeImgButtons>
+          <TypoComponent
+            fontSize="16px"
+            fontWeight="semi-bold"
+            textAlign="left"
+            color="var(--color-point)"
+            onClick={modifyImg}
+          >
+            프로필 사진 바꾸기
+          </TypoComponent>
+        </ChangeImgButtons>
       </SettingProfileUser>
 
       <ProfileListWrap>
@@ -84,12 +88,12 @@ const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
       </ProfileListWrap>
 
       <ButtonWrapComponent>
-        <ButtonCompontent desc="취소" height="32px" onClick={cancelBtnClick} />
+        <ButtonCompontent desc="취소" height="40px" onClick={cancelBtnClick} />
         <ButtonCompontent
           desc="수정"
           backgroundColor="var(--color-point)"
           color="var(--color-white)"
-          height="32px"
+          height="40px"
         />
       </ButtonWrapComponent>
     </SettingProfileWrap>

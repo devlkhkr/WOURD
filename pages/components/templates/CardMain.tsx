@@ -252,6 +252,27 @@ const WordRegInfoStyled = styled.div`
   }
 `;
 
+export function getStateStrKr(state: string) {
+  switch (state) {
+    case "k":
+      return "아는단어";
+    case "d":
+      return "모르는단어";
+    case "f":
+      return "즐겨찾은단어";
+    case "s":
+      return "건너뛴단어";
+    case "cs":
+      return "CS";
+    case "web":
+      return "Web";
+    case "ntv":
+      return "Native";
+    default:
+      return state;
+  }
+}
+
 const CardMainComponent: React.FC<CardMainTypes> = ({
   exposeWord,
   isMyWord,
@@ -274,19 +295,6 @@ const CardMainComponent: React.FC<CardMainTypes> = ({
     skip: function (_objWord: ExposeWordTypes, e: Event) {
       afterCardHandler(_objWord, "s");
     },
-  };
-
-  const getStateStrKr = (state: string) => {
-    switch (state) {
-      case "k":
-        return "아는단어";
-      case "d":
-        return "모르는단어";
-      case "f":
-        return "즐겨찾은단어";
-      case "s":
-        return "건너뛴단어";
-    }
   };
 
   const afterCardHandler = function (_objWord: ExposeWordTypes, state: string) {

@@ -29,7 +29,9 @@ export default async function getMyWordlist(
       "WORD_TB.word_is_cs_flag," +
       "WORD_TB.word_is_web_flag," +
       "WORD_TB.word_is_ntv_flag" +
-      " FROM USER_WORD_TB LEFT OUTER JOIN WORD_TB ON USER_WORD_TB.word_id = WORD_TB.word_id LEFT JOIN USER_TB ON WORD_TB.word_reg_userid = USER_TB.user_id WHERE USER_WORD_TB.user_id='" +
+      ", true as active_state_flag " +
+      ", true as active_cate_flag " +
+      "FROM USER_WORD_TB LEFT OUTER JOIN WORD_TB ON USER_WORD_TB.word_id = WORD_TB.word_id LEFT JOIN USER_TB ON WORD_TB.word_reg_userid = USER_TB.user_id WHERE USER_WORD_TB.user_id='" +
       session.user.email +
       "' AND word_use_flag=1 ORDER BY state_modified_date desc",
     function (err: any, data: any) {
