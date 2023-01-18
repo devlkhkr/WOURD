@@ -1,24 +1,25 @@
 import styled, { StyledInterface } from "styled-components";
 import TypoComponent from "../atoms/Typo";
 
-interface NoticeListArticleTypes {
+interface AccordionBoardArticleTypes {
   article: string;
   isOpened: boolean;
 }
 
-const NoticeListArticleComponent = styled.div<NoticeListArticleTypes>`
+const AccordionBoardArticleComponent = styled.div<AccordionBoardArticleTypes>`
   transition: all 0.3s linear;
   max-height: 0;
   overflow: hidden;
   max-height: ${props => (props.isOpened ? "60vw" : "0")};
 `;
 
-const NoticeListArticle: React.FC<NoticeListArticleTypes> = ({
+const AccordionBoardArticle: React.FC<AccordionBoardArticleTypes> = ({
   article,
   isOpened,
 }) => {
+
   return (
-    <NoticeListArticleComponent isOpened={isOpened} article={article}>
+    <AccordionBoardArticleComponent isOpened={isOpened} article={article}>
       <TypoComponent
         fontSize="14px"
         fontWeight="regular"
@@ -27,8 +28,8 @@ const NoticeListArticle: React.FC<NoticeListArticleTypes> = ({
       >
         {article}
       </TypoComponent>
-    </NoticeListArticleComponent>
+    </AccordionBoardArticleComponent>
   );
 };
 
-export default NoticeListArticle;
+export default AccordionBoardArticle;
