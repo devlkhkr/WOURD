@@ -263,7 +263,7 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
     { optType: "k", checked: true },
     { optType: "d", checked: true },
     { optType: "f", checked: true },
-    { optType: "s", checked: true },
+    { optType: "s", checked: false },
   ]);
   const [activeCateFlags, setActiveCateFlags] = useState<optListTypes[]>([
     { optType: "cs", checked: true },
@@ -492,7 +492,7 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
               />
             ) : myWordList.length === 0 && searchKeyword.length === 0 ? (
               <DataEmptyComponent
-                title={`단어장에 등록된 단어가 없습니다.`}
+                title={`단어장에 등록된 카드가 없습니다.`}
                 detail="홈 화면에서 단어카드를 둘러보는 건 어떨까요?"
                 ppsTit={`카드 둘러보기`}
                 ppsFunc={goToMain}
