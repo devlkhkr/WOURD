@@ -481,7 +481,7 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
             )
           )}
           <MyWordEndContents>
-            {fltrdMyWordList.length >= totalPgn * 5 ? (
+            {fltrdMyWordList.length > totalPgn * 5 ? (
               <Button
                 onClick={() => setTotalPgn(totalPgn + 1)}
                 desc="더 보기"
