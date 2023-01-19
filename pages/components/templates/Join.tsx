@@ -20,6 +20,7 @@ import axios from "axios";
 import validator from "validator";
 import passwordValidator from "password-validator";
 import Hash from "../atoms/Hash";
+import { newAlert } from "../atoms/Alert";
 interface JoinTypes {
   setJoinPageOpened: Function;
   signIn: Function;
@@ -107,6 +108,7 @@ const JoinComponent: React.FC<JoinTypes> = ({
 
   const invtCode: any = process.env.NEXT_PUBLIC_INVITE_CODE;
 
+  const regexUserName = /[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\ '\"\\(\=]/gi;
   const schema = new passwordValidator();
   schema
     .is()
@@ -146,7 +148,6 @@ const JoinComponent: React.FC<JoinTypes> = ({
           alert("유효한 이메일 형식이 아닙니다.");
         } else {
           sendAuthCheckMail();
-          setAuthCheckFlag(true);
         }
       } else if (dupCheckLeng > 0) {
         alert("이미 등록된 이메일 입니다.");
@@ -167,6 +168,9 @@ const JoinComponent: React.FC<JoinTypes> = ({
     );
 
     setResAuthCode(res.data.authCode);
+    res.status === 200
+      ? setAuthCheckFlag(true)
+      : newAlert("메일 전송실패", "ngtv");
   };
 
   const successAuthCheck = () => {
@@ -410,10 +414,27 @@ const JoinComponent: React.FC<JoinTypes> = ({
                 id="joinName"
                 maxLength={5}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  setJoinUserName(e.currentTarget.value);
-                  setJoinUserImg(
-                    `https://avatars.dicebear.com/api/personas/${e.currentTarget.value}.svg`
-                  );
+                  e.currentTarget.value.length > 0 &&
+                  regexUserName.test(e.currentTarget.value)
+                    ? (() => {
+                        e.currentTarget.value = e.currentTarget.value.replace(
+                          regexUserName,
+                          ""
+                        );
+                        newAlert(
+                          "한글, 영 대소문자, 숫자만 입력 가능합니다.",
+                          "ngtv"
+                        );
+                      })()
+                    : (() => {
+                        e.currentTarget.value.length > 5
+                          ? newAlert("최대 5글자까지 입력 가능합니다.", "ngtv")
+                          : void 0;
+                        setJoinUserName(e.currentTarget.value);
+                        setJoinUserImg(
+                          `https://avatars.dicebear.com/api/personas/${e.currentTarget.value}.svg`
+                        );
+                      })();
                 }}
               />
             </InputWrap>

@@ -17,6 +17,7 @@ import Form from "../../components/organisms/Form";
 import axios from "axios";
 import uuid from "uuid4";
 import { useSession } from "next-auth/react";
+import { newAlert } from "pages/components/atoms/Alert";
 interface RegistWordTypes {}
 
 const RegistWordWrap = styled.div``;
@@ -46,8 +47,8 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
     console.log("작성된 약어 풀이: ", wordUnravel);
     console.log("작성된 단어 설명: ", wordDesc);
     console.log("선택된 단어 카테고리: ", wordCtgr.current.getValue());
-
     console.log("-----------------------------");
+
     if (wordTit.length <= 0) {
       alert("단어명을 입력하세요.");
       return;
@@ -96,11 +97,11 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
               }
             );
             resState.status === 200
-              ? alert("단어 상태변경 완료.")
-              : alert("단어 상태변경 실패.");
+              ? newAlert("단어 상태변경 완료.", "pstv")
+              : newAlert("단어 상태변경 실패.", "ngtv");
           })();
         }
-        alert("단어 등록완료");
+        newAlert("단어 등록완료", "pstv");
       }
       // E : 단어 Insert 로직
     }
@@ -120,7 +121,7 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
             placeHolder="예) SSR"
             id="wordName"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setwordTit(e.currentTarget.value);
+              setwordTit(e.currentTarget.value.replaceAll("'", "''"));
             }}
           />
         </Fieldset>
@@ -160,7 +161,7 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
               type="text"
               placeHolder="예) Server Side Rendering"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setWordUnravel(e.currentTarget.value);
+                setWordUnravel(e.currentTarget.value.replaceAll("'", "''"));
               }}
             />
           </Fieldset>
@@ -177,7 +178,7 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
             placeholder="예) SSR이란 서버사이드 렌더링(Server Side Rendering)의 약자로 서버로부터 완전하게 만들어진 HTML 파일을 받아와 페이지 전체를 렌더링 하는 방식이다."
             reference={wordDesc}
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-              setwordDesc(e.currentTarget.value);
+              setwordDesc(e.currentTarget.value.replaceAll("'", "''"));
             }}
           />
         </Fieldset>
