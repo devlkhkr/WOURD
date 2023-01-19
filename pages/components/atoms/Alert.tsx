@@ -24,7 +24,7 @@ const AlertWrapStyled = styled.div`
   flex-flow: column-reverse;
   align-items: center;
   justify-content: end;
-  z-index: 9999;
+  z-index: 20000;
   pointer-events: none;
 `;
 
