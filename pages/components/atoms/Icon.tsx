@@ -9,24 +9,34 @@ const IconWrap = styled.i<IconWrapTypes>`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: ${(props) => props.iconWidth};
-  height: ${(props) => props.iconHeight};
-  margin: 0 ${(props) => props.align || ""} ${(props) => props.bottom || ""};
-  color: ${(props) => props.color || "inherit"};
+  width: ${props => props.iconWidth};
+  height: ${props => props.iconHeight};
+  margin: 0 ${props => props.align || ""} ${props => props.bottom || ""};
+  color: ${props => props.color || "inherit"};
   svg {
-    font-size: ${(props) => props.svgSize || "16px"};
+    font-size: ${props => props.svgSize || "16px"};
     width: 100%;
     height: 100%;
   }
+`;
+
+const CustomIcon = styled(IconWrap)<IconWrapTypes>`
+  background-image: url(${props => props.iconImg ? `../images/icons/${props.iconImg}.png` : ""});
+  background-size: cover;
+  background-position: center;
 `;
 
 // margin: 0 ${props => props.align}px ${props => (props.bottom ? props.bottom : 4)}px;
 
 interface IconTypes {
   // FIXME: SystemDevs의 github 아이콘때문에 유니온 타입으로 잠시 지정
-  iconShape: IconDefinition | any;
+  iconShape?: IconDefinition | any;
 }
 interface IconWrapTypes extends styledInterface {
+  // icon fontawesome
+  iconShape?: any;
+  // icon custom
+  iconImg?: string;
   iconWidth?: string;
   iconHeight?: string;
   bottom?: string;
@@ -36,6 +46,7 @@ interface IconWrapTypes extends styledInterface {
 
 const Icon: React.FC<IconWrapTypes & IconTypes> = ({
   iconShape,
+  iconImg,
   iconWidth,
   iconHeight,
   bottom,
@@ -44,18 +55,29 @@ const Icon: React.FC<IconWrapTypes & IconTypes> = ({
   color,
   onClick,
 }) => {
+  console.log(iconImg)
   return (
-    <IconWrap
-      iconWidth={iconWidth}
-      iconHeight={iconHeight}
-      bottom={bottom}
-      align={align}
-      svgSize={svgSize}
-      color={color}
-      onClick={onClick}
-    >
-      <FontAwesomeIcon icon={iconShape} />
-    </IconWrap>
+    <>
+      {iconShape ? (
+        <IconWrap
+          iconWidth={iconWidth}
+          iconHeight={iconHeight}
+          bottom={bottom}
+          align={align}
+          svgSize={svgSize}
+          color={color}
+          onClick={onClick}
+        >
+          <FontAwesomeIcon icon={iconShape} />
+        </IconWrap>
+      ) : (
+        <CustomIcon
+          iconImg={iconImg}
+          iconWidth={iconWidth}
+          iconHeight={iconHeight}
+        />
+      )}
+    </>
   );
 };
 

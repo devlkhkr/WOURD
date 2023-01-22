@@ -37,7 +37,7 @@ const ProfileWordIconWrap = styled.div`
   padding: 8px;
   margin-bottom: 8px;
   border-radius: 50%;
-  background-color: #eaeaea;
+  background-color: #f7f7f7;
 `;
 
 const ProfileWordItemComponent: React.FC<ProfileWordTitleTypes> = (props) => {
@@ -48,7 +48,8 @@ const ProfileWordItemComponent: React.FC<ProfileWordTitleTypes> = (props) => {
       case "know":
         return (
           <Icon
-            iconShape={faLightbulb}
+            // iconShape={faLightbulb}
+            iconImg="icon-circle"
             iconWidth="14px"
             iconHeight="14px"
             svgSize="14px"
@@ -58,7 +59,8 @@ const ProfileWordItemComponent: React.FC<ProfileWordTitleTypes> = (props) => {
       case "dontknow":
         return (
           <Icon
-            iconShape={faCircleQuestion}
+            // iconShape={faCircleQuestion}
+            iconImg="icon-triangle"
             iconWidth="14px"
             iconHeight="14px"
             svgSize="14px"
@@ -68,7 +70,8 @@ const ProfileWordItemComponent: React.FC<ProfileWordTitleTypes> = (props) => {
       case "favorite":
         return (
           <Icon
-            iconShape={faStar}
+            // iconShape={faStar}
+            iconImg="icon-star"
             iconWidth="14px"
             iconHeight="14px"
             svgSize="14px"
@@ -78,7 +81,8 @@ const ProfileWordItemComponent: React.FC<ProfileWordTitleTypes> = (props) => {
       case "skip":
         return (
           <Icon
-            iconShape={faForward}
+            // iconShape={faForward}
+            iconImg="icon-x"
             iconWidth="14px"
             iconHeight="14px"
             svgSize="14px"
