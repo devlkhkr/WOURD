@@ -90,6 +90,10 @@ const UserProfileComponent: React.FC<UserProfileTypes> = ({}) => {
   return (
     <UserProfileStyled>
       <ImgComponent
+        // state 변경.
+        // ui에 주사위 / 새로고침 누를때마다 state 변경. 변경되는값은
+        // dropdown 이 scr의 personas
+        // /뒤에 들어가는애가 uuid로 생성된값.svg
         src={userData?.image!}
         objectFit="cover"
         width="64px"
