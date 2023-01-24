@@ -284,7 +284,7 @@ const SystemSpec: React.FC = () => {
         </StackWrap>
       </section>
 
-      {/* DEV */}
+      {/* dev */}
       <section className="dev-section">
         <TypoComponent
           fontSize="18px"
@@ -318,6 +318,44 @@ const SystemSpec: React.FC = () => {
             by="Babel"
             docs="https://babeljs.io/"
             desc="Babel is a JavaScript compiler."
+          />
+        </StackWrap>
+      </section>
+
+      {/* database */}
+      <section className="dev-section">
+        <TypoComponent
+          fontSize="18px"
+          fontWeight="bold"
+          textAlign="left"
+          color="#202020"
+          marginTop="32px"
+          marginBottom="16px"
+          paddingLeft="4px"
+        >
+          Database
+        </TypoComponent>
+        <StackWrap>
+          <StackComponent
+            name="Rds"
+            src="spec-rds.png"
+            by="AWS.amazon"
+            docs="https://aws.amazon.com/ko/rds/"
+            desc="Set up, operate, and scale your relational database in the cloud with just a few clicks."
+          />
+          <StackComponent
+            name="Axios"
+            src="spec-axios.png"
+            by="open source"
+            docs="https://axios-http.com/kr/docs/intro"
+            desc="Promise-based HTTP client library available in browser and node.js"
+          />
+          <StackComponent
+            name="Rest API"
+            src="spec-restapi.png"
+            by="Roy Fielding"
+            docs="https://aws.amazon.com/ko/what-is/restful-api/"
+            desc="an application programming interface (API or web API) that conforms to the constraints of REST architectural style and allows for interaction with RESTful web services"
           />
         </StackWrap>
       </section>
