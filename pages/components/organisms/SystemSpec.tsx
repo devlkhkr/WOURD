@@ -239,8 +239,8 @@ const SystemSpec: React.FC = () => {
         </StackWrap>
       </section>
 
-       {/* view */}
-       <section className="view-section">
+      {/* view */}
+      <section className="view-section">
         <TypoComponent
           fontSize="18px"
           fontWeight="bold"
@@ -275,16 +275,52 @@ const SystemSpec: React.FC = () => {
             desc="Take the hassle out of icons"
           />
           <StackComponent
-            name="Font-Awesome"
+            name="Dicebear-avatar"
             src="spec-dicebear.svg"
             by="FlorianKoerner"
             docs="https://avatars.dicebear.com/"
             desc="Can choose between simple identicons and lovely designed characters."
           />
-          
         </StackWrap>
       </section>
 
+      {/* DEV */}
+      <section className="dev-section">
+        <TypoComponent
+          fontSize="18px"
+          fontWeight="bold"
+          textAlign="left"
+          color="#202020"
+          marginTop="32px"
+          marginBottom="16px"
+          paddingLeft="4px"
+        >
+          Dev
+        </TypoComponent>
+        <StackWrap>
+          <StackComponent
+            name="ES-Lint"
+            src="spec-eslint.png"
+            by="Nicholas C. Zakas"
+            docs="https://github.com/eslint/eslint"
+            desc="ESLint is a tool for identifying and reporting on patterns found in ECMAScript/JavaScript code."
+          />
+          <StackComponent
+            name="Prettier"
+            src="spec-prettier.png"
+            by="open source"
+            docs="https://prettier.io/"
+            desc="Prettier is an opinionated code formatter with support"
+          />
+          <StackComponent
+            name="Babel"
+            src="spec-babel.png"
+            by="Babel"
+            docs="https://babeljs.io/"
+            desc="Babel is a JavaScript compiler."
+          />
+        </StackWrap>
+      </section>
     </>
   );
 };
