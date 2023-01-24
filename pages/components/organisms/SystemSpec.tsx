@@ -359,6 +359,38 @@ const SystemSpec: React.FC = () => {
           />
         </StackWrap>
       </section>
+
+      {/* release */}
+      <section className="dev-section">
+        <TypoComponent
+          fontSize="18px"
+          fontWeight="bold"
+          textAlign="left"
+          color="#202020"
+          marginTop="32px"
+          marginBottom="16px"
+          paddingLeft="4px"
+        >
+          Release
+        </TypoComponent>
+        <StackWrap>
+          <StackComponent
+            name="Ec2"
+            src="spec-ec2.png"
+            by="AWS.amazon"
+            docs="https://aws.amazon.com/ko/ec2/?trk=68913a17-4967-41f6-a766-0f2eb338dd04&sc_channel=ps&s_kwcid=AL!4422!3!588924203178!p!!g!!ec2&ef_id=CjwKCAiAoL6eBhA3EiwAXDom5q4Z-nFYnywcaXRQysXbQt_VbfQKfIK0vaXJN1Mf3hCce6DdAPG-6hoCpxQQAvD_BwE:G:s&s_kwcid=AL!4422!3!588924203178!p!!g!!ec2"
+            desc="Amazon Elastic Compute Cloud (Amazon EC2) provides scalable computing capacity in the Amazon Web Services (AWS) Cloud."
+          />
+        <StackComponent
+            name="Vercel"
+            src="spec-vercel.png"
+            by="Vercel"
+            docs="https://vercel.com/"
+            desc="Vercel is the platform for frontend developers, providing the speed and reliability innovators need to create at the moment of inspiration."
+          />
+        </StackWrap>
+
+      </section>
     </>
   );
 };
