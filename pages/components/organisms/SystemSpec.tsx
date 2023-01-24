@@ -389,7 +389,30 @@ const SystemSpec: React.FC = () => {
             desc="Vercel is the platform for frontend developers, providing the speed and reliability innovators need to create at the moment of inspiration."
           />
         </StackWrap>
+      </section>
 
+      {/* storage */}
+      <section className="dev-section">
+        <TypoComponent
+          fontSize="18px"
+          fontWeight="bold"
+          textAlign="left"
+          color="#202020"
+          marginTop="32px"
+          marginBottom="16px"
+          paddingLeft="4px"
+        >
+          Storage
+        </TypoComponent>
+        <StackWrap>
+          <StackComponent
+            name="S3"
+            src="spec-s3.png"
+            by="AWS.amazon"
+            docs="https://aws.amazon.com/ko/s3/?trk=024bf255-8753-410e-9b2f-8015932510e8&sc_channel=ps&s_kwcid=AL!4422!3!588924203916!e!!g!!s3&ef_id=CjwKCAiAoL6eBhA3EiwAXDom5psEUb4bpRmSvbwFv34jqXBeWX0Qs5K_jgPn-UdikbHJYEXC0m609hoCPCYQAvD_BwE:G:s&s_kwcid=AL!4422!3!588924203916!e!!g!!s3"
+            desc="Amazon Simple Storage Service (Amazon S3) is an object storage service that offers industry-leading scalability, data availability, security, and performance."
+          />
+        </StackWrap>
       </section>
     </>
   );
