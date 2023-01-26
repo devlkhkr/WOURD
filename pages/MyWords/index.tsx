@@ -103,6 +103,8 @@ const WordCtrlIconWrap = styled.div`
 
 const WordFilterList = styled.div`
   width: 240px;
+  max-height: calc(100% - 40px);
+  overflow: auto;
   padding: 8px;
   background-color: #fff;
   position: absolute;
@@ -270,6 +272,10 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
     { optType: "web", checked: true },
     { optType: "ntv", checked: true },
   ]);
+  const [activeOwnerFlags, setActiveOwnerFlags] = useState<optListTypes[]>([
+    { optType: "my", checked: true },
+    { optType: "others", checked: true },
+  ]);
 
   const wordOptTgls: wordOptTglsTypes[] = [
     {
@@ -280,18 +286,22 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
       optTitle: "카테고리별",
       optList: activeCateFlags,
     },
+    {
+      optTitle: "등록자별",
+      optList: activeOwnerFlags,
+    },
   ];
 
   const myWordOptTglOnChange = (
     event: React.ChangeEvent<HTMLInputElement>,
     optType: string
   ) => {
+    let tempMyWordList: MyWordsListTypes[] = [...myWordList];
     switch (optType) {
       case "k":
       case "d":
       case "f":
       case "s":
-        let tempMyWordList: MyWordsListTypes[] = [...myWordList];
         let tempActiveStateFlags = [...activeStateFlags];
         let targetStateOpt = tempActiveStateFlags.filter(
           (opt) => opt.optType === optType
@@ -317,6 +327,28 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
         );
         targetCateOpt[0].checked = event.target.checked;
         setActiveCateFlags(tempActiveCateFlags);
+        break;
+      case "my":
+      case "others":
+        let tempActiveOwnerFlags = [...activeOwnerFlags];
+        let targetOwnerOpt = tempActiveOwnerFlags.filter(
+          (opt) => opt.optType === optType
+        );
+        targetOwnerOpt[0].checked = event.target.checked;
+        setActiveOwnerFlags(tempActiveOwnerFlags);
+
+        tempMyWordList.map((word: MyWordsListTypes, index: number) => {
+          let ownerFlag = word.user_id === userData.email;
+          optType === "my" && ownerFlag
+            ? (word.active_state_flag = event.target.checked)
+            : void 0;
+          optType === "others" && !ownerFlag
+            ? (word.active_state_flag = event.target.checked)
+            : void 0;
+        });
+
+        setMyWordList(tempMyWordList);
+
         break;
       default:
         console.log("토글 타입 미정의 에러");

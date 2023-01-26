@@ -268,6 +268,10 @@ export function getStateStrKr(state: string) {
       return "Web";
     case "ntv":
       return "Native";
+    case "my":
+      return "내가 등록한 단어";
+    case "others":
+      return "다른사람이 등록한 단어";
     default:
       return state;
   }
