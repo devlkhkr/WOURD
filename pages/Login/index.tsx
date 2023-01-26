@@ -46,7 +46,7 @@ const LoginStyled = styled.form<LoginTypes>`
     background-image: url(../images/bg_login.png);
     background-size: 100%;
     background-repeat: no-repeat;
-    background-position: center bottom;
+    background-position: center bottom 20px;
     z-index: -1;
     opacity: 0.5;
   }
