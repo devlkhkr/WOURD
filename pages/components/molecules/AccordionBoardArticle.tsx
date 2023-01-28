@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import styled, { StyledInterface } from "styled-components";
 import TypoComponent from "../atoms/Typo";
 
@@ -17,7 +18,7 @@ const AccordionBoardArticle: React.FC<AccordionBoardArticleTypes> = ({
   article,
   isOpened,
 }) => {
-
+  console.log(isOpened)
   return (
     <AccordionBoardArticleComponent isOpened={isOpened} article={article}>
       <TypoComponent

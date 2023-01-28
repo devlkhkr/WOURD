@@ -55,7 +55,6 @@ const Icon: React.FC<IconWrapTypes & IconTypes> = ({
   color,
   onClick,
 }) => {
-  console.log(iconImg)
   return (
     <>
       {iconShape ? (
