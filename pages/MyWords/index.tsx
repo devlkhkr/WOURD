@@ -20,6 +20,7 @@ import { useSession } from "next-auth/react";
 import MyWordCardComponent, {
   MyWordsListTypes,
 } from "pages/components/organisms/MyWordCard";
+import { newContext } from "pages/components/organisms/Context";
 
 const MyClickedCardStyled = styled.div`
   position: absolute;
@@ -241,14 +242,26 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
     router.push("/");
   };
 
-  const editOnclick = (event: React.MouseEvent<HTMLElement>) => {
-    event.stopPropagation();
-    console.log("edit word");
-  };
-
   const contextOnclick = (event: React.MouseEvent<HTMLElement>) => {
     event.stopPropagation();
-    console.log("context onclick");
+
+    newContext({
+      title: "단어 편집",
+      contextList: [
+        {
+          contextTit: "수정",
+          color: "grey",
+          onClick: "cardEditOnclick",
+        },
+        {
+          contextTit: "삭제",
+          color: "red",
+          onClick: "cardDelOnclick",
+        },
+      ],
+      isOpen: true,
+      position: { x: event.pageX, y: event.pageY },
+    });
   };
 
   interface optListTypes {

@@ -1,14 +1,14 @@
 import { AnyAction, CombinedState, combineReducers } from "@reduxjs/toolkit";
 import { HYDRATE } from "next-redux-wrapper";
 
-import userReducer, { UserDataTypes } from "redux/slices/user";
+import contextReducer, { ContextDataTypes } from "redux/slices/context";
 import modalReducer, { ModalDataTypes } from "redux/slices/modal";
 import alertReducer, { AlertDataTypes } from "./slices/alert";
 
 import { store } from "redux/store";
 
 export interface IState {
-  user: UserDataTypes;
+  context: ContextDataTypes;
   modal: ModalDataTypes;
   alert: AlertDataTypes;
 }
@@ -22,14 +22,14 @@ const rootReducer = (
       let prevCliState = store.getState();
       console.log("prevCliState:::", prevCliState);
       const nextState: IState = {
-        user: prevCliState.user,
+        context: prevCliState.context,
         modal: prevCliState.modal,
         alert: prevCliState.alert,
       };
       return nextState;
     default: {
       const combinedReducer = combineReducers({
-        user: userReducer,
+        context: contextReducer,
         modal: modalReducer,
         alert: alertReducer,
       });
