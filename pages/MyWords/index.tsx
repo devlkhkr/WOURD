@@ -249,7 +249,7 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
     event.stopPropagation();
 
     newContext({
-      title: "단어 편집",
+      title: objMyWord.word_name,
       contextList: [
         {
           contextTit: "수정",
