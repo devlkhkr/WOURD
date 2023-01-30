@@ -12,7 +12,6 @@ import styledInterface from "../Intefaces/styledComponent";
 
 import { useSelector } from "react-redux";
 import { ReducerType } from "redux/rootReducer";
-import { UserDataTypes } from "redux/slices/user";
 import { useSession } from "next-auth/react";
 import DataEmptyComponent from "../molecules/DataEmpty";
 import { useRouter } from "next/router";

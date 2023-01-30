@@ -12,7 +12,6 @@ import axios from "axios";
 import Hash from "../components/atoms/Hash";
 
 import { useDispatch } from "react-redux";
-import { UserDataTypes, setUserData } from "redux/slices/user";
 import { NextPage } from "next";
 
 import { store } from "redux/store";

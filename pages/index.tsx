@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import CardMain, { ExposeWordTypes } from "./components/templates/CardMain";
 import wrapper from "redux/store";
-import { UserDataTypes, setUserData } from "redux/slices/user";
 import { unstable_getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]";
 
