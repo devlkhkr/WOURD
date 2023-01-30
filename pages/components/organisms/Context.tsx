@@ -108,9 +108,10 @@ const ContextComponent: React.FC = ({}) => {
     console.log(context.position);
     console.log(refContextWrap.current?.offsetWidth);
     if (refContextWrap.current) {
+      console.log(window);
       let contextPosCond =
         context.position.x + refContextWrap.current.offsetWidth >
-        window.outerWidth;
+        window.innerWidth;
       contextPosCond
         ? (refContextWrap.current.style.left =
             context.position.x - refContextWrap.current.offsetWidth + "px")
