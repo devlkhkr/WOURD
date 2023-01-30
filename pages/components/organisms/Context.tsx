@@ -102,7 +102,7 @@ const ContextComponent: React.FC = ({}) => {
     return (
       <>
         <ContextMaskStyled
-          onClick={() => {
+          onPointerDown={() => {
             store.dispatch(clearContext({}));
           }}
         />
