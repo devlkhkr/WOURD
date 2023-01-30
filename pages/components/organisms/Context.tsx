@@ -105,10 +105,7 @@ const ContextComponent: React.FC = ({}) => {
   });
 
   useEffect(() => {
-    console.log(context.position);
-    console.log(refContextWrap.current?.offsetWidth);
     if (refContextWrap.current) {
-      console.log(window);
       let contextPosCond =
         context.position.x + refContextWrap.current.offsetWidth >
         window.innerWidth;
@@ -130,6 +127,7 @@ const ContextComponent: React.FC = ({}) => {
       default:
         console.log("Context 매칭 함수 없음");
     }
+    store.dispatch(clearContext({}));
     return true;
   };
 
