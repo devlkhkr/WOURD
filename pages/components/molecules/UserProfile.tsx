@@ -6,7 +6,6 @@ import TypoComponent from "../atoms/Typo";
 
 import { useSelector } from "react-redux";
 import { ReducerType } from "redux/rootReducer";
-import { UserDataTypes } from "redux/slices/user";
 
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import Icon from "../atoms/Icon";

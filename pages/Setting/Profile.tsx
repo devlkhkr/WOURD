@@ -7,7 +7,6 @@ import ProfileListComponent from "pages/components/molecules/SettingProfileList"
 
 import { useSelector } from "react-redux";
 import { ReducerType } from "redux/rootReducer";
-import { UserDataTypes } from "redux/slices/user";
 import ButtonCompontent from "pages/components/atoms/Button";
 import ButtonWrapComponent from "pages/components/molecules/ButtonWrap";
 import { useRouter } from "next/router";

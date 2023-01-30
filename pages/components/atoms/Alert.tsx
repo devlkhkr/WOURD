@@ -64,7 +64,7 @@ const AlertComponent: React.FC = ({}) => {
   store.subscribe(() => {
     setMsg(store.getState().alert.msg);
   });
-  //   const { msg } = useSelector(selectAlert);
+
   if (Object.keys(msg).length != 0) {
     return (
       <AlertWrapStyled>

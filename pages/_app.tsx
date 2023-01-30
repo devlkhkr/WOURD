@@ -13,7 +13,6 @@ import Login from "pages/Login";
 import styled from "styled-components";
 import { useRouter } from "next/router";
 import { useState, useEffect, useRef } from "react";
-import { UserDataTypes } from "redux/slices/user";
 import wrapper from "redux/store";
 import GlobalModal from "pages/components/templates/GlobalModal";
 
@@ -28,6 +27,7 @@ import {
 import axios from "axios";
 import { DefaultSeo } from "next-seo";
 import Alert from "./components/atoms/Alert";
+import Context from "./components/organisms/Context";
 
 /* S: default SEO */
 // 각 페이지별로 custom SEO 만들기
@@ -188,6 +188,7 @@ function MyApp({
         {loadingStart || axiosLoading ? <Loading /> : <></>}
         <Wrapper className={router.pathname == "/Login" ? "isLogin" : ""}>
           {/* modal */}
+          <Context />
           <Alert />
           <GlobalModal />
           <Wrap>
