@@ -21,7 +21,7 @@ const TypoStyled = styled.div<TypoType>`
   display: -webkit-box;
   padding-left: ${(props) => props.paddingLeft || "0"};
   -webkit-line-clamp: ${(props) => props.lineClamp || "unset"};
-  -webkit-box-orient: vertical;
+  -webkit-box-orient: ${(props) => (props.lineClamp ? "vertical" : "unset")};
 `;
 
 const TypoComponent: React.FC<TypoType> = ({
