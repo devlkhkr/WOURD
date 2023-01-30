@@ -5,7 +5,7 @@ import { authOptions } from "pages/api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";
 const db = require("../../../../common/config/db");
 
-export default async function Login(req: NextApiRequest, res: NextApiResponse) {
+export default async function getUserInfo(req: NextApiRequest, res: NextApiResponse) {
   //   const session = await unstable_getServerSession(req, res, authOptions);
   //   if (!session) {
   //     res.status(401).json({ message: "You must be logged in." });

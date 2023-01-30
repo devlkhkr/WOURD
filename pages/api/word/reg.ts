@@ -1,8 +1,7 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 const db = require("../../../common/config/db");
 
-export default function RegistUser(req: NextApiRequest, res: NextApiResponse) {
+export default function registWord(req: NextApiRequest, res: NextApiResponse) {
   db.query(
     "INSERT INTO WORD_TB " +
       "VALUES (" +

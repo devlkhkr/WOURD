@@ -2,7 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 const db = require("../../../../common/config/db");
 
-export default function Login(req: NextApiRequest, res: NextApiResponse) {
+export default function login(req: NextApiRequest, res: NextApiResponse) {
   db.query(
     "SELECT " +
       "user_id," +
