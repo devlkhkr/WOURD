@@ -247,13 +247,12 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
     objMyWord: MyWordsListTypes
   ) => {
     event.stopPropagation();
-
     newContext({
       title: objMyWord.word_name,
       contextList: [
         {
           contextTit: "수정",
-          color: "grey",
+          color: "var(--color-grey)",
           onClick: "cardEditOnclick",
           params: {
             wordOwnerId: objMyWord.user_id,
@@ -262,7 +261,7 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
         },
         {
           contextTit: "삭제",
-          color: "red",
+          color: "var(--color-red)",
           onClick: "cardDelOnclick",
           params: {
             wordOwnerId: objMyWord.user_id,
