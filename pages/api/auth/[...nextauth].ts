@@ -3,7 +3,13 @@ import { NextApiRequest } from "next";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import Hash from "pages/components/atoms/Hash";
-import { UserDataTypes } from "redux/slices/context";
+export interface UserDataTypes {
+  id: string;
+  nickName: string;
+  prfImg: string;
+  mainWordExpOpts: object;
+  lastLogin: Date | string;
+}
 
 export const authOptions = {
   providers: [
