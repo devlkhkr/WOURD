@@ -73,6 +73,11 @@ export function newContext(context: ContextDataTypes) {
   );
 }
 
+export interface paramsAbleKeyTypes {
+  wordOwnerId?: string;
+  wordId?: string;
+}
+
 const ContextComponent: React.FC = ({}) => {
   const [context, setContext] = useState<ContextDataTypes>();
   store.subscribe(() => {
@@ -84,13 +89,13 @@ const ContextComponent: React.FC = ({}) => {
     return pos;
   };
 
-  const initContextFunction = (type: string) => {
+  const initContextFunction = (type: string, params: paramsAbleKeyTypes) => {
     switch (type) {
       case "cardEditOnclick":
-        cardEditOnclick();
+        cardEditOnclick(params);
         break;
       case "cardDelOnclick":
-        cardDelOnclick();
+        cardDelOnclick(params);
         break;
       default:
         console.log("Context 매칭 함수 없음");
@@ -118,7 +123,7 @@ const ContextComponent: React.FC = ({}) => {
                 key={index}
                 color={list.color}
                 onClick={(e) => {
-                  initContextFunction(list.onClick);
+                  initContextFunction(list.onClick, list.params);
                 }}
               >
                 <Typo fontSize="14px">{list.contextTit}</Typo>

@@ -242,7 +242,10 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
     router.push("/");
   };
 
-  const contextOnclick = (event: React.MouseEvent<HTMLElement>) => {
+  const cardContextOnclick = (
+    event: React.MouseEvent<HTMLElement>,
+    objMyWord: MyWordsListTypes
+  ) => {
     event.stopPropagation();
 
     newContext({
@@ -252,11 +255,19 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
           contextTit: "수정",
           color: "grey",
           onClick: "cardEditOnclick",
+          params: {
+            wordOwnerId: objMyWord.user_id,
+            wordId: objMyWord.word_id,
+          },
         },
         {
           contextTit: "삭제",
           color: "red",
           onClick: "cardDelOnclick",
+          params: {
+            wordOwnerId: objMyWord.user_id,
+            wordId: objMyWord.word_id,
+          },
         },
       ],
       isOpen: true,
@@ -501,7 +512,7 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
                     key={index}
                     objMyWord={objMyWord}
                     onCardClick={myCardClick}
-                    contextOnclick={contextOnclick}
+                    cardContextOnclick={cardContextOnclick}
                     searchKeyword={searchKeyword}
                   />
                 )
@@ -519,7 +530,7 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
                 objMyWord={objMyWord}
                 key={index}
                 onCardClick={myCardClick}
-                contextOnclick={contextOnclick}
+                cardContextOnclick={cardContextOnclick}
               />
             ) : (
               void 0

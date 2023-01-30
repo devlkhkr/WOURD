@@ -29,7 +29,7 @@ export interface MyWordsListTypes {
 interface MyWordCardTypes {
   objMyWord: MyWordsListTypes;
   onCardClick: Function;
-  contextOnclick: Function;
+  cardContextOnclick: Function;
   searchKeyword?: string;
 }
 
@@ -120,7 +120,7 @@ const WordEditWrapStyeld = styled.div`
 const MyWordCardComponent: React.FC<MyWordCardTypes> = ({
   objMyWord,
   onCardClick,
-  contextOnclick,
+  cardContextOnclick,
   searchKeyword,
 }) => {
   const userData: any = useSession().data?.user;
@@ -187,7 +187,7 @@ const MyWordCardComponent: React.FC<MyWordCardTypes> = ({
                 align="auto"
                 color="#acb8cf"
                 onClick={(event: React.MouseEvent<HTMLElement>) => {
-                  contextOnclick(event);
+                  cardContextOnclick(event, objMyWord);
                 }}
               />
             </>

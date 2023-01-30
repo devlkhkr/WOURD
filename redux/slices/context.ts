@@ -1,9 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { paramsAbleKeyTypes } from "pages/components/organisms/Context";
 
 export interface ContextListTypes {
   contextTit: string;
   color: string;
   onClick: string;
+  params: paramsAbleKeyTypes;
 }
 
 export interface ContextDataTypes {
