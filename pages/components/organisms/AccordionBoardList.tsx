@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import styledInterface from "../Intefaces/styledComponent";
 import AccordionBoardArticle from "../molecules/AccordionBoardArticle";
@@ -16,16 +17,21 @@ const AccordionBoardListComponent = styled.li`
 
 interface AccordionBoardListTypes extends styledInterface {
   acrdData: acrdDataTypes[];
+  acrdFunc: any;
 }
 
 const AccordionBoardList: React.FC<AccordionBoardListTypes> = ({
   acrdData,
+  acrdFunc
 }) => {
-  console.log(acrdData);
+
+  const [data, setData] = useState(acrdData);
+  useEffect(() => {
+    acrdFunc(data)
+  }, [data])
   return (
     <>
-      {acrdData.map((list, index) => {
-        console.log(list.isOpened)
+      {data.map((list, index) => {
         return (
           <AccordionBoardListComponent key={index}>
             <AccordionBoardTitle
@@ -33,14 +39,23 @@ const AccordionBoardList: React.FC<AccordionBoardListTypes> = ({
               date={list.date}
               afterIcon={list.isOpened ? "arr-up" : "arr-down"}
               onClick={() => {
-                list.isOpened = !list.isOpened;
+                // const hello = data[index].isOpened = !data[index].isOpened
+                // console.log(hello)
+                setData([
+                  {
+                    title: "🔥",
+                    date: "10.29 OCt",
+                    article: "짧게 넣을것인가욤? 눌렀을때 또한번 어디론가 이동해야하나욤?",
+                    isOpened: true,
+                  },
+                ])
               }}
             ></AccordionBoardTitle>
 
-            <AccordionBoardArticle
-              isOpened={list.isOpened}
+            {/* <AccordionBoardArticle
+              isOpened={data[index].isOpened}
               article={list.article}
-            ></AccordionBoardArticle>
+            ></AccordionBoardArticle> */}
           </AccordionBoardListComponent>
         );
       })}
