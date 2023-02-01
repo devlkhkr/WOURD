@@ -12,6 +12,7 @@ interface MultiSelectTypes extends styledInterface {
 interface OptionTypes {
   name: string;
   value: number;
+  defaultChecked?: boolean;
 }
 
 const MultiSelectStyled = styled.div<MultiSelectTypes>`
@@ -57,6 +58,7 @@ const MultiSelectComponent: React.FC<MultiSelectTypes> = ({
               name={name}
               value={o.value}
               id={name + o.value}
+              defaultChecked={o.defaultChecked}
               reference={(checkbox: HTMLInputElement) =>
                 (multiSelectRefs.current[index] = checkbox)
               }

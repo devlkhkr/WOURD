@@ -3,16 +3,17 @@ import styled from "styled-components";
 import Label from "../../components/atoms/Label";
 import InputWrap from "../../components/molecules/InputWrap";
 import styledInterface from "../Intefaces/styledComponent";
+import checkIcon from "public/images/icons/check.png";
 interface RadioTypes extends styledInterface {
   name: string;
   options: OptionTypes[];
   reference: any;
+  defaultChecked?: number;
 }
 
 interface OptionTypes {
   name: string;
   value: number;
-  defaultChecked?: boolean;
 }
 
 const RadioStyled = styled.input<OptionTypes>`
@@ -33,8 +34,9 @@ const RadioStyled = styled.input<OptionTypes>`
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    background-color: var(--color-point);
-    border-radius: inherit;
+    background-image: url(${checkIcon.src});
+    background-repeat: no-repeat;
+    background-size: 16px;
     z-index: 1;
   }
   &:checked:before {
@@ -47,6 +49,7 @@ const RadioComponent: React.FC<RadioTypes> = ({
   onClick,
   options,
   reference,
+  defaultChecked,
 }) => {
   const radioRefs: any = useRef([]);
   const getValue = () => {
@@ -69,7 +72,7 @@ const RadioComponent: React.FC<RadioTypes> = ({
               name={name}
               value={o.value}
               onClick={onClick}
-              defaultChecked={o.defaultChecked}
+              defaultChecked={defaultChecked === o.value ? true : false}
               ref={(radioDom: HTMLInputElement) =>
                 (radioRefs.current[index] = radioDom)
               }

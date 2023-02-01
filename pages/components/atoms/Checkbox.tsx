@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import styledInterface from "../Intefaces/styledComponent";
+import checkIcon from "public/images/icons/check.png";
 interface CheckboxTypes extends styledInterface {
   onChange?: any;
   defaultChecked?: boolean;
@@ -64,8 +65,9 @@ const CheckboxStyled = styled.input<CheckboxTypes>`
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
-            background-color: var(--color-point);
-            border-radius: inherit;
+            background-image: url(${checkIcon.src});
+            background-repeat: no-repeat;
+            background-size: 16px;
             z-index: 1;
           }
           &:checked:before {
