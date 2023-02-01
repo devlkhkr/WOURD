@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import ToggleCheckComponent from "pages/components/atoms/Toggle";
 import Anchor from "pages/components/atoms/Anchor";
-import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import styled from "styled-components";
 import styledInterface from "../components/Intefaces/styledComponent";
 import { openModal, closeModal } from "redux/slices/modal";
@@ -15,10 +15,9 @@ import ProfileWordComponent from "pages/components/molecules/ProfileWord";
 import ProfileWordItemComponent from "pages/components/molecules/ProfileWordItem";
 import { reloadSession } from "pages/components/atoms/Session";
 
-import { getSession, signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import axios from "axios";
-import { clearMsg, setMsg } from "redux/slices/alert";
 import uuid from "uuid4";
 import { newAlert } from "pages/components/atoms/Alert";
 import TypoComponent from "pages/components/atoms/Typo";
@@ -196,7 +195,7 @@ const Setting: NextPage<SettingTypes> = () => {
       toggleFlag: wordCtrlByState,
       toggleFunc: setWordCtrlByState,
       usageList: [
-        "상태별 노출 관리를 통해 이미 상태 변경 된 단어를 다시 메인에 노출할지 결정합니다.",
+        "이미 상태 변경 된 단어를 메인에 다시 노출할지 결정합니다.",
         "단어장에 없는 새로운 단어만 보시려면 상태별 노출관리 토글을 모두 해제해보세요.",
       ],
       acrdList: {
@@ -234,7 +233,7 @@ const Setting: NextPage<SettingTypes> = () => {
       toggleFlag: wordCtrlByCate,
       toggleFunc: setWordCtrlByCate,
       usageList: [
-        "카테고리별 노출 관리를 통해 특정 카테고리에 해당하는 단어만 메인에 노출할지 결정합니다.",
+        "특정 카테고리에 해당하는 단어만 메인에 노출할지 결정합니다.",
         "카테고리별 노출 관리 토글은 최소 한개 이상 선택되어야 합니다.",
       ],
       acrdList: {
@@ -301,7 +300,7 @@ const Setting: NextPage<SettingTypes> = () => {
         marginBottom="12px"
         color="var(--color-grey)"
       >
-        &bull;메인카드 노출 옵션
+        &bull;홈 화면 카드 노출 옵션
       </TypoComponent>
       <SettingTopStyled>
         {objAcrdList.map((objAcrd, index) => (
