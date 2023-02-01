@@ -67,6 +67,7 @@ interface InputTextTypes extends styledInterface {
   maxLength?: number;
   defaultValue?: string;
   bgType?: string;
+  value?: string;
 }
 
 const InputText: React.FC<InputTextTypes> = ({
@@ -82,6 +83,7 @@ const InputText: React.FC<InputTextTypes> = ({
   reference,
   defaultValue,
   className,
+  value,
 }) => {
   const getInputBgClass = (bgType: string) => {
     return "test";
@@ -100,6 +102,7 @@ const InputText: React.FC<InputTextTypes> = ({
       ref={reference}
       defaultValue={defaultValue}
       className={className}
+      value={value}
       // className={bgType ? getInputBgClass(bgType) : ""}
     />
   );

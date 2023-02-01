@@ -18,19 +18,36 @@ import axios from "axios";
 import uuid from "uuid4";
 import { useSession } from "next-auth/react";
 import { newAlert } from "pages/components/atoms/Alert";
-interface RegistWordTypes {}
+
+interface ModifyWordTypes {
+  wordData: {
+    word_seq: number;
+    word_id: string;
+    word_name: string;
+    word_intl_flag: boolean;
+    word_unravel: string;
+    word_desc: string;
+    word_reg_userid: string;
+    word_reg_date: string | Date;
+    word_use_flag: boolean;
+    word_is_cs_flag: boolean;
+    word_is_web_flag: boolean;
+    word_is_ntv_flag: boolean;
+  }[];
+}
 
 const RegistWordWrap = styled.div``;
 
-const RegistWord: NextPage<RegistWordTypes> = ({}) => {
+const ModifyWord: NextPage<ModifyWordTypes> = ({
+  wordData,
+}: ModifyWordTypes) => {
   const userData = useSession();
-  const [isIntl, setIsIntl] = useState(true);
-  const [wordTit, setwordTit] = useState("");
-  const wordIntlFlag: any = useRef();
-  const [wordUnravel, setWordUnravel] = useState("");
-  const [wordDesc, setwordDesc] = useState("");
+  const [isIntl, setIsIntl] = useState(wordData[0].word_intl_flag);
+  const [wordTit, setwordTit] = useState(wordData[0].word_name);
+  const wordIntlFlag: any = useRef(wordData[0].word_intl_flag);
+  const [wordUnravel, setWordUnravel] = useState(wordData[0].word_unravel);
+  const [wordDesc, setwordDesc] = useState(wordData[0].word_desc);
   const wordCtgr: any = useRef();
-  const onAfterRegState: any = useRef();
 
   const intlYNOnclick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setWordUnravel("");
@@ -74,7 +91,6 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
         wordUnravel: wordUnravel,
         wordDesc: wordDesc,
         wordCtgr: wordCtgr.current.getValue(),
-        wordState: onAfterRegState.current.value,
       };
       const resReg = await axios.post(
         "http://localhost:3000" + "/api/word/reg",
@@ -84,24 +100,7 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
       );
 
       if (resReg.data.affectedRows === 1) {
-        if (wordRegistData.wordState != "unset") {
-          (async () => {
-            const resState = await axios.post(
-              "http://localhost:3000" + "/api/user/word/state",
-              {
-                wordInfo: {
-                  userId: wordRegistData.userId,
-                  wordId: wordRegistData.wordId,
-                  wordState: wordRegistData.wordState,
-                },
-              }
-            );
-            resState.status === 200
-              ? newAlert("단어 상태변경 완료.", "pstv")
-              : newAlert("단어 상태변경 실패.", "ngtv");
-          })();
-        }
-        newAlert("단어 등록완료", "pstv");
+        newAlert("단어 수정완료", "pstv");
       }
       // E : 단어 Insert 로직
     }
@@ -120,6 +119,7 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
             type="text"
             placeHolder="예) SSR"
             id="wordName"
+            value={wordTit}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               setwordTit(e.currentTarget.value.replaceAll("'", "''"));
             }}
@@ -133,7 +133,7 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
               name="intlYN"
               onClick={intlYNOnclick}
               reference={wordIntlFlag}
-              defaultChecked={1}
+              defaultChecked={wordData[0].word_intl_flag ? 1 : 0}
               options={[
                 {
                   name: "아니요, 낱말입니다.",
@@ -160,6 +160,7 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
               id="wordsExpln"
               type="text"
               placeHolder="예) Server Side Rendering"
+              value={wordUnravel}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setWordUnravel(e.currentTarget.value.replaceAll("'", "''"));
               }}
@@ -177,6 +178,7 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
             height="300px"
             placeholder="예) SSR이란 서버사이드 렌더링(Server Side Rendering)의 약자로 서버로부터 완전하게 만들어진 HTML 파일을 받아와 페이지 전체를 렌더링 하는 방식이다."
             reference={wordDesc}
+            value={wordDesc}
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
               setwordDesc(e.currentTarget.value.replaceAll("'", "''"));
             }}
@@ -194,54 +196,22 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
               {
                 name: "CS",
                 value: 0,
+                defaultChecked: wordData[0].word_is_cs_flag,
               },
               {
                 name: "Web",
                 value: 1,
+                defaultChecked: wordData[0].word_is_web_flag,
               },
               {
                 name: "Native",
                 value: 2,
+                defaultChecked: wordData[0].word_is_ntv_flag,
               },
             ]}
             id="wordsCtgrCbx"
             name="wordsCategoryCbx"
             reference={wordCtgr}
-          />
-        </Fieldset>
-
-        <Fieldset>
-          <Label
-            htmlFor="wordsCtgrSlct"
-            desc="등록 후 단어 관리"
-            mandatory={true}
-          />
-          <Select
-            reference={onAfterRegState}
-            options={[
-              {
-                name: "선택안함",
-                value: "unset",
-              },
-              {
-                name: "아는 단어에 추가",
-                value: "k",
-              },
-              {
-                name: "모르는 단어에 추가",
-                value: "d",
-              },
-              {
-                name: "즐겨찾은 단어에 추가",
-                value: "f",
-              },
-              {
-                name: "건너뛴 단어에 추가",
-                value: "s",
-              },
-            ]}
-            id="wordsCtgrSlct"
-            name="wordsCategorySlct"
           />
         </Fieldset>
 
@@ -272,4 +242,20 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
   );
 };
 
-export default RegistWord;
+export const getServerSideProps = async (context: any) => {
+  let wordId = context.query.pid[0];
+  const res = await axios.get("http://localhost:3000" + "/api/myword/info", {
+    headers: { "Content-type": "application/json" },
+    params: {
+      wordId: wordId,
+    },
+  });
+  console.log(res.data);
+  return {
+    props: {
+      wordData: res.data,
+    },
+  };
+};
+
+export default ModifyWord;

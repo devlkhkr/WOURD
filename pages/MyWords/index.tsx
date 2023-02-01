@@ -255,7 +255,7 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
           contextTit: "수정",
           color: "var(--color-grey)",
           onClick: () => {
-            router.push("/MyWords/Regist");
+            router.push(`/MyWords/Regist/${objMyWord.word_id}`);
           },
         },
         {
