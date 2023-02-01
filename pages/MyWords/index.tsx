@@ -21,6 +21,7 @@ import MyWordCardComponent, {
   MyWordsListTypes,
 } from "pages/components/organisms/MyWordCard";
 import { newContext } from "pages/components/organisms/Context";
+import { newAlert } from "pages/components/atoms/Alert";
 
 const MyClickedCardStyled = styled.div`
   position: absolute;
@@ -253,19 +254,40 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
         {
           contextTit: "수정",
           color: "var(--color-grey)",
-          onClick: "cardEditOnclick",
-          params: {
-            wordOwnerId: objMyWord.user_id,
-            wordId: objMyWord.word_id,
+          onClick: () => {
+            router.push("/MyWords/Regist");
           },
         },
         {
           contextTit: "삭제",
           color: "var(--color-red)",
-          onClick: "cardDelOnclick",
-          params: {
-            wordOwnerId: objMyWord.user_id,
-            wordId: objMyWord.word_id,
+          onClick: () => {
+            confirm(
+              `정말 '${objMyWord.word_name}' 단어를 삭제하시겠습니까?\n메인화면과 해당 단어카드를 갖고있는 모든 유저의 단어장에서도 삭제됩니다.`
+            )
+              ? (async () => {
+                  const res = await fetch(
+                    "http://localhost:3000" + "/api/word/del",
+                    {
+                      method: "POST",
+                      body: JSON.stringify({
+                        wordOwnerId: objMyWord.user_id,
+                        wordId: objMyWord.word_id,
+                      }),
+                    }
+                  );
+                  res.status === 200
+                    ? (() => {
+                        let tempMyWordList = [...myWordList];
+                        let exceptedWordList = tempMyWordList.filter(
+                          (word) => word.word_id != objMyWord.word_id
+                        );
+                        setMyWordList(exceptedWordList);
+                        newAlert("삭제완료", "pstv");
+                      })()
+                    : newAlert("삭제실패", "ngtv");
+                })()
+              : void 0;
           },
         },
       ],

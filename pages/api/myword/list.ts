@@ -14,7 +14,7 @@ export default async function getMyWordlist(
   }
   db.query(
     "SELECT " +
-      "USER_WORD_TB.user_word_key," +
+      // "USER_WORD_TB.user_word_key," +
       "USER_TB.user_id," +
       "USER_WORD_TB.word_id," +
       "USER_TB.user_prf_img," +
