@@ -77,6 +77,8 @@ const HeaderComponent: React.FC<HeaderComponentTypes> = ({}) => {
         return <h2>단어장</h2>;
       case "/MyWords/Regist":
         return <h2>새로운 단어 등록</h2>;
+      case "/MyWords/Regist/[...pid]":
+        return <h2>단어 수정</h2>;
       case "/Setting":
         return <h2>설정</h2>;
       case "/Setting/Profile":
