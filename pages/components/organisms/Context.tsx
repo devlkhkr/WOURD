@@ -12,7 +12,6 @@ import {
   clearContext,
 } from "redux/slices/context";
 import Typo from "../atoms/Typo";
-import { cardDelOnclick, cardEditOnclick } from "../atoms/ContextFunc";
 
 interface ContextPosTypes {
   ref: any;
@@ -83,11 +82,6 @@ export function newContext(context: ContextDataTypes) {
   );
 }
 
-export interface paramsAbleKeyTypes {
-  wordOwnerId?: string;
-  wordId?: string;
-}
-
 const ContextComponent: React.FC = ({}) => {
   const [context, setContext] = useState<ContextDataTypes>({
     title: "",
@@ -116,21 +110,6 @@ const ContextComponent: React.FC = ({}) => {
     }
   }, [context]);
 
-  const initContextFunction = (type: string, params: paramsAbleKeyTypes) => {
-    switch (type) {
-      case "cardEditOnclick":
-        cardEditOnclick(params);
-        break;
-      case "cardDelOnclick":
-        cardDelOnclick(params);
-        break;
-      default:
-        console.log("Context 매칭 함수 없음");
-    }
-    store.dispatch(clearContext({}));
-    return true;
-  };
-
   return (
     <ContextActiveStyled active={context.isOpen}>
       <ContextMaskStyled
@@ -149,8 +128,9 @@ const ContextComponent: React.FC = ({}) => {
             <ContextListStyled
               key={index}
               color={list.color}
-              onClick={(e) => {
-                initContextFunction(list.onClick, list.params);
+              onClick={() => {
+                list.onClick();
+                store.dispatch(clearContext({}));
               }}
             >
               <Typo fontSize="14px">{list.contextTit}</Typo>

@@ -1,11 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { paramsAbleKeyTypes } from "pages/components/organisms/Context";
+import { MouseEventHandler } from "react";
 
 export interface ContextListTypes {
   contextTit: string;
   color: string;
-  onClick: string;
-  params: paramsAbleKeyTypes;
+  onClick: Function;
 }
 
 export interface ContextDataTypes {

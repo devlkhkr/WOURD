@@ -9,7 +9,7 @@ import rootReducer, { IState } from "./rootReducer";
 import logger from "redux-logger";
 import { createWrapper } from "next-redux-wrapper";
 
-const middleware = [...getDefaultMiddleware(), logger];
+const middleware = [...getDefaultMiddleware({serializableCheck: false}), logger];
 
 const createStore = () => {
   const store = configureStore({
