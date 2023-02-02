@@ -4,7 +4,7 @@ import styledInterface from "../Intefaces/styledComponent";
 interface TextAreaTypes extends styledInterface {
   placeholder?: string;
   onChange?: any;
-  value?: string;
+  defaultValue?: string;
 }
 
 const TextAreaStyled = styled.textarea<TextAreaTypes>`
@@ -26,7 +26,7 @@ const TextAreaComponent: React.FC<TextAreaTypes> = ({
   id,
   placeholder,
   height,
-  value,
+  defaultValue,
   onChange,
 }) => {
   return (
@@ -34,7 +34,7 @@ const TextAreaComponent: React.FC<TextAreaTypes> = ({
       id={id}
       placeholder={placeholder}
       height={height}
-      value={value}
+      defaultValue={defaultValue}
       onChange={onChange}
     ></TextAreaStyled>
   );

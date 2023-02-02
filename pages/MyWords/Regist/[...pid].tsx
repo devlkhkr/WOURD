@@ -58,7 +58,7 @@ const ModifyWord: NextPage<ModifyWordTypes> = ({
   const cancleRegWordClick = () => {
     router.back();
   };
-  const startWordReg = async () => {
+  const startWordMod = async () => {
     console.log("작성된 단어명: ", wordTit);
     console.log("선택된 약어 Y/N: ", wordIntlFlag.current.getValue());
     console.log("작성된 약어 풀이: ", wordUnravel);
@@ -85,7 +85,7 @@ const ModifyWord: NextPage<ModifyWordTypes> = ({
       // S : 단어 Insert 로직
       const wordRegistData = {
         userId: userData.data?.user?.email,
-        wordId: uuid().replaceAll("-", ""),
+        wordId: wordData[0].word_id,
         wordTit: wordTit,
         wordIntlFlag: wordIntlFlag.current.getValue(),
         wordUnravel: wordUnravel,
@@ -93,7 +93,7 @@ const ModifyWord: NextPage<ModifyWordTypes> = ({
         wordCtgr: wordCtgr.current.getValue(),
       };
       const resReg = await axios.post(
-        "http://localhost:3000" + "/api/word/reg",
+        "http://localhost:3000" + "/api/word/mod",
         {
           wordRegistData: wordRegistData,
         }
@@ -119,7 +119,7 @@ const ModifyWord: NextPage<ModifyWordTypes> = ({
             type="text"
             placeHolder="예) SSR"
             id="wordName"
-            value={wordTit}
+            defaultValue={wordTit}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               setwordTit(e.currentTarget.value.replaceAll("'", "''"));
             }}
@@ -160,7 +160,7 @@ const ModifyWord: NextPage<ModifyWordTypes> = ({
               id="wordsExpln"
               type="text"
               placeHolder="예) Server Side Rendering"
-              value={wordUnravel}
+              defaultValue={wordUnravel}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 setWordUnravel(e.currentTarget.value.replaceAll("'", "''"));
               }}
@@ -178,7 +178,7 @@ const ModifyWord: NextPage<ModifyWordTypes> = ({
             height="300px"
             placeholder="예) SSR이란 서버사이드 렌더링(Server Side Rendering)의 약자로 서버로부터 완전하게 만들어진 HTML 파일을 받아와 페이지 전체를 렌더링 하는 방식이다."
             reference={wordDesc}
-            value={wordDesc}
+            defaultValue={wordDesc}
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
               setwordDesc(e.currentTarget.value.replaceAll("'", "''"));
             }}
@@ -227,13 +227,13 @@ const ModifyWord: NextPage<ModifyWordTypes> = ({
               onClick={cancleRegWordClick}
             />
             <Button
-              desc="단어 등록하기"
+              desc="단어 수정하기"
               id="submitRegWord"
               backgroundColor="var(--color-point)"
               color="#fff"
               width="60%"
               height="40px"
-              onClick={startWordReg}
+              onClick={startWordMod}
             />
           </ButtonWrap>
         </Fieldset>
