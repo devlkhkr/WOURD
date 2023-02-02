@@ -1,5 +1,5 @@
 import type { NextPage } from "next";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 
@@ -41,7 +41,8 @@ const RegistWordWrap = styled.div``;
 const ModifyWord: NextPage<ModifyWordTypes> = ({
   wordData,
 }: ModifyWordTypes) => {
-  const userData = useSession();
+  const { data: session, status } = useSession();
+  const router = useRouter();
   const [isIntl, setIsIntl] = useState(wordData[0].word_intl_flag);
   const [wordTit, setwordTit] = useState(wordData[0].word_name);
   const wordIntlFlag: any = useRef(wordData[0].word_intl_flag);
@@ -49,12 +50,20 @@ const ModifyWord: NextPage<ModifyWordTypes> = ({
   const [wordDesc, setwordDesc] = useState(wordData[0].word_desc);
   const wordCtgr: any = useRef();
 
+  useEffect(() => {
+    wordData[0].word_reg_userid != session?.user.email
+      ? (() => {
+          router.back();
+          alert("권한이 없습니다.");
+        })()
+      : void 0;
+  }, []);
+
   const intlYNOnclick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setWordUnravel("");
     const target = event.target as HTMLInputElement;
     target.id === "intlYN_1" ? setIsIntl(true) : setIsIntl(false);
   };
-  const router = useRouter();
   const cancleRegWordClick = () => {
     router.back();
   };
@@ -84,7 +93,7 @@ const ModifyWord: NextPage<ModifyWordTypes> = ({
     } else {
       // S : 단어 Insert 로직
       const wordRegistData = {
-        userId: userData.data?.user?.email,
+        userId: session?.user.email,
         wordId: wordData[0].word_id,
         wordTit: wordTit,
         wordIntlFlag: wordIntlFlag.current.getValue(),
