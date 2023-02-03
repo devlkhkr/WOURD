@@ -47,7 +47,7 @@ const ModifyWord: NextPage<ModifyWordTypes> = ({
   const [wordTit, setWordTit] = useState(wordData[0].word_name);
   const wordIntlFlag: any = useRef(wordData[0].word_intl_flag);
   const [wordUnravel, setWordUnravel] = useState(wordData[0].word_unravel);
-  const [wordDesc, setwordDesc] = useState(wordData[0].word_desc);
+  const [wordDesc, setWordDesc] = useState(wordData[0].word_desc);
   const wordCtgr: any = useRef();
 
   useEffect(() => {
@@ -57,7 +57,7 @@ const ModifyWord: NextPage<ModifyWordTypes> = ({
           newAlert("권한이 없습니다.", "ngtv");
         })()
       : void 0;
-  }, []);
+  }, [wordData]);
 
   const intlYNOnclick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setWordUnravel("");
@@ -190,7 +190,7 @@ const ModifyWord: NextPage<ModifyWordTypes> = ({
             reference={wordDesc}
             defaultValue={wordDesc}
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-              setwordDesc(e.currentTarget.value.replaceAll("'", "''"));
+              setWordDesc(e.currentTarget.value.replaceAll("'", "''"));
             }}
           />
         </Fieldset>
