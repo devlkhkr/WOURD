@@ -44,7 +44,7 @@ const ModifyWord: NextPage<ModifyWordTypes> = ({
   const { data: session, status } = useSession();
   const router = useRouter();
   const [isIntl, setIsIntl] = useState(wordData[0].word_intl_flag);
-  const [wordTit, setwordTit] = useState(wordData[0].word_name);
+  const [wordTit, setWordTit] = useState(wordData[0].word_name);
   const wordIntlFlag: any = useRef(wordData[0].word_intl_flag);
   const [wordUnravel, setWordUnravel] = useState(wordData[0].word_unravel);
   const [wordDesc, setwordDesc] = useState(wordData[0].word_desc);
@@ -54,7 +54,7 @@ const ModifyWord: NextPage<ModifyWordTypes> = ({
     wordData[0].word_reg_userid != session?.user.email
       ? (() => {
           router.back();
-          alert("권한이 없습니다.");
+          newAlert("권한이 없습니다.", "ngtv");
         })()
       : void 0;
   }, []);
@@ -109,6 +109,7 @@ const ModifyWord: NextPage<ModifyWordTypes> = ({
       );
 
       if (resReg.data.affectedRows === 1) {
+        router.back();
         newAlert("단어 수정완료", "pstv");
       }
       // E : 단어 Insert 로직
@@ -130,7 +131,7 @@ const ModifyWord: NextPage<ModifyWordTypes> = ({
             id="wordName"
             defaultValue={wordTit}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setwordTit(e.currentTarget.value.replaceAll("'", "''"));
+              setWordTit(e.currentTarget.value.replaceAll("'", "''"));
             }}
           />
         </Fieldset>

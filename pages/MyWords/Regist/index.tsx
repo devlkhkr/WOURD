@@ -25,7 +25,7 @@ const RegistWordWrap = styled.div``;
 const RegistWord: NextPage<RegistWordTypes> = ({}) => {
   const userData = useSession();
   const [isIntl, setIsIntl] = useState(true);
-  const [wordTit, setwordTit] = useState("");
+  const [wordTit, setWordTit] = useState("");
   const wordIntlFlag: any = useRef();
   const [wordUnravel, setWordUnravel] = useState("");
   const [wordDesc, setwordDesc] = useState("");
@@ -121,7 +121,7 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
             placeHolder="예) SSR"
             id="wordName"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setwordTit(e.currentTarget.value.replaceAll("'", "''"));
+              setWordTit(e.currentTarget.value.replaceAll("'", "''"));
             }}
           />
         </Fieldset>
