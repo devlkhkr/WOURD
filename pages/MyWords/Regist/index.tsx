@@ -176,7 +176,6 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
             id="wordDesc"
             height="300px"
             placeholder="예) SSR이란 서버사이드 렌더링(Server Side Rendering)의 약자로 서버로부터 완전하게 만들어진 HTML 파일을 받아와 페이지 전체를 렌더링 하는 방식이다."
-            reference={wordDesc}
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
               setWordDesc(e.currentTarget.value.replaceAll("'", "''"));
             }}
