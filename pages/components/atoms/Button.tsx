@@ -28,6 +28,7 @@ const ButtonCompontent: React.FC<ButtonTypes> = ({
   marginTop,
   className,
   onClick,
+  onPointerDown,
   fontSize,
   reference,
   disabled,
@@ -44,6 +45,7 @@ const ButtonCompontent: React.FC<ButtonTypes> = ({
       marginTop={marginTop}
       className={className}
       onClick={onClick}
+      onPointerDown={onPointerDown}
       desc={desc}
       fontSize={fontSize}
       ref={reference}

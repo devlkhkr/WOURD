@@ -25,6 +25,7 @@ export default interface StyledComponentTypes {
   color?: string;
 
   onClick?: MouseEventHandler;
+  onPointerDown?: MouseEventHandler;
   title?: string;
 
   opacity?: string;
@@ -34,4 +35,6 @@ export default interface StyledComponentTypes {
   fontWeight?: string;
   lineHeight?: string;
   textAlign?: string;
+
+  zIndex?: number;
 }

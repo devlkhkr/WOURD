@@ -16,6 +16,8 @@ import { useSession } from "next-auth/react";
 import DataEmptyComponent from "../molecules/DataEmpty";
 import { useRouter } from "next/router";
 import { newAlert } from "../atoms/Alert";
+import setCardState from "pages/api/join/dup";
+import StyledComponentTypes from "../Intefaces/styledComponent";
 
 interface CardMainTypes {
   exposeWord: ExposeWordTypes[];
@@ -43,7 +45,7 @@ const CardBaseStyle = `
   flex-flow: column;
   width: 100%;
   height: 100%;
-  padding: 16px 16px 80px;
+  padding: 16px;
   position: absolute;
   text-align: center;
   backface-visibility: hidden;
@@ -142,7 +144,7 @@ const setButtonFocus: Function = function (color: string) {
   `;
 };
 
-const BtnWrapCardCtrlStyled = styled.div`
+const BtnWrapCardCtrlStyled = styled.div<StyledComponentTypes>`
   position: absolute;
   left: 50%;
   bottom: 0;
@@ -154,6 +156,7 @@ const BtnWrapCardCtrlStyled = styled.div`
   justify-content: center;
   width: calc(100% - 32px);
   height: 80px;
+  z-index: ${(props) => props.zIndex || "inherit"};
   button {
     position: absolute;
     max-width: calc(25% - 4px);
@@ -313,6 +316,8 @@ const CardMainComponent: React.FC<CardMainTypes> = ({
       )}로 변경되었습니다.`,
       "pstv"
     );
+    let tempCardIdx = cardIdx + 1;
+    setCardIdx(tempCardIdx);
   };
 
   const setCardData = async (_objWord: ExposeWordTypes, _state: string) => {
@@ -343,13 +348,15 @@ const CardMainComponent: React.FC<CardMainTypes> = ({
 
   useEffect(() => {
     console.log("wordList:::", exposeWord);
-    setWordList([...exposeWord].reverse());
+    // setWordList([...exposeWord].reverse());
+    setWordList([...exposeWord]);
   }, [exposeWord]);
 
   const [wordList, setWordList] = useState<ExposeWordTypes[]>([]);
   const [currentCardIdx, setCurrentCardIdx] = useState(0);
   const [buttonState, setButtonState] = useState("");
   const router = useRouter();
+  const [cardIdx, setCardIdx] = useState(0);
 
   const goToWordReg = () => {
     router.push("/MyWords/Regist");
@@ -368,89 +375,97 @@ const CardMainComponent: React.FC<CardMainTypes> = ({
             fullsize={true}
           />
         )}
-        {wordList.map((objWord: any, index: number) => (
-          <CardSwiper
-            // key={objWord.word_seq}
-            key={index}
-            className={`card ${objWord.fliped ? "fliped" : ""} ${
-              objWord.state || ""
-            }`} //${index === 0 ? "first" : ""}
-            wordInfo={objWord}
-            cardHandler={cardHandler}
-            setButtonState={setButtonState}
-          >
-            <CardWrapStyled
-              onPointerDown={(e) => {
-                setCardFlip(objWord, e);
-                setCurrentCardIdx(index);
-              }}
+        {wordList.map((objWord: any, index: number) =>
+          cardIdx + 2 > index && index > cardIdx - 2 ? (
+            <CardSwiper
+              // key={objWord.word_seq}
+              key={index}
+              className={`card ${objWord.fliped ? "fliped" : ""} ${
+                objWord.state || ""
+              }`} //${index === 0 ? "first" : ""}
+              wordInfo={objWord}
+              cardHandler={cardHandler}
+              setButtonState={setButtonState}
+              zIndex={wordList.length - index}
             >
-              <CardMainStyled
-                exposeWord={exposeWord}
-                className="cardMain"
-                isMyWord={isMyWord}
+              <CardWrapStyled
+                onPointerDown={(e) => {
+                  setCardFlip(objWord, e);
+                  setCurrentCardIdx(index);
+                }}
               >
-                {isMyWord ? (
-                  <></>
-                ) : (
-                  <CardFrontStyled>
+                <CardMainStyled
+                  exposeWord={exposeWord}
+                  className="cardMain"
+                  isMyWord={isMyWord}
+                >
+                  {isMyWord ? (
+                    <></>
+                  ) : (
+                    <CardFrontStyled>
+                      <Typo fontSize="20px" fontWeight="bold">
+                        {objWord.word_name}
+                      </Typo>
+                    </CardFrontStyled>
+                  )}
+                  <CardBackStyled
+                    className={
+                      objWord.state != undefined ? `state_${objWord.state}` : ""
+                    }
+                  >
+                    {closeCardModal ? (
+                      <ButtonCardClose onClick={() => closeCardModal([])}>
+                        <Icon
+                          iconShape={faXmark}
+                          iconWidth="24px"
+                          iconHeight="24px"
+                          svgSize="24px"
+                          align="auto"
+                          color="#fff"
+                        />
+                      </ButtonCardClose>
+                    ) : (
+                      <></>
+                    )}
+                    <WordRegInfoStyled>
+                      <img src={objWord.user_prf_img}></img>
+                      <span className="card_user_nickname">
+                        {objWord.user_nickname}
+                      </span>
+                    </WordRegInfoStyled>
+                    <WordCateListStyled>
+                      {objWord.word_is_cs_flag ? <span>CS</span> : <></>}
+                      {objWord.word_is_web_flag ? <span>WEB</span> : <></>}
+                      {objWord.word_is_ntv_flag ? <span>NATIVE</span> : <></>}
+                    </WordCateListStyled>
                     <Typo fontSize="20px" fontWeight="bold">
                       {objWord.word_name}
                     </Typo>
-                  </CardFrontStyled>
-                )}
-                <CardBackStyled
-                  className={
-                    objWord.state != undefined ? `state_${objWord.state}` : ""
-                  }
-                >
-                  {closeCardModal ? (
-                    <ButtonCardClose onClick={() => closeCardModal([])}>
-                      <Icon
-                        iconShape={faXmark}
-                        iconWidth="24px"
-                        iconHeight="24px"
-                        svgSize="24px"
-                        align="auto"
-                        color="#fff"
-                      />
-                    </ButtonCardClose>
-                  ) : (
-                    <></>
-                  )}
-                  <WordRegInfoStyled>
-                    <img src={objWord.user_prf_img}></img>
-                    <span className="card_user_nickname">
-                      {objWord.user_nickname}
-                    </span>
-                  </WordRegInfoStyled>
-                  <WordCateListStyled>
-                    {objWord.word_is_cs_flag ? <span>CS</span> : <></>}
-                    {objWord.word_is_web_flag ? <span>WEB</span> : <></>}
-                    {objWord.word_is_ntv_flag ? <span>NATIVE</span> : <></>}
-                  </WordCateListStyled>
-                  <Typo fontSize="20px" fontWeight="bold">
-                    {objWord.word_name}
-                  </Typo>
-                  <Typo fontSize="14px" fontWeight="semi-bold">
-                    {objWord.word_unravel}
-                  </Typo>
-                  <Typo fontSize="14px" fontWeight="regular" textAlign="left">
-                    {objWord.word_desc}
-                  </Typo>
-                </CardBackStyled>
-              </CardMainStyled>
-            </CardWrapStyled>
-          </CardSwiper>
-        ))}
-        <BtnWrapCardCtrlStyled className={`btn_wrap_cardctrl ${buttonState}`}>
+                    <Typo fontSize="14px" fontWeight="semi-bold">
+                      {objWord.word_unravel}
+                    </Typo>
+                    <Typo fontSize="14px" fontWeight="regular" textAlign="left">
+                      {objWord.word_desc}
+                    </Typo>
+                  </CardBackStyled>
+                </CardMainStyled>
+              </CardWrapStyled>
+            </CardSwiper>
+          ) : (
+            void 0
+          )
+        )}
+        <BtnWrapCardCtrlStyled
+          className={`btn_wrap_cardctrl ${buttonState}`}
+          zIndex={wordList.length}
+        >
           <Button
             desc="건너뛰기"
             backgroundColor="rgba(255,255,255,.35)"
             color="#fff"
             height="40px"
             className="btn_word_s"
-            onClick={(e: any) => {
+            onPointerDown={(e: any) => {
               cardHandler.skip(wordList[currentCardIdx], e);
             }}
           />
@@ -460,7 +475,7 @@ const CardMainComponent: React.FC<CardMainTypes> = ({
             color="#fff"
             height="40px"
             className="btn_word_f"
-            onClick={(e: any) => {
+            onPointerDown={(e: any) => {
               cardHandler.fav(wordList[currentCardIdx], e);
             }}
           />
@@ -470,7 +485,7 @@ const CardMainComponent: React.FC<CardMainTypes> = ({
             color="#fff"
             height="40px"
             className="btn_word_d"
-            onClick={(e: any) => {
+            onPointerDown={(e: any) => {
               cardHandler.dontKnow(wordList[currentCardIdx], e);
             }}
           />
@@ -480,7 +495,7 @@ const CardMainComponent: React.FC<CardMainTypes> = ({
             color="#fff"
             height="40px"
             className="btn_word_k"
-            onClick={(e: any) => {
+            onPointerDown={(e: any) => {
               cardHandler.know(wordList[currentCardIdx], e);
             }}
           />

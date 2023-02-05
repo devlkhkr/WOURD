@@ -12,6 +12,7 @@ interface CardSwiperTypes {
     skip: Function;
   };
   setButtonState: Function;
+  zIndex: number;
 }
 
 const CardSwiperSyled = styled.div<CardSwiperTypes>`
@@ -21,6 +22,7 @@ const CardSwiperSyled = styled.div<CardSwiperTypes>`
   left: 0px;
   user-select: none;
   will-change: left, transform;
+  z-index: ${(props) => props.zIndex || "inherit"};
   /* opacity: 0;
   &.first {
     opacity: 1;
@@ -65,6 +67,7 @@ const CardSwiperComponent: React.FC<CardSwiperTypes> = ({
   wordInfo,
   cardHandler,
   setButtonState,
+  zIndex,
 }) => {
   const throwLimit = 60;
   let startPointX = 0;
@@ -166,6 +169,7 @@ const CardSwiperComponent: React.FC<CardSwiperTypes> = ({
       wordInfo={wordInfo}
       cardHandler={cardHandler}
       setButtonState={setButtonState}
+      zIndex={zIndex}
     >
       {children}
     </CardSwiperSyled>

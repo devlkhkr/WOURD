@@ -74,7 +74,7 @@ export default async function getWordlist(
       session.user.mainWordExpOpts?.stateFlags,
       session.user.email
     ) +
-    " ORDER BY RAND ()";
+    " ORDER BY RAND () LIMIT 100";
   db.query(ReqFullQuery, function (err: any, result: any) {
     if (err) {
       console.log(err);
