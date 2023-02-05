@@ -18,7 +18,6 @@ const AccordionBoardArticle: React.FC<AccordionBoardArticleTypes> = ({
   article,
   isOpened,
 }) => {
-  console.log(isOpened)
   return (
     <AccordionBoardArticleComponent isOpened={isOpened} article={article}>
       <TypoComponent
