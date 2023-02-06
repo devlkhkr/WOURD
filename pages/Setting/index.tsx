@@ -1,4 +1,4 @@
-import type { NextPage } from "next";
+import type { InferGetServerSidePropsType, NextPage } from "next";
 import ToggleCheckComponent from "pages/components/atoms/Toggle";
 import Anchor from "pages/components/atoms/Anchor";
 import { useRef, useState } from "react";
@@ -22,7 +22,20 @@ import uuid from "uuid4";
 import { newAlert } from "pages/components/atoms/Alert";
 import TypoComponent from "pages/components/atoms/Typo";
 import UsageComponent from "pages/components/molecules/Usage";
+import { unstable_getServerSession } from "next-auth";
+import { authOptions } from "pages/api/auth/[...nextauth]";
 
+interface sttCntTypes {
+  word_state: "k" | "d" | "f" | "s" | "m";
+  state_count: number;
+}
+interface sttCntObjTypes {
+  k: number;
+  d: number;
+  f: number;
+  s: number;
+  m: number;
+}
 interface SettingTypes extends styledInterface {
   typo: string;
   afterIcon?: string;
@@ -52,6 +65,7 @@ interface wordArcdListTypes {
     label: string;
     color: string;
     wordIcon: string;
+    count: number;
   }[];
 }
 
@@ -96,13 +110,16 @@ const AcrdWrapStyled = styled.div`
   border-bottom: 1px dashed #ddd;
 `;
 
-const Setting: NextPage<SettingTypes> = () => {
+const Setting: NextPage<{ statesCount: sttCntObjTypes }> = ({
+  statesCount,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const [wordCtrlByActivity, setWordCtrlByActivity] = useState(true);
   const [wordCtrlByState, setWordCtrlByState] = useState(false);
   const [wordCtrlByCate, setWordCtrlByCate] = useState(false);
   const { data: session, status } = useSession();
   const stateTogglesRef = useRef<any>([]);
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const [modalComponents, setModalComponents] = useState<
     modalComponentsTypes[]
@@ -120,8 +137,6 @@ const Setting: NextPage<SettingTypes> = () => {
       typo: "시스템스펙",
     },
   ]);
-
-  const dispatch = useDispatch();
 
   const modalOpenClick = (e: React.MouseEvent<HTMLDivElement>) => {
     switch (e.currentTarget.innerText) {
@@ -166,24 +181,34 @@ const Setting: NextPage<SettingTypes> = () => {
       toggleFunc: setWordCtrlByActivity,
       acrdList: [
         {
-          label: "아는단어",
+          label: "아는 단어",
           color: "#aaa",
           wordIcon: "know",
+          count: statesCount.k,
         },
         {
-          label: "모르는단어",
+          label: "모르는 단어",
           color: "#aaa",
           wordIcon: "dontknow",
+          count: statesCount.d,
         },
         {
-          label: "즐겨찾는단어",
+          label: "즐겨찾은 단어",
           color: "#aaa",
           wordIcon: "favorite",
+          count: statesCount.f,
         },
         {
-          label: "건너뛴단어",
+          label: "건너 뛴 단어",
           color: "#aaa",
           wordIcon: "skip",
+          count: statesCount.s,
+        },
+        {
+          label: "등록한 단어",
+          color: "#aaa",
+          wordIcon: "my",
+          count: statesCount.m,
         },
       ],
     },
@@ -288,6 +313,7 @@ const Setting: NextPage<SettingTypes> = () => {
                   color={list.color}
                   wordIcon={list.wordIcon}
                   key={index}
+                  count={list.count}
                 />
               ))}
             </ProfileWordComponent>
@@ -408,6 +434,23 @@ const Setting: NextPage<SettingTypes> = () => {
 };
 
 export const getServerSideProps = async (context: any) => {
-  return { props: {} };
+  const res = await fetch("http://localhost:3000" + "/api/myword/count", {
+    headers: {
+      cookie: context.req.headers.cookie || "",
+    },
+  });
+  const data: sttCntTypes[] = await res.json();
+  let sttCntObj: sttCntObjTypes = {
+    k: 0,
+    d: 0,
+    f: 0,
+    s: 0,
+    m: 0,
+  };
+  for (let s = 0; s < data.length; s++) {
+    sttCntObj[data[s].word_state] = data[s].state_count;
+  }
+  console.log(sttCntObj);
+  return { props: { statesCount: sttCntObj } };
 };
 export default Setting;

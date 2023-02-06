@@ -9,12 +9,15 @@ import {
   faCircleQuestion,
   faStar,
   faForward,
+  faPencil,
+  faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
 
 interface ProfileWordTitleTypes extends styledInterface {
   typo: string;
   color: string;
   wordIcon: string;
+  count: number;
 }
 
 const ProfileWordItem = styled.li`
@@ -41,7 +44,7 @@ const ProfileWordIconWrap = styled.div`
 `;
 
 const ProfileWordItemComponent: React.FC<ProfileWordTitleTypes> = (props) => {
-  const { typo, color, wordIcon } = props;
+  const { typo, color, wordIcon, count } = props;
 
   const setWordIcon = () => {
     switch (wordIcon) {
@@ -81,12 +84,21 @@ const ProfileWordItemComponent: React.FC<ProfileWordTitleTypes> = (props) => {
       case "skip":
         return (
           <Icon
-            // iconShape={faForward}
             iconImg="icon-x"
             iconWidth="14px"
             iconHeight="14px"
             svgSize="14px"
             color="var(--color-grey)"
+          />
+        );
+      case "my":
+        return (
+          <Icon
+            iconShape={faUserPlus}
+            iconWidth="14px"
+            iconHeight="14px"
+            svgSize="14px"
+            color="var(--color-lightgrey)"
           />
         );
       default:
@@ -97,7 +109,7 @@ const ProfileWordItemComponent: React.FC<ProfileWordTitleTypes> = (props) => {
   return (
     <ProfileWordItem>
       {wordIcon && <ProfileWordIconWrap>{setWordIcon()}</ProfileWordIconWrap>}
-      <TypoComponent fontSize="12px" fontWeight="medium" color={color}>
+      <TypoComponent fontSize="10px" fontWeight="medium" color={color}>
         {typo}
       </TypoComponent>
       <TypoComponent
@@ -105,7 +117,7 @@ const ProfileWordItemComponent: React.FC<ProfileWordTitleTypes> = (props) => {
         fontWeight="semi-bold"
         color="var(--color-point)"
       >
-        0개
+        {count}개
       </TypoComponent>
     </ProfileWordItem>
   );
