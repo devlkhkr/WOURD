@@ -16,7 +16,6 @@ import { useSession } from "next-auth/react";
 import DataEmptyComponent from "../molecules/DataEmpty";
 import { useRouter } from "next/router";
 import { newAlert } from "../atoms/Alert";
-import setCardState from "pages/api/join/dup";
 import StyledComponentTypes from "../Intefaces/styledComponent";
 
 interface CardMainTypes {
@@ -347,7 +346,6 @@ const CardMainComponent: React.FC<CardMainTypes> = ({
   };
 
   useEffect(() => {
-    console.log("wordList:::", exposeWord);
     // setWordList([...exposeWord].reverse());
     setWordList([...exposeWord]);
   }, [exposeWord]);

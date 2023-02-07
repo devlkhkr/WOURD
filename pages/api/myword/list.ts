@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { unstable_getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]";
-const db = require("../../../common/config/db");
+const db = require("common/config/db");
 
 export default async function getMyWordlist(
   req: NextApiRequest,

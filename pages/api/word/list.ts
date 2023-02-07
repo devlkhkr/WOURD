@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-const db = require("../../../common/config/db");
+const db = require("common/config/db");
 
 import { authOptions } from "pages/api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth/next";

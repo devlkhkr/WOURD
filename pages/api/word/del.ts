@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { unstable_getServerSession } from "next-auth";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 import { json } from "stream/consumers";
-const db = require("../../../common/config/db");
+const db = require("common/config/db");
 
 export default async function delWord(req: NextApiRequest, res: NextApiResponse) {
   const session = await unstable_getServerSession(req, res, authOptions);

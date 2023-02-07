@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-const db = require("../../../common/config/db");
+const db = require("common/config/db");
 
 export default function registWord(req: NextApiRequest, res: NextApiResponse) {
   db.query(
