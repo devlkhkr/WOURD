@@ -93,6 +93,7 @@ const JoinComponent: React.FC<JoinTypes> = ({
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [isPwValid, setIsPwValid] = useState(false);
   const [isPwCfValid, setIsPwCfValid] = useState(false);
+  const [isNameValid, setIsNameValid] = useState(false);
   const [isInvtValid, setIsInvtValid] = useState(false);
   /* E : 유효성 체크 State Flags */
 
@@ -130,11 +131,14 @@ const JoinComponent: React.FC<JoinTypes> = ({
   };
 
   const emailDupCheck = async () => {
-    const res = await axios.post("http://localhost:3000" + "/api/join/dup", {
-      joinUserData: {
-        email: joinUserId,
-      },
-    });
+    const res = await axios.post(
+      "http://localhost:3000" + "/api/cert/mail/dup",
+      {
+        joinUserData: {
+          email: joinUserId,
+        },
+      }
+    );
     return res.data.length;
   };
 
@@ -159,7 +163,7 @@ const JoinComponent: React.FC<JoinTypes> = ({
 
   const sendAuthCheckMail = async () => {
     const res = await axios.post(
-      "http://localhost:3000" + "/api/join/sendmail",
+      "http://localhost:3000" + "/api/cert/mail/send",
       {
         joinUserData: {
           email: joinUserId,
@@ -235,6 +239,29 @@ const JoinComponent: React.FC<JoinTypes> = ({
     }
   };
 
+  const nameDupCheck = async () => {
+    if (joinUserName.length === 0) {
+      alert("닉네임을 입력하세요.");
+      return;
+    }
+    const res = await axios.post(
+      "http://localhost:3000" + "/api/cert/name/dup",
+      {
+        userName: joinUserName,
+      }
+    );
+    console.log(res);
+    res.data.length === 0
+      ? (() => {
+          alert("사용 가능한 닉네임 입니다.");
+          setIsNameValid(true);
+        })()
+      : (() => {
+          alert("이미 사용중인 닉네임 입니다.");
+          console.log("닉네임 중복체크 에러 발생:::", res.data);
+        })();
+  };
+
   const joinButtonClick = () => {
     console.log("작성된 이메일: ", joinUserId);
     console.log("작성된 암호: ", joinUserPw);
@@ -242,6 +269,7 @@ const JoinComponent: React.FC<JoinTypes> = ({
 
     console.log("mail 유효성: ", isEmailValid);
     console.log("pw 유효성: ", isPwValid);
+    console.log("닉네임 유효성: ", isNameValid);
     console.log("invt 유효성: ", isInvtValid);
 
     console.log("-----------------------------");
@@ -253,6 +281,8 @@ const JoinComponent: React.FC<JoinTypes> = ({
       alert("비밀번호가 일치하지 않습니다.");
     } else if (joinUserName.length <= 0) {
       alert("닉네임을 입력해주세요.");
+    } else if (!isNameValid) {
+      alert("닉네임 중복체크를 해주세요.");
     } else if (!isInvtValid) {
       alert("초대코드가 유효하지 않습니다.");
     } else {
@@ -266,7 +296,7 @@ const JoinComponent: React.FC<JoinTypes> = ({
   };
 
   const sendJoinForm = async (hashedPw: string, salt: string) => {
-    const res = await axios.post("http://localhost:3000" + "/api/join/reg", {
+    const res = await axios.post("http://localhost:3000" + "/api/user/reg", {
       joinUserData: {
         email: joinUserId,
         pw: hashedPw,
@@ -362,9 +392,10 @@ const JoinComponent: React.FC<JoinTypes> = ({
                     </Typo>
                   </AuthCheckWrap>
                   <Button
-                    desc="인증하기"
+                    desc={isEmailValid ? "인증완료" : "인증하기"}
                     width="80px"
                     backgroundColor="var(--color-point)"
+                    className={isEmailValid ? "disabled" : ""}
                     color="#fff"
                     onClick={authCodeCheck}
                   />
@@ -408,35 +439,50 @@ const JoinComponent: React.FC<JoinTypes> = ({
           <Fieldset>
             <InputWrap>
               <Label htmlFor="joinName" desc="닉네임" mandatory={true} />
-              <InputText
-                type="text"
-                placeHolder="닉네임을 입력하세요."
-                id="joinName"
-                maxLength={5}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  e.currentTarget.value.length > 0 &&
-                  regexUserName.test(e.currentTarget.value)
-                    ? (() => {
-                        e.currentTarget.value = e.currentTarget.value.replace(
-                          regexUserName,
-                          ""
-                        );
-                        newAlert(
-                          "한글, 영 대소문자, 숫자만 입력 가능합니다.",
-                          "ngtv"
-                        );
-                      })()
-                    : (() => {
-                        e.currentTarget.value.length > 5
-                          ? newAlert("최대 5글자까지 입력 가능합니다.", "ngtv")
-                          : void 0;
-                        setJoinUserName(e.currentTarget.value);
-                        setJoinUserImg(
-                          `https://avatars.dicebear.com/api/personas/${e.currentTarget.value}.svg`
-                        );
-                      })();
-                }}
-              />
+              <FlexWrap>
+                <InputText
+                  type="text"
+                  placeHolder="닉네임을 입력하세요."
+                  id="joinName"
+                  maxLength={5}
+                  readonly={isNameValid}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    e.currentTarget.value.length > 0 &&
+                    regexUserName.test(e.currentTarget.value)
+                      ? (() => {
+                          e.currentTarget.value = e.currentTarget.value.replace(
+                            regexUserName,
+                            ""
+                          );
+                          newAlert(
+                            "한글, 영 대소문자, 숫자만 입력 가능합니다.",
+                            "ngtv"
+                          );
+                        })()
+                      : (() => {
+                          e.currentTarget.value.length > 5
+                            ? newAlert(
+                                "최대 5글자까지 입력 가능합니다.",
+                                "ngtv"
+                              )
+                            : void 0;
+                          setJoinUserName(e.currentTarget.value);
+                          setJoinUserImg(
+                            `https://avatars.dicebear.com/api/personas/${e.currentTarget.value}.svg`
+                          );
+                        })();
+                  }}
+                />
+                <Button
+                  desc={isNameValid ? "사용가능" : "중복체크"}
+                  width="80px"
+                  backgroundColor="var(--color-point)"
+                  className={`${isNameValid ? "disabled" : ""}`}
+                  color="#fff"
+                  onClick={nameDupCheck}
+                  disabled={isNameValid}
+                />
+              </FlexWrap>
             </InputWrap>
             <InputWrap>
               <Label htmlFor="joinKey" desc="초대코드" mandatory={true} />
