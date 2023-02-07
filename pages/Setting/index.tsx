@@ -71,6 +71,7 @@ interface wordArcdListTypes {
 
 interface modalComponentsTypes {
   typo: string;
+  modalType: string;
 }
 
 const SettingWrap = styled.div`
@@ -126,53 +127,25 @@ const Setting: NextPage<{ statesCount: sttCntObjTypes }> = ({
   >([
     {
       typo: "공지사항",
+      modalType: "NoticeModal",
     },
     {
       typo: "도움말(FAQ)",
+      modalType: "HelpMessageModal",
     },
     {
       typo: "개발히스토리",
+      modalType: "DevLogModal",
     },
     {
       typo: "시스템스펙",
+      modalType: "SystemSpecModal",
+    },
+    {
+      typo: "도네이션",
+      modalType: "DonationModal",
     },
   ]);
-
-  const modalOpenClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    switch (e.currentTarget.innerText) {
-      case "공지사항":
-        return dispatch(
-          openModal({
-            modalType: "NoticeModal",
-            isOpen: true,
-          })
-        );
-      case "도움말(FAQ)":
-        return dispatch(
-          openModal({
-            modalType: "HelpMessageModal",
-            isOpen: true,
-          })
-        );
-      case "개발히스토리":
-        return dispatch(
-          openModal({
-            modalType: "DevLogModal",
-            isOpen: true,
-          })
-        );
-      case "시스템스펙":
-        return dispatch(
-          openModal({
-            modalType: "SystemSpecModal",
-            isOpen: true,
-          })
-        );
-      default:
-        return console.log("null page");
-    }
-    return;
-  };
 
   const wordAcrdList: wordArcdListTypes[] = [
     {
@@ -325,6 +298,7 @@ const Setting: NextPage<{ statesCount: sttCntObjTypes }> = ({
         marginTop="20px"
         marginBottom="12px"
         color="var(--color-grey)"
+        fontSize="13px"
       >
         &bull;홈 화면 카드 노출 옵션
       </TypoComponent>
@@ -405,6 +379,7 @@ const Setting: NextPage<{ statesCount: sttCntObjTypes }> = ({
         marginTop="20px"
         marginBottom="12px"
         color="var(--color-grey)"
+        fontSize="13px"
       >
         &bull;이 앱에 대해서
       </TypoComponent>
@@ -413,7 +388,14 @@ const Setting: NextPage<{ statesCount: sttCntObjTypes }> = ({
           <SettingListComponent
             key={index}
             typo={item.typo}
-            onClick={modalOpenClick}
+            onClick={() => {
+              dispatch(
+                openModal({
+                  modalType: item.modalType,
+                  isOpen: true,
+                })
+              );
+            }}
           />
         ))}
 
@@ -450,7 +432,6 @@ export const getServerSideProps = async (context: any) => {
   for (let s = 0; s < data.length; s++) {
     sttCntObj[data[s].word_state] = data[s].state_count;
   }
-  console.log(sttCntObj);
   return { props: { statesCount: sttCntObj } };
 };
 export default Setting;
