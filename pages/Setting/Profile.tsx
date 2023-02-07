@@ -12,6 +12,9 @@ import ButtonWrapComponent from "pages/components/molecules/ButtonWrap";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
+import { faRepeat } from "@fortawesome/free-solid-svg-icons";
+import Icon from "pages/components/atoms/Icon";
+import uuid from "uuid4";
 
 interface SettingProfileTypes extends styledInterface {}
 
@@ -39,22 +42,18 @@ const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
   const { data: session, status } = useSession();
 
   const [wordActivity, setWordActivity] = useState(false);
+  const [userImg, setUserImg] = useState(session?.user.image!);
 
   const router = useRouter();
   const cancelBtnClick = () => {
     router.back();
   };
 
-  // FIXME: 이미지 수정할수있는 함수
-  const modifyImg = () => {
-    console.log("이미지 수정 함수");
-  };
-
   return (
     <SettingProfileWrap>
       <SettingProfileUser>
         <ImgComponent
-          src={session?.user.image!}
+          src={userImg}
           objectFit="cover"
           marginBottom="16px"
           width="80px"
@@ -67,9 +66,13 @@ const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
             fontWeight="semi-bold"
             textAlign="left"
             color="var(--color-point)"
-            onClick={modifyImg}
+            onClick={() => {
+              setUserImg(
+                `https://avatars.dicebear.com/api/personas/${uuid()}.svg`
+              );
+            }}
           >
-            프로필 사진 바꾸기
+            랜덤 아바타 생성
           </TypoComponent>
         </ChangeImgButtons>
       </SettingProfileUser>
@@ -78,6 +81,8 @@ const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
         <ProfileListComponent
           typo="이메일"
           userInfo={`${session?.user.email}`}
+          readonly={true}
+          isEmail={true}
         />
         <ProfileListComponent
           typo="닉네임"

@@ -6,11 +6,11 @@ interface HelpMessageListArticleTypes {
   isOpened: boolean;
 }
 
-const HelpMessageListArticleComponent = styled.div<NoticeListArticleTypes>`
+const HelpMessageListArticleComponent = styled.div<HelpMessageListArticleTypes>`
   transition: all 0.3s linear;
   max-height: 0;
   overflow: hidden;
-  max-height: ${props => (props.isOpened ? "60vw" : "0")};
+  max-height: ${(props) => (props.isOpened ? "60vw" : "0")};
 `;
 
 const HelpMessageListArticle: React.FC<HelpMessageListArticleTypes> = ({

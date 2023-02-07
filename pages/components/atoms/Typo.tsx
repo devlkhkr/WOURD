@@ -12,7 +12,7 @@ const TypoStyled = styled.div<TypoType>`
   font-weight: ${(props) => `var(--weight-${props.fontWeight || "regular"})`};
   line-height: ${(props) => props.lineHeight || "1.2"};
   color: ${(props) => props.color || "inherit"};
-  text-align: ${(props) => props.textAlign || "center"};
+  text-align: ${(props) => props.textAlign || "left"};
   margin-top: ${(props) => props.marginTop || "unset"};
   margin-bottom: ${(props) => props.marginBottom || "unset"};
   text-overflow: ellipsis;

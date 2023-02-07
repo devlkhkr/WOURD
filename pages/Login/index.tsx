@@ -177,6 +177,7 @@ const LoginComponent: NextPage<LoginTypes> = ({ isAuth }) => {
           fontSize="14px"
           color="var(--color-grey)"
           onClick={(e) => setJoinPageOpened(true)}
+          textAlign="center"
           lineClamp="1"
         >
           회원가입
