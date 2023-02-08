@@ -74,6 +74,9 @@ const JoinStyled = styled.div<JoinTypes>`
   animation: popup 0.3s linear;
 `;
 
+export const regexUserName =
+  /[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\ '\"\\(\=]/gi;
+
 const JoinComponent: React.FC<JoinTypes> = ({
   setJoinPageOpened,
   signIn,
@@ -109,7 +112,6 @@ const JoinComponent: React.FC<JoinTypes> = ({
 
   const invtCode: any = process.env.NEXT_PUBLIC_INVITE_CODE;
 
-  const regexUserName = /[ \{\}\[\]\/?.,;:|\)*~`!^\-_+┼<>@\#$%&\ '\"\\(\=]/gi;
   const schema = new passwordValidator();
   schema
     .is()
@@ -250,7 +252,6 @@ const JoinComponent: React.FC<JoinTypes> = ({
         userName: joinUserName,
       }
     );
-    console.log(res);
     res.data.length === 0
       ? (() => {
           alert("사용 가능한 닉네임 입니다.");

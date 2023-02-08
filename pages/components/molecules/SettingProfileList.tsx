@@ -1,6 +1,7 @@
 import { faCheckCircle } from "@fortawesome/free-regular-svg-icons";
-import React from "react";
+import React, { MouseEventHandler } from "react";
 import styled from "styled-components";
+import Button from "../atoms/Button";
 
 import InputText from "../atoms/InputText";
 import { svgCheckIcon } from "../atoms/SvgIcons";
@@ -12,16 +13,26 @@ interface ProfileListTypes extends styledInterface {
   userInfo?: string;
   readonly?: boolean;
   isEmail?: boolean;
+  onInputChange?: Function;
+  maxLength?: number;
+  buttonInfo?: {
+    label: string;
+    onClick: MouseEventHandler;
+  };
 }
 
 const ProfileListWrap = styled.dl<{ isEmail?: boolean }>`
   display: flex;
   align-items: center;
   dt {
-    min-width: 100px;
+    min-width: 72px;
   }
   dd {
-    width: calc(100% - 100px);
+    display: flex;
+    width: calc(100% - 72px);
+    button {
+      margin-left: 8px;
+    }
     ${(props) =>
       props.isEmail
         ? `
@@ -43,7 +54,16 @@ const ProfileListWrap = styled.dl<{ isEmail?: boolean }>`
 `;
 
 const ProfileListComponent: React.FC<ProfileListTypes> = (props) => {
-  const { typo, color, userInfo, readonly, isEmail } = props;
+  const {
+    typo,
+    color,
+    userInfo,
+    readonly,
+    isEmail,
+    onInputChange,
+    maxLength,
+    buttonInfo,
+  } = props;
   // console.log(userInfo);
   return (
     <ProfileListWrap isEmail={isEmail}>
@@ -59,7 +79,7 @@ const ProfileListComponent: React.FC<ProfileListTypes> = (props) => {
       </dt>
       <dd>
         {/* FIXME : input value ? */}
-        {readonly ? (
+        {isEmail ? (
           <TypoComponent
             lineHeight="40px"
             paddingLeft="8px"
@@ -73,7 +93,22 @@ const ProfileListComponent: React.FC<ProfileListTypes> = (props) => {
             type="text"
             placeHolder={`${typo}을 입력해주세요`}
             defaultValue={userInfo}
+            onChange={onInputChange}
+            maxLength={maxLength}
+            readonly={readonly}
           />
+        )}
+        {buttonInfo ? (
+          <Button
+            type="button"
+            width="140px"
+            desc={buttonInfo.label}
+            onClick={buttonInfo.onClick}
+            backgroundColor="var(--color-point)"
+            color="#fff"
+          />
+        ) : (
+          <></>
         )}
       </dd>
     </ProfileListWrap>

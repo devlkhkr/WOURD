@@ -7,7 +7,7 @@ export default function setCardState(
   res: NextApiResponse
 ) {
   db.query(
-    `SELECT * FROM USER_TB WHERE user_nickname='${req.body.userName}'`,
+    `SELECT user_nickname FROM USER_TB WHERE user_nickname='${req.body.userName}'`,
     function (err: any, data: any) {
       if (!err) {
         res.send(data);
