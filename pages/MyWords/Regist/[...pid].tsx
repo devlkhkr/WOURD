@@ -95,10 +95,11 @@ const ModifyWord: NextPage<ModifyWordTypes> = ({
       const wordRegistData = {
         userId: session?.user.email,
         wordId: wordData[0].word_id,
-        wordTit: wordTit,
+        wordTit: wordTit.replaceAll("'", "''"),
         wordIntlFlag: wordIntlFlag.current.getValue(),
-        wordUnravel: wordUnravel,
-        wordDesc: wordDesc,
+        wordUnravel:
+          wordUnravel === null ? "" : wordUnravel.replaceAll("'", "''"),
+        wordDesc: wordDesc.replaceAll("'", "''"),
         wordCtgr: wordCtgr.current.getValue(),
       };
       const resReg = await axios.post(
@@ -131,7 +132,7 @@ const ModifyWord: NextPage<ModifyWordTypes> = ({
             id="wordName"
             defaultValue={wordTit}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setWordTit(e.currentTarget.value.replaceAll("'", "''"));
+              setWordTit(e.currentTarget.value);
             }}
           />
         </Fieldset>
@@ -172,7 +173,7 @@ const ModifyWord: NextPage<ModifyWordTypes> = ({
               placeHolder="예) Server Side Rendering"
               defaultValue={wordUnravel}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setWordUnravel(e.currentTarget.value.replaceAll("'", "''"));
+                setWordUnravel(e.currentTarget.value);
               }}
             />
           </Fieldset>
@@ -189,7 +190,7 @@ const ModifyWord: NextPage<ModifyWordTypes> = ({
             placeholder="예) SSR이란 서버사이드 렌더링(Server Side Rendering)의 약자로 서버로부터 완전하게 만들어진 HTML 파일을 받아와 페이지 전체를 렌더링 하는 방식이다."
             defaultValue={wordDesc}
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-              setWordDesc(e.currentTarget.value.replaceAll("'", "''"));
+              setWordDesc(e.currentTarget.value);
             }}
           />
         </Fieldset>
