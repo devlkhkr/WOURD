@@ -22,6 +22,7 @@ import MyWordCardComponent, {
 } from "pages/components/organisms/MyWordCard";
 import { newContext } from "pages/components/organisms/Context";
 import { newAlert } from "pages/components/atoms/Alert";
+import Mask from "pages/components/atoms/Mask";
 
 const MyClickedCardStyled = styled.div`
   position: absolute;
@@ -113,7 +114,7 @@ const WordFilterList = styled.div`
   right: 0;
   /* top: calc(var(--height-header) + 60px); */
   top: 0;
-  z-index: 9999;
+  z-index: 19999;
   border-radius: 8px;
   box-shadow: 0px 4px 12px 8px rgba(0, 0, 0, 0.05);
   opacity: 0;
@@ -441,6 +442,15 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
 
   return (
     <>
+      {wordFilterOpened ? (
+        <Mask
+          onClick={() => {
+            setWordFilterOpened(!wordFilterOpened);
+          }}
+        ></Mask>
+      ) : (
+        <></>
+      )}
       {clickedWord.length === 1 ? (
         <MyClickedCardStyled>
           <CardMain
