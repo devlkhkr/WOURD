@@ -34,9 +34,6 @@ interface HashedDataTypes {
 
 const FlexWrap = styled.div`
   display: flex;
-  button.disabled {
-    background-color: var(--color-grey);
-  }
   input {
     flex: 1;
   }
@@ -359,10 +356,9 @@ const JoinComponent: React.FC<JoinTypes> = ({
                   desc="코드전송"
                   width="80px"
                   backgroundColor="var(--color-point)"
-                  className={`${authCheckFlag ? "disabled" : ""}`}
+                  disabled={authCheckFlag}
                   color="#fff"
                   onClick={authButtonClick}
-                  disabled={authCheckFlag}
                 />
               </FlexWrap>
             </InputWrap>
@@ -396,7 +392,7 @@ const JoinComponent: React.FC<JoinTypes> = ({
                     desc={isEmailValid ? "인증완료" : "인증하기"}
                     width="80px"
                     backgroundColor="var(--color-point)"
-                    className={isEmailValid ? "disabled" : ""}
+                    disabled={isEmailValid}
                     color="#fff"
                     onClick={authCodeCheck}
                   />
@@ -478,7 +474,6 @@ const JoinComponent: React.FC<JoinTypes> = ({
                   desc={isNameValid ? "사용가능" : "중복체크"}
                   width="80px"
                   backgroundColor="var(--color-point)"
-                  className={`${isNameValid ? "disabled" : ""}`}
                   color="#fff"
                   onClick={nameDupCheck}
                   disabled={isNameValid}

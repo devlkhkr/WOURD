@@ -104,6 +104,7 @@ const ProfileListComponent: React.FC<ProfileListTypes> = (props) => {
             width="140px"
             desc={buttonInfo.label}
             onClick={buttonInfo.onClick}
+            disabled={readonly}
             backgroundColor="var(--color-point)"
             color="#fff"
           />
