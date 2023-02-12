@@ -13,10 +13,12 @@ import Hash from "../components/atoms/Hash";
 
 import { useDispatch } from "react-redux";
 import { NextPage } from "next";
+import { NextSeo } from 'next-seo';
 
 import { store } from "redux/store";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+
 
 interface LoginTypes {
   isAuth?: boolean;
@@ -127,6 +129,17 @@ const LoginComponent: NextPage<LoginTypes> = ({ isAuth }) => {
 
   return (
     <>
+      <NextSeo
+				title="Copublish Login"
+				description=""
+				openGraph={{
+					type: 'website',
+					url: '',
+					title: 'Copub login page',
+					description: '',
+				}}
+			/>
+
       {joinPageOpened ? (
         <Join
           setJoinPageOpened={setJoinPageOpened}
