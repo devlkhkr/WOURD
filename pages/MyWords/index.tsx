@@ -23,6 +23,7 @@ import MyWordCardComponent, {
 import { newContext } from "pages/components/organisms/Context";
 import { newAlert } from "pages/components/atoms/Alert";
 import Mask from "pages/components/atoms/Mask";
+import { NextSeo } from "next-seo";
 
 const MyClickedCardStyled = styled.div`
   position: absolute;
@@ -452,6 +453,16 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
       ) : (
         <></>
       )}
+      <NextSeo
+        title="Copublish MyWords"
+        description=""
+        openGraph={{
+          type: "website",
+          url: "",
+          title: "Copub MyWords page",
+          description: "",
+        }}
+      />
       {clickedWord.length === 1 ? (
         <MyClickedCardStyled>
           <CardMain

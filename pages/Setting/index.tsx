@@ -24,6 +24,7 @@ import TypoComponent from "pages/components/atoms/Typo";
 import UsageComponent from "pages/components/molecules/Usage";
 import { unstable_getServerSession } from "next-auth";
 import { authOptions } from "pages/api/auth/[...nextauth]";
+import { NextSeo } from "next-seo";
 
 interface sttCntTypes {
   word_state: "k" | "d" | "f" | "s" | "m";
@@ -261,146 +262,157 @@ const Setting: NextPage<{ statesCount: sttCntObjTypes }> = ({
   ];
 
   return (
-    <SettingWrap>
-      <SettingProfileStyled>
-        <Anchor width="100%" href="/Setting/Profile">
-          <UserProfileComponent />
-        </Anchor>
-      </SettingProfileStyled>
+    <>
+      <NextSeo
+        title="Copublish Setting"
+        description=""
+        openGraph={{
+          type: "website",
+          url: "",
+          title: "Copub Setting page",
+          description: "",
+        }}
+      />
+      <SettingWrap>
+        <SettingProfileStyled>
+          <Anchor width="100%" href="/Setting/Profile">
+            <UserProfileComponent />
+          </Anchor>
+        </SettingProfileStyled>
 
-      {wordAcrdList.map((wordAcrd, index) => {
-        return (
-          <ProfileWordsWrap key={index}>
-            <ProfileWordTitleComponent
-              typo={wordAcrd.acrdTitle}
-              afterIcon={wordAcrd.toggleFlag ? "arr-up" : "arr-down"}
-              onClick={() => {
-                wordAcrd.toggleFunc((prev: boolean) => !prev);
-              }}
-            />
+        {wordAcrdList.map((wordAcrd, index) => {
+          return (
+            <ProfileWordsWrap key={index}>
+              <ProfileWordTitleComponent
+                typo={wordAcrd.acrdTitle}
+                afterIcon={wordAcrd.toggleFlag ? "arr-up" : "arr-down"}
+                onClick={() => {
+                  wordAcrd.toggleFunc((prev: boolean) => !prev);
+                }}
+              />
 
-            <ProfileWordComponent isOpened={wordAcrd.toggleFlag}>
-              {wordAcrd.acrdList.map((list, index) => (
-                <ProfileWordItemComponent
-                  typo={list.label}
-                  color={list.color}
-                  wordIcon={list.wordIcon}
-                  key={index}
-                  count={list.count}
-                />
-              ))}
-            </ProfileWordComponent>
-          </ProfileWordsWrap>
-        );
-      })}
-      <TypoComponent
-        textAlign="left"
-        marginTop="20px"
-        marginBottom="12px"
-        color="var(--color-grey)"
-        fontSize="13px"
-      >
-        &bull;홈 화면 카드 노출 옵션
-      </TypoComponent>
-      <SettingTopStyled>
-        {objAcrdList.map((objAcrd, index) => (
-          <AcrdWrapStyled key={index}>
+              <ProfileWordComponent isOpened={wordAcrd.toggleFlag}>
+                {wordAcrd.acrdList.map((list, index) => (
+                  <ProfileWordItemComponent
+                    typo={list.label}
+                    color={list.color}
+                    wordIcon={list.wordIcon}
+                    key={index}
+                    count={list.count}
+                  />
+                ))}
+              </ProfileWordComponent>
+            </ProfileWordsWrap>
+          );
+        })}
+        <TypoComponent
+          textAlign="left"
+          marginTop="20px"
+          marginBottom="12px"
+          color="var(--color-grey)"
+          fontSize="13px"
+        >
+          &bull;홈 화면 카드 노출 옵션
+        </TypoComponent>
+        <SettingTopStyled>
+          {objAcrdList.map((objAcrd, index) => (
+            <AcrdWrapStyled key={index}>
+              <SettingListComponent
+                typo={objAcrd.acrdTitle}
+                afterIcon={objAcrd.toggleFlag ? "arr-up" : "arr-down"}
+                onClick={() => {
+                  objAcrd.toggleFunc((prev: boolean) => !prev);
+                }}
+              />
+
+              <Accordion isOpened={objAcrd.toggleFlag}>
+                {objAcrd.acrdList.data.map((list, index) => (
+                  <ToggleCheckComponent
+                    key={index}
+                    typo={list.label}
+                    defaultChecked={list.checked}
+                    reference={(checkbox: HTMLInputElement) =>
+                      objAcrd.acrdList.type === "category"
+                        ? (stateTogglesRef.current[index] = checkbox)
+                        : void 0
+                    }
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      let arrTglsVld: boolean[] = [];
+                      stateTogglesRef.current.map(
+                        (toggle: HTMLInputElement, index: number) => {
+                          arrTglsVld[index] = toggle.checked;
+                        }
+                      );
+                      arrTglsVld.indexOf(true) === -1
+                        ? (() => {
+                            e.target.checked = true;
+                            newAlert(
+                              "카테고리 토글은 최소 한개이상 설정되어야 합니다.",
+                              "ngtv"
+                            );
+                            return;
+                          })()
+                        : (() => {
+                            const res = axios.post(
+                              "http://localhost:3000" + "/api/user/opt",
+                              {
+                                column: list.column,
+                                value: e.target.checked ? 1 : 0,
+                              }
+                            );
+                            res.then(result => {
+                              result.status === 200
+                                ? (() => {
+                                    newAlert(
+                                      `${list.label} 노출옵션이 ${
+                                        e.target.checked ? "활성" : "비활성"
+                                      }화 되었습니다.`,
+                                      "pstv"
+                                    );
+                                    reloadSession();
+                                  })()
+                                : void 0;
+                            });
+                          })();
+                    }}
+                  />
+                ))}
+              </Accordion>
+              {objAcrd.usageList && objAcrd.toggleFlag ? (
+                <UsageComponent usageList={objAcrd.usageList} />
+              ) : (
+                <></>
+              )}
+            </AcrdWrapStyled>
+          ))}
+        </SettingTopStyled>
+        <TypoComponent
+          textAlign="left"
+          marginTop="20px"
+          marginBottom="12px"
+          color="var(--color-grey)"
+          fontSize="13px"
+        >
+          &bull;이 앱에 대해서
+        </TypoComponent>
+        <SettingBottomStyled>
+          {modalComponents.map((item: modalComponentsTypes, index: number) => (
             <SettingListComponent
-              typo={objAcrd.acrdTitle}
-              afterIcon={objAcrd.toggleFlag ? "arr-up" : "arr-down"}
+              key={index}
+              typo={item.typo}
               onClick={() => {
-                objAcrd.toggleFunc((prev: boolean) => !prev);
+                dispatch(
+                  openModal({
+                    modalType: item.modalType,
+                    isOpen: true,
+                  })
+                );
               }}
             />
+          ))}
 
-            <Accordion isOpened={objAcrd.toggleFlag}>
-              {objAcrd.acrdList.data.map((list, index) => (
-                <ToggleCheckComponent
-                  key={index}
-                  typo={list.label}
-                  defaultChecked={list.checked}
-                  reference={(checkbox: HTMLInputElement) =>
-                    objAcrd.acrdList.type === "category"
-                      ? (stateTogglesRef.current[index] = checkbox)
-                      : void 0
-                  }
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    let arrTglsVld: boolean[] = [];
-                    stateTogglesRef.current.map(
-                      (toggle: HTMLInputElement, index: number) => {
-                        arrTglsVld[index] = toggle.checked;
-                      }
-                    );
-                    arrTglsVld.indexOf(true) === -1
-                      ? (() => {
-                          e.target.checked = true;
-                          newAlert(
-                            "카테고리 토글은 최소 한개이상 설정되어야 합니다.",
-                            "ngtv"
-                          );
-                          return;
-                        })()
-                      : (() => {
-                          const res = axios.post(
-                            "http://localhost:3000" + "/api/user/opt",
-                            {
-                              column: list.column,
-                              value: e.target.checked ? 1 : 0,
-                            }
-                          );
-                          res.then((result) => {
-                            result.status === 200
-                              ? (() => {
-                                  newAlert(
-                                    `${list.label} 노출옵션이 ${
-                                      e.target.checked ? "활성" : "비활성"
-                                    }화 되었습니다.`,
-                                    "pstv"
-                                  );
-                                  reloadSession();
-                                })()
-                              : void 0;
-                          });
-                        })();
-                  }}
-                />
-              ))}
-            </Accordion>
-            {objAcrd.usageList && objAcrd.toggleFlag ? (
-              <UsageComponent usageList={objAcrd.usageList} />
-            ) : (
-              <></>
-            )}
-          </AcrdWrapStyled>
-        ))}
-      </SettingTopStyled>
-      <TypoComponent
-        textAlign="left"
-        marginTop="20px"
-        marginBottom="12px"
-        color="var(--color-grey)"
-        fontSize="13px"
-      >
-        &bull;이 앱에 대해서
-      </TypoComponent>
-      <SettingBottomStyled>
-        {modalComponents.map((item: modalComponentsTypes, index: number) => (
-          <SettingListComponent
-            key={index}
-            typo={item.typo}
-            onClick={() => {
-              dispatch(
-                openModal({
-                  modalType: item.modalType,
-                  isOpen: true,
-                })
-              );
-            }}
-          />
-        ))}
-
-        <SettingListComponent typo="버전정보" rightTypo="1.0.0" />
-        {/* <SettingListComponent
+          <SettingListComponent typo="버전정보" rightTypo="1.0.0" />
+          {/* <SettingListComponent
           typo="로그아웃"
           color="var(--color-red)"
           onClick={() => {
@@ -410,8 +422,9 @@ const Setting: NextPage<{ statesCount: sttCntObjTypes }> = ({
             });
           }}
         /> */}
-      </SettingBottomStyled>
-    </SettingWrap>
+        </SettingBottomStyled>
+      </SettingWrap>
+    </>
   );
 };
 
