@@ -19,6 +19,7 @@ import UsageComponent from "pages/components/molecules/Usage";
 import { regexUserName } from "pages/components/templates/Join";
 import { newAlert } from "pages/components/atoms/Alert";
 import axios from "axios";
+import { reloadSession } from "pages/components/atoms/Session";
 
 interface SettingProfileTypes extends styledInterface {}
 
@@ -54,6 +55,39 @@ const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
   const router = useRouter();
   const cancelBtnClick = () => {
     router.back();
+  };
+
+  const sendModForm = async () => {
+    const res = await axios.post("http://localhost:3000" + "/api/user/mod", {
+      modUserData: {
+        name: modUserName,
+        prfImg: userImg,
+      },
+    });
+
+    res.data.affectedRows === 1
+      ? (() => {
+          router.back();
+          newAlert("프로필 수정완료", "pstv");
+          reloadSession();
+        })()
+      : (() => {
+          console.log("프로필 수정 중 에러 발생:::", res.data);
+        })();
+  };
+  const modBtnOnclick = () => {
+    console.log("변경된 이미지: ", userImg);
+    console.log("변경된 이름: ", modUserName);
+    console.log("변경된 이름 중복체크 유효성: ", isNameValid);
+
+    console.log("-----------------------------");
+    if (!modUserName) {
+      alert("닉네임을 입력해주세요.");
+    } else if (!isNameValid) {
+      alert("닉네임 중복체크를 완료해주세요.");
+    } else {
+      sendModForm();
+    }
   };
 
   return (
@@ -118,10 +152,6 @@ const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
                     newAlert("이미 사용중인 닉네임 입니다.", "ngtv");
                     console.log("닉네임 중복체크 에러 발생:::", res.data);
                   })();
-              // const res = await fetch(
-              //   "https://jsonplaceholder.typicode.com/todos/1"
-              // );
-              // console.log(res);
             },
           }}
           onInputChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -163,6 +193,7 @@ const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
           backgroundColor="var(--color-point)"
           color="var(--color-white)"
           height="40px"
+          onClick={modBtnOnclick}
         />
       </ButtonWrapComponent>
     </SettingProfileWrap>
