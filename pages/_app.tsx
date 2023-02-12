@@ -29,6 +29,24 @@ import { DefaultSeo } from "next-seo";
 import Alert from "./components/atoms/Alert";
 import Context from "./components/organisms/Context";
 
+function Auth({ children }: any) {
+  const { data: session, status } = useSession();
+  // const isUser = !!session?.user;
+  const isUser = session?.user;
+  useEffect(() => {
+    if (status === "loading") return; // Do nothing while loading
+    if (!isUser) signIn(); // If not authenticated, force log in
+  }, [isUser, status]);
+
+  if (isUser) {
+    return children;
+  }
+
+  // Session is being fetched, or no user.
+  // If no user, useEffect() will redirect.
+  return <Loading />;
+}
+
 /* S: default SEO */
 // 각 페이지별로 custom SEO 만들기
 const DEFAULT_SEO = {
@@ -110,6 +128,7 @@ function MyApp({
           !config.url?.includes("/api/user/word/state") &&
           !config.url?.includes("/api/user/opt")
         ) {
+          console.log(axiosLoading);
           setAxiosLoading(true);
         }
         return config;
@@ -150,23 +169,6 @@ function MyApp({
     };
     // E : 라우터 로딩 세팅
   }, []);
-
-  function Auth({ children }: any) {
-    const { data: session, status } = useSession();
-    const isUser = !!session?.user;
-    useEffect(() => {
-      if (status === "loading") return; // Do nothing while loading
-      if (!isUser) signIn(); // If not authenticated, force log in
-    }, [isUser, status]);
-
-    if (isUser) {
-      return children;
-    }
-
-    // Session is being fetched, or no user.
-    // If no user, useEffect() will redirect.
-    return <Loading />;
-  }
 
   return (
     <SessionProvider session={pageProps.session}>

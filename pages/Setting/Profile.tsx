@@ -10,7 +10,7 @@ import { ReducerType } from "redux/rootReducer";
 import ButtonCompontent from "pages/components/atoms/Button";
 import ButtonWrapComponent from "pages/components/molecules/ButtonWrap";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { faRepeat } from "@fortawesome/free-solid-svg-icons";
 import Icon from "pages/components/atoms/Icon";
@@ -100,25 +100,28 @@ const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
             label: isNameValid ? "사용가능" : "중복체크",
             onClick: async () => {
               if (modUserName.length === 0) {
-                alert("닉네임을 입력하세요.");
+                newAlert("닉네임을 입력하세요.", "ngtv");
                 return;
               }
-              const res = await axios.post(
+              const res = await axios.get(
                 "http://localhost:3000" + "/api/cert/name/dup",
                 {
-                  userName: modUserName,
+                  params: { userName: modUserName },
                 }
               );
-              console.log(res);
               res.data.length === 0
                 ? (() => {
-                    alert("사용 가능한 닉네임 입니다.");
+                    newAlert("사용 가능한 닉네임 입니다.", "pstv");
                     setIsNameValid(true);
                   })()
                 : (() => {
-                    alert("이미 사용중인 닉네임 입니다.");
+                    newAlert("이미 사용중인 닉네임 입니다.", "ngtv");
                     console.log("닉네임 중복체크 에러 발생:::", res.data);
                   })();
+              // const res = await fetch(
+              //   "https://jsonplaceholder.typicode.com/todos/1"
+              // );
+              // console.log(res);
             },
           }}
           onInputChange={(e: React.ChangeEvent<HTMLInputElement>) => {
