@@ -128,7 +128,6 @@ function MyApp({
           !config.url?.includes("/api/user/word/state") &&
           !config.url?.includes("/api/user/opt")
         ) {
-          console.log(axiosLoading);
           setAxiosLoading(true);
         }
         return config;
