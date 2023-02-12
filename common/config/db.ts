@@ -25,4 +25,4 @@ const db = {
   }
 }
 
-module.exports = db; //db객체 반환
+module.exports = db;

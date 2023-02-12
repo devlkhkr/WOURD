@@ -20,6 +20,7 @@ export default async function getStatesCount(
   db.query(ReqFullQuery, function (err: any, result: any) {
     if (err) {
       console.log(err);
+      res.send(err)
     } else {
       res.send(result);
     }

@@ -30,7 +30,7 @@ export default async function getUserInfo(req: NextApiRequest, res: NextApiRespo
       req.body.email +
       "'",
     function (err: any, data: any) {
-      if (data) {
+      if (!err) {
         res.send({
           userInfo: {
             nickName: data[0].user_nickname,
@@ -50,6 +50,9 @@ export default async function getUserInfo(req: NextApiRequest, res: NextApiRespo
             },
           },
         });
+      }
+      else{
+        res.send(err)
       }
     }
   );
