@@ -3,6 +3,7 @@ import { useSession } from "next-auth/react";
 import React from "react";
 import styled from "styled-components";
 import Icon from "../atoms/Icon";
+import TypoComponent from "../atoms/Typo";
 import Typo from "../atoms/Typo";
 import styledInterface from "../Intefaces/styledComponent";
 
@@ -117,6 +118,14 @@ const WordEditWrapStyeld = styled.div`
   }
 `;
 
+const WordOwnerStyled = styled.span`
+  display: flex;
+  align-items: center;
+  img {
+    margin-left: 8px;
+  }
+`;
+
 const MyWordCardComponent: React.FC<MyWordCardTypes> = ({
   objMyWord,
   onCardClick,
@@ -170,7 +179,7 @@ const MyWordCardComponent: React.FC<MyWordCardTypes> = ({
         <Typo
           fontSize="12px"
           color="var(--color-grey)"
-          marginTop="12px"
+          marginTop="14px"
           textAlign="left"
         >
           {objMyWord.word_is_cs_flag ? <span>CS</span> : <></>}
@@ -192,7 +201,16 @@ const MyWordCardComponent: React.FC<MyWordCardTypes> = ({
               />
             </>
           ) : (
-            <img src={objMyWord.user_prf_img} />
+            <WordOwnerStyled>
+              <TypoComponent
+                color="var(--color-grey)"
+                fontSize="10px"
+                marginTop="4px"
+              >
+                {objMyWord.user_nickname}
+              </TypoComponent>
+              <img src={objMyWord.user_prf_img} />
+            </WordOwnerStyled>
           )}
         </WordEditWrapStyeld>
       </MyWordCateListStyled>
