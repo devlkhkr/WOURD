@@ -10,11 +10,16 @@ import { ReducerType } from "redux/rootReducer";
 import ButtonCompontent from "pages/components/atoms/Button";
 import ButtonWrapComponent from "pages/components/molecules/ButtonWrap";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { faRepeat } from "@fortawesome/free-solid-svg-icons";
 import Icon from "pages/components/atoms/Icon";
 import uuid from "uuid4";
+import UsageComponent from "pages/components/molecules/Usage";
+import { regexUserName } from "pages/components/templates/Join";
+import { newAlert } from "pages/components/atoms/Alert";
+import axios from "axios";
+import { reloadSession } from "pages/components/atoms/Session";
 
 interface SettingProfileTypes extends styledInterface {}
 
@@ -34,19 +39,55 @@ const SettingProfileUser = styled.div`
   margin-bottom: 16px;
 `;
 
-const ProfileListWrap = styled.div``;
+const ProfileListWrap = styled.div`
+  margin-bottom: 24px;
+`;
 
 const ChangeImgButtons = styled.div``;
 
 const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
   const { data: session, status } = useSession();
 
-  const [wordActivity, setWordActivity] = useState(false);
+  const [isNameValid, setIsNameValid] = useState(false);
+  const [modUserName, setModUserName] = useState(session?.user.name!);
   const [userImg, setUserImg] = useState(session?.user.image!);
 
   const router = useRouter();
   const cancelBtnClick = () => {
     router.back();
+  };
+
+  const sendModForm = async () => {
+    const res = await axios.post("http://localhost:3000" + "/api/user/mod", {
+      modUserData: {
+        name: modUserName,
+        prfImg: userImg,
+      },
+    });
+
+    res.data.affectedRows === 1
+      ? (() => {
+          router.back();
+          newAlert("프로필 수정완료", "pstv");
+          reloadSession();
+        })()
+      : (() => {
+          console.log("프로필 수정 중 에러 발생:::", res.data);
+        })();
+  };
+  const modBtnOnclick = () => {
+    console.log("변경된 이미지: ", userImg);
+    console.log("변경된 이름: ", modUserName);
+    console.log("변경된 이름 중복체크 유효성: ", isNameValid);
+
+    console.log("-----------------------------");
+    if (!modUserName) {
+      alert("닉네임을 입력해주세요.");
+    } else if (!isNameValid) {
+      alert("닉네임 중복체크를 완료해주세요.");
+    } else {
+      sendModForm();
+    }
   };
 
   return (
@@ -86,10 +127,64 @@ const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
         />
         <ProfileListComponent
           typo="닉네임"
-          userInfo={`${session?.user.name}`}
+          userInfo={modUserName}
+          maxLength={5}
+          readonly={isNameValid}
+          buttonInfo={{
+            label: isNameValid ? "사용가능" : "중복체크",
+            onClick: async () => {
+              if (modUserName.length === 0) {
+                newAlert("닉네임을 입력하세요.", "ngtv");
+                return;
+              }
+              const res = await axios.get(
+                "http://localhost:3000" + "/api/cert/name/dup",
+                {
+                  params: { userName: modUserName },
+                }
+              );
+              res.data.length === 0
+                ? (() => {
+                    newAlert("사용 가능한 닉네임 입니다.", "pstv");
+                    setIsNameValid(true);
+                  })()
+                : (() => {
+                    newAlert("이미 사용중인 닉네임 입니다.", "ngtv");
+                    console.log("닉네임 중복체크 에러 발생:::", res.data);
+                  })();
+            },
+          }}
+          onInputChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            e.currentTarget.value.length > 0 &&
+            regexUserName.test(e.currentTarget.value)
+              ? (() => {
+                  e.currentTarget.value = e.currentTarget.value.replace(
+                    regexUserName,
+                    ""
+                  );
+                  newAlert(
+                    "한글, 영 대소문자, 숫자만 입력 가능합니다.",
+                    "ngtv"
+                  );
+                })()
+              : (() => {
+                  e.currentTarget.value.length > 5
+                    ? newAlert("최대 5글자까지 입력 가능합니다.", "ngtv")
+                    : void 0;
+                  setModUserName(e.currentTarget.value);
+                })();
+          }}
         />
         {/* <ProfileListComponent typo="소개글" /> */}
       </ProfileListWrap>
+
+      <UsageComponent
+        usageList={[
+          "랜덤 아바타 버튼을 눌러서 무작위 캐릭터 이미지를 생성합니다.",
+          "정보 변경 후 수정 버튼을 눌러 저장 완료합니다.",
+          "저장되지 않은 변경정보는 모두 사라집니다.",
+        ]}
+      />
 
       <ButtonWrapComponent>
         <ButtonCompontent desc="취소" height="40px" onClick={cancelBtnClick} />
@@ -98,6 +193,7 @@ const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
           backgroundColor="var(--color-point)"
           color="var(--color-white)"
           height="40px"
+          onClick={modBtnOnclick}
         />
       </ButtonWrapComponent>
     </SettingProfileWrap>

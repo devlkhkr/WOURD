@@ -7,7 +7,7 @@ export default function setCardState(
   res: NextApiResponse
 ) {
   db.query(
-    `SELECT * FROM USER_TB WHERE user_id='${req.body.joinUserData.email}'`,
+    `SELECT user_id FROM USER_TB WHERE user_id='${req.body.joinUserData.email}'`,
     function (err: any, data: any) {
       if (!err) {
         res.send(data);

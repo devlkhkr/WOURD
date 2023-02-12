@@ -9,6 +9,7 @@ import Notice from "../organisms/Notice";
 import SystemSpec from "../organisms/SystemSpec";
 import { selectModal, openModal, closeModal } from "redux/slices/modal";
 import TypoComponent from "../atoms/Typo";
+import Donation from "../organisms/Donation";
 
 interface ModalTypes {
   title?: string;
@@ -25,6 +26,8 @@ const modalStringList = {
   DevLogModal: "DevLogModal",
   // 시스템스펙
   SystemSpecModal: "SystemSpecModal",
+  // 도네이션
+  DonationModal: "DonationModal",
 };
 
 const modalComponentList: Array<ModalTypes> = [
@@ -47,6 +50,11 @@ const modalComponentList: Array<ModalTypes> = [
     title: "시스템스펙",
     type: modalStringList.SystemSpecModal,
     component: <SystemSpec />,
+  },
+  {
+    title: "도네이션",
+    type: modalStringList.DonationModal,
+    component: <Donation />,
   },
 ];
 
