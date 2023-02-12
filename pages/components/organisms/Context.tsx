@@ -12,6 +12,7 @@ import {
   clearContext,
 } from "redux/slices/context";
 import Typo from "../atoms/Typo";
+import Mask from "../atoms/Mask";
 
 interface ContextPosTypes {
   ref: any;
@@ -24,17 +25,6 @@ interface ContextPosTypes {
 interface ContextListTypes {
   color: string;
 }
-
-const ContextMaskStyled = styled.div`
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 19998;
-  background-color: rgba(0, 0, 0, 0.05);
-`;
-
 const ContextWrapStyled = styled.div<ContextPosTypes>`
   position: fixed;
   left: ${(props) => props.position.x}px;
@@ -112,7 +102,7 @@ const ContextComponent: React.FC = ({}) => {
 
   return (
     <ContextActiveStyled active={context.isOpen}>
-      <ContextMaskStyled
+      <Mask
         onClick={() => {
           store.dispatch(clearContext({}));
         }}
