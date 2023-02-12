@@ -444,6 +444,7 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
     <>
       {wordFilterOpened ? (
         <Mask
+          trnsp={true}
           onClick={() => {
             setWordFilterOpened(!wordFilterOpened);
           }}
