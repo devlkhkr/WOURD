@@ -28,12 +28,10 @@ const AccordionWrapsetStyled = styled.div<AccordionTypes>`
 const AccordionComponent: React.FC<AccordionTypes> = ({
   isOpened,
   children,
+  childrenLength,
 }) => {
   return (
-    <AccordionWrapsetStyled
-      isOpened={isOpened}
-      childrenLength={children?.length}
-    >
+    <AccordionWrapsetStyled isOpened={isOpened} childrenLength={childrenLength}>
       {children}
     </AccordionWrapsetStyled>
   );

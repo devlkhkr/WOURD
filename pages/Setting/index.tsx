@@ -332,7 +332,10 @@ const Setting: NextPage<{ statesCount: sttCntObjTypes }> = ({
                 }}
               />
 
-              <Accordion isOpened={objAcrd.toggleFlag}>
+              <Accordion
+                isOpened={objAcrd.toggleFlag}
+                childrenLength={objAcrd.acrdList.data.length}
+              >
                 {objAcrd.acrdList.data.map((list, index) => (
                   <ToggleCheckComponent
                     key={index}
