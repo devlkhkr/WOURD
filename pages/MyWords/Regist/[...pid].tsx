@@ -53,7 +53,7 @@ const ModifyWord: NextPage<ModifyWordTypes> = ({
   /* FIXME 배포 시 undefined 가능성 오류로 임시 주석처리 */
   useEffect(() => {
     if (session) {
-      wordData[0].word_reg_userid != session.user.email!
+      wordData[0].word_reg_userid != session?.user?.email!
         ? (() => {
             router.back();
             newAlert("권한이 없습니다.", "ngtv");
