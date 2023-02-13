@@ -96,7 +96,7 @@ const ModifyWord: NextPage<ModifyWordTypes> = ({
     } else {
       // S : 단어 Insert 로직
       const wordRegistData = {
-        userId: session ? session.user.email : "",
+        userId: session ? session?.user?.email! : "",
         wordId: wordData[0].word_id,
         wordTit: wordTit.replaceAll("'", "''"),
         wordIntlFlag: wordIntlFlag.current.getValue(),
