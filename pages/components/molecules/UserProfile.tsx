@@ -41,7 +41,7 @@ const UserProfileComponent: React.FC<UserProfileTypes> = ({}) => {
 
   const getLastLoginPeriod = () => {
     if (session) {
-      let stDate = new Date(session.user.lastLogin!);
+      let stDate = new Date(session?.user?.lastLogin!);
       let endDate = new Date();
       let btMs = endDate.getTime() - stDate.getTime();
       let btDay = classifyTimestamp(btMs);
@@ -96,7 +96,7 @@ const UserProfileComponent: React.FC<UserProfileTypes> = ({}) => {
         // ui에 주사위 / 새로고침 누를때마다 state 변경. 변경되는값은
         // dropdown 이 scr의 personas
         // /뒤에 들어가는애가 uuid로 생성된값.svg
-        src={session ? session.user.image! : ""}
+        src={session ? session?.user?.image! : ""}
         objectFit="cover"
         width="64px"
         height="64px"
@@ -104,7 +104,7 @@ const UserProfileComponent: React.FC<UserProfileTypes> = ({}) => {
       />
       <UserInfoStyled>
         <TypoComponent fontSize="16px" fontWeight="semi-bold" textAlign="left">
-          {session ? session.user.name : ""}
+          {session ? session?.user?.name! : ""}
         </TypoComponent>
         <TypoComponent
           fontSize="14px"
@@ -113,7 +113,7 @@ const UserProfileComponent: React.FC<UserProfileTypes> = ({}) => {
           color="var(--color-point)"
           marginTop="4px"
         >
-          {session ? session.user.email : ""}
+          {session ? session?.user?.email! : ""}
         </TypoComponent>
         <TypoComponent
           fontSize="12px"

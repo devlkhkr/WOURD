@@ -50,9 +50,9 @@ const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
 
   const [isNameValid, setIsNameValid] = useState(false);
   const [modUserName, setModUserName] = useState(
-    session ? session.user.name! : ""
+    session ? session?.user?.name! : ""
   );
-  const [userImg, setUserImg] = useState(session ? session.user.image! : "");
+  const [userImg, setUserImg] = useState(session ? session?.user?.image! : "");
 
   const router = useRouter();
   const cancelBtnClick = () => {
@@ -91,7 +91,7 @@ const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
       if (!modUserName) {
         alert("닉네임을 입력해주세요.");
       } else if (!isNameValid) {
-        if (modUserName === session?.user.name) {
+        if (modUserName === session?.user?.name!) {
           sendModForm();
         } else {
           alert("닉네임 중복체크를 완료해주세요.");
@@ -135,7 +135,7 @@ const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
       <ProfileListWrap>
         <ProfileListComponent
           typo="이메일"
-          userInfo={`${session ? session.user.email : ""}`}
+          userInfo={`${session ? session?.user?.email! : ""}`}
           readonly={true}
           isEmail={true}
         />
