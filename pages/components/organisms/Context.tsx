@@ -75,7 +75,13 @@ export function newContext(context: ContextDataTypes) {
 const ContextComponent: React.FC = ({}) => {
   const [context, setContext] = useState<ContextDataTypes>({
     title: "",
-    contextList: [],
+    contextList: [
+      {
+        contextTit: "",
+        color: "",
+        onClick: () => {},
+      },
+    ],
     isOpen: false,
     position: {
       x: 0,
