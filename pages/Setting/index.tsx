@@ -203,29 +203,29 @@ const Setting: NextPage<{ statesCount: sttCntObjTypes }> = ({
           {
             label: "아는단어",
             column: "user_main_k_flag",
-            checked: session?.user?.mainWordExpOpts
-              ? session.user.mainWordExpOpts.stateFlags?.user_main_k_flag!
+            checked: session
+              ? session.user.mainWordExpOpts?.stateFlags.user_main_k_flag!
               : false,
           },
           {
             label: "모르는단어",
             column: "user_main_d_flag",
-            checked: session?.user?.mainWordExpOpts
-              ? session.user.mainWordExpOpts.stateFlags?.user_main_d_flag!
+            checked: session
+              ? session.user.mainWordExpOpts?.stateFlags.user_main_d_flag!
               : false,
           },
           {
             label: "즐겨찾은단어",
             column: "user_main_f_flag",
-            checked: session?.user?.mainWordExpOpts
-              ? session.user.mainWordExpOpts.stateFlags?.user_main_f_flag!
+            checked: session
+              ? session.user.mainWordExpOpts?.stateFlags.user_main_f_flag!
               : false,
           },
           {
             label: "건너뛴단어",
             column: "user_main_s_flag",
-            checked: session?.user?.mainWordExpOpts
-              ? session.user.mainWordExpOpts.stateFlags?.user_main_s_flag!
+            checked: session
+              ? session.user.mainWordExpOpts?.stateFlags.user_main_s_flag!
               : false,
           },
         ],
@@ -246,21 +246,21 @@ const Setting: NextPage<{ statesCount: sttCntObjTypes }> = ({
             label: "CS",
             column: "user_main_cs_flag",
             checked: session
-              ? session?.user?.mainWordExpOpts?.cateFlags.user_main_cs_flag!
+              ? session.user.mainWordExpOpts?.cateFlags.user_main_cs_flag!
               : false,
           },
           {
             label: "Web",
             column: "user_main_web_flag",
             checked: session
-              ? session?.user?.mainWordExpOpts?.cateFlags.user_main_web_flag!
+              ? session.user.mainWordExpOpts?.cateFlags.user_main_web_flag!
               : false,
           },
           {
             label: "Native",
             column: "user_main_ntv_flag",
             checked: session
-              ? session?.user?.mainWordExpOpts?.cateFlags.user_main_ntv_flag!
+              ? session.user.mainWordExpOpts?.cateFlags.user_main_ntv_flag!
               : false,
           },
         ],
