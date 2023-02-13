@@ -90,9 +90,12 @@ export const authOptions = {
       return token;
     },
     async session({ session, token }: any) {
-      const res = await axios.post("http://localhost:3000" + "/api/user/info", {
-        email: session.user.email,
-      });
+      const res = await axios.post(
+        process.env.NEXT_PUBLIC_ORIGIN + "/api/user/info",
+        {
+          email: session.user.email,
+        }
+      );
       session.user.image = res.data.userInfo.prfImg;
       session.user.name = res.data.userInfo.nickName;
       session.user.mainWordExpOpts = res.data.userInfo.mainWordExpOpts;
@@ -107,7 +110,7 @@ export const authOptions = {
 
 const insertLoginData = async (userId: string) => {
   const res = await axios.post(
-    "http://localhost:3000" + "/api/user/log/history",
+    process.env.NEXT_PUBLIC_ORIGIN + "/api/user/log/history",
     {
       loginUserData: {
         logUserId: userId,
@@ -123,12 +126,15 @@ const startAuthorize = async (
   userId: string | undefined,
   hashedPw: string | boolean
 ) => {
-  const res = await axios.post("http://localhost:3000" + "/api/user/log/in", {
-    loginUserData: {
-      id: userId,
-      pw: hashedPw,
-    },
-  });
+  const res = await axios.post(
+    process.env.NEXT_PUBLIC_ORIGIN + "/api/user/log/in",
+    {
+      loginUserData: {
+        id: userId,
+        pw: hashedPw,
+      },
+    }
+  );
   if (res.data.loginFlag === true) {
     console.log("Login Successfully");
     insertLoginData(res.data.userInfo.id);

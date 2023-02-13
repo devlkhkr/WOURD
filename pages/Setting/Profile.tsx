@@ -58,12 +58,15 @@ const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
   };
 
   const sendModForm = async () => {
-    const res = await axios.post("http://localhost:3000" + "/api/user/mod", {
-      modUserData: {
-        name: modUserName,
-        prfImg: userImg,
-      },
-    });
+    const res = await axios.post(
+      process.env.NEXT_PUBLIC_ORIGIN + "/api/user/mod",
+      {
+        modUserData: {
+          name: modUserName,
+          prfImg: userImg,
+        },
+      }
+    );
 
     res.data.affectedRows === 1
       ? (() => {
@@ -142,7 +145,7 @@ const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
                 return;
               }
               const res = await axios.get(
-                "http://localhost:3000" + "/api/cert/name/dup",
+                process.env.NEXT_PUBLIC_ORIGIN + "/api/cert/name/dup",
                 {
                   params: { userName: modUserName },
                 }

@@ -66,7 +66,9 @@ const SystemSpec: React.FC = () => {
   };
 
   const getApi = async () => {
-    const res = await axios.get("http://localhost:3000" + "/api/word/list");
+    const res = await axios.get(
+      process.env.NEXT_PUBLIC_ORIGIN + "/api/word/list"
+    );
     console.log(res);
   };
 
@@ -84,7 +86,7 @@ const SystemSpec: React.FC = () => {
           Developers
         </TypoComponent>
         <StackWrap>
-          {devs.map(dev => (
+          {devs.map((dev) => (
             <SystemDevsComponent
               key={dev.id}
               pos={dev.pos}
@@ -381,7 +383,7 @@ const SystemSpec: React.FC = () => {
             docs="https://aws.amazon.com/ko/ec2/?trk=68913a17-4967-41f6-a766-0f2eb338dd04&sc_channel=ps&s_kwcid=AL!4422!3!588924203178!p!!g!!ec2&ef_id=CjwKCAiAoL6eBhA3EiwAXDom5q4Z-nFYnywcaXRQysXbQt_VbfQKfIK0vaXJN1Mf3hCce6DdAPG-6hoCpxQQAvD_BwE:G:s&s_kwcid=AL!4422!3!588924203178!p!!g!!ec2"
             desc="Amazon Elastic Compute Cloud (Amazon EC2) provides scalable computing capacity in the Amazon Web Services (AWS) Cloud."
           />
-        <StackComponent
+          <StackComponent
             name="Vercel"
             src="spec-vercel.png"
             by="Vercel"

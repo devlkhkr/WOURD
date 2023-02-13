@@ -24,7 +24,7 @@ const Home: NextPage = ({ dataWordList }: any) => {
 };
 
 export const getServerSideProps = async (context: any) => {
-  const res = await fetch("http://localhost:3000" + "/api/word/list", {
+  const res = await fetch(process.env.NEXT_PUBLIC_ORIGIN + "/api/word/list", {
     headers: {
       cookie: context.req.headers.cookie || "",
     },

@@ -13,12 +13,11 @@ import Hash from "../components/atoms/Hash";
 
 import { useDispatch } from "react-redux";
 import { NextPage } from "next";
-import { NextSeo } from 'next-seo';
+import { NextSeo } from "next-seo";
 
 import { store } from "redux/store";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-
 
 interface LoginTypes {
   isAuth?: boolean;
@@ -111,7 +110,7 @@ const LoginComponent: NextPage<LoginTypes> = ({ isAuth }) => {
 
   const insertLoginData = async (userId: string) => {
     const res = await axios.post(
-      "http://localhost:3000" + "/api/user/log/history",
+      process.env.NEXT_PUBLIC_ORIGIN + "/api/user/log/history",
       {
         loginUserData: {
           logUserId: userId,
@@ -130,15 +129,15 @@ const LoginComponent: NextPage<LoginTypes> = ({ isAuth }) => {
   return (
     <>
       <NextSeo
-				title="Copublish Login"
-				description=""
-				openGraph={{
-					type: 'website',
-					url: '',
-					title: 'Copub login page',
-					description: '',
-				}}
-			/>
+        title="Copublish Login"
+        description=""
+        openGraph={{
+          type: "website",
+          url: "",
+          title: "Copub login page",
+          description: "",
+        }}
+      />
 
       {joinPageOpened ? (
         <Join

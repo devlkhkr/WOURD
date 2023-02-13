@@ -103,7 +103,7 @@ const ModifyWord: NextPage<ModifyWordTypes> = ({
         wordCtgr: wordCtgr.current.getValue(),
       };
       const resReg = await axios.post(
-        "http://localhost:3000" + "/api/word/mod",
+        process.env.NEXT_PUBLIC_ORIGIN + "/api/word/mod",
         {
           wordRegistData: wordRegistData,
         }
@@ -254,12 +254,15 @@ const ModifyWord: NextPage<ModifyWordTypes> = ({
 
 export const getServerSideProps = async (context: any) => {
   let wordId = context.query.pid[0];
-  const res = await axios.get("http://localhost:3000" + "/api/myword/info", {
-    headers: { "Content-type": "application/json" },
-    params: {
-      wordId: wordId,
-    },
-  });
+  const res = await axios.get(
+    process.env.NEXT_PUBLIC_ORIGIN + "/api/myword/info",
+    {
+      headers: { "Content-type": "application/json" },
+      params: {
+        wordId: wordId,
+      },
+    }
+  );
   console.log(res.data);
   return {
     props: {

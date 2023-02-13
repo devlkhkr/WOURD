@@ -35,9 +35,12 @@ const Hash: HashTypes = {
     });
   },
   makePasswordHashed: async (loginUserId: string, plainPassword: string) => {
-    const res = await axios.post("http://localhost:3000" + "/api/user/salt", {
-      loginUserId: loginUserId,
-    });
+    const res = await axios.post(
+      process.env.NEXT_PUBLIC_ORIGIN + "/api/user/salt",
+      {
+        loginUserId: loginUserId,
+      }
+    );
     if (res.data.dupLeng <= 0) {
       alert("존재하지 않는 아이디 입니다.");
       return null;

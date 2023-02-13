@@ -354,13 +354,13 @@ const Setting: NextPage<{ statesCount: sttCntObjTypes }> = ({
                           })()
                         : (() => {
                             const res = axios.post(
-                              "http://localhost:3000" + "/api/user/opt",
+                              process.env.NEXT_PUBLIC_ORIGIN + "/api/user/opt",
                               {
                                 column: list.column,
                                 value: e.target.checked ? 1 : 0,
                               }
                             );
-                            res.then(result => {
+                            res.then((result) => {
                               result.status === 200
                                 ? (() => {
                                     newAlert(
@@ -429,11 +429,14 @@ const Setting: NextPage<{ statesCount: sttCntObjTypes }> = ({
 };
 
 export const getServerSideProps = async (context: any) => {
-  const res = await fetch("http://localhost:3000" + "/api/myword/count", {
-    headers: {
-      cookie: context.req.headers.cookie || "",
-    },
-  });
+  const res = await fetch(
+    process.env.NEXT_PUBLIC_ORIGIN + "/api/myword/count",
+    {
+      headers: {
+        cookie: context.req.headers.cookie || "",
+      },
+    }
+  );
   const data: sttCntTypes[] = await res.json();
   let sttCntObj: sttCntObjTypes = {
     k: 0,

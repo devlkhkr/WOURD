@@ -131,7 +131,7 @@ const JoinComponent: React.FC<JoinTypes> = ({
 
   const emailDupCheck = async () => {
     const res = await axios.post(
-      "http://localhost:3000" + "/api/cert/mail/dup",
+      process.env.NEXT_PUBLIC_ORIGIN + "/api/cert/mail/dup",
       {
         joinUserData: {
           email: joinUserId,
@@ -162,7 +162,7 @@ const JoinComponent: React.FC<JoinTypes> = ({
 
   const sendAuthCheckMail = async () => {
     const res = await axios.post(
-      "http://localhost:3000" + "/api/cert/mail/send",
+      process.env.NEXT_PUBLIC_ORIGIN + "/api/cert/mail/send",
       {
         joinUserData: {
           email: joinUserId,
@@ -244,7 +244,7 @@ const JoinComponent: React.FC<JoinTypes> = ({
       return;
     }
     const res = await axios.post(
-      "http://localhost:3000" + "/api/cert/name/dup",
+      process.env.NEXT_PUBLIC_ORIGIN + "/api/cert/name/dup",
       {
         userName: joinUserName,
       }
@@ -294,15 +294,18 @@ const JoinComponent: React.FC<JoinTypes> = ({
   };
 
   const sendJoinForm = async (hashedPw: string, salt: string) => {
-    const res = await axios.post("http://localhost:3000" + "/api/user/reg", {
-      joinUserData: {
-        email: joinUserId,
-        pw: hashedPw,
-        name: joinUserName,
-        salt: salt,
-        prfImg: joinUserImg,
-      },
-    });
+    const res = await axios.post(
+      process.env.NEXT_PUBLIC_ORIGIN + "/api/user/reg",
+      {
+        joinUserData: {
+          email: joinUserId,
+          pw: hashedPw,
+          name: joinUserName,
+          salt: salt,
+          prfImg: joinUserImg,
+        },
+      }
+    );
 
     res.data.affectedRows === 1
       ? (() => {

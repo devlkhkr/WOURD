@@ -77,7 +77,7 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
         wordState: onAfterRegState.current.value,
       };
       const resReg = await axios.post(
-        "http://localhost:3000" + "/api/word/reg",
+        process.env.NEXT_PUBLIC_ORIGIN + "/api/word/reg",
         {
           wordRegistData: wordRegistData,
         }
@@ -87,7 +87,7 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
         if (wordRegistData.wordState != "unset") {
           (async () => {
             const resState = await axios.post(
-              "http://localhost:3000" + "/api/user/word/state",
+              process.env.NEXT_PUBLIC_ORIGIN + "/api/user/word/state",
               {
                 wordInfo: {
                   userId: wordRegistData.userId,

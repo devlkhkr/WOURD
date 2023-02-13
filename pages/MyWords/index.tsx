@@ -269,7 +269,7 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
             )
               ? (async () => {
                   const res = await fetch(
-                    "http://localhost:3000" + "/api/word/del",
+                    process.env.NEXT_PUBLIC_ORIGIN + "/api/word/del",
                     {
                       method: "POST",
                       body: JSON.stringify({
@@ -614,7 +614,7 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
 };
 
 export async function getServerSideProps(context: any) {
-  const res = await fetch("http://localhost:3000" + "/api/myword/list", {
+  const res = await fetch(process.env.NEXT_PUBLIC_ORIGIN + "/api/myword/list", {
     headers: {
       cookie: context.req.headers.cookie || "",
     },
