@@ -51,12 +51,14 @@ const ModifyWord: NextPage<ModifyWordTypes> = ({
   const wordCtgr: any = useRef();
 
   useEffect(() => {
-    wordData[0].word_reg_userid != session?.user.email
-      ? (() => {
-          router.back();
-          newAlert("권한이 없습니다.", "ngtv");
-        })()
-      : void 0;
+    if (session) {
+      wordData[0].word_reg_userid != session.user.email
+        ? (() => {
+            router.back();
+            newAlert("권한이 없습니다.", "ngtv");
+          })()
+        : void 0;
+    }
   }, [wordData]);
 
   const intlYNOnclick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -93,7 +95,7 @@ const ModifyWord: NextPage<ModifyWordTypes> = ({
     } else {
       // S : 단어 Insert 로직
       const wordRegistData = {
-        userId: session?.user.email,
+        userId: session ? session.user.email : "",
         wordId: wordData[0].word_id,
         wordTit: wordTit.replaceAll("'", "''"),
         wordIntlFlag: wordIntlFlag.current.getValue(),

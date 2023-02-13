@@ -49,8 +49,10 @@ const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
   const { data: session, status } = useSession();
 
   const [isNameValid, setIsNameValid] = useState(false);
-  const [modUserName, setModUserName] = useState(session?.user.name!);
-  const [userImg, setUserImg] = useState(session?.user.image!);
+  const [modUserName, setModUserName] = useState(
+    session ? session.user.name! : ""
+  );
+  const [userImg, setUserImg] = useState(session ? session.user.image! : "");
 
   const router = useRouter();
   const cancelBtnClick = () => {
@@ -84,16 +86,21 @@ const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
     console.log("변경된 이름 중복체크 유효성: ", isNameValid);
 
     console.log("-----------------------------");
-    if (!modUserName) {
-      alert("닉네임을 입력해주세요.");
-    } else if (!isNameValid) {
-      if (modUserName === session?.user.name) {
-        sendModForm();
+
+    if (session) {
+      if (!modUserName) {
+        alert("닉네임을 입력해주세요.");
+      } else if (!isNameValid) {
+        if (modUserName === session?.user.name) {
+          sendModForm();
+        } else {
+          alert("닉네임 중복체크를 완료해주세요.");
+        }
       } else {
-        alert("닉네임 중복체크를 완료해주세요.");
+        sendModForm();
       }
     } else {
-      sendModForm();
+      alert("세션만료");
     }
   };
 
@@ -128,7 +135,7 @@ const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
       <ProfileListWrap>
         <ProfileListComponent
           typo="이메일"
-          userInfo={`${session?.user.email}`}
+          userInfo={`${session ? session.user.email : ""}`}
           readonly={true}
           isEmail={true}
         />

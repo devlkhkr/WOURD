@@ -32,7 +32,7 @@ import Context from "./components/organisms/Context";
 function Auth({ children }: any) {
   const { data: session, status } = useSession();
   // const isUser = !!session?.user;
-  const isUser = session?.user;
+  const isUser = session ? session.user : null;
   useEffect(() => {
     if (status === "loading") return; // Do nothing while loading
     if (!isUser) signIn(); // If not authenticated, force log in
