@@ -40,5 +40,4 @@
 | perf     | 성능 개선                                              |
 | chore    | 빌드 업무 수정, 패키지 매니저 수정 (gitignore 수정 등) |
 | docs     | 문서 수정 ex) README.md                                |
-| chore    | 빌드 업무 수정, 패키지 매니저 수정                     |
 | remove   | 파일을 삭제만 한 경우                                  |
