@@ -84,7 +84,10 @@ const UserProfileComponent: React.FC<UserProfileTypes> = ({}) => {
       let btMs = endDate.getTime() - stDate.getTime();
       // let btDay = classifyTimestamp(btMs);
       // return btDay;
-      return `${stDate.getFullYear()}/${stDate.getMonth()}/${stDate.getDate()}`;
+      let year = stDate.getFullYear();
+      let month = stDate.getMonth() + 1;
+      let date = stDate.getDate();
+      return `${year}/${10 - (month + 1) >= 0 ? "0" + month : month}/${date}`;
     } else {
       return false;
     }
