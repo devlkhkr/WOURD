@@ -84,7 +84,7 @@ const UserProfileComponent: React.FC<UserProfileTypes> = ({}) => {
       let btMs = endDate.getTime() - stDate.getTime();
       // let btDay = classifyTimestamp(btMs);
       // return btDay;
-      return `${((btMs / (1000 * 60)) % 60).toFixed(0)}분 전`;
+      return `${stDate.getFullYear()}/${stDate.getMonth()}/${stDate.getDate()}`;
     } else {
       return false;
     }

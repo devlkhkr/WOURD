@@ -85,7 +85,7 @@ const SliderAvataTypes = styled.ul`
     background-color: #f3f3f3;
     overflow: hidden;
     &.on {
-      outline: 2px solid var(--color-point);
+      box-shadow: 0 0 0 2px var(--color-point);
       img {
         opacity: 0.5;
       }
