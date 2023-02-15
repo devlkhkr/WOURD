@@ -39,18 +39,6 @@ const UserInfoStyled = styled.div<UserProfileTypes>`
 const UserProfileComponent: React.FC<UserProfileTypes> = ({}) => {
   const { data: session, status } = useSession();
 
-  const getLastLoginPeriod = () => {
-    if (session) {
-      let stDate = new Date(session?.user?.lastLogin!);
-      let endDate = new Date();
-      let btMs = endDate.getTime() - stDate.getTime();
-      let btDay = classifyTimestamp(btMs);
-      return btDay;
-    } else {
-      return false;
-    }
-  };
-
   const getPeriodType = (microSec: number) => {
     const timeDiv: number[] = [1000, 60, 60, 24];
     let result: string = "";
@@ -86,9 +74,21 @@ const UserProfileComponent: React.FC<UserProfileTypes> = ({}) => {
         periodSuffix = "일";
         break;
     }
-
     return `${lastLoginPeriod.result + periodSuffix} 전`;
   };
+
+  const getLastLoginPeriod = () => {
+    if (session) {
+      let stDate = new Date(session?.user?.lastLogin!);
+      let endDate = new Date();
+      let btMs = endDate.getTime() - stDate.getTime();
+      let btDay = classifyTimestamp(btMs);
+      return btDay;
+    } else {
+      return false;
+    }
+  };
+
   return (
     <UserProfileStyled>
       <ImgComponent

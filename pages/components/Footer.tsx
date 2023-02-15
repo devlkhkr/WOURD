@@ -57,8 +57,8 @@ const Footer: React.FC = () => {
   return (
     <FooterWrap>
       <ul>
-        <li className={router.pathname.includes("/MyWords") ? "active" : ""}>
-          <Link href="/MyWords">
+        <Link href="/MyWords">
+          <li className={router.pathname.includes("/MyWords") ? "active" : ""}>
             <a>
               <Icon
                 iconShape={faFolder}
@@ -69,10 +69,10 @@ const Footer: React.FC = () => {
               />
               <IconText text="단어장" />
             </a>
-          </Link>
-        </li>
-        <li className={router.pathname == "/" ? "active" : ""}>
-          <Link href="/">
+          </li>
+        </Link>
+        <Link href="/">
+          <li className={router.pathname == "/" ? "active" : ""}>
             <a>
               <Icon
                 iconShape={faHouse}
@@ -83,10 +83,10 @@ const Footer: React.FC = () => {
               />
               <IconText text="홈" />
             </a>
-          </Link>
-        </li>
-        <li className={router.pathname.includes("/Setting") ? "active" : ""}>
-          <Link href="/Setting">
+          </li>
+        </Link>
+        <Link href="/Setting">
+          <li className={router.pathname.includes("/Setting") ? "active" : ""}>
             <a>
               <Icon
                 iconShape={faGear}
@@ -97,8 +97,8 @@ const Footer: React.FC = () => {
               />
               <IconText text="설정" />
             </a>
-          </Link>
-        </li>
+          </li>
+        </Link>
       </ul>
     </FooterWrap>
   );
