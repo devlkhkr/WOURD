@@ -13,6 +13,8 @@ const SelectStyled = styled.select<SelectTypes>`
   height: 40px;
   border: 1px solid var(--color-lightgrey);
   background-color: #fff;
+  font-size: 14px;
+  color: var(--color-black);
   padding: 0 8px;
 `;
 

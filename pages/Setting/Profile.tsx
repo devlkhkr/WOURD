@@ -361,6 +361,7 @@ const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
           <ButtonCompontent
             desc="취소"
             height="40px"
+            color="var(--color-black)"
             onClick={cancelBtnClick}
           />
           <ButtonCompontent

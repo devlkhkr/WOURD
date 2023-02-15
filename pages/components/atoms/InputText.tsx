@@ -14,6 +14,7 @@ const Input = styled.input`
   border-color: #e3e3e3;
   background-color: transparent;
   padding: 0 8px;
+  font-size: 14px;
   border-radius: 0;
   position: relative;
   outline: none;

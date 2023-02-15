@@ -12,7 +12,7 @@ const TextAreaStyled = styled.textarea<TextAreaTypes>`
   height: ${(props) => props.height};
   /* border: 1px solid var(--color-lightgrey); */
   border: 0;
-  /* background-color: #f1f4fc; */
+  font-size: 14px;
   background-color: #f4f7ff;
   padding: 12px;
   resize: none;
