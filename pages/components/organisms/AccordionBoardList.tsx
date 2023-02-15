@@ -8,10 +8,10 @@ import { acrdDataTypes, noticeListTypes } from "./Notice";
 
 const AccordionBoardListComponent = styled.li`
   padding: 16px 16px 16px 12px;
-  border-top: 1px solid #1388be70;
+  border-top: 1px dashed var(--color-lightgrey);
   position: relative;
   &:last-child {
-    border-bottom: 1px solid #1388be70;
+    border-bottom: 1px dashed var(--color-lightgrey);
   }
 `;
 

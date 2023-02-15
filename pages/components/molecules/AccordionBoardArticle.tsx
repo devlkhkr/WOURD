@@ -8,10 +8,11 @@ interface AccordionBoardArticleTypes {
 }
 
 const AccordionBoardArticleComponent = styled.div<AccordionBoardArticleTypes>`
-  transition: ${props => (props.isOpened ? "all 0.3s linear" : "all 0.15s linear")};
+  transition: ${(props) =>
+    props.isOpened ? "all 0.3s linear" : "all 0.15s linear"};
   max-height: 0;
   overflow: hidden;
-  max-height: ${props => (props.isOpened ? "60vw" : "0")};
+  max-height: ${(props) => (props.isOpened ? "60vw" : "0")};
 `;
 
 interface ArticleProps {
@@ -23,19 +24,18 @@ const NoticeArticle = styled.p<ArticleProps>`
   line-height: 1.2;
   color: inherit;
   text-align: left;
-  margin-top: 4px;
+  margin-top: 6px;
   margin-bottom: unset;
   text-overflow: ellipsis;
   overflow: hidden;
   word-break: break-word;
   display: -webkit-box;
-`
+`;
 
 const AccordionBoardArticle: React.FC<AccordionBoardArticleTypes> = ({
   article,
   isOpened,
 }) => {
-  console.log(article)
   return (
     <AccordionBoardArticleComponent isOpened={isOpened} article={article}>
       {/* <TypoComponent
@@ -46,7 +46,10 @@ const AccordionBoardArticle: React.FC<AccordionBoardArticleTypes> = ({
       >
         {article}
       </TypoComponent> */}
-      <NoticeArticle article={article} dangerouslySetInnerHTML={{__html: article}}></NoticeArticle>
+      <NoticeArticle
+        article={article}
+        dangerouslySetInnerHTML={{ __html: article }}
+      ></NoticeArticle>
     </AccordionBoardArticleComponent>
   );
 };
