@@ -82,8 +82,9 @@ const UserProfileComponent: React.FC<UserProfileTypes> = ({}) => {
       let stDate = new Date(session?.user?.lastLogin!);
       let endDate = new Date();
       let btMs = endDate.getTime() - stDate.getTime();
-      let btDay = classifyTimestamp(btMs);
-      return btDay;
+      // let btDay = classifyTimestamp(btMs);
+      // return btDay;
+      return `${((btMs / (1000 * 60)) % 60).toFixed(0)}분 전`;
     } else {
       return false;
     }
