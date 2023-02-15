@@ -51,7 +51,8 @@ function Auth({ children }: any) {
 // 각 페이지별로 custom SEO 만들기
 const DEFAULT_SEO = {
   title: "Wourd",
-  description: "You can register words by category to manage storage and status. The goal is to broaden the knowledge for everyone by the searching the words registered by others and sharing the words registered by the user.",
+  description:
+    "You can register words by category to manage storage and status. The goal is to broaden the knowledge for everyone by the searching the words registered by others and sharing the words registered by the user.",
   canonical: "https://www.carrotins.com",
   openGraph: {
     type: "website",
@@ -169,6 +170,10 @@ function MyApp({
       <Provider store={store}>
         <Head>
           <link rel="icon" href="/favicon.ico" />
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=0"
+          />
         </Head>
 
         {/* SEO */}
