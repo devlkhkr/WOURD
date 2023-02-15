@@ -27,6 +27,7 @@ const ImgComponent: React.FC<ImgTypes> = ({
   width,
   height,
   borderColor,
+  onClick,
 }) => {
   return (
     <ImgStyled
@@ -37,6 +38,7 @@ const ImgComponent: React.FC<ImgTypes> = ({
       objectFit={objectFit}
       marginBottom={marginBottom}
       borderColor={borderColor}
+      onClick={onClick}
     />
   );
 };

@@ -61,7 +61,6 @@ const ContextTitStyled = styled.div`
 `;
 
 export function newContext(context: ContextDataTypes) {
-  console.log(context);
   store.dispatch(
     setContext({
       title: context.title,

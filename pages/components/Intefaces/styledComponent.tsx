@@ -1,6 +1,7 @@
 import { MouseEventHandler } from "react";
 export default interface StyledComponentTypes {
   children?: React.ReactNode;
+  display?: string;
   reference?: any;
 
   id?: string;

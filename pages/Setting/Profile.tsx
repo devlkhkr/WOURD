@@ -10,7 +10,7 @@ import { ReducerType } from "redux/rootReducer";
 import ButtonCompontent from "pages/components/atoms/Button";
 import ButtonWrapComponent from "pages/components/molecules/ButtonWrap";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSession } from "next-auth/react";
 import { faRepeat } from "@fortawesome/free-solid-svg-icons";
 import Icon from "pages/components/atoms/Icon";
@@ -20,6 +20,8 @@ import { regexUserName } from "pages/components/templates/Join";
 import { newAlert } from "pages/components/atoms/Alert";
 import axios from "axios";
 import { reloadSession } from "pages/components/atoms/Session";
+import Mask from "pages/components/atoms/Mask";
+import { useDidMountEffect } from "functional/useDidMountEffect";
 
 interface SettingProfileTypes extends styledInterface {}
 
@@ -43,7 +45,55 @@ const ProfileListWrap = styled.div`
   margin-bottom: 24px;
 `;
 
-const ChangeImgButtons = styled.div``;
+const SelectAvatarType = styled.div`
+  width: 24px;
+  height: 24px;
+  background-color: #f3f3f3;
+  display: inline-block;
+  border-radius: 100%;
+`;
+
+const ChangeImgButtons = styled.div`
+  > div {
+    vertical-align: middle;
+    & + div {
+      margin-left: 8px;
+    }
+  }
+  ul {
+  }
+`;
+
+const SliderAvataTypes = styled.ul`
+  white-space: nowrap;
+  overflow: auto;
+  width: calc(100% - 72px);
+  box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, 0.05);
+  padding: 24px;
+  z-index: 19999;
+  position: absolute;
+  left: 36px;
+  background-color: #fff;
+  border-radius: 8px;
+  border: 1px dashed #ddd;
+  li {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    border-radius: 100%;
+    background-color: #f3f3f3;
+    overflow: hidden;
+    &.on {
+      outline: 2px solid var(--color-point);
+      img {
+        opacity: 0.5;
+      }
+    }
+    & + li {
+      margin-left: 16px;
+    }
+  }
+`;
 
 const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
   const { data: session, status } = useSession();
@@ -53,8 +103,63 @@ const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
     session ? session?.user?.name! : ""
   );
   const [userImg, setUserImg] = useState(session ? session?.user?.image! : "");
+  const [avtTypesOpened, setAvtTypesOpened] = useState(false);
+  const [arrAvatarTypes, setArrAvatarTypes] = useState([
+    "adventurer",
+    "adventurer-neutral",
+    "avataaars",
+    "avataaars-neutral",
+    "big-ears",
+    "big-ears-neutral",
+    "big-smile",
+    "bottts",
+    "bottts-neutral",
+    "croodles",
+    "croodles-neutral",
+    "fun-emoji",
+    "identicon",
+    "lorelei",
+    "lorelei-neutral",
+    "micah",
+    "miniavs",
+    "open-peeps",
+    "personas",
+    "pixel-art",
+    "pixel-art-neutral",
+    "shapes",
+    "thumbs",
+  ]);
+
+  const setSortedArrAvatarTypes = (current: string) => {
+    let tempArrAvatarTypes = [...arrAvatarTypes];
+    let sortedArrAvatarTypes = tempArrAvatarTypes
+      .filter((x) => x === current)
+      .concat(tempArrAvatarTypes.filter((x) => x !== current));
+    setArrAvatarTypes(sortedArrAvatarTypes);
+  };
+
+  const getUserAvatarType = () => {
+    if (session) {
+      let userAvatarType = session?.user?.image
+        ?.split("5.x")[1]
+        .split("svg")[0]
+        .replaceAll("/", "");
+      return arrAvatarTypes[arrAvatarTypes.indexOf(userAvatarType!)];
+    }
+  };
+
+  const [avatarType, setAvatarType] = useState(getUserAvatarType());
+
+  useEffect(() => {
+    setSortedArrAvatarTypes(avatarType!);
+  }, []);
+
+  useDidMountEffect((): void => {
+    setUserImg(`https://api.dicebear.com/5.x/${avatarType}/svg?seed=${uuid()}`);
+  }, [avatarType]);
 
   const router = useRouter();
+
   const cancelBtnClick = () => {
     router.back();
   };
@@ -116,14 +221,54 @@ const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
         />
         {/* FIXME: 추후 버튼으로 바꾸어야할까요? */}
         <ChangeImgButtons>
+          <SelectAvatarType>
+            <ImgComponent
+              src={`https://api.dicebear.com/5.x/${avatarType}/svg?seed=sample`}
+              onClick={() => {
+                setAvtTypesOpened(true);
+              }}
+            />
+            {avtTypesOpened ? (
+              <>
+                <Mask
+                  trnsp={true}
+                  onClick={() => {
+                    setAvtTypesOpened(false);
+                  }}
+                />
+                <SliderAvataTypes>
+                  {arrAvatarTypes.map((avatar: string, index: number) => {
+                    return (
+                      <li
+                        key={index}
+                        onClick={() => {
+                          setAvatarType(avatar);
+                          setSortedArrAvatarTypes(avatar);
+                          setAvtTypesOpened(false);
+                        }}
+                        className={avatarType === avatar ? "on" : ""}
+                      >
+                        <ImgComponent
+                          src={`https://api.dicebear.com/5.x/${avatar}/svg?seed=sample`}
+                        />
+                      </li>
+                    );
+                  })}
+                </SliderAvataTypes>
+              </>
+            ) : (
+              <></>
+            )}
+          </SelectAvatarType>
           <TypoComponent
+            display="inline-block"
             fontSize="16px"
             fontWeight="semi-bold"
             textAlign="left"
             color="var(--color-point)"
             onClick={() => {
               setUserImg(
-                `https://avatars.dicebear.com/api/personas/${uuid()}.svg`
+                `https://api.dicebear.com/5.x/${avatarType}/svg?seed=${uuid()}`
               );
             }}
           >
