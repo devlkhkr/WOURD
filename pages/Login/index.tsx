@@ -129,12 +129,12 @@ const LoginComponent: NextPage<LoginTypes> = ({ isAuth }) => {
   return (
     <>
       <NextSeo
-        title="Copublish Login"
-        description=""
+        title="Wourd Login"
+        description="Wourd Login Page"
         openGraph={{
           type: "website",
-          url: "",
-          title: "Copub login page",
+          url: process.env.NEXT_PUBLIC_ORIGIN + "/Login",
+          title: "Wourd Login page",
           description: "",
         }}
       />

@@ -9,48 +9,32 @@ interface AccordionBoardTitleTypes extends styledInterface {
   titleText: string;
   date: string;
   afterIcon?: string;
+  isOpened: boolean;
+}
+
+interface isOpenedProps {
+  isOpened: boolean;
 }
 
 const AccordionBoardTitleComponent = styled.div`
   cursor: pointer;
 `;
 
-const ArrowIconWrap = styled.div`
+const ArrowIconWrap = styled.div<isOpenedProps>`
   position: absolute;
   top: 16px;
   right: 12px;
+  transition: all 0.3s linear;
+  transform: ${props => (props.isOpened ? "rotate(180deg)": "rotate(0deg)")};
 `;
 
 const AccordionBoardTitle: React.FC<AccordionBoardTitleTypes> = ({
   titleText,
   date,
   afterIcon,
-  onClick
+  onClick,
+  isOpened,
 }) => {
-  const setAfterIcon = () => {
-    switch (afterIcon) {
-      case "arr-down":
-        return (
-          <Icon
-            iconShape={faChevronDown}
-            iconWidth="16px"
-            iconHeight="16px"
-            svgSize="12px"
-          />
-        );
-      case "arr-up":
-        return (
-          <Icon
-            iconShape={faChevronUp}
-            iconWidth="16px"
-            iconHeight="16px"
-            svgSize="12px"
-          />
-        );
-      default:
-        return;
-    }
-  };
 
   return (
     <AccordionBoardTitleComponent onClick={onClick}>
@@ -71,7 +55,15 @@ const AccordionBoardTitle: React.FC<AccordionBoardTitleTypes> = ({
       >
         {date}
       </TypoComponent>
-      <ArrowIconWrap>{afterIcon && setAfterIcon()}</ArrowIconWrap>
+      {/* <ArrowIconWrap>{afterIcon && setAfterIcon()}</ArrowIconWrap> */}
+      <ArrowIconWrap isOpened={isOpened}>
+        <Icon
+          iconShape={faChevronDown}
+          iconWidth="16px"
+          iconHeight="16px"
+          svgSize="12px"
+        />
+      </ArrowIconWrap>
     </AccordionBoardTitleComponent>
   );
 };

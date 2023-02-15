@@ -454,12 +454,12 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
         <></>
       )}
       <NextSeo
-        title="Copublish MyWords"
-        description=""
+        title="Wourd MyWords"
+        description="Wourd MyWords"
         openGraph={{
           type: "website",
-          url: "",
-          title: "Copub MyWords page",
+          url: process.env.NEXT_PUBLIC_ORIGIN + "/MyWords",
+          title: "Wourd MyWords page",
           description: "",
         }}
       />

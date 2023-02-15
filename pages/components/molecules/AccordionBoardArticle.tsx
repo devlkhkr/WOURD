@@ -8,26 +8,45 @@ interface AccordionBoardArticleTypes {
 }
 
 const AccordionBoardArticleComponent = styled.div<AccordionBoardArticleTypes>`
-  transition: all 0.3s linear;
+  transition: ${props => (props.isOpened ? "all 0.3s linear" : "all 0.15s linear")};
   max-height: 0;
   overflow: hidden;
   max-height: ${props => (props.isOpened ? "60vw" : "0")};
 `;
 
+interface ArticleProps {
+  article: any;
+}
+const NoticeArticle = styled.p<ArticleProps>`
+  font-size: 14px;
+  font-weight: var(--weight-regular);
+  line-height: 1.2;
+  color: inherit;
+  text-align: left;
+  margin-top: 4px;
+  margin-bottom: unset;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  word-break: break-word;
+  display: -webkit-box;
+`
+
 const AccordionBoardArticle: React.FC<AccordionBoardArticleTypes> = ({
   article,
   isOpened,
 }) => {
+  console.log(article)
   return (
     <AccordionBoardArticleComponent isOpened={isOpened} article={article}>
-      <TypoComponent
+      {/* <TypoComponent
         fontSize="14px"
         fontWeight="regular"
         textAlign="left"
         marginTop="4px"
       >
         {article}
-      </TypoComponent>
+      </TypoComponent> */}
+      <NoticeArticle article={article} dangerouslySetInnerHTML={{__html: article}}></NoticeArticle>
     </AccordionBoardArticleComponent>
   );
 };

@@ -50,15 +50,15 @@ function Auth({ children }: any) {
 /* S: default SEO */
 // 각 페이지별로 custom SEO 만들기
 const DEFAULT_SEO = {
-  title: "Copublish IT Dictionary",
-  description: "meta head description 값",
+  title: "Wourd",
+  description: "You can register words by category to manage storage and status. The goal is to broaden the knowledge for everyone by the searching the words registered by others and sharing the words registered by the user.",
   canonical: "https://www.carrotins.com",
   openGraph: {
     type: "website",
     locale: "ko_KR",
-    url: "카카오톡, 페이스북에 링크 넣으면 연결되는 url",
-    title: "Copublish",
-    site_name: "Copub",
+    url: process.env.NEXT_PUBLIC_ORIGIN,
+    title: "Wourd",
+    site_name: "Wourd",
     images: [
       {
         url: "카카오톡, 페이스북에에 링크 넣으면 올라올 이미지",
@@ -67,11 +67,6 @@ const DEFAULT_SEO = {
         alt: "이미지",
       },
     ],
-  },
-  twitter: {
-    handle: "@handle",
-    site: "@site",
-    cardType: "summary_large_image",
   },
 };
 

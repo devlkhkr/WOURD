@@ -271,12 +271,12 @@ const Setting: NextPage<{ statesCount: sttCntObjTypes }> = ({
   return (
     <>
       <NextSeo
-        title="Copublish Setting"
-        description=""
+        title="Wourd Setting"
+        description="Wourd Setting Page"
         openGraph={{
           type: "website",
-          url: "",
-          title: "Copub Setting page",
+          url: process.env.NEXT_PUBLIC_ORIGIN + "/Setting",
+          title: "Wourd Setting Page",
           description: "",
         }}
       />

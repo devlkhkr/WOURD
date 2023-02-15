@@ -52,7 +52,7 @@ const ProfileWordItemComponent: React.FC<ProfileWordTitleTypes> = (props) => {
         return (
           <Icon
             // iconShape={faLightbulb}
-            iconImg="icon-circle"
+            iconImg="icon-circle-stroke"
             iconWidth="14px"
             iconHeight="14px"
             svgSize="14px"
@@ -63,7 +63,7 @@ const ProfileWordItemComponent: React.FC<ProfileWordTitleTypes> = (props) => {
         return (
           <Icon
             // iconShape={faCircleQuestion}
-            iconImg="icon-triangle"
+            iconImg="icon-triangle-stroke"
             iconWidth="14px"
             iconHeight="14px"
             svgSize="14px"
@@ -74,7 +74,7 @@ const ProfileWordItemComponent: React.FC<ProfileWordTitleTypes> = (props) => {
         return (
           <Icon
             // iconShape={faStar}
-            iconImg="icon-star"
+            iconImg="icon-star-stroke"
             iconWidth="14px"
             iconHeight="14px"
             svgSize="14px"
@@ -84,7 +84,7 @@ const ProfileWordItemComponent: React.FC<ProfileWordTitleTypes> = (props) => {
       case "skip":
         return (
           <Icon
-            iconImg="icon-x"
+            iconImg="icon-x-stroke"
             iconWidth="14px"
             iconHeight="14px"
             svgSize="14px"
