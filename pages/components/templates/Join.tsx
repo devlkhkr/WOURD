@@ -468,7 +468,7 @@ const JoinComponent: React.FC<JoinTypes> = ({
                             : void 0;
                           setJoinUserName(e.currentTarget.value);
                           setJoinUserImg(
-                            `https://avatars.dicebear.com/api/personas/${e.currentTarget.value}.svg`
+                            `https://api.dicebear.com/5.x/${e.currentTarget.value}/svg?seed=sample`
                           );
                         })();
                   }}
