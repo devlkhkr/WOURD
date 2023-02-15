@@ -32,6 +32,7 @@ const AccordionBoardList: React.FC<AccordionBoardListTypes> = ({
         <AccordionBoardTitle
           titleText={data.title}
           date={data.date}
+          isOpened={data.isOpened}
           afterIcon={data.isOpened ? "arr-up" : "arr-down"}
           onClick={() => {
             setData({...data, isOpened : !data.isOpened})

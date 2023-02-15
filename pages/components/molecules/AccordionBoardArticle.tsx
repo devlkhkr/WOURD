@@ -8,7 +8,7 @@ interface AccordionBoardArticleTypes {
 }
 
 const AccordionBoardArticleComponent = styled.div<AccordionBoardArticleTypes>`
-  transition: all 0.3s linear;
+  transition: ${props => (props.isOpened ? "all 0.3s linear" : "all 0.15s linear")};
   max-height: 0;
   overflow: hidden;
   max-height: ${props => (props.isOpened ? "60vw" : "0")};

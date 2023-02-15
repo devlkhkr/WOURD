@@ -51,7 +51,7 @@ function Auth({ children }: any) {
 // 각 페이지별로 custom SEO 만들기
 const DEFAULT_SEO = {
   title: "Wourd",
-  description: "",
+  description: "You can register words by category to manage storage and status. The goal is to broaden the knowledge for everyone by the searching the words registered by others and sharing the words registered by the user.",
   canonical: "https://www.carrotins.com",
   openGraph: {
     type: "website",
@@ -67,11 +67,6 @@ const DEFAULT_SEO = {
         alt: "이미지",
       },
     ],
-  },
-  twitter: {
-    handle: "@handle",
-    site: "@site",
-    cardType: "summary_large_image",
   },
 };
 
