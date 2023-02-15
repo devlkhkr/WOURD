@@ -286,7 +286,7 @@ const JoinComponent: React.FC<JoinTypes> = ({
     } else {
       Hash.createHashedPassword(joinUserPw).then(
         (hashedData: HashedDataTypes) => {
-          console.log(hashedData);
+          // console.log(hashedData);
           sendJoinForm(hashedData.password, hashedData.salt);
         }
       );

@@ -65,13 +65,6 @@ const SystemSpec: React.FC = () => {
     },
   };
 
-  const getApi = async () => {
-    const res = await axios.get(
-      process.env.NEXT_PUBLIC_ORIGIN + "/api/word/list"
-    );
-    console.log(res);
-  };
-
   return (
     <>
       {/* developers */}

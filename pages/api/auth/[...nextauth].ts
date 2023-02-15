@@ -119,7 +119,7 @@ const insertLoginData = async (userId: string) => {
     }
   );
   let logInsertResult = res.data.affectedRows === 1 ? "true" : "false";
-  console.log(`로그인 기록 Insert : ${logInsertResult}`);
+  // console.log(`로그인 기록 Insert : ${logInsertResult}`);
 };
 
 const startAuthorize = async (

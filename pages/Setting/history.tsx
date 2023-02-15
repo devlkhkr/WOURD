@@ -16,7 +16,7 @@ const SettingHistory = () => {
         // &per_page = 한번에 가져올 아이템의 개수
         url: `https://api.github.com/repos/${owner}/${repo}/commits?&per_page=100`,
       });
-      console.log(response);
+      // console.log(response);
       const data = response.data;
       setRepos(data);
     } catch {

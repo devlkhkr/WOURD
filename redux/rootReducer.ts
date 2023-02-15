@@ -20,7 +20,7 @@ const rootReducer = (
   switch (action.type) {
     case HYDRATE:
       let prevCliState = store.getState();
-      console.log("prevCliState:::", prevCliState);
+      // console.log("prevCliState:::", prevCliState);
       const nextState: IState = {
         context: prevCliState.context,
         modal: prevCliState.modal,

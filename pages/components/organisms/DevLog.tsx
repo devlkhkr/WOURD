@@ -105,7 +105,6 @@ const DevHistory: React.FC = () => {
           `https://api.github.com/repos/${gitOwner}/${gitRepo}/commits?&per_page=100`
         )
         .then((res) => {
-          console.log(res.data);
           setGitCommitList(res.data);
         });
     } catch {

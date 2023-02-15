@@ -119,7 +119,7 @@ function MyApp({
     //axios 호출시 인터셉트
     axios.interceptors.request.use(
       function (config) {
-        console.log("axiosConfigUrl:::", config.url);
+        // console.log("axiosConfigUrl:::", config.url);
         if (
           !config.url?.includes("/api/user/word/state") &&
           !config.url?.includes("/api/user/opt")
