@@ -4,9 +4,9 @@ import styled from "styled-components";
 import Button from "../atoms/Button";
 
 import InputText from "../atoms/InputText";
-import { svgCheckIcon } from "../atoms/SvgIcons";
+import { svgCheckIcon } from "../../../functional/functions/SvgIcons";
 import TypoComponent from "../atoms/Typo";
-import styledInterface from "../Intefaces/styledComponent";
+import styledInterface from "../../../functional/intefaces/styledComponent";
 
 interface ProfileListTypes extends styledInterface {
   typo: string;

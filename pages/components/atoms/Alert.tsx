@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-import styledInterface from "../Intefaces/styledComponent";
+import styledInterface from "../../../functional/intefaces/styledComponent";
 
 import { clearMsg, RdxMsgTypes, selectAlert, setMsg } from "redux/slices/alert";
 import uuid from "uuid4";

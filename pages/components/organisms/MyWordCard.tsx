@@ -5,7 +5,7 @@ import styled from "styled-components";
 import Icon from "../atoms/Icon";
 import TypoComponent from "../atoms/Typo";
 import Typo from "../atoms/Typo";
-import styledInterface from "../Intefaces/styledComponent";
+import styledInterface from "../../../functional/intefaces/styledComponent";
 
 export interface MyWordsListTypes {
   [key: string]: string | number | Date | boolean;

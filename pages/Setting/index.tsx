@@ -3,7 +3,7 @@ import ToggleCheckComponent from "pages/components/atoms/Toggle";
 import Anchor from "pages/components/atoms/Anchor";
 import { useRef, useState } from "react";
 import styled from "styled-components";
-import styledInterface from "../components/Intefaces/styledComponent";
+import styledInterface from "../../functional/intefaces/styledComponent";
 import { openModal, closeModal } from "redux/slices/modal";
 
 import SettingListComponent from "../components/molecules/SettingList";
@@ -13,7 +13,7 @@ import { useDispatch } from "react-redux";
 import ProfileWordTitleComponent from "pages/components/molecules/ProfileWordTitle";
 import ProfileWordComponent from "pages/components/molecules/ProfileWord";
 import ProfileWordItemComponent from "pages/components/molecules/ProfileWordItem";
-import { reloadSession } from "pages/components/atoms/Session";
+import { reloadSession } from "functional/functions/Session";
 
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";

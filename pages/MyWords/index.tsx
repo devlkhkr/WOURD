@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import Button from "../components/atoms/Button";
 import styled from "styled-components";
-import styledInterface from "../components/Intefaces/styledComponent";
+import styledInterface from "../../functional/intefaces/styledComponent";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import Typo from "pages/components/atoms/Typo";

@@ -1,9 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import styledInterface from "../Intefaces/styledComponent"
-interface FieldsetTypes extends styledInterface {
-  
-}
+import styledInterface from "../../../functional/intefaces/styledComponent";
+interface FieldsetTypes extends styledInterface {}
 
 const FieldsetStyled = styled.fieldset<FieldsetTypes>`
   padding: 16px 0;

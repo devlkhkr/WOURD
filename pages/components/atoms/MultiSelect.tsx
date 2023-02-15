@@ -2,7 +2,7 @@ import React, { useImperativeHandle, useRef, useState } from "react";
 import styled from "styled-components";
 import Label from "./Label";
 import Checkbox from "./Checkbox";
-import styledInterface from "../Intefaces/styledComponent";
+import styledInterface from "../../../functional/intefaces/styledComponent";
 interface MultiSelectTypes extends styledInterface {
   name: string;
   options: OptionTypes[];

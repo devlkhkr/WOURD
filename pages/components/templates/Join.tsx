@@ -19,7 +19,7 @@ import { useRef } from "react";
 import axios from "axios";
 import validator from "validator";
 import passwordValidator from "password-validator";
-import Hash from "../atoms/Hash";
+import Hash from "../../../functional/functions/Hash";
 import { newAlert } from "../atoms/Alert";
 interface JoinTypes {
   setJoinPageOpened: Function;

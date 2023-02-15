@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import styledInterface from "../Intefaces/styledComponent";
+import styledInterface from "../../../functional/intefaces/styledComponent";
 interface SelectTypes extends styledInterface {
   name: string;
   options: object[];

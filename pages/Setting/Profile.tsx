@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import styledInterface from "../components/Intefaces/styledComponent";
+import styledInterface from "../../functional/intefaces/styledComponent";
 
 import ImgComponent from "pages/components/atoms/Img";
 import TypoComponent from "pages/components/atoms/Typo";
@@ -19,9 +19,9 @@ import UsageComponent from "pages/components/molecules/Usage";
 import { regexUserName } from "pages/components/templates/Join";
 import { newAlert } from "pages/components/atoms/Alert";
 import axios from "axios";
-import { reloadSession } from "pages/components/atoms/Session";
+import { reloadSession } from "functional/functions/Session";
 import Mask from "pages/components/atoms/Mask";
-import { useDidMountEffect } from "functional/useDidMountEffect";
+import { useDidMountEffect } from "functional/customHooks/useDidMountEffect";
 import { NextSeo } from "next-seo";
 
 interface SettingProfileTypes extends styledInterface {}

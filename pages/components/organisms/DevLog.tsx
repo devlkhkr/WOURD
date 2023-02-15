@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Typo from "../atoms/Typo";
 import styled from "styled-components";
-import styledInterface from "pages/components/Intefaces/styledComponent";
+import styledInterface from "functional/intefaces/styledComponent";
 
 const gitOwner = "devlkhkr";
 const gitRepo = "DEV-WORDS";

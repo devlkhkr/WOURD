@@ -8,7 +8,7 @@ import Icon from "pages/components/atoms/Icon";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 import CardSwiper from "../organisms/CardSwiper";
-import styledInterface from "../Intefaces/styledComponent";
+import styledInterface from "../../../functional/intefaces/styledComponent";
 
 import { useSelector } from "react-redux";
 import { ReducerType } from "redux/rootReducer";
@@ -16,7 +16,7 @@ import { useSession } from "next-auth/react";
 import DataEmptyComponent from "../molecules/DataEmpty";
 import { useRouter } from "next/router";
 import { newAlert } from "../atoms/Alert";
-import StyledComponentTypes from "../Intefaces/styledComponent";
+import StyledComponentTypes from "../../../functional/intefaces/styledComponent";
 
 interface CardMainTypes {
   exposeWord: ExposeWordTypes[];

@@ -1,13 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import styledInterface from "../Intefaces/styledComponent"
-interface ButtonWrapTypes extends styledInterface {
-
-}
+import styledInterface from "../../../functional/intefaces/styledComponent";
+interface ButtonWrapTypes extends styledInterface {}
 
 const ButtonWrapsetStyled = styled.div<ButtonWrapTypes>`
   display: flex;
-  margin-top : 24px;
+  margin-top: 24px;
   button {
     flex: auto;
     & + button {

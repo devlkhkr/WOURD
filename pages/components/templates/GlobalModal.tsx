@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-import styledInterface from "../Intefaces/styledComponent";
+import styledInterface from "../../../functional/intefaces/styledComponent";
 import Icon from "pages/components/atoms/Icon";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import DevLog from "pages/components/organisms/DevLog";

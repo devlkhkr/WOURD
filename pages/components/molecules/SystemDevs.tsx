@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import ImgComponent from "../atoms/Img";
 import TypoComponent from "../atoms/Typo";
-import styledInterface from "../Intefaces/styledComponent";
+import styledInterface from "../../../functional/intefaces/styledComponent";
 import Icon from "../atoms/Icon";
 import {
   faGithub,
@@ -64,14 +64,14 @@ const SystemDevsComponent: React.FC<SystemDevType> = ({
   instagram,
   mail,
 }) => {
-  const [userImgUrl, setUserImgUsrl] = useState()
+  const [userImgUrl, setUserImgUsrl] = useState();
   const getUserImg = async (userId: string) => {
     try {
-      await axios
-      .get(`https://api.github.com/users/${userId}`)
-      .then(res => {
-        const { data : { avatar_url } } = res
-        setUserImgUsrl(avatar_url)
+      await axios.get(`https://api.github.com/users/${userId}`).then((res) => {
+        const {
+          data: { avatar_url },
+        } = res;
+        setUserImgUsrl(avatar_url);
       });
     } catch {
       console.log("오류");
@@ -79,8 +79,8 @@ const SystemDevsComponent: React.FC<SystemDevType> = ({
   };
 
   useEffect(() => {
-    getUserImg(github)
-  }, [])
+    getUserImg(github);
+  }, []);
 
   return (
     <DevsItem>
@@ -94,18 +94,10 @@ const SystemDevsComponent: React.FC<SystemDevType> = ({
         />
       </DevsInfo>
       <DevSocial>
-        <TypoComponent
-          fontSize="16px"
-          fontWeight="bold"
-          color="#202020"
-        >
+        <TypoComponent fontSize="16px" fontWeight="bold" color="#202020">
           {name}
         </TypoComponent>
-        <TypoComponent
-          fontSize="14px"
-          fontWeight="medium"
-          color="#999999"
-        >
+        <TypoComponent fontSize="14px" fontWeight="medium" color="#999999">
           {pos}
         </TypoComponent>
         <IconWrap>

@@ -1,26 +1,24 @@
 import React from "react";
 import styled, { css } from "styled-components";
-import styledInterface from "../Intefaces/styledComponent"
-interface LoadingTypes extends styledInterface{
-
-}
+import styledInterface from "../../../functional/intefaces/styledComponent";
+interface LoadingTypes extends styledInterface {}
 
 const countDominoSegs = 7;
 
 const setDominoTimer = function () {
   let styles = "";
 
-  for (let i = 1; i < (countDominoSegs + 1); i++) {
+  for (let i = 1; i < countDominoSegs + 1; i++) {
     styles += `
         &:nth-child(${i}) {
-          animation-delay: ${(-0.4 * i)}s;
+          animation-delay: ${-0.4 * i}s;
         }
      `;
   }
   return css`
     ${styles}
   `;
-}
+};
 
 const LoadingStyled = styled.div<LoadingTypes>`
   position: fixed;
@@ -55,19 +53,17 @@ const LoadingStyled = styled.div<LoadingTypes>`
   }
 `;
 
-const LoadingComponent: React.FC<LoadingTypes> = ({
-  color,
-}) => {
+const LoadingComponent: React.FC<LoadingTypes> = ({ color }) => {
   const createLoadingDomino = function () {
     return (
       <ul>
-        {new Array(countDominoSegs).fill(0).map((li, index) => <li key={index}></li>)}
+        {new Array(countDominoSegs).fill(0).map((li, index) => (
+          <li key={index}></li>
+        ))}
       </ul>
-    )
-  }
-  return (
-    <LoadingStyled color={color}>{createLoadingDomino()}</LoadingStyled>
-  );
+    );
+  };
+  return <LoadingStyled color={color}>{createLoadingDomino()}</LoadingStyled>;
 };
 
 LoadingComponent.defaultProps = {};

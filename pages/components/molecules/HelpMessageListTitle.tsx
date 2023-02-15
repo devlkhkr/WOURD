@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import styledInterface from "../Intefaces/styledComponent";
+import styledInterface from "../../../functional/intefaces/styledComponent";
 import TypoComponent from "../atoms/Typo";
 import Icon from "../atoms/Icon";
 
@@ -25,7 +25,7 @@ const HelpmessageListTitle: React.FC<HelpMessageListTitleTypes> = ({
   titleText,
   date,
   afterIcon,
-  onClick
+  onClick,
 }) => {
   const setAfterIcon = () => {
     switch (afterIcon) {

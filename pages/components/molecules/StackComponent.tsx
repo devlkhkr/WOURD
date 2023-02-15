@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import ImgComponent from "../atoms/Img";
 import TypoComponent from "../atoms/Typo";
-import styledInterface from "../Intefaces/styledComponent";
+import styledInterface from "../../../functional/intefaces/styledComponent";
 
 interface StackComponentType extends styledInterface {
   name: string;

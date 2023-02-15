@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
-import styledInterface from "../Intefaces/styledComponent";
+import styledInterface from "../../../functional/intefaces/styledComponent";
 import AccordionBoardList from "./AccordionBoardList";
 
 const NoticeListItem = styled.li`
@@ -38,8 +38,7 @@ const Notice: React.FC = () => {
       id: 1,
       title: "1.0.0 버전 업데이트 노트",
       date: "2.15 Feb",
-      article:
-        `1.0.0 버전에서는 기본 서비스의 사용이 가능합니다. <br />
+      article: `1.0.0 버전에서는 기본 서비스의 사용이 가능합니다. <br />
         단어들을 아는 단어 / 모르는 단어 / 즐겨찾는 단어 / 건너 뛴 단어 <br />
         4가지의 상태로 관리할 수 있으며, 내가 아는 단어를 공유할 수 있는 등록 기능도 활성화 되었습니다.`,
       isOpened: false,

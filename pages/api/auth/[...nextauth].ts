@@ -2,7 +2,7 @@ import axios from "axios";
 import { NextApiRequest } from "next";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import Hash from "pages/components/atoms/Hash";
+import Hash from "functional/functions/Hash";
 export interface UserDataTypes {
   id: string;
   nickName: string;

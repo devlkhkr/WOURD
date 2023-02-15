@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import styledInterface from "../Intefaces/styledComponent";
+import styledInterface from "../../../functional/intefaces/styledComponent";
 import checkIcon from "public/images/icons/check.png";
 interface CheckboxTypes extends styledInterface {
   onChange?: any;

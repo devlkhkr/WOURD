@@ -2,7 +2,7 @@ import React, { useImperativeHandle, useRef } from "react";
 import styled from "styled-components";
 import Label from "../../components/atoms/Label";
 import InputWrap from "../../components/molecules/InputWrap";
-import styledInterface from "../Intefaces/styledComponent";
+import styledInterface from "../../../functional/intefaces/styledComponent";
 import checkIcon from "public/images/icons/check.png";
 interface RadioTypes extends styledInterface {
   name: string;

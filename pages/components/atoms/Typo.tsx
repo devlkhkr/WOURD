@@ -1,7 +1,7 @@
 import React from "react";
 import { MouseEventHandler } from "react";
 import styled from "styled-components";
-import styledInterface from "../Intefaces/styledComponent";
+import styledInterface from "../../../functional/intefaces/styledComponent";
 interface TypoType extends styledInterface {
   onClick?: MouseEventHandler;
   lineClamp?: string;

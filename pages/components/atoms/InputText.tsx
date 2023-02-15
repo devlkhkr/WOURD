@@ -1,7 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import styledInterface from "../Intefaces/styledComponent";
-import { svgEmailIcon, svgPwIcon, svgSearchIcon } from "./SvgIcons";
+import styledInterface from "../../../functional/intefaces/styledComponent";
+import {
+  svgEmailIcon,
+  svgPwIcon,
+  svgSearchIcon,
+} from "../../../functional/functions/SvgIcons";
 const Input = styled.input`
   width: ${(props) => props.width || "100%"};
   height: 40px;

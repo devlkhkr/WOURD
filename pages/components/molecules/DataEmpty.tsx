@@ -2,7 +2,7 @@ import React, { MouseEventHandler } from "react";
 import styled from "styled-components";
 import ButtonCompontent from "../atoms/Button";
 import Typo from "../atoms/Typo";
-import styledInterface from "../Intefaces/styledComponent";
+import styledInterface from "../../../functional/intefaces/styledComponent";
 
 interface DataEmptyTypes extends styledInterface {
   title?: string;

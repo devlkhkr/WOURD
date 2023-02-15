@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import styledInterface from "../Intefaces/styledComponent";
+import styledInterface from "../../../functional/intefaces/styledComponent";
 import AccordionBoardArticle from "../molecules/AccordionBoardArticle";
 import AccordionBoardTitle from "../molecules/AccordionBoardTitle";
 
@@ -23,9 +23,7 @@ const AccordionBoardList: React.FC<AccordionBoardListTypes> = ({
   acrdData,
 }) => {
   const [data, setData] = useState(acrdData);
-  useEffect(() => {
-    
-  }, [data]);
+  useEffect(() => {}, [data]);
   return (
     <>
       <AccordionBoardListComponent>
@@ -35,7 +33,7 @@ const AccordionBoardList: React.FC<AccordionBoardListTypes> = ({
           isOpened={data.isOpened}
           afterIcon={data.isOpened ? "arr-up" : "arr-down"}
           onClick={() => {
-            setData({...data, isOpened : !data.isOpened})
+            setData({ ...data, isOpened: !data.isOpened });
           }}
         ></AccordionBoardTitle>
 

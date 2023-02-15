@@ -3,25 +3,26 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import styled from "styled-components";
-import styledInterface from "../Intefaces/styledComponent";
+import styledInterface from "../../../functional/intefaces/styledComponent";
 
 const IconWrap = styled.i<IconWrapTypes>`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: ${props => props.iconWidth};
-  height: ${props => props.iconHeight};
-  margin: 0 ${props => props.align || ""} ${props => props.bottom || ""};
-  color: ${props => props.color || "inherit"};
+  width: ${(props) => props.iconWidth};
+  height: ${(props) => props.iconHeight};
+  margin: 0 ${(props) => props.align || ""} ${(props) => props.bottom || ""};
+  color: ${(props) => props.color || "inherit"};
   svg {
-    font-size: ${props => props.svgSize || "16px"};
+    font-size: ${(props) => props.svgSize || "16px"};
     width: 100%;
     height: 100%;
   }
 `;
 
 const CustomIcon = styled(IconWrap)<IconWrapTypes>`
-  background-image: url(${props => props.iconImg ? `../images/icons/${props.iconImg}.png` : ""});
+  background-image: url(${(props) =>
+    props.iconImg ? `../images/icons/${props.iconImg}.png` : ""});
   background-size: cover;
   background-position: center;
 `;

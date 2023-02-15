@@ -2,7 +2,7 @@ import React from "react";
 import { MouseEventHandler } from "react";
 import Link from "next/link";
 import styled from "styled-components";
-import styledInterface from "../Intefaces/styledComponent";
+import styledInterface from "../../../functional/intefaces/styledComponent";
 interface AnchorType extends styledInterface {
   children: React.ReactNode;
   href: string;

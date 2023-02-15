@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import styledInterface from "../Intefaces/styledComponent";
+import styledInterface from "../../../functional/intefaces/styledComponent";
 import TypoComponent from "../atoms/Typo";
 import Icon from "../atoms/Icon";
 
@@ -25,7 +25,7 @@ const ArrowIconWrap = styled.div<isOpenedProps>`
   top: 16px;
   right: 12px;
   transition: all 0.3s linear;
-  transform: ${props => (props.isOpened ? "rotate(180deg)": "rotate(0deg)")};
+  transform: ${(props) => (props.isOpened ? "rotate(180deg)" : "rotate(0deg)")};
 `;
 
 const AccordionBoardTitle: React.FC<AccordionBoardTitleTypes> = ({
@@ -35,7 +35,6 @@ const AccordionBoardTitle: React.FC<AccordionBoardTitleTypes> = ({
   onClick,
   isOpened,
 }) => {
-
   return (
     <AccordionBoardTitleComponent onClick={onClick}>
       <TypoComponent
