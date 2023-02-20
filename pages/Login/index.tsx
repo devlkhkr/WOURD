@@ -18,9 +18,21 @@ import { NextSeo } from "next-seo";
 import { store } from "redux/store";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { newConfirm } from "pages/components/templates/Confirm";
 
 interface LoginTypes {
-  isAuth?: boolean;
+  isLoginPage?: boolean;
+}
+
+export function needLogin() {
+  newConfirm({
+    confirmText: "로그인이 필요한 서비스입니다.",
+    submitTit: "로그인",
+    confirmSubmit: () => {
+      signIn();
+    },
+    isOpen: true,
+  });
 }
 
 const LoginStyled = styled.form<LoginTypes>`
@@ -63,7 +75,7 @@ const LoginWithOtherSys = styled.div`
   }
 `;
 
-const LoginComponent: NextPage<LoginTypes> = ({ isAuth }) => {
+const LoginComponent: NextPage<LoginTypes> = ({ isLoginPage }) => {
   const idInput: any = useRef();
   const pwInput: any = useRef();
   const router = useRouter();
@@ -210,7 +222,7 @@ const LoginComponent: NextPage<LoginTypes> = ({ isAuth }) => {
 };
 
 LoginComponent.defaultProps = {
-  isAuth: true,
+  isLoginPage: true,
 };
 
 export default LoginComponent;

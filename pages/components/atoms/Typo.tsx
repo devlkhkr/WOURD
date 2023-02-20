@@ -8,7 +8,8 @@ interface TypoType extends styledInterface {
 }
 
 const TypoStyled = styled.div<TypoType>`
-  display: ${(props) => props.display || "-webkit-box"};
+  display: ${(props) =>
+    props.textAlign === "center" ? props.display : "block" || "-webkit-box"};
   font-size: ${(props) => props.fontSize || "14px"};
   font-weight: ${(props) => `var(--weight-${props.fontWeight || "regular"})`};
   line-height: ${(props) => props.lineHeight || "1.2"};

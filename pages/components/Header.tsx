@@ -11,7 +11,9 @@ import styled from "styled-components";
 import Logo from "../components/atoms/Logo";
 import { useRouter } from "next/router";
 import Icon from "./atoms/Icon";
-import { signOut } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
+import { newConfirm } from "./templates/Confirm";
+import { needLogin } from "pages/Login";
 
 interface HeaderComponentTypes {}
 
@@ -55,13 +57,14 @@ const AddNewWord = styled.span`
 const HeaderComponent: React.FC<HeaderComponentTypes> = ({}) => {
   const router = useRouter();
   const [canGoBack, setCanGoBack] = useState<boolean>();
+  const { data: session, status } = useSession();
 
   useEffect(() => {
     window.history.length > 1 ? setCanGoBack(true) : setCanGoBack(false);
   });
 
   const addNewWordClick = () => {
-    router.push("/MyWords/Regist");
+    session != null ? router.push("/MyWords/Regist") : needLogin();
   };
 
   const getHdrTitle = (path: string) => {
@@ -98,12 +101,13 @@ const HeaderComponent: React.FC<HeaderComponentTypes> = ({}) => {
             iconHeight="20px"
             align="auto"
             color="var(--color-grey)"
-            onClick={() =>
+            onClick={() => {
               signOut({
                 redirect: true,
-                callbackUrl: "/Login",
-              })
-            }
+                callbackUrl: "/Setting",
+              });
+              alert("로그아웃 되었습니다.");
+            }}
           />
         );
       case "/":

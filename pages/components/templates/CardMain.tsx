@@ -425,7 +425,17 @@ const CardMainComponent: React.FC<CardMainTypes> = ({
                     ) : (
                       <></>
                     )}
-                    <WordRegInfoStyled>
+                    <WordRegInfoStyled
+                      onClick={() => {
+                        // window.navigator.share({
+                        //   title: "", // 공유될 제목
+                        //   text: "", // 공유될 설명
+                        //   url: "", // 공유될 URL
+                        //   files: [], // 공유할 파일 배열
+                        // });
+                        console.log(window.navigator);
+                      }}
+                    >
                       <img src={objWord.user_prf_img}></img>
                       <span className="card_user_nickname">
                         {objWord.user_nickname}
