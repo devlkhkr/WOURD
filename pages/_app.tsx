@@ -191,9 +191,21 @@ function MyApp({
           <Wrap>
             {/* content */}
             {Component.defaultProps?.isLoginPage ? (
-              <Component {...pageProps} />
+              <>
+                <Header />
+                <Component {...pageProps} />
+              </>
+            ) : Component.defaultProps?.isAuth ? (
+              <Auth>
+                <Header />
+                <ComponentWrap
+                  className={router.pathname == "/" ? "isMain" : ""}
+                >
+                  <Component {...pageProps} />
+                </ComponentWrap>
+                <Footer />
+              </Auth>
             ) : (
-              // <Auth>
               <>
                 <Header />
                 <ComponentWrap
@@ -203,7 +215,6 @@ function MyApp({
                 </ComponentWrap>
                 <Footer />
               </>
-              // </Auth>
             )}
           </Wrap>
         </Wrapper>

@@ -19,6 +19,7 @@ import uuid from "uuid4";
 import { useSession } from "next-auth/react";
 import { newAlert } from "pages/components/atoms/Alert";
 import { NextSeo } from "next-seo";
+
 interface RegistWordTypes {}
 
 const RegistWordWrap = styled.div``;
@@ -282,6 +283,10 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
       </RegistWordWrap>
     </>
   );
+};
+
+RegistWord.defaultProps = {
+  isAuth: true,
 };
 
 export default RegistWord;

@@ -61,6 +61,7 @@ const LoginStyled = styled.form<LoginTypes>`
     background-position: center bottom 20px;
     z-index: -1;
     opacity: 0.5;
+    pointer-events: none;
   }
   input {
     margin-top: 8px;

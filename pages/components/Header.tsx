@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowLeft,
   faArrowRightFromBracket,
+  faArrowRightToBracket,
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -16,17 +17,6 @@ import { newConfirm } from "./templates/Confirm";
 import { needLogin } from "pages/Login";
 
 interface HeaderComponentTypes {}
-
-const HeaderWrapStyled = styled.header<HeaderComponentTypes>`
-  background-color: blue;
-  width: 100%;
-  height: var(--height-header);
-  background-color: #ffffff;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, 0.05);
-`;
 
 const HeaderLogo = styled.div`
   display: flex;
@@ -58,6 +48,18 @@ const HeaderComponent: React.FC<HeaderComponentTypes> = ({}) => {
   const router = useRouter();
   const [canGoBack, setCanGoBack] = useState<boolean>();
   const { data: session, status } = useSession();
+
+  const HeaderWrapStyled = styled.header<HeaderComponentTypes>`
+    width: 100%;
+    height: var(--height-header);
+    background-color: #ffffff;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    box-shadow: ${router.pathname === "/Login"
+      ? "unset"
+      : "0px 0px 8px 2px rgba(0, 0, 0, 0.05)"};
+  `;
 
   useEffect(() => {
     window.history.length > 1 ? setCanGoBack(true) : setCanGoBack(false);
@@ -91,22 +93,28 @@ const HeaderComponent: React.FC<HeaderComponentTypes> = ({}) => {
     }
   };
 
+  const sysLogOut = () => {
+    signOut({
+      redirect: true,
+      callbackUrl: "/Setting",
+    });
+    alert("로그아웃 되었습니다.");
+  };
+
   const getHdrRightIcon = (path: string) => {
     switch (path) {
       case "/Setting":
         return (
           <Icon
-            iconShape={faArrowRightFromBracket}
+            iconShape={
+              session ? faArrowRightFromBracket : faArrowRightToBracket
+            }
             iconWidth="20px"
             iconHeight="20px"
             align="auto"
             color="var(--color-grey)"
             onClick={() => {
-              signOut({
-                redirect: true,
-                callbackUrl: "/Setting",
-              });
-              alert("로그아웃 되었습니다.");
+              session ? sysLogOut() : signIn();
             }}
           />
         );

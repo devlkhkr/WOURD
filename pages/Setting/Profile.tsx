@@ -24,7 +24,9 @@ import Mask from "pages/components/atoms/Mask";
 import { useDidMountEffect } from "functional/customHooks/useDidMountEffect";
 import { NextSeo } from "next-seo";
 
-interface SettingProfileTypes extends styledInterface {}
+interface SettingProfileTypes {
+  isAuth: boolean;
+}
 
 const SettingProfileWrap = styled.div`
   background-color: var(--color-white);
@@ -377,6 +379,10 @@ const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
       </SettingProfileWrap>
     </>
   );
+};
+
+SettingProfileComponent.defaultProps = {
+  isAuth: true,
 };
 
 export default SettingProfileComponent;
