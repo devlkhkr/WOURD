@@ -5,6 +5,7 @@ import CardMain, { ExposeWordTypes } from "./components/templates/CardMain";
 import wrapper from "redux/store";
 import { unstable_getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]";
+import { getSession } from "next-auth/react";
 
 interface dataWordListTypes {
   dataWordList: ExposeWordTypes;
@@ -24,15 +25,11 @@ const Home: NextPage = ({ dataWordList }: any) => {
 };
 
 export const getServerSideProps = async (context: any) => {
-<<<<<<< Updated upstream
-  const res = await fetch(process.env.NEXT_PUBLIC_ORIGIN + "/api/word/list", {
-=======
   const session = await getSession(context);
   console.log(session);
   let wordListApi = session != null ? "/api/word/list" : "/api/word/preview";
 
   const res = await fetch(process.env.NEXT_PUBLIC_ORIGIN + wordListApi, {
->>>>>>> Stashed changes
     headers: {
       cookie: context.req.headers.cookie || "",
     },
