@@ -46,11 +46,11 @@ const AccordionBoardTitle: React.FC<AccordionBoardTitleTypes> = ({
         {titleText}
       </TypoComponent>
       <TypoComponent
-        fontSize="14px"
+        fontSize="13px"
         fontWeight="medium"
         textAlign="left"
         color="#cccccc"
-        marginTop="6px"
+        marginTop="4px"
       >
         {date}
       </TypoComponent>
