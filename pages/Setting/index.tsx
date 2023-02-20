@@ -319,7 +319,7 @@ const Setting: NextPage<{ statesCount: sttCntObjTypes }> = ({
           color="var(--color-grey)"
           fontSize="13px"
         >
-          &bull;홈 화면 카드 노출 옵션
+          &bull;랜덤카드 노출 옵션
         </TypoComponent>
         <SettingTopStyled>
           {objAcrdList.map((objAcrd, index) => (

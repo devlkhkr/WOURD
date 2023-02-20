@@ -592,7 +592,7 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
             ) : myWordList.length === 0 && searchKeyword.length === 0 ? (
               <DataEmptyComponent
                 title={`단어장에 등록된 카드가 없습니다.`}
-                detail="홈 화면에서 단어카드를 둘러보는 건 어떨까요?"
+                detail="랜덤카드 화면에서 단어카드를 둘러보는 건 어떨까요?"
                 ppsTit={`카드 둘러보기`}
                 ppsFunc={goToMain}
                 fullsize={true}
@@ -600,7 +600,7 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
             ) : (
               <DataEmptyComponent
                 title={`더 이상 표시할 카드가 없습니다.`}
-                detail="홈 화면에서 단어카드를 둘러보는 건 어떨까요?"
+                detail="랜덤카드 화면에서 단어카드를 둘러보는 건 어떨까요?"
                 ppsTit={`카드 둘러보기`}
                 ppsFunc={goToMain}
                 fullsize={false}

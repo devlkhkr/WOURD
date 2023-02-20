@@ -14,6 +14,7 @@ import {
   faInfoCircle,
   faGear,
   faFolder,
+  faShuffle,
 } from "@fortawesome/free-solid-svg-icons";
 
 const FooterWrap = styled.footer`
@@ -75,13 +76,13 @@ const Footer: React.FC = () => {
           <li className={router.pathname == "/" ? "active" : ""}>
             <a>
               <Icon
-                iconShape={faHouse}
+                iconShape={faShuffle}
                 iconWidth="16px"
                 iconHeight="16px"
                 bottom="6px"
                 align="auto"
               />
-              <IconText text="홈" />
+              <IconText text="랜덤카드" />
             </a>
           </li>
         </Link>
