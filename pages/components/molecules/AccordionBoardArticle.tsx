@@ -28,7 +28,7 @@ const NoticeArticle = styled.p<ArticleProps>`
   margin-bottom: unset;
   text-overflow: ellipsis;
   overflow: hidden;
-  word-break: break-word;
+  word-break: keep-all;
   display: -webkit-box;
 `;
 
