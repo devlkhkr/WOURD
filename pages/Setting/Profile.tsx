@@ -219,7 +219,7 @@ const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
           type: "website",
           url: process.env.NEXT_PUBLIC_ORIGIN + "/Setting/Profile",
           title: "Wourd Setting Profile Page",
-          description: "",
+          description: "wourd setting progile page",
         }}
       />
       <SettingProfileWrap>

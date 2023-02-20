@@ -135,7 +135,7 @@ const LoginComponent: NextPage<LoginTypes> = ({ isAuth }) => {
           type: "website",
           url: process.env.NEXT_PUBLIC_ORIGIN + "/Login",
           title: "Wourd Login page",
-          description: "",
+          description: "wourd login page",
         }}
       />
 

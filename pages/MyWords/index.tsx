@@ -460,7 +460,7 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
           type: "website",
           url: process.env.NEXT_PUBLIC_ORIGIN + "/MyWords",
           title: "Wourd MyWords page",
-          description: "",
+          description: "wourd mywords page",
         }}
       />
       {clickedWord.length === 1 ? (

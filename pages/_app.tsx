@@ -53,7 +53,7 @@ const DEFAULT_SEO = {
   title: "Wourd",
   description:
     "You can register words by category to manage storage and status. The goal is to broaden the knowledge for everyone by the searching the words registered by others and sharing the words registered by the user.",
-  canonical: "https://www.carrotins.com",
+  canonical: "https://www.wourd.kr/",
   openGraph: {
     type: "website",
     locale: "ko_KR",

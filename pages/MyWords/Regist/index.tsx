@@ -117,7 +117,7 @@ const RegistWord: NextPage<RegistWordTypes> = ({}) => {
           type: "website",
           url: process.env.NEXT_PUBLIC_ORIGIN + "/MyWords/Regist",
           title: "Wourd Words Regist Page",
-          description: "",
+          description: "wourd words regist page",
         }}
       />
       <RegistWordWrap>

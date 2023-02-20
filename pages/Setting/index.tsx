@@ -277,7 +277,7 @@ const Setting: NextPage<{ statesCount: sttCntObjTypes }> = ({
           type: "website",
           url: process.env.NEXT_PUBLIC_ORIGIN + "/Setting",
           title: "Wourd Setting Page",
-          description: "",
+          description: "wourd setting page",
         }}
       />
       <SettingWrap>
