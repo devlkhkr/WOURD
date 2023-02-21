@@ -24,7 +24,7 @@ const AccordionBoardList: React.FC<AccordionBoardListTypes> = ({
 }) => {
   const [data, setData] = useState(acrdData);
   useEffect(() => {}, [data]);
-  return (
+  return data ? (
     <>
       <AccordionBoardListComponent>
         <AccordionBoardTitle
@@ -43,6 +43,8 @@ const AccordionBoardList: React.FC<AccordionBoardListTypes> = ({
         ></AccordionBoardArticle>
       </AccordionBoardListComponent>
     </>
+  ) : (
+    <></>
   );
 };
 

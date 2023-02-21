@@ -63,24 +63,28 @@ const RadioComponent: React.FC<RadioTypes> = ({
   }));
   return (
     <div ref={reference}>
-      {options.map((o: any, index: number) => {
-        return (
-          <InputWrap key={o.value}>
-            <RadioStyled
-              type="radio"
-              id={`${name}_${o.value}`}
-              name={name}
-              value={o.value}
-              onClick={onClick}
-              defaultChecked={defaultChecked === o.value ? true : false}
-              ref={(radioDom: HTMLInputElement) =>
-                (radioRefs.current[index] = radioDom)
-              }
-            ></RadioStyled>
-            <Label htmlFor={`${name}_${o.value}`} desc={o.name} />
-          </InputWrap>
-        );
-      })}
+      {options ? (
+        options.map((o: any, index: number) => {
+          return (
+            <InputWrap key={o.value}>
+              <RadioStyled
+                type="radio"
+                id={`${name}_${o.value}`}
+                name={name}
+                value={o.value}
+                onClick={onClick}
+                defaultChecked={defaultChecked === o.value ? true : false}
+                ref={(radioDom: HTMLInputElement) =>
+                  (radioRefs.current[index] = radioDom)
+                }
+              ></RadioStyled>
+              <Label htmlFor={`${name}_${o.value}`} desc={o.name} />
+            </InputWrap>
+          );
+        })
+      ) : (
+        <></>
+      )}
     </div>
   );
 };

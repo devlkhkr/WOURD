@@ -51,22 +51,26 @@ const MultiSelectComponent: React.FC<MultiSelectTypes> = ({
   }));
   return (
     <MultiSelectStyled id={id} name={name} options={options}>
-      {options.map((o: any, index: any) => {
-        return (
-          <MSGridStyled key={o.name}>
-            <Checkbox
-              name={name}
-              value={o.value}
-              id={name + o.value}
-              defaultChecked={o.defaultChecked}
-              reference={(checkbox: HTMLInputElement) =>
-                (multiSelectRefs.current[index] = checkbox)
-              }
-            />
-            <Label htmlFor={name + o.value} desc={o.name} />
-          </MSGridStyled>
-        );
-      })}
+      {options ? (
+        options.map((o: any, index: any) => {
+          return (
+            <MSGridStyled key={o.name}>
+              <Checkbox
+                name={name}
+                value={o.value}
+                id={name + o.value}
+                defaultChecked={o.defaultChecked}
+                reference={(checkbox: HTMLInputElement) =>
+                  (multiSelectRefs.current[index] = checkbox)
+                }
+              />
+              <Label htmlFor={name + o.value} desc={o.name} />
+            </MSGridStyled>
+          );
+        })
+      ) : (
+        <></>
+      )}
     </MultiSelectStyled>
   );
 };

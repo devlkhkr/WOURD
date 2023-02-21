@@ -17,8 +17,8 @@ const AnchorStyled = styled.a<AnchorType>`
 
 const AnchorComponent: React.FC<AnchorType> = ({ width, href, children }) => {
   return (
-    <Link href={href}>
-      <AnchorStyled href={href} width={width}>
+    <Link href={href ?? ""}>
+      <AnchorStyled href={href ?? ""} width={width}>
         {children}
       </AnchorStyled>
     </Link>

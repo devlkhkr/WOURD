@@ -30,9 +30,13 @@ const UsageStyled = styled.ul<UsageComponent>`
 const UsageComponent: React.FC<UsageComponent> = ({ usageList }) => {
   return (
     <UsageStyled usageList={usageList}>
-      {usageList.map((notice: string, index: number) => (
-        <li key={index}>{notice}</li>
-      ))}
+      {usageList ? (
+        usageList.map((notice: string, index: number) => (
+          <li key={index}>{notice}</li>
+        ))
+      ) : (
+        <></>
+      )}
     </UsageStyled>
   );
 };

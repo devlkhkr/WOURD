@@ -2,7 +2,7 @@ import React, { MouseEventHandler } from "react";
 import styled from "styled-components";
 
 interface MaskType {
-  onClick: MouseEventHandler;
+  onClick?: MouseEventHandler;
   trnsp?: boolean;
 }
 

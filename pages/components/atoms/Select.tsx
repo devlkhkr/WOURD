@@ -45,13 +45,17 @@ const SelectComponent: React.FC<SelectTypes> = ({
   return (
     <SelectWrapStyled>
       <SelectStyled id={id} name={name} options={options} ref={reference}>
-        {options.map((o: any) => {
-          return (
-            <option key={o.value} value={o.value}>
-              {o.name}
-            </option>
-          );
-        })}
+        {options ? (
+          options.map((o: any) => {
+            return (
+              <option key={o.value} value={o.value}>
+                {o.name}
+              </option>
+            );
+          })
+        ) : (
+          <></>
+        )}
       </SelectStyled>
     </SelectWrapStyled>
   );

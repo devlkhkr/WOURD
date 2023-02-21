@@ -78,7 +78,7 @@ const StackComponent: React.FC<StackComponentType> = ({
             color="#202020"
             marginBottom="4px"
           >
-            <Link href={docs} passHref>
+            <Link href={docs ?? ""} passHref>
               <LinkTo target="_blank" rel="noopener noreferrer">
                 {name}
               </LinkTo>
