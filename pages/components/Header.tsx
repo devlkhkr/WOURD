@@ -6,6 +6,7 @@ import {
   faArrowRightFromBracket,
   faArrowRightToBracket,
   faArrowsRotate,
+  faPersonWalkingArrowRight,
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -56,6 +57,18 @@ const HeaderWrapStyled = styled.header<{ path: string }>`
   justify-content: center;
   box-shadow: ${(props) =>
     props.path === "/Login" ? "unset" : "0px 0px 8px 2px rgba(0, 0, 0, 0.05)"};
+`;
+
+const EnterGuestStyled = styled.div`
+  display: flex;
+  align-items: center;
+  * {
+    display: inline-block;
+    vertical-align: bottom;
+  }
+  i {
+    margin-left: 4px;
+  }
 `;
 
 const HeaderComponent: React.FC<HeaderComponentTypes> = ({}) => {
@@ -152,11 +165,19 @@ const HeaderComponent: React.FC<HeaderComponentTypes> = ({}) => {
         );
       case "/Login":
         return (
-          <TypoComponent fontSize="12px" color="var(--color-grey)">
+          <EnterGuestStyled>
             <AnchorComponent href="/Setting" underline={true}>
-              게스트로 둘러보기
+              <TypoComponent fontSize="12px" color="var(--color-grey)">
+                게스트로 둘러보기
+              </TypoComponent>
+              <Icon
+                iconShape={faPersonWalkingArrowRight}
+                iconWidth="16px"
+                iconHeight="16px"
+                color="var(--color-grey)"
+              />
             </AnchorComponent>
-          </TypoComponent>
+          </EnterGuestStyled>
         );
       default:
         return <></>;
