@@ -106,7 +106,7 @@ const MyWordCateListStyled = styled.div`
   }
 `;
 
-const WordEditWrapStyeld = styled.div`
+const WordEditWrapStyled = styled.div`
   position: absolute;
   right: 16px;
   bottom: 16px;
@@ -132,7 +132,7 @@ const MyWordCardComponent: React.FC<MyWordCardTypes> = ({
   cardContextOnclick,
   searchKeyword,
 }) => {
-  const userData: any = useSession().data?.user;
+  const { data: session, status } = useSession();
   const setTitleMark = (title: string, keyword: string) => {
     let markIdx = title.toUpperCase().indexOf(keyword.toUpperCase());
     let markdownStr =
@@ -186,8 +186,8 @@ const MyWordCardComponent: React.FC<MyWordCardTypes> = ({
           {objMyWord.word_is_web_flag ? <span>Web</span> : <></>}
           {objMyWord.word_is_ntv_flag ? <span>Native</span> : <></>}
         </Typo>
-        <WordEditWrapStyeld>
-          {objMyWord.user_id === userData.email ? (
+        <WordEditWrapStyled>
+          {objMyWord.user_id === session?.user?.email ? (
             <>
               <Icon
                 iconShape={faEllipsis}
@@ -212,7 +212,7 @@ const MyWordCardComponent: React.FC<MyWordCardTypes> = ({
               <img src={objMyWord.user_prf_img} />
             </WordOwnerStyled>
           )}
-        </WordEditWrapStyeld>
+        </WordEditWrapStyled>
       </MyWordCateListStyled>
     </MyWordListWrapStyled>
   );

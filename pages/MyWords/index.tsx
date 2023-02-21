@@ -16,7 +16,7 @@ import { faSliders } from "@fortawesome/free-solid-svg-icons";
 import ToggleCheckComponent from "pages/components/atoms/Toggle";
 import DataEmptyComponent from "pages/components/molecules/DataEmpty";
 import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
+import { getSession, signIn, useSession } from "next-auth/react";
 import MyWordCardComponent, {
   MyWordsListTypes,
 } from "pages/components/organisms/MyWordCard";
@@ -24,6 +24,7 @@ import { newContext } from "pages/components/organisms/Context";
 import { newAlert } from "pages/components/atoms/Alert";
 import Mask from "pages/components/atoms/Mask";
 import { NextSeo } from "next-seo";
+import { needLogin } from "pages/Login";
 
 const MyClickedCardStyled = styled.div`
   position: absolute;
@@ -147,7 +148,8 @@ const MyWordEndContents = styled.div`
 `;
 
 const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
-  const userData: any = useSession().data?.user;
+  const { data: session, status } = useSession();
+  const userData: any = session?.user;
 
   const [clickedWord, setClickedWord] = useState<ExposeWordTypes[]>([]);
   const [myWordList, setMyWordList] = useState<MyWordsListTypes[]>([]);
@@ -238,7 +240,7 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
   };
 
   const goToWordReg = () => {
-    router.push("/MyWords/Regist");
+    session ? router.push("/MyWords/Regist") : needLogin();
   };
 
   const goToMain = () => {
@@ -427,6 +429,7 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
   }, [activeCateFlags]);
 
   useEffect(() => {
+    console.log(dataMyWordList);
     setMyWordList(dataMyWordList);
   }, [dataMyWordList]);
 
@@ -590,13 +593,25 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
                 marginTop="24px"
               />
             ) : myWordList.length === 0 && searchKeyword.length === 0 ? (
-              <DataEmptyComponent
-                title={`단어장에 등록된 카드가 없습니다.`}
-                detail="랜덤카드 화면에서 단어카드를 둘러보는 건 어떨까요?"
-                ppsTit={`카드 둘러보기`}
-                ppsFunc={goToMain}
-                fullsize={true}
-              />
+              session ? (
+                <DataEmptyComponent
+                  title={`단어장에 등록된 카드가 없습니다.`}
+                  detail="랜덤카드 화면에서 단어카드를 둘러보는 건 어떨까요?"
+                  ppsTit={`카드 둘러보기`}
+                  ppsFunc={goToMain}
+                  fullsize={true}
+                />
+              ) : (
+                <DataEmptyComponent
+                  title={`로그인이 필요합니다.`}
+                  detail="Wourd와 함께 단어카드를 상태/카테고리별로 관리해보세요."
+                  ppsTit={`로그인 하기`}
+                  ppsFunc={() => {
+                    signIn();
+                  }}
+                  fullsize={true}
+                />
+              )
             ) : (
               <DataEmptyComponent
                 title={`더 이상 표시할 카드가 없습니다.`}
@@ -614,17 +629,30 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
 };
 
 export async function getServerSideProps(context: any) {
-  const res = await fetch(process.env.NEXT_PUBLIC_ORIGIN + "/api/myword/list", {
-    headers: {
-      cookie: context.req.headers.cookie || "",
-    },
-  });
-  const data = await res.json();
-  return {
-    props: {
-      dataMyWordList: data,
-    },
-  };
+  const session = await getSession(context);
+
+  if (session != null) {
+    const res = await fetch(
+      process.env.NEXT_PUBLIC_ORIGIN + "/api/myword/list",
+      {
+        headers: {
+          cookie: context.req.headers.cookie || "",
+        },
+      }
+    );
+    const data = await res.json();
+    return {
+      props: {
+        dataMyWordList: data,
+      },
+    };
+  } else {
+    return {
+      props: {
+        dataMyWordList: [],
+      },
+    };
+  }
 }
 
 export default MyWordsComponent;

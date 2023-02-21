@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowLeft,
   faArrowRightFromBracket,
+  faArrowRightToBracket,
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -11,20 +12,11 @@ import styled from "styled-components";
 import Logo from "../components/atoms/Logo";
 import { useRouter } from "next/router";
 import Icon from "./atoms/Icon";
-import { signOut } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
+import { newConfirm } from "./templates/Confirm";
+import { needLogin } from "pages/Login";
 
 interface HeaderComponentTypes {}
-
-const HeaderWrapStyled = styled.header<HeaderComponentTypes>`
-  background-color: blue;
-  width: 100%;
-  height: var(--height-header);
-  background-color: #ffffff;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, 0.05);
-`;
 
 const HeaderLogo = styled.div`
   display: flex;
@@ -52,16 +44,28 @@ const AddNewWord = styled.span`
   right: 20px;
 `;
 
+const HeaderWrapStyled = styled.header<{ path: string }>`
+  width: 100%;
+  height: var(--height-header);
+  background-color: #ffffff;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  box-shadow: ${(props) =>
+    props.path === "/Login" ? "unset" : "0px 0px 8px 2px rgba(0, 0, 0, 0.05)"};
+`;
+
 const HeaderComponent: React.FC<HeaderComponentTypes> = ({}) => {
   const router = useRouter();
   const [canGoBack, setCanGoBack] = useState<boolean>();
+  const { data: session, status } = useSession();
 
   useEffect(() => {
     window.history.length > 1 ? setCanGoBack(true) : setCanGoBack(false);
   });
 
   const addNewWordClick = () => {
-    router.push("/MyWords/Regist");
+    session != null ? router.push("/MyWords/Regist") : needLogin();
   };
 
   const getHdrTitle = (path: string) => {
@@ -88,22 +92,35 @@ const HeaderComponent: React.FC<HeaderComponentTypes> = ({}) => {
     }
   };
 
+  const sysLogOut = () => {
+    newConfirm({
+      submitTit: "로그아웃",
+      confirmText: "로그아웃 하시겠습니까?",
+      confirmSubmit: () => {
+        signOut({
+          redirect: true,
+          callbackUrl: "/Setting",
+        });
+        alert("로그아웃 되었습니다.");
+      },
+    });
+  };
+
   const getHdrRightIcon = (path: string) => {
     switch (path) {
       case "/Setting":
         return (
           <Icon
-            iconShape={faArrowRightFromBracket}
+            iconShape={
+              session ? faArrowRightFromBracket : faArrowRightToBracket
+            }
             iconWidth="20px"
             iconHeight="20px"
             align="auto"
             color="var(--color-grey)"
-            onClick={() =>
-              signOut({
-                redirect: true,
-                callbackUrl: "/Login",
-              })
-            }
+            onClick={() => {
+              session ? sysLogOut() : signIn();
+            }}
           />
         );
       case "/":
@@ -123,10 +140,8 @@ const HeaderComponent: React.FC<HeaderComponentTypes> = ({}) => {
     }
   };
 
-  const addWordDeniedList = ["/Setting", "/MyWords/Regist"];
-
   return (
-    <HeaderWrapStyled>
+    <HeaderWrapStyled path={router.pathname}>
       {canGoBack ? (
         <HistoryBack>
           <Icon

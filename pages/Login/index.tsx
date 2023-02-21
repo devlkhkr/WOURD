@@ -18,9 +18,20 @@ import { NextSeo } from "next-seo";
 import { store } from "redux/store";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { newConfirm } from "pages/components/templates/Confirm";
 
 interface LoginTypes {
-  isAuth?: boolean;
+  isLoginPage?: boolean;
+}
+
+export function needLogin() {
+  newConfirm({
+    confirmText: "로그인이 필요한 서비스입니다.",
+    submitTit: "로그인",
+    confirmSubmit: () => {
+      signIn();
+    },
+  });
 }
 
 const LoginStyled = styled.form<LoginTypes>`
@@ -49,6 +60,7 @@ const LoginStyled = styled.form<LoginTypes>`
     background-position: center bottom 20px;
     z-index: -1;
     opacity: 0.5;
+    pointer-events: none;
   }
   input {
     margin-top: 8px;
@@ -58,19 +70,30 @@ const LoginStyled = styled.form<LoginTypes>`
   }
 `;
 
+const WelcomeMsgStyled = styled.div`
+  p {
+    font-size: 20px;
+    font-weight: var(--weight-light);
+    color: var(--color-darkblue);
+    line-height: 1.25;
+    span {
+      font-weight: var(--weight-bold);
+    }
+  }
+`;
+
 const LoginWithOtherSys = styled.div`
   button {
   }
 `;
 
-const LoginComponent: NextPage<LoginTypes> = ({ isAuth }) => {
+const LoginComponent: NextPage<LoginTypes> = ({ isLoginPage }) => {
   const idInput: any = useRef();
   const pwInput: any = useRef();
   const router = useRouter();
   const session = useSession();
 
   useEffect(() => {
-    console.log(session.status);
     if (session.status === "authenticated") {
       router.push("/");
     }
@@ -98,7 +121,7 @@ const LoginComponent: NextPage<LoginTypes> = ({ isAuth }) => {
             if (res.error === "CredentialsSignin") {
               alert("아이디 또는 비밀번호를 확인하세요.");
             } else if (res.status === 200 && res.error === null) {
-              console.log("로그인 성공");
+              console.log("LogIn Succeed");
             } else {
               console.log("예외오류:::", res);
             }
@@ -150,14 +173,13 @@ const LoginComponent: NextPage<LoginTypes> = ({ isAuth }) => {
       )}
       <LoginStyled onSubmit={startLogin}>
         {/* <Logo mainColor="var(--color-point)" subColor="#231815" /> */}
-        <Typo
-          textAlign="left"
-          fontSize="24px"
-          fontWeight="bold"
-          color="var(--color-darkblue)"
-        >
-          로그인
-        </Typo>
+        <WelcomeMsgStyled>
+          <p>
+            함께 만들어가는 단어장
+            <br /> <span>WOURD</span> 에 오신 것을 환영합니다 :)
+          </p>
+        </WelcomeMsgStyled>
+
         <Fieldset>
           <InputText
             type="text"
@@ -210,7 +232,7 @@ const LoginComponent: NextPage<LoginTypes> = ({ isAuth }) => {
 };
 
 LoginComponent.defaultProps = {
-  isAuth: true,
+  isLoginPage: true,
 };
 
 export default LoginComponent;

@@ -1,3 +1,4 @@
+import { useSession } from "next-auth/react";
 import React, { useState } from "react";
 import { useRef } from "react";
 import styled from "styled-components";
@@ -69,6 +70,7 @@ const CardSwiperComponent: React.FC<CardSwiperTypes> = ({
   setButtonState,
   zIndex,
 }) => {
+  const { data: session, status } = useSession();
   const throwLimit = 60;
   let startPointX = 0;
   let startPointY = 0;
@@ -145,13 +147,18 @@ const CardSwiperComponent: React.FC<CardSwiperTypes> = ({
     cardStateDecided(movedDistanceX, movedDistanceY);
   };
 
+  const cardStateCanceled = () => {
+    cardDOM.current.style.left = 0;
+    cardDOM.current.style.top = 0;
+    cardDOM.current.style.transform = "unset";
+    setButtonState("");
+  };
+
   const cardStateDecided = function (_x: number, _y: number) {
     let absX = Math.abs(_x);
     let absY = Math.abs(_y);
-    if (absX < throwLimit && absY < throwLimit) {
-      cardDOM.current.style.left = 0;
-      cardDOM.current.style.top = 0;
-      cardDOM.current.style.transform = "unset";
+    if ((absX < throwLimit && absY < throwLimit) || !session) {
+      cardStateCanceled();
     }
     if (absX > throwLimit && absX > absY) {
       _x > 0 ? cardHandler.know(wordInfo) : cardHandler.dontKnow(wordInfo);

@@ -25,7 +25,7 @@ const Home: NextPage = ({ dataWordList }: any) => {
 };
 
 export const getServerSideProps = async (context: any) => {
-  const session = await getSession();
+  const session = await getSession(context);
   let wordListApi = session != null ? "/api/word/list" : "/api/word/preview";
 
   const res = await fetch(process.env.NEXT_PUBLIC_ORIGIN + wordListApi, {

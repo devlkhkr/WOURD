@@ -17,6 +17,7 @@ import DataEmptyComponent from "../molecules/DataEmpty";
 import { useRouter } from "next/router";
 import { newAlert } from "../atoms/Alert";
 import StyledComponentTypes from "../../../functional/intefaces/styledComponent";
+import { needLogin } from "pages/Login";
 
 interface CardMainTypes {
   exposeWord: ExposeWordTypes[];
@@ -229,13 +230,6 @@ const WordRegInfoStyled = styled.div`
   left: 16px;
   top: 16px;
   text-align: left;
-  &::before {
-    /* content: "등록자:";
-    font-size: 14px;
-    margin-right: 16px;
-    vertical-align: middle;
-    opacity: 0.8; */
-  }
   img,
   .card_user_nickname {
     display: inline-block;
@@ -284,7 +278,7 @@ const CardMainComponent: React.FC<CardMainTypes> = ({
   closeCardModal,
   afterMyWordState,
 }) => {
-  const userData = useSession();
+  const { data: session, status } = useSession();
 
   const cardList: any = useRef();
   const cardHandler = {
@@ -303,20 +297,26 @@ const CardMainComponent: React.FC<CardMainTypes> = ({
   };
 
   const afterCardHandler = function (_objWord: ExposeWordTypes, state: string) {
-    setButtonState("");
-    _objWord.fliped = false;
-    _objWord.state = `state_${state}`;
-    setCardData(_objWord, state);
-    setWordList([...wordList]);
-    // console.log(_objWord);
-    newAlert(
-      `${_objWord.word_name}의 상태가 ${getStateStrKr(
-        state
-      )}로 변경되었습니다.`,
-      "pstv"
-    );
-    let tempCardIdx = cardIdx + 1;
-    setCardIdx(tempCardIdx);
+    session
+      ? (() => {
+          setButtonState("");
+          _objWord.fliped = false;
+          _objWord.state = `state_${state}`;
+          setCardData(_objWord, state);
+          setWordList([...wordList]);
+          // console.log(_objWord);
+          newAlert(
+            `${_objWord.word_name}의 상태가 ${getStateStrKr(
+              state
+            )}로 변경되었습니다.`,
+            "pstv"
+          );
+          let tempCardIdx = cardIdx + 1;
+          setCardIdx(tempCardIdx);
+        })()
+      : (() => {
+          needLogin();
+        })();
   };
 
   const setCardData = async (_objWord: ExposeWordTypes, _state: string) => {
@@ -324,7 +324,7 @@ const CardMainComponent: React.FC<CardMainTypes> = ({
       process.env.NEXT_PUBLIC_ORIGIN + "/api/user/word/state",
       {
         wordInfo: {
-          userId: userData.data?.user?.email,
+          userId: session?.user?.email,
           wordId: _objWord.word_id,
           wordState: _state,
         },
@@ -425,7 +425,17 @@ const CardMainComponent: React.FC<CardMainTypes> = ({
                     ) : (
                       <></>
                     )}
-                    <WordRegInfoStyled>
+                    <WordRegInfoStyled
+                      onClick={() => {
+                        // window.navigator.share({
+                        //   title: "", // 공유될 제목
+                        //   text: "", // 공유될 설명
+                        //   url: "", // 공유될 URL
+                        //   files: [], // 공유할 파일 배열
+                        // });
+                        console.log(window.navigator);
+                      }}
+                    >
                       <img src={objWord.user_prf_img}></img>
                       <span className="card_user_nickname">
                         {objWord.user_nickname}
