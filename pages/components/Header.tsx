@@ -5,6 +5,7 @@ import {
   faArrowLeft,
   faArrowRightFromBracket,
   faArrowRightToBracket,
+  faArrowsRotate,
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -15,6 +16,8 @@ import Icon from "./atoms/Icon";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { newConfirm } from "./templates/Confirm";
 import { needLogin } from "pages/Login";
+import TypoComponent from "./atoms/Typo";
+import AnchorComponent from "./atoms/Anchor";
 
 interface HeaderComponentTypes {}
 
@@ -124,6 +127,18 @@ const HeaderComponent: React.FC<HeaderComponentTypes> = ({}) => {
           />
         );
       case "/":
+        return (
+          <Icon
+            iconShape={faArrowsRotate}
+            iconWidth="20px"
+            iconHeight="20px"
+            align="auto"
+            color="var(--color-grey)"
+            onClick={() => {
+              router.reload();
+            }}
+          />
+        );
       case "/MyWords":
         return (
           <Icon
@@ -134,6 +149,14 @@ const HeaderComponent: React.FC<HeaderComponentTypes> = ({}) => {
             color="var(--color-grey)"
             onClick={addNewWordClick}
           />
+        );
+      case "/Login":
+        return (
+          <TypoComponent fontSize="12px" color="var(--color-grey)">
+            <AnchorComponent href="/Setting" underline={true}>
+              게스트로 둘러보기
+            </AnchorComponent>
+          </TypoComponent>
         );
       default:
         return <></>;
