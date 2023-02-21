@@ -2,7 +2,10 @@ import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import styledInterface from "../../../functional/intefaces/styledComponent";
 import Icon from "pages/components/atoms/Icon";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCircleExclamation,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
 import DevLog from "pages/components/organisms/DevLog";
 import HelpMessage from "../organisms/HelpMessage";
 import Notice from "../organisms/Notice";
@@ -19,6 +22,7 @@ import { useEffect, useState } from "react";
 import { store } from "redux/store";
 import ButtonCompontent from "../atoms/Button";
 import Mask from "../atoms/Mask";
+import { faBell } from "@fortawesome/free-regular-svg-icons";
 
 const ConfirmWrapStyled = styled.div`
   position: fixed;
@@ -67,9 +71,14 @@ const ConfirmDetailsStyled = styled.div`
 `;
 
 const TitConfirmStyled = styled.div`
+  display: flex;
+  align-items: center;
   height: 48px;
   padding-left: 16px;
   background-color: #555;
+  i {
+    margin-right: 8px;
+  }
 `;
 
 const ConfirmButtonsStyled = styled.div`
@@ -118,13 +127,19 @@ const ConfirmComponent: React.FC = () => {
       />
       <ConfirmCardStyled>
         <TitConfirmStyled>
+          <Icon
+            iconShape={faBell}
+            iconWidth="14px"
+            iconHeight="14px"
+            color="#fff"
+          />
           <TypoComponent
             textAlign="left"
             lineHeight="48px"
             color="#fff"
             fontWeight="bold"
           >
-            확인
+            알림
           </TypoComponent>
         </TitConfirmStyled>
         <CloseConfirmStyled onClick={() => store.dispatch(closeConfirm())}>
