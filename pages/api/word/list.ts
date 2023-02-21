@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 const db = require("common/config/db");
 
 import { authOptions } from "pages/api/auth/[...nextauth]";
-import { unstable_getServerSession } from "next-auth/next";
+import { getServerSession } from "next-auth/next";
 
 const getCateFlagQuery = (cateFlags: object | null | undefined) => {
   if (cateFlags) {
@@ -63,7 +63,7 @@ export default async function getWordlist(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const session = await unstable_getServerSession(req, res, authOptions);
+  const session = await getServerSession(req, res, authOptions);
   if (!session) {
     res.status(401).json({ message: "You must be logged in." });
     return;

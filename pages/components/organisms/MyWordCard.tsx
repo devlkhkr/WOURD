@@ -142,7 +142,7 @@ const MyWordCardComponent: React.FC<MyWordCardTypes> = ({
 
     return markdownStr;
   };
-  return (
+  return objMyWord ? (
     <MyWordListWrapStyled
       className={`state_${objMyWord.word_state}`}
       onClick={() => onCardClick(objMyWord)}
@@ -215,6 +215,8 @@ const MyWordCardComponent: React.FC<MyWordCardTypes> = ({
         </WordEditWrapStyled>
       </MyWordCateListStyled>
     </MyWordListWrapStyled>
+  ) : (
+    <></>
   );
 };
 

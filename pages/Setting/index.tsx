@@ -22,7 +22,7 @@ import uuid from "uuid4";
 import { newAlert } from "pages/components/atoms/Alert";
 import TypoComponent from "pages/components/atoms/Typo";
 import UsageComponent from "pages/components/molecules/Usage";
-import { unstable_getServerSession } from "next-auth";
+import { getServerSession } from "next-auth";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 import { NextSeo } from "next-seo";
 import { newConfirm } from "pages/components/templates/Confirm";

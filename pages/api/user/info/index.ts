@@ -2,11 +2,11 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getSession } from "next-auth/react";
 import { authOptions } from "pages/api/auth/[...nextauth]";
-import { unstable_getServerSession } from "next-auth/next";
+import { getServerSession } from "next-auth/next";
 const db = require("common/config/db");
 
 export default async function getUserInfo(req: NextApiRequest, res: NextApiResponse) {
-  //   const session = await unstable_getServerSession(req, res, authOptions);
+  //   const session = await getServerSession(req, res, authOptions);
   //   if (!session) {
   //     res.status(401).json({ message: "You must be logged in." });
   //     return;

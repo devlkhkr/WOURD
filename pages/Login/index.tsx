@@ -77,6 +77,9 @@ const WelcomeMsgStyled = styled.div`
     color: var(--color-darkblue);
     line-height: 1.25;
     span {
+      font-size: 18px;
+    }
+    strong {
       font-weight: var(--weight-bold);
     }
   }
@@ -90,6 +93,7 @@ const LoginWithOtherSys = styled.div`
 const LoginComponent: NextPage<LoginTypes> = ({ isLoginPage }) => {
   const idInput: any = useRef();
   const pwInput: any = useRef();
+  const btnLogin: any = useRef();
   const router = useRouter();
   const session = useSession();
 
@@ -175,8 +179,8 @@ const LoginComponent: NextPage<LoginTypes> = ({ isLoginPage }) => {
         {/* <Logo mainColor="var(--color-point)" subColor="#231815" /> */}
         <WelcomeMsgStyled>
           <p>
-            함께 만들어가는 단어장
-            <br /> <span>WOURD</span> 에 오신 것을 환영합니다 :)
+            <span>함께 만들어가는 단어장</span>
+            <br /> <strong>WOURD</strong> 에 오신 것을 환영합니다 :)
           </p>
         </WelcomeMsgStyled>
 
@@ -205,6 +209,7 @@ const LoginComponent: NextPage<LoginTypes> = ({ isLoginPage }) => {
             height="48px"
             color="#fff"
             backgroundColor="var(--color-point)"
+            reference={btnLogin}
           />
         </Fieldset>
         <Typo

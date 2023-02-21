@@ -120,11 +120,7 @@ const ConfirmComponent: React.FC = () => {
 
   return (
     <ConfirmWrapStyled>
-      <Mask
-        onClick={() => {
-          store.dispatch(closeConfirm());
-        }}
-      />
+      <Mask />
       <ConfirmCardStyled>
         <TitConfirmStyled>
           <Icon

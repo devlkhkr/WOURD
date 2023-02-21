@@ -429,7 +429,6 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
   }, [activeCateFlags]);
 
   useEffect(() => {
-    console.log(dataMyWordList);
     setMyWordList(dataMyWordList);
   }, [dataMyWordList]);
 
