@@ -24,7 +24,9 @@ import Mask from "pages/components/atoms/Mask";
 import { useDidMountEffect } from "functional/customHooks/useDidMountEffect";
 import { NextSeo } from "next-seo";
 
-interface SettingProfileTypes extends styledInterface {}
+interface SettingProfileTypes {
+  isAuth: boolean;
+}
 
 const SettingProfileWrap = styled.div`
   background-color: var(--color-white);
@@ -68,12 +70,14 @@ const ChangeImgButtons = styled.div`
 const SliderAvataTypes = styled.ul`
   white-space: nowrap;
   overflow: auto;
+  max-width: calc(720px - 72px);
   width: calc(100% - 72px);
   box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, 0.05);
   padding: 24px;
   z-index: 19999;
   position: absolute;
-  left: 36px;
+  left: 50%;
+  transform: translate(-50%, 0);
   background-color: #fff;
   border-radius: 8px;
   border: 1px dashed #ddd;
@@ -375,6 +379,10 @@ const SettingProfileComponent: React.FC<SettingProfileTypes> = () => {
       </SettingProfileWrap>
     </>
   );
+};
+
+SettingProfileComponent.defaultProps = {
+  isAuth: true,
 };
 
 export default SettingProfileComponent;

@@ -100,7 +100,11 @@ const UserProfileComponent: React.FC<UserProfileTypes> = ({}) => {
         // ui에 주사위 / 새로고침 누를때마다 state 변경. 변경되는값은
         // dropdown 이 scr의 personas
         // /뒤에 들어가는애가 uuid로 생성된값.svg
-        src={session ? session?.user?.image! : ""}
+        src={
+          session
+            ? session?.user?.image!
+            : "https://api.dicebear.com/5.x/personas/svg?seed=guest"
+        }
         objectFit="cover"
         width="64px"
         height="64px"
@@ -108,7 +112,7 @@ const UserProfileComponent: React.FC<UserProfileTypes> = ({}) => {
       />
       <UserInfoStyled>
         <TypoComponent fontSize="16px" fontWeight="semi-bold" textAlign="left">
-          {session ? session?.user?.name! : ""}
+          {session ? session?.user?.name! : "게스트"}
         </TypoComponent>
         <TypoComponent
           fontSize="14px"
@@ -117,7 +121,7 @@ const UserProfileComponent: React.FC<UserProfileTypes> = ({}) => {
           color="var(--color-point)"
           marginTop="4px"
         >
-          {session ? session?.user?.email! : ""}
+          {session ? session?.user?.email! : "guest@wourd.kr"}
         </TypoComponent>
         <TypoComponent
           fontSize="12px"
@@ -126,7 +130,9 @@ const UserProfileComponent: React.FC<UserProfileTypes> = ({}) => {
           textAlign="left"
           marginTop="8px"
         >
-          {`마지막 접속: ${getLastLoginPeriod()}`}
+          {`마지막 접속: ${
+            session ? getLastLoginPeriod() : "로그인이 필요합니다."
+          }`}
         </TypoComponent>
       </UserInfoStyled>
       <Icon

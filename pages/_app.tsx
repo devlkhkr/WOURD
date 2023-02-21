@@ -28,6 +28,7 @@ import axios from "axios";
 import { DefaultSeo } from "next-seo";
 import Alert from "./components/atoms/Alert";
 import Context from "./components/organisms/Context";
+import Confirm from "./components/templates/Confirm";
 
 function Auth({ children }: any) {
   const { data: session, status } = useSession();
@@ -185,12 +186,16 @@ function MyApp({
           {/* modal */}
           <Context />
           <Alert />
+          <Confirm />
           <GlobalModal />
           <Wrap>
             {/* content */}
-            {Component.defaultProps?.isAuth === true ? (
-              <Component {...pageProps} />
-            ) : (
+            {Component.defaultProps?.isLoginPage ? (
+              <>
+                <Header />
+                <Component {...pageProps} />
+              </>
+            ) : Component.defaultProps?.isAuth ? (
               <Auth>
                 <Header />
                 <ComponentWrap
@@ -200,6 +205,16 @@ function MyApp({
                 </ComponentWrap>
                 <Footer />
               </Auth>
+            ) : (
+              <>
+                <Header />
+                <ComponentWrap
+                  className={router.pathname == "/" ? "isMain" : ""}
+                >
+                  <Component {...pageProps} />
+                </ComponentWrap>
+                <Footer />
+              </>
             )}
           </Wrap>
         </Wrapper>

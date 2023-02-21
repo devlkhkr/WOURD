@@ -15,7 +15,7 @@ import ProfileWordComponent from "pages/components/molecules/ProfileWord";
 import ProfileWordItemComponent from "pages/components/molecules/ProfileWordItem";
 import { reloadSession } from "functional/functions/Session";
 
-import { useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import uuid from "uuid4";
@@ -25,6 +25,8 @@ import UsageComponent from "pages/components/molecules/Usage";
 import { unstable_getServerSession } from "next-auth";
 import { authOptions } from "pages/api/auth/[...nextauth]";
 import { NextSeo } from "next-seo";
+import { newConfirm } from "pages/components/templates/Confirm";
+import { needLogin } from "pages/Login";
 
 interface sttCntTypes {
   word_state: "k" | "d" | "f" | "s" | "m";
@@ -205,21 +207,21 @@ const Setting: NextPage<{ statesCount: sttCntObjTypes }> = ({
             column: "user_main_k_flag",
             checked: session
               ? session?.user?.mainWordExpOpts?.stateFlags?.user_main_k_flag!
-              : false,
+              : true,
           },
           {
             label: "모르는단어",
             column: "user_main_d_flag",
             checked: session
               ? session?.user?.mainWordExpOpts?.stateFlags?.user_main_d_flag!
-              : false,
+              : true,
           },
           {
             label: "즐겨찾은단어",
             column: "user_main_f_flag",
             checked: session
               ? session?.user?.mainWordExpOpts?.stateFlags?.user_main_f_flag!
-              : false,
+              : true,
           },
           {
             label: "건너뛴단어",
@@ -247,21 +249,21 @@ const Setting: NextPage<{ statesCount: sttCntObjTypes }> = ({
             column: "user_main_cs_flag",
             checked: session
               ? session?.user?.mainWordExpOpts?.cateFlags.user_main_cs_flag!
-              : false,
+              : true,
           },
           {
             label: "Web",
             column: "user_main_web_flag",
             checked: session
               ? session?.user?.mainWordExpOpts?.cateFlags.user_main_web_flag!
-              : false,
+              : true,
           },
           {
             label: "Native",
             column: "user_main_ntv_flag",
             checked: session
               ? session?.user?.mainWordExpOpts?.cateFlags.user_main_ntv_flag!
-              : false,
+              : true,
           },
         ],
       },
@@ -281,10 +283,12 @@ const Setting: NextPage<{ statesCount: sttCntObjTypes }> = ({
         }}
       />
       <SettingWrap>
-        <SettingProfileStyled>
-          <Anchor width="100%" href="/Setting/Profile">
-            <UserProfileComponent />
-          </Anchor>
+        <SettingProfileStyled
+          onClick={() => {
+            session === null ? needLogin() : router.push("Setting/Profile");
+          }}
+        >
+          <UserProfileComponent />
         </SettingProfileStyled>
 
         {wordAcrdList.map((wordAcrd, index) => {
@@ -347,42 +351,52 @@ const Setting: NextPage<{ statesCount: sttCntObjTypes }> = ({
                         : void 0
                     }
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      let arrTglsVld: boolean[] = [];
-                      stateTogglesRef.current.map(
-                        (toggle: HTMLInputElement, index: number) => {
-                          arrTglsVld[index] = toggle.checked;
-                        }
-                      );
-                      arrTglsVld.indexOf(true) === -1
+                      session
                         ? (() => {
-                            e.target.checked = true;
-                            newAlert(
-                              "카테고리 토글은 최소 한개이상 설정되어야 합니다.",
-                              "ngtv"
-                            );
-                            return;
-                          })()
-                        : (() => {
-                            const res = axios.post(
-                              process.env.NEXT_PUBLIC_ORIGIN + "/api/user/opt",
-                              {
-                                column: list.column,
-                                value: e.target.checked ? 1 : 0,
+                            let arrTglsVld: boolean[] = [];
+                            stateTogglesRef.current.map(
+                              (toggle: HTMLInputElement, index: number) => {
+                                arrTglsVld[index] = toggle.checked;
                               }
                             );
-                            res.then((result) => {
-                              result.status === 200
-                                ? (() => {
-                                    newAlert(
-                                      `${list.label} 노출옵션이 ${
-                                        e.target.checked ? "활성" : "비활성"
-                                      }화 되었습니다.`,
-                                      "pstv"
-                                    );
-                                    reloadSession();
-                                  })()
-                                : void 0;
-                            });
+                            arrTglsVld.indexOf(true) === -1
+                              ? (() => {
+                                  e.target.checked = true;
+                                  newAlert(
+                                    "카테고리 토글은 최소 한개이상 설정되어야 합니다.",
+                                    "ngtv"
+                                  );
+                                  return;
+                                })()
+                              : (() => {
+                                  const res = axios.post(
+                                    process.env.NEXT_PUBLIC_ORIGIN +
+                                      "/api/user/opt",
+                                    {
+                                      column: list.column,
+                                      value: e.target.checked ? 1 : 0,
+                                    }
+                                  );
+                                  res.then((result) => {
+                                    result.status === 200
+                                      ? (() => {
+                                          newAlert(
+                                            `${list.label} 노출옵션이 ${
+                                              e.target.checked
+                                                ? "활성"
+                                                : "비활성"
+                                            }화 되었습니다.`,
+                                            "pstv"
+                                          );
+                                          reloadSession();
+                                        })()
+                                      : void 0;
+                                  });
+                                })();
+                          })()
+                        : (() => {
+                            needLogin();
+                            e.target.checked = !e.target.checked;
                           })();
                     }}
                   />

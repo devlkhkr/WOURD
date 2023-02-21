@@ -7,6 +7,24 @@ interface SelectTypes extends styledInterface {
   reference?: any;
 }
 
+const SelectWrapStyled = styled.div`
+  position: relative;
+  &::after {
+    content: "";
+    display: inline-block;
+    width: 0;
+    height: 0;
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: rotate(45deg) translate(-6px, -50%);
+    border: solid var(--color-grey);
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 4px;
+  }
+`;
+
 const SelectStyled = styled.select<SelectTypes>`
   appearance: none;
   width: 100%;
@@ -25,15 +43,17 @@ const SelectComponent: React.FC<SelectTypes> = ({
   reference,
 }) => {
   return (
-    <SelectStyled id={id} name={name} options={options} ref={reference}>
-      {options.map((o: any) => {
-        return (
-          <option key={o.value} value={o.value}>
-            {o.name}
-          </option>
-        );
-      })}
-    </SelectStyled>
+    <SelectWrapStyled>
+      <SelectStyled id={id} name={name} options={options} ref={reference}>
+        {options.map((o: any) => {
+          return (
+            <option key={o.value} value={o.value}>
+              {o.name}
+            </option>
+          );
+        })}
+      </SelectStyled>
+    </SelectWrapStyled>
   );
 };
 

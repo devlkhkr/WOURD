@@ -8,6 +8,7 @@ interface CheckboxTypes extends styledInterface {
   value?: number;
   isToggle?: boolean;
   reference?: any;
+  disabled?: boolean;
 }
 
 const CheckboxStyled = styled.input<CheckboxTypes>`
@@ -85,6 +86,7 @@ const InputRadioComponent: React.FC<CheckboxTypes> = ({
   defaultChecked,
   isToggle,
   reference,
+  disabled,
 }) => {
   return (
     <CheckboxStyled
@@ -97,6 +99,7 @@ const InputRadioComponent: React.FC<CheckboxTypes> = ({
       defaultChecked={defaultChecked}
       isToggle={isToggle}
       ref={reference}
+      disabled={disabled}
     ></CheckboxStyled>
   );
 };
