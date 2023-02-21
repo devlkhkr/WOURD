@@ -55,39 +55,30 @@ const UserProfileComponent: React.FC<UserProfileTypes> = ({}) => {
     }
   };
 
-  const classifyTimestamp = (ms: number) => {
-    let periodSuffix: string = "";
+  function getTimeDiffString(milliseconds: number) {
+    const second = 1000;
+    const minute = 60 * second;
+    const hour = 60 * minute;
+    const day = 24 * hour;
 
-    let lastLoginPeriod: PeriodTypes = getPeriodType(ms)!;
-
-    switch (lastLoginPeriod.type) {
-      case 0:
-        periodSuffix = "초";
-        break;
-      case 1:
-        periodSuffix = "분";
-        break;
-      case 2:
-        periodSuffix = "시간";
-        break;
-      case 3:
-        periodSuffix = "일";
-        break;
+    if (milliseconds < minute) {
+      return `${Math.floor(milliseconds / second)}초 전`;
+    } else if (milliseconds < hour) {
+      return `${Math.floor(milliseconds / minute)}분 전`;
+    } else if (milliseconds < day) {
+      return `${Math.floor(milliseconds / hour)}시간 전`;
+    } else {
+      return `${Math.floor(milliseconds / day)}일 전`;
     }
-    return `${lastLoginPeriod.result + periodSuffix} 전`;
-  };
+  }
 
   const getLastLoginPeriod = () => {
     if (session) {
       let stDate = new Date(session?.user?.lastLogin!);
       let endDate = new Date();
       let btMs = endDate.getTime() - stDate.getTime();
-      // let btDay = classifyTimestamp(btMs);
-      // return btDay;
-      let year = stDate.getFullYear();
-      let month = stDate.getMonth() + 1;
-      let date = stDate.getDate();
-      return `${year}/${10 - (month + 1) >= 0 ? "0" + month : month}/${date}`;
+      let btDay = getTimeDiffString(btMs);
+      return btDay;
     } else {
       return false;
     }
