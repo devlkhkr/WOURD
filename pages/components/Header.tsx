@@ -44,22 +44,21 @@ const AddNewWord = styled.span`
   right: 20px;
 `;
 
+const HeaderWrapStyled = styled.header<{ path: string }>`
+  width: 100%;
+  height: var(--height-header);
+  background-color: #ffffff;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  box-shadow: ${(props) =>
+    props.path === "/Login" ? "unset" : "0px 0px 8px 2px rgba(0, 0, 0, 0.05)"};
+`;
+
 const HeaderComponent: React.FC<HeaderComponentTypes> = ({}) => {
   const router = useRouter();
   const [canGoBack, setCanGoBack] = useState<boolean>();
   const { data: session, status } = useSession();
-
-  const HeaderWrapStyled = styled.header<HeaderComponentTypes>`
-    width: 100%;
-    height: var(--height-header);
-    background-color: #ffffff;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    box-shadow: ${router.pathname === "/Login"
-      ? "unset"
-      : "0px 0px 8px 2px rgba(0, 0, 0, 0.05)"};
-  `;
 
   useEffect(() => {
     window.history.length > 1 ? setCanGoBack(true) : setCanGoBack(false);
@@ -94,11 +93,17 @@ const HeaderComponent: React.FC<HeaderComponentTypes> = ({}) => {
   };
 
   const sysLogOut = () => {
-    signOut({
-      redirect: true,
-      callbackUrl: "/Setting",
+    newConfirm({
+      submitTit: "로그아웃",
+      confirmText: "로그아웃 하시겠습니까?",
+      confirmSubmit: () => {
+        signOut({
+          redirect: true,
+          callbackUrl: "/Setting",
+        });
+        alert("로그아웃 되었습니다.");
+      },
     });
-    alert("로그아웃 되었습니다.");
   };
 
   const getHdrRightIcon = (path: string) => {
@@ -135,10 +140,8 @@ const HeaderComponent: React.FC<HeaderComponentTypes> = ({}) => {
     }
   };
 
-  const addWordDeniedList = ["/Setting", "/MyWords/Regist"];
-
   return (
-    <HeaderWrapStyled>
+    <HeaderWrapStyled path={router.pathname}>
       {canGoBack ? (
         <HistoryBack>
           <Icon

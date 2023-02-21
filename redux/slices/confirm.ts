@@ -3,15 +3,15 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 export interface ConfirmDataTypes {
   confirmText: string;
   confirmSubmit: Function;
-  isOpen: boolean;
-  submitTit?: string,
+  isOpen?: boolean;
+  submitTit?: string;
 }
 
 const initialState: ConfirmDataTypes = {
   confirmText: "",
   submitTit: "",
   isOpen: false,
-  confirmSubmit: () => {}
+  confirmSubmit: () => {},
 };
 
 export const confirmSlice = createSlice({
