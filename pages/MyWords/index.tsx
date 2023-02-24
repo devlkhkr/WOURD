@@ -602,7 +602,7 @@ const MyWordsComponent: NextPage = ({ dataMyWordList }: any) => {
                 />
               ) : (
                 <DataEmptyComponent
-                  title={`로그인이 필요합니다.`}
+                  title={`로그인이 필요한 서비스입니다.`}
                   detail="Wourd와 함께 단어카드를 상태/카테고리별로 관리해보세요."
                   ppsTit={`로그인 하기`}
                   ppsFunc={() => {
