@@ -15,7 +15,7 @@ const Home: NextPage = ({ dataWordList }: any) => {
   const [exposeWord, setExposeWord] = useState([]);
   useEffect(() => {
     setExposeWord(dataWordList);
-  }, []);
+  }, [dataWordList]);
 
   return (
     <>

@@ -148,7 +148,7 @@ const HeaderComponent: React.FC<HeaderComponentTypes> = ({}) => {
             align="auto"
             color="var(--color-grey)"
             onClick={() => {
-              router.reload();
+              router.push(router.pathname);
             }}
           />
         );
