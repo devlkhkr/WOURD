@@ -3,7 +3,7 @@
 </h1>
 
 ### Service Link
-<span><a href="https://wourd.kr">https://wourd.kr</a></span>
+<span><a href="https://wourd.kr" target="_blank">https://wourd.kr</a></span>
 
 ### Front-End Stack
 <span><img src="https://img.shields.io/badge/-Next.js-23F7DF1E?style=for-the-badge&logo=Next.js&logoColor=white&color=000000"></span>
