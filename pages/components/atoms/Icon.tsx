@@ -15,14 +15,14 @@ const IconWrap = styled.i<IconWrapTypes>`
   color: ${(props) => props.color || "inherit"};
   svg {
     font-size: ${(props) => props.svgSize || "16px"};
-    width: 100%;
-    height: 100%;
+    width: ${(props) => props.svgSize || "100%"};
+    height: ${(props) => props.svgSize || "100%"};
   }
 `;
 
 const CustomIcon = styled(IconWrap)<IconWrapTypes>`
-  background-image: url(${(props) =>
-    props.iconImg ? `../images/icons/${props.iconImg}.png` : ""});
+  background-image: ${(props) =>
+    props.iconImg ? `url(../images/icons/${props.iconImg}.png)` : ""};
   background-size: cover;
   background-position: center;
 `;

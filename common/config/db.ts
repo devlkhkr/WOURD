@@ -1,28 +1,18 @@
 export {};
-const mysql = require('mysql');
-
-let pool = mysql.createPool({
-  user: process.env.NEXT_PUBLIC_DB_USER,
-  password: process.env.NEXT_PUBLIC_DB_PW,
-  host: process.env.NEXT_PUBLIC_DB_HOST,
-  port: process.env.NEXT_PUBLIC_DB_PORT,
-  database: process.env.NEXT_PUBLIC_DB_DATABASE,
-  charset: process.env.NEXT_PUBLIC_DB_CHARSET,
-});
+const pool = require('./pool');
 
 const db = {
-  query : (query:string, callback:Function) => {
-    db.getConnection((conn:any)=>{
-      conn.query(query, callback)
-      conn.release();
-    })
-  },
-  getConnection : (callback:Function)=>{
-    pool.getConnection((err:Error, conn:any)=>{ 
-      if(err)throw err;
-      callback(conn);
+  query: (query: string, values: any[] = []) => {
+    return new Promise((resolve, reject) => {
+      pool.query(query, values, (err:any, results:any) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(results);
+        }
+      });
     });
-  }
-}
+  },
+};
 
 module.exports = db;

@@ -18,10 +18,10 @@ export default async function setUserOpt(req: NextApiRequest, res: NextApiRespon
       session.user.email +
       "'",
     function (err: any, data: any) {
-      if (!err && data.length === 1) {
+      if (!err && data.changedRows === 1) {
         res.send(true);
       } else {
-        console.log(err);
+        console.log("opt api err:", err);
         res.send(err);
       }
     }

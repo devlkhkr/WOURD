@@ -60,7 +60,7 @@ const Hash: HashTypes = {
         );
       });
     } else {
-      console.log("error:::", res.data);
+      console.log("error:::", "Hash.makePasswordHashed 에러");
       return false;
     }
   },

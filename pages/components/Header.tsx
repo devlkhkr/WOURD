@@ -86,13 +86,8 @@ const HeaderComponent: React.FC<HeaderComponentTypes> = ({}) => {
 
   const getHdrTitle = (path: string) => {
     switch (path) {
-      case "/":
-        return (
-          <Logo
-            mainColor="var(--color-point)"
-            subColor="var(--color-darkblue)"
-          />
-        );
+      case "/Login":
+        return <></>;
       case "/MyWords":
         return <h2>단어장</h2>;
       case "/MyWords/Regist":
@@ -104,7 +99,12 @@ const HeaderComponent: React.FC<HeaderComponentTypes> = ({}) => {
       case "/Setting/Profile":
         return <h2>프로필 변경</h2>;
       default:
-        return <></>;
+        return (
+          <Logo
+            mainColor="var(--color-point)"
+            subColor="var(--color-darkblue)"
+          />
+        );
     }
   };
 
@@ -148,7 +148,7 @@ const HeaderComponent: React.FC<HeaderComponentTypes> = ({}) => {
             align="auto"
             color="var(--color-grey)"
             onClick={() => {
-              router.reload();
+              router.push(router.pathname);
             }}
           />
         );
