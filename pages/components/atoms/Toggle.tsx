@@ -17,6 +17,7 @@ const ToggleCheckStyled = styled.div`
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px dashed rgba(120, 120, 120, 0.2);
+  background-color: #fcfcfc;
   &:last-of-type {
     border-bottom: 0;
   }
