@@ -75,10 +75,15 @@ const UserProfileComponent: React.FC<UserProfileTypes> = ({}) => {
   const getLastLoginPeriod = () => {
     if (session) {
       let stDate = new Date(session?.user?.lastLogin!);
-      let endDate = new Date();
-      let btMs = endDate.getTime() - stDate.getTime();
-      let btDay = getTimeDiffString(btMs);
-      return btDay;
+      // let endDate = new Date();
+      // let btMs = endDate.getTime() - stDate.getTime();
+      // let btDay = getTimeDiffString(btMs);
+      const year = stDate.getFullYear();
+      const month = String(stDate.getMonth() + 1).padStart(2, "0");
+      const day = String(stDate.getDate()).padStart(2, "0");
+      const formattedDate = `${year}/${month}/${day}`;
+      return formattedDate;
+      // return btDay;
     } else {
       return false;
     }
