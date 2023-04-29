@@ -1,7 +1,18 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../auth/[...nextauth]";
 const db = require("common/config/db");
 
-export default function registWord(req: NextApiRequest, res: NextApiResponse) {
+export default async function registWord(req: NextApiRequest, res: NextApiResponse) {
+  const session = await getServerSession(req, res, authOptions);
+  if (!session) {
+    res.status(401).json({ message: "You must be logged in." });
+    return;
+  }
+  if (session?.user?.email != req.body.wordRegistData.regUserId) {
+    res.status(401).json({ message: "Permission Denied" });
+    return;
+  }
   db.query(
     "UPDATE WORD_TB SET" + 
       " word_name='" +

@@ -18,8 +18,10 @@ import axios from "axios";
 import uuid from "uuid4";
 import { useSession } from "next-auth/react";
 import { newAlert } from "pages/components/atoms/Alert";
+import DataEmptyComponent from "pages/components/molecules/DataEmpty";
 
 interface ModifyWordTypes {
+  isAuth: boolean;
   wordData: {
     word_seq: number;
     word_id: string;
@@ -54,10 +56,10 @@ const ModifyWord: NextPage<ModifyWordTypes> = ({
   useEffect(() => {
     if (session) {
       wordData[0].word_reg_userid != session?.user?.email!
-        ? (() => {
+        ? setTimeout(() => {
             router.back();
             newAlert("권한이 없습니다.", "ngtv");
-          })()
+          }, 5000)
         : void 0;
     }
   }, [wordData]);
@@ -96,7 +98,7 @@ const ModifyWord: NextPage<ModifyWordTypes> = ({
     } else {
       // S : 단어 Insert 로직
       const wordRegistData = {
-        userId: session ? session?.user?.email! : "",
+        regUserId: wordData[0].word_reg_userid,
         wordId: wordData[0].word_id,
         wordTit: wordTit.replaceAll("'", "''"),
         wordIntlFlag: wordIntlFlag.current.getValue(),
@@ -120,7 +122,7 @@ const ModifyWord: NextPage<ModifyWordTypes> = ({
     }
   };
 
-  return (
+  return session?.user?.email === wordData[0].word_reg_userid ? (
     <RegistWordWrap>
       <Form>
         <Fieldset>
@@ -252,6 +254,15 @@ const ModifyWord: NextPage<ModifyWordTypes> = ({
         </Fieldset>
       </Form>
     </RegistWordWrap>
+  ) : (
+    <DataEmptyComponent
+      title={`권한이 없습니다.`}
+      detail="로그인 계정과 단어 등록자의 정보가 다릅니다. 로그인 정보를 확인해주세요. 잠시 후 이전화면으로 이동합니다."
+      ppsTit={`이전 화면으로`}
+      ppsFunc={() => {
+        router.back();
+      }}
+    />
   );
 };
 
@@ -274,4 +285,7 @@ export const getServerSideProps = async (context: any) => {
   };
 };
 
+ModifyWord.defaultProps = {
+  isAuth: true,
+};
 export default ModifyWord;

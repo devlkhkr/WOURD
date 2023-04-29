@@ -44,7 +44,6 @@ export default function sendMailAuth(
       data: data,
       authCode: randomAuthCode,
     };
-    // console.log(connectObject);
     res.send(connectObject);
   });
 }
