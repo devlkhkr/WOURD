@@ -1,6 +1,9 @@
 <h1 align="center" style="display: block; font-size: 2.5em; font-weight: bold; margin-block-start: 1em; margin-block-end: 1em;">
-  <strong>Copublish IT Dictionary</strong>
+  <strong>WOURD</strong>
 </h1>
+
+### Service Link
+<span><a href="https://wourd.kr/">https://wourd.kr</a></span>
 
 ### Front-End Stack
 <span><img src="https://img.shields.io/badge/-Next.js-23F7DF1E?style=for-the-badge&logo=Next.js&logoColor=white&color=000000"></span>
