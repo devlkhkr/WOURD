@@ -5,7 +5,11 @@ import Button from "../atoms/Button";
 import Typo from "../atoms/Typo";
 
 import Icon from "pages/components/atoms/Icon";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowUpRightFromSquare,
+  faBan,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
 
 import CardSwiper from "../organisms/CardSwiper";
 import styledInterface from "../../../functional/intefaces/styledComponent";
@@ -18,6 +22,12 @@ import { useRouter } from "next/router";
 import { newAlert } from "../atoms/Alert";
 import StyledComponentTypes from "../../../functional/intefaces/styledComponent";
 import { needLogin } from "pages/Login";
+import { faThumbsDown } from "@fortawesome/free-regular-svg-icons";
+import { newContext } from "../organisms/Context";
+import { newConfirm } from "./Confirm";
+import { store } from "redux/store";
+import { closeConfirm } from "redux/slices/confirm";
+import { MyWordsListTypes } from "../organisms/MyWordCard";
 
 interface CardMainTypes {
   exposeWord: ExposeWordTypes[];
@@ -88,8 +98,7 @@ const CardBackStyled = styled.div`
   ${CardBaseStyle}
   transform: rotateY(180deg);
   background: linear-gradient(#3f88ef, #0047ab);
-  /* background: linear-gradient(#747f8f, #48515f); */
-  color: #fff;
+  color: #ffffff;
   &.state {
     &_k {
       background: linear-gradient(#80d069, #38991c);
@@ -108,17 +117,6 @@ const CardBackStyled = styled.div`
       margin-top: 4px;
     }
   }
-`;
-
-const CardEndStyled = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-  font-size: 14px;
 `;
 
 const setButtonPosition: Function = function () {
@@ -196,21 +194,11 @@ const BtnWrapCardCtrlStyled = styled.div<StyledComponentTypes>`
   }
 `;
 
-const ButtonCardClose = styled.i`
-  display: inline-block;
-  width: 24px;
-  height: 24px;
-  position: absolute;
-  right: 16px;
-  top: 16px;
-  z-index: 1;
-`;
-
 const WordCateListStyled = styled.div`
   margin-bottom: 6px;
   span {
     font-size: 12px;
-    color: rgba(255, 255, 255, 0.5);
+    color: #fff;
     & + span {
       &::before {
         content: "";
@@ -225,11 +213,18 @@ const WordCateListStyled = styled.div`
 `;
 
 const WordRegInfoStyled = styled.div`
-  display: inline-block;
+  display: flex;
+  width: calc(100% - 32px);
   position: absolute;
   left: 16px;
   top: 16px;
   text-align: left;
+  > span {
+    width: 50%;
+  }
+`;
+
+const WordOwnerInfo = styled.span`
   img,
   .card_user_nickname {
     display: inline-block;
@@ -244,6 +239,60 @@ const WordRegInfoStyled = styled.div`
   .card_user_nickname {
     margin-left: 8px;
     font-size: 14px;
+  }
+`;
+
+const ButtonCardRemote = styled.span`
+  line-height: 24px;
+  text-align: right;
+  i {
+    display: inline-block;
+    vertical-align: top;
+    & + i {
+      margin-left: 12px;
+    }
+  }
+`;
+
+const BluredGradientBg = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: linear-gradient(to right, #ffffff, #ece9e6);
+  display: flex;
+  flex-grow: 1;
+  border-radius: 16px;
+  overflow: hidden;
+  z-index: -1;
+  div {
+    position: absolute;
+    border-radius: 100%;
+    filter: blur(100px);
+    opacity: 0.4;
+    &:nth-child(1) {
+      background: linear-gradient(132deg, #ff00dc 0%, #1f91cf 100%);
+      width: 200px;
+      height: 200px;
+      left: -50px;
+      top: -50px;
+    }
+    &:nth-child(2) {
+      background: linear-gradient(132deg, #39ff00 0%, #00a6ff 100%);
+      width: 60vw;
+      height: 60vw;
+      left: 50%;
+      top: 50%;
+      transform: translateX(-50%) translateY(-50%);
+    }
+    &:nth-child(3) {
+      background: linear-gradient(132deg, #ff0000 0%, #ffed00 100%);
+      width: 200px;
+      height: 200px;
+      right: -40px;
+      bottom: -40px;
+    }
   }
 `;
 
@@ -356,6 +405,20 @@ const CardMainComponent: React.FC<CardMainTypes> = ({
   const router = useRouter();
   const [cardIdx, setCardIdx] = useState(0);
 
+  const reportOnclick = (_objWord: any, reportType: number) => {
+    newConfirm({
+      submitTit: `신고하기`,
+      confirmText: `'${_objWord.word_name}' 단어를 신고하시겠습니까?`,
+      confirmSubmit: () => {
+        store.dispatch(closeConfirm());
+        newAlert(
+          "신고가 완료되었습니다. 해당 단어의 검토가 진행됩니다.",
+          "pstv"
+        );
+      },
+    });
+  };
+
   const goToWordReg = () => {
     router.push("/MyWords/Regist");
   };
@@ -411,35 +474,91 @@ const CardMainComponent: React.FC<CardMainTypes> = ({
                       objWord.state != undefined ? `state_${objWord.state}` : ""
                     }
                   >
-                    {closeCardModal ? (
-                      <ButtonCardClose onClick={() => closeCardModal([])}>
+                    {/* <BluredGradientBg>
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                    </BluredGradientBg> */}
+                    <WordRegInfoStyled>
+                      <WordOwnerInfo>
+                        <img src={objWord.user_prf_img}></img>
+                        <span className="card_user_nickname">
+                          {objWord.user_nickname}
+                        </span>
+                      </WordOwnerInfo>
+                      <ButtonCardRemote>
                         <Icon
-                          iconShape={faXmark}
+                          iconShape={faBan}
                           iconWidth="24px"
                           iconHeight="24px"
-                          svgSize="24px"
-                          align="auto"
-                          color="#fff"
+                          svgSize="16px"
+                          color="#ffffff"
+                          onClick={(event: React.MouseEvent<HTMLElement>) => {
+                            newContext({
+                              title: "신고하기",
+                              contextList: [
+                                {
+                                  contextTit: "틀린 내용이 있어요",
+                                  color: "var(--color-grey)",
+                                  onClick: () => {
+                                    reportOnclick(objWord, 0);
+                                  },
+                                },
+                                {
+                                  contextTit: "부적절한 단어에요",
+                                  color: "var(--color-grey)",
+                                  onClick: () => {
+                                    reportOnclick(objWord, 1);
+                                  },
+                                },
+                                {
+                                  contextTit: "중복 등록된 단어에요",
+                                  color: "var(--color-grey)",
+                                  onClick: () => {
+                                    reportOnclick(objWord, 1);
+                                  },
+                                },
+                              ],
+                              isOpen: true,
+                              position: { x: event.pageX, y: event.pageY },
+                            });
+                          }}
                         />
-                      </ButtonCardClose>
-                    ) : (
-                      <></>
-                    )}
-                    <WordRegInfoStyled
-                      onClick={() => {
-                        // window.navigator.share({
-                        //   title: "", // 공유될 제목
-                        //   text: "", // 공유될 설명
-                        //   url: "", // 공유될 URL
-                        //   files: [], // 공유할 파일 배열
-                        // });
-                        console.log(window.navigator);
-                      }}
-                    >
-                      <img src={objWord.user_prf_img}></img>
-                      <span className="card_user_nickname">
-                        {objWord.user_nickname}
-                      </span>
+                        <Icon
+                          iconShape={faArrowUpRightFromSquare}
+                          iconWidth="24px"
+                          iconHeight="24px"
+                          svgSize="16px"
+                          color="#ffffff"
+                          onClick={() => {
+                            if (window.navigator.share!) {
+                              window.navigator.share({
+                                title: objWord.word_name, // 공유될 제목
+                                text: `지금 WOURD에서 ${objWord.word_name}에 대하여 알아보세요.`, // 공유될 설명
+                                url: "", // 공유될 URL
+                                files: [], // 공유할 파일 배열
+                              });
+                            } else {
+                              newAlert(
+                                "공유하기를 지원하지 않는 기기입니다.",
+                                "ngtv"
+                              );
+                            }
+                          }}
+                        />
+                        {closeCardModal ? (
+                          <Icon
+                            iconShape={faXmark}
+                            iconWidth="24px"
+                            iconHeight="24px"
+                            svgSize="22px"
+                            color="#ffffff"
+                            onClick={() => closeCardModal([])}
+                          />
+                        ) : (
+                          <></>
+                        )}
+                      </ButtonCardRemote>
                     </WordRegInfoStyled>
                     <WordCateListStyled>
                       {objWord.word_is_cs_flag ? <span>CS</span> : <></>}
